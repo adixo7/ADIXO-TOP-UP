@@ -255,10 +255,10 @@ const App: React.FC = () => {
                     Browse Armory
                   </button>
                   <button 
-                    onClick={() => setActiveTab('history')}
+                    onClick={user ? () => setActiveTab('history') : () => setShowAuth(true)}
                     className="bg-transparent border-2 border-zinc-700 text-white font-black px-6 md:px-12 py-4 md:py-5 rounded-2xl uppercase tracking-[0.15em] text-[10px] md:text-xs transition-all hover:bg-zinc-800/40 active:scale-95"
                   >
-                    Mission Log
+                    {user ? 'Mission Log' : 'Sign Up'}
                   </button>
                 </div>
               </div>
@@ -296,16 +296,16 @@ const App: React.FC = () => {
           <section>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                <span className="w-1 h-6 bg-indigo-600 rounded-full"></span> 
-                {searchTerm ? `Search Results for "${searchTerm}"` : 'Trending Now'}
+                <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span> 
+                {searchTerm ? `Search Results for "${searchTerm}"` : 'TRENDING NOW'}
               </h2>
               {!searchTerm && (
-                <button onClick={() => setActiveTab('games')} className="text-zinc-500 hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors">See All Games</button>
+                <button onClick={() => setActiveTab('games')} className="text-zinc-500 hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors">SEE ALL GAMES</button>
               )}
             </div>
             {filteredGames.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                {(searchTerm ? filteredGames : filteredGames.slice(0, 5)).map(game => (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 xl:grid-cols-10 gap-3 md:gap-4 lg:gap-6">
+                {(searchTerm ? filteredGames : filteredGames.slice(0, 10)).map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
@@ -516,10 +516,10 @@ const App: React.FC = () => {
           ) : (
             <div className="space-y-8">
               <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">
-                {searchTerm ? `Search Results: ${searchTerm}` : 'The Armory'}
+                {searchTerm ? `Search Results: ${searchTerm}` : 'THE ARMORY'}
               </h2>
               {filteredGames.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 xl:grid-cols-8 gap-3 md:gap-4 lg:gap-6">
                   {filteredGames.map(game => (
                     <GameCard key={game.id} game={game} onClick={setSelectedGame} />
                   ))}
