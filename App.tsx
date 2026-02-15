@@ -13,7 +13,7 @@ const FIVE_MINUTES = 5 * 60 * 1000;
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [user, setUser] = useState<User | null>(null);
-  const [showAuth, setShowAuth] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
@@ -102,7 +102,7 @@ const App: React.FC = () => {
   const handleLogin = (newUser: User) => {
     setUser(newUser);
     localStorage.setItem('adixo_user', JSON.stringify(newUser));
-    setShowAuth(false);
+    setAuthMode(null);
   };
 
   const handleLogout = () => {
@@ -115,7 +115,7 @@ const App: React.FC = () => {
 
   const handlePackageSelect = (game: Game, pkg: Package) => {
     if (!user) {
-      setShowAuth(true);
+      setAuthMode('login');
       return;
     }
     setSelectedGame(game);
@@ -226,7 +226,7 @@ const App: React.FC = () => {
       onTabChange={setActiveTab} 
       user={user} 
       onLogout={handleLogout}
-      onOpenAuth={() => setShowAuth(true)}
+      onOpenAuth={(mode) => setAuthMode(mode || 'login')}
       searchTerm={searchTerm}
       onSearchChange={setSearchTerm}
     >
@@ -255,7 +255,7 @@ const App: React.FC = () => {
                     Browse Armory
                   </button>
                   <button 
-                    onClick={user ? () => setActiveTab('history') : () => setShowAuth(true)}
+                    onClick={user ? () => setActiveTab('history') : () => setAuthMode('register')}
                     className="bg-transparent border-2 border-zinc-700 text-white font-black px-6 md:px-12 py-4 md:py-5 rounded-2xl uppercase tracking-[0.15em] text-[10px] md:text-xs transition-all hover:bg-zinc-800/40 active:scale-95"
                   >
                     {user ? 'Mission Log' : 'Sign Up'}
@@ -582,7 +582,7 @@ const App: React.FC = () => {
               <h3 className="text-xl font-black text-white uppercase italic tracking-tighter mb-4">Authentication Required</h3>
               <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest max-w-xs mx-auto mb-8">Login to view your persistent mission history across sessions. Your old history is waiting.</p>
               <button 
-                onClick={() => setShowAuth(true)}
+                onClick={() => setAuthMode('login')}
                 className="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-10 py-4 rounded-xl uppercase tracking-widest text-[10px] transition-all shadow-xl shadow-indigo-600/20 active:scale-95"
               >
                 Access History Grid
@@ -655,8 +655,8 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {showAuth && (
-        <Auth onLogin={handleLogin} onClose={() => setShowAuth(false)} />
+      {authMode && (
+        <Auth initialMode={authMode} onLogin={handleLogin} onClose={() => setAuthMode(null)} />
       )}
 
       {isGatewayOpen && selectedPayment && selectedPackage && selectedGame && (

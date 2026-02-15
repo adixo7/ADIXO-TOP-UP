@@ -8,7 +8,7 @@ interface LayoutProps {
   onTabChange: (tab: string) => void;
   user: User | null;
   onLogout: () => void;
-  onOpenAuth: () => void;
+  onOpenAuth: (mode?: 'login' | 'register') => void;
   searchTerm: string;
   onSearchChange: (value: string) => void;
 }
@@ -192,7 +192,7 @@ const Layout: React.FC<LayoutProps> = ({
             </div>
           ) : (
             <button 
-              onClick={onOpenAuth}
+              onClick={() => onOpenAuth('login')}
               className="bg-zinc-800 border border-zinc-700 text-white px-4 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-zinc-700 transition-all active:scale-95 shadow-lg shadow-black/20"
             >
               Login
@@ -225,7 +225,7 @@ const Layout: React.FC<LayoutProps> = ({
           <i className="fas fa-headset"></i>
           <span className="text-[10px] font-black uppercase tracking-tighter">Support</span>
         </a>
-        <button onClick={user ? () => setIsProfileOpen(true) : onOpenAuth} className={`flex flex-col items-center gap-1 ${user ? 'text-indigo-500' : 'text-zinc-500'}`}>
+        <button onClick={user ? () => setIsProfileOpen(true) : () => onOpenAuth('login')} className={`flex flex-col items-center gap-1 ${user ? 'text-indigo-500' : 'text-zinc-500'}`}>
           <i className={user ? 'fas fa-user' : 'fas fa-sign-in-alt'}></i>
           <span className="text-[10px] font-black uppercase tracking-tighter">{user ? 'Account' : 'Login'}</span>
         </button>
