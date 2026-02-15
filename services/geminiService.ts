@@ -1,7 +1,7 @@
-
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// process.env.API_KEY is replaced by Vite during build
+const apiKey = process.env.API_KEY || '';
 
 const SYSTEM_INSTRUCTION = `You are AdixoBot, the elite AI concierge for ADIXO TOP UP. 
 Your mission is to provide 24/7 technical support and gaming advice for Free Fire, PUBG Mobile, Call of Duty, and Blood Strike.
@@ -20,7 +20,10 @@ Keep responses concise and actionable.`;
  * Low-latency response using Gemini 3 Flash for basic support and quick queries
  */
 export const getFastAdvice = async (message: string, context?: any) => {
+  if (!apiKey) return "Command Center offline: API Key missing.";
+  
   try {
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: message,
@@ -40,7 +43,10 @@ export const getFastAdvice = async (message: string, context?: any) => {
  * Deep reasoning response using Gemini 3 Pro for tactical analysis and complex troubleshooting
  */
 export const getProAdvice = async (message: string, context?: any) => {
+  if (!apiKey) return "Command Center offline: API Key missing.";
+
   try {
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: message,
