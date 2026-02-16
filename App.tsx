@@ -304,12 +304,14 @@ const App: React.FC = () => {
                   >
                     BROWSE ARMORY
                   </button>
-                  <button 
-                    onClick={user ? () => setActiveTab('history') : () => setAuthMode('login')}
-                    className="bg-transparent border border-zinc-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all hover:bg-zinc-800/40 active:scale-95"
-                  >
-                    HISTORY
-                  </button>
+                  {!user && (
+                    <button 
+                      onClick={() => setAuthMode('login')}
+                      className="bg-transparent border border-zinc-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all hover:bg-zinc-800/40 active:scale-95"
+                    >
+                      SIGN UP
+                    </button>
+                  )}
                 </div>
               </div>
             </section>
