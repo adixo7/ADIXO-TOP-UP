@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { User } from '../types';
 import Footer from './Footer';
@@ -61,13 +62,13 @@ const Layout: React.FC<LayoutProps> = ({
           <div className="w-8 h-8 md:w-10 md:h-10 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-600/40 group-hover:scale-105 transition-transform">
             <i className="fas fa-bolt text-white text-base md:text-xl"></i>
           </div>
-          <div className="flex flex-col md:flex-row md:items-center gap-0.5 md:gap-3">
+          <div className="flex items-center gap-3">
             <span className="text-lg md:text-2xl font-black tracking-tighter text-white uppercase italic logo-font leading-none">
               ADIXO <span className="text-indigo-500">TOPUP</span>
             </span>
             
-            {/* Refined Live Indicator Badge - Matching Screenshot */}
-            <div className="flex items-center gap-1.5 bg-black/60 border border-indigo-500 px-2 py-0.5 md:py-1 rounded-[4px] shadow-[0_0_10px_rgba(79,70,229,0.3)] w-fit transition-all hover:border-indigo-400">
+            {/* Live Indicator Badge */}
+            <div className="flex items-center gap-1.5 bg-black/60 border border-indigo-500 px-2 py-1 rounded-[4px] shadow-[0_0_10px_rgba(79,70,229,0.3)] w-fit transition-all hover:border-indigo-400">
               <div className="flex items-center justify-center">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -159,21 +160,14 @@ const Layout: React.FC<LayoutProps> = ({
                       className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
                     >
                       <i className="fas fa-user-shield text-indigo-500 group-hover:scale-110 transition-transform w-5 text-center"></i>
-                      <span className="text-xs font-bold uppercase tracking-wider">Profile Protocol</span>
+                      <span className="text-xs font-bold uppercase tracking-wider">PROFILE</span>
                     </button>
                     <button 
                       onClick={() => handleMenuAction('history')}
                       className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
                     >
                       <i className="fas fa-history text-indigo-500 group-hover:rotate-[-15deg] transition-transform w-5 text-center"></i>
-                      <span className="text-xs font-bold uppercase tracking-wider">Mission Log</span>
-                    </button>
-                    <button 
-                      onClick={() => handleMenuAction('history')}
-                      className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
-                    >
-                      <i className="fas fa-receipt text-indigo-500 group-hover:scale-110 transition-transform w-5 text-center"></i>
-                      <span className="text-xs font-bold uppercase tracking-wider">Transactions</span>
+                      <span className="text-xs font-bold uppercase tracking-wider">Order History</span>
                     </button>
                   </div>
                   <div className="p-2 bg-zinc-950 border-t border-zinc-800/50">

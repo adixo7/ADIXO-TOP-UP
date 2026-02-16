@@ -1,3 +1,4 @@
+
 import { Game, PaymentMethod } from './types';
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
@@ -20,7 +21,7 @@ export const GAMES: Game[] = [
     id: 'ff',
     name: 'Free Fire',
     category: 'Battle Royale',
-    image: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/3d/8c/6f/3d8c6f6e-4433-255d-7578-831639c0e7c5/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/460x0w.webp',
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5f/Garena_Free_Fire_logo.png/512px-Garena_Free_Fire_logo.png',
     banner: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?w=1200&h=400&fit=crop&q=80',
     idPlaceholder: 'Player ID (e.g. 123456789)',
     description: 'Survive to the end in the fast-paced mobile battle royale.',
@@ -62,7 +63,7 @@ export const GAMES: Game[] = [
     id: 'mlbb',
     name: 'Mobile Legends',
     category: 'MOBA',
-    image: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/97/81/86/97818617-1f48-9366-6b21-4f932f913f01/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/460x0w.webp',
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f6/Mobile_Legends_Logo.png/512px-Mobile_Legends_Logo.png',
     banner: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=1200&h=400&fit=crop&q=80',
     idPlaceholder: 'User ID (Zone ID)',
     description: 'The ultimate mobile MOBA experience.',
@@ -93,7 +94,7 @@ export const GAMES: Game[] = [
     id: 'pubg',
     name: 'PUBG Mobile',
     category: 'Battle Royale',
-    image: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/28/73/42/28734267-336c-94cc-1996-541575825026/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/460x0w.webp',
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/PUBG_Mobile_Logo.png/512px-PUBG_Mobile_Logo.png',
     banner: 'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=1200&h=400&fit=crop&q=80',
     idPlaceholder: 'Character ID (e.g. 51234567)',
     description: 'The original battle royale mobile experience.',
@@ -125,7 +126,7 @@ export const GAMES: Game[] = [
     id: 'bs',
     name: 'Blood Strike',
     category: 'Battle Royale',
-    image: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/4a/7d/53/4a7d5300-3023-0130-9759-338c7f3b33f3/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/460x0w.webp',
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d7/Blood_Strike_Logo.png/512px-Blood_Strike_Logo.png',
     banner: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200&h=400&fit=crop&q=80',
     idPlaceholder: 'Player ID',
     description: 'Fast-paced striker battle royale with intense tactical combat.',
@@ -153,7 +154,7 @@ export const GAMES: Game[] = [
     id: 'codm',
     name: 'Call of Duty: Mobile',
     category: 'FPS',
-    image: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/1e/8a/5a/1e8a5a7b-0442-990a-5c6e-568e6e8e8e8e/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/460x0w.webp',
+    image: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Call_of_Duty_Mobile_Logo.png/512px-Call_of_Duty_Mobile_Logo.png',
     banner: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=1200&h=400&fit=crop&q=80',
     idPlaceholder: 'Player ID (e.g. 123456789)',
     description: 'The definitive mobile FPS experience.',
