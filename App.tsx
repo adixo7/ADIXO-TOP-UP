@@ -34,6 +34,18 @@ const App: React.FC = () => {
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activeTab, selectedGame]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Auth & Disclaimer Initialization
   useEffect(() => {
     const savedUser = localStorage.getItem('adixo_user');
