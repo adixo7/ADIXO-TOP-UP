@@ -174,6 +174,10 @@ const App: React.FC = () => {
   };
 
   const handleConfirmOrder = () => {
+    if (!user) {
+      setAuthMode('login');
+      return;
+    }
     if (!playerId.trim()) {
       alert("Please enter your Player ID first!");
       return;
