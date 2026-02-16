@@ -276,15 +276,17 @@ const App: React.FC = () => {
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
 
       {activeTab === 'home' && (
-        <div className="space-y-12 animate-in fade-in duration-700">
+        <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
           {!searchTerm && (
-            <section className="relative h-[180px] md:h-[240px] rounded-[3rem] overflow-hidden group shadow-2xl border border-zinc-800 bg-[#0c0c0e]">
+            <section className="relative h-[180px] md:h-[240px] rounded-[3rem] overflow-hidden group shadow-2xl border border-orange-500/20 bg-[#0c0c0e]">
+              <div className="absolute inset-0 bg-orange-600/5 group-hover:bg-orange-600/10 transition-colors"></div>
               <img 
                 src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop&q=80" 
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-20 grayscale-[20%]"
                 alt="Hero"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-center items-center px-6 md:px-16 text-center">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>
+              <div className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-16 text-center">
                 <span className="text-orange-500 font-black uppercase tracking-[0.4em] mb-3 text-[7px] md:text-[10px] animate-pulse">ADIXO OFFICIAL TOPUP</span>
                 
                 <p className="text-zinc-400 max-w-sm md:max-w-2xl text-[9px] md:text-[12px] font-medium leading-relaxed mb-6 mx-auto">
