@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { PaymentMethod, Package, Game } from '../types';
 
@@ -134,7 +133,7 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
             <div className="flex justify-between items-center px-1">
               <label className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">TRANSACTION ID (TRXID)</label>
               {isBinance && (
-                <a href="https://www.binance.com" target="_blank" className="text-[8px] font-black text-indigo-500 uppercase tracking-widest hover:underline">Open App</a>
+                <a href="https://www.binance.com" target="_blank" className="text-[8px] font-black text-orange-500 uppercase tracking-widest hover:underline">Open App</a>
               )}
             </div>
             <input 
@@ -143,7 +142,7 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
               value={trxId}
               onChange={(e) => setTrxId(e.target.value.toUpperCase())}
               placeholder="ENTER TRXID HERE"
-              className="w-full bg-[#121214] border border-zinc-800 rounded-xl py-3 px-4 text-white text-base font-mono focus:outline-none focus:border-indigo-600 transition-all placeholder:text-zinc-900"
+              className="w-full bg-[#121214] border border-zinc-800 rounded-xl py-3 px-4 text-white text-base font-mono focus:outline-none focus:border-orange-600 transition-all placeholder:text-zinc-900"
             />
           </div>
           <button 

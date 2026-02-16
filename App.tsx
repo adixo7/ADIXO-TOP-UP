@@ -8,6 +8,7 @@ import Auth from './components/Auth';
 import PaymentGateway from './components/PaymentGateway';
 import ChatWidget from './components/ChatWidget';
 import Features from './components/Features';
+import DisclaimerPopup from './components/DisclaimerPopup';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -19,6 +20,7 @@ const App: React.FC = () => {
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
   const [isGatewayOpen, setIsGatewayOpen] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [playerId, setPlayerId] = useState('');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,13 +34,24 @@ const App: React.FC = () => {
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
-  // Auth Initialization
+  // Auth & Disclaimer Initialization
   useEffect(() => {
     const savedUser = localStorage.getItem('adixo_user');
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
+
+    // Show disclaimer if not shown in current session
+    const disclaimerShown = sessionStorage.getItem('adixo_disclaimer_shown');
+    if (!disclaimerShown) {
+      setShowDisclaimer(true);
+    }
   }, []);
+
+  const handleCloseDisclaimer = () => {
+    setShowDisclaimer(false);
+    sessionStorage.setItem('adixo_disclaimer_shown', 'true');
+  };
 
   // Transaction Management (Persistence Logic)
   useEffect(() => {
@@ -233,10 +246,6 @@ const App: React.FC = () => {
     game.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const trackedTransactions = transactions.filter(t => 
-    !orderTrackId || t.id.toLowerCase().includes(orderTrackId.toLowerCase()) || t.playerId.toLowerCase().includes(orderTrackId.toLowerCase())
-  );
-
   const groupedPackages: Record<string, Package[]> = (selectedGame?.packages || []).reduce((acc: Record<string, Package[]>, pkg) => {
     const cat = pkg.category || 'GENERAL';
     if (!acc[cat]) acc[cat] = [];
@@ -264,6 +273,8 @@ const App: React.FC = () => {
       searchTerm={searchTerm}
       onSearchChange={setSearchTerm}
     >
+      {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
+
       {activeTab === 'home' && (
         <div className="space-y-12 animate-in fade-in duration-700">
           {!searchTerm && (
@@ -274,7 +285,7 @@ const App: React.FC = () => {
                 alt="Hero"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-center items-center px-6 md:px-16 text-center">
-                <span className="text-indigo-500 font-black uppercase tracking-[0.4em] mb-3 text-[7px] md:text-[10px] animate-pulse">ADIXO OFFICIAL TOPUP</span>
+                <span className="text-orange-500 font-black uppercase tracking-[0.4em] mb-3 text-[7px] md:text-[10px] animate-pulse">ADIXO OFFICIAL TOPUP</span>
                 
                 <p className="text-zinc-400 max-w-sm md:max-w-2xl text-[9px] md:text-[12px] font-medium leading-relaxed mb-6 mx-auto">
                   Instant delivery for Free Fire, PUBG Mobile and more with the best price in market
@@ -283,15 +294,15 @@ const App: React.FC = () => {
                 <div className="flex flex-row justify-center gap-3">
                   <button 
                     onClick={() => setActiveTab('games')}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all shadow-xl shadow-indigo-600/30 active:scale-95"
+                    className="bg-orange-600 hover:bg-orange-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all shadow-xl shadow-orange-600/30 active:scale-95"
                   >
-                    Browse Armory
+                    BROWSE ARMORY
                   </button>
                   <button 
                     onClick={user ? () => setActiveTab('history') : () => setAuthMode('login')}
                     className="bg-transparent border border-zinc-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all hover:bg-zinc-800/40 active:scale-95"
                   >
-                    History
+                    HISTORY
                   </button>
                 </div>
               </div>
@@ -299,13 +310,13 @@ const App: React.FC = () => {
           )}
 
           {user && transactions.length > 0 && !searchTerm && (
-            <section className="bg-indigo-600/5 border border-indigo-500/20 rounded-[2.5rem] p-8 animate-in slide-in-from-left-4 duration-500">
+            <section className="bg-orange-600/5 border border-orange-500/20 rounded-[2.5rem] p-8 animate-in slide-in-from-left-4 duration-500">
                <div className="flex items-center justify-between mb-6">
                   <h2 className="text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                    <span className="w-1 h-5 bg-indigo-600 rounded-full"></span> 
+                    <span className="w-1 h-5 bg-orange-600 rounded-full"></span> 
                     Recent Activity
                   </h2>
-                  <button onClick={() => setActiveTab('history')} className="text-indigo-500 text-[9px] font-black uppercase tracking-widest hover:underline">Full Order History</button>
+                  <button onClick={() => setActiveTab('history')} className="text-orange-500 text-[9px] font-black uppercase tracking-widest hover:underline">Full Order History</button>
                </div>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                  {transactions.slice(0, 3).map(trx => (
@@ -318,7 +329,7 @@ const App: React.FC = () => {
                         <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest truncate">{trx.amount} {trx.unit}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-indigo-500 text-[10px] font-black italic">৳{trx.price}</p>
+                        <p className="text-orange-500 text-[10px] font-black italic">৳{trx.price}</p>
                       </div>
                    </div>
                  ))}
@@ -329,13 +340,13 @@ const App: React.FC = () => {
           <section>
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                <span className="w-1.5 h-6 bg-indigo-600 rounded-full"></span> 
+                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
                 TRENDING NOW
               </h2>
             </div>
             {filteredGames.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-8 xl:grid-cols-10 gap-3 md:gap-4 lg:gap-6">
-                {(searchTerm ? filteredGames : filteredGames.slice(0, 10)).map(game => (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
+                {(searchTerm ? filteredGames : filteredGames).map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
@@ -367,11 +378,18 @@ const App: React.FC = () => {
                   <div className="bg-zinc-900 rounded-[2rem] p-8 border border-zinc-800 shadow-xl overflow-hidden relative">
                     <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-32 object-cover opacity-20 grayscale" />
                     <div className="relative pt-12">
-                      <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-indigo-500 mb-6 shadow-xl shadow-indigo-500/20 bg-zinc-950">
-                        <img src={selectedGame.image} alt={selectedGame.name} className="w-full h-full object-cover" />
+                      <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-orange-500 mb-6 shadow-xl shadow-orange-500/20 bg-zinc-950">
+                        <img 
+                           src={selectedGame.image} 
+                           alt={selectedGame.name} 
+                           className="w-full h-full object-cover" 
+                           onError={(e) => {
+                             (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedGame.name)}&background=18181b&color=f97316&bold=true`;
+                           }}
+                        />
                       </div>
                       <h2 className="text-3xl font-black text-white uppercase italic tracking-tighter mb-2">{selectedGame.name}</h2>
-                      <p className="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-6">{selectedGame.category}</p>
+                      <p className="text-orange-400 text-xs font-bold uppercase tracking-widest mb-6">{selectedGame.category}</p>
                       <p className="text-zinc-400 text-sm leading-relaxed mb-8">{selectedGame.description}</p>
                     </div>
                   </div>
@@ -379,15 +397,15 @@ const App: React.FC = () => {
                   <div className="space-y-4 px-2">
                     <h3 className="text-xl font-bold text-white">Player ID / Username</h3>
                     <div className="relative group">
-                      <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-indigo-500 transition-colors">
+                      <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
                         <i className="fas fa-gamepad text-xl"></i>
                       </div>
                       <input 
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder="Enter Game ID"
-                        className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-indigo-500 transition-all shadow-sm"
+                        placeholder={selectedGame.idPlaceholder}
+                        className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
                   </div>
@@ -395,41 +413,44 @@ const App: React.FC = () => {
 
                 <div className="lg:col-span-2 space-y-10">
                   <div className="space-y-8">
-                    <div className="mb-8 w-fit">
-                      <div className="border border-zinc-800 px-5 py-3 rounded-lg relative overflow-hidden bg-zinc-900/20 group">
-                         <div className="absolute top-0 left-0 w-1 h-full bg-indigo-600/50"></div>
-                         <h3 className="text-[10px] font-black text-zinc-300 uppercase tracking-[0.3em] flex items-center gap-2">
-                           <span className="w-3 h-[1px] bg-zinc-700"></span> PACKAGES
-                         </h3>
-                      </div>
-                    </div>
-                    
                     {sortedCategoryKeys.map((category) => (
                       <div key={category} className="space-y-4">
                         <div className="flex items-center gap-4">
-                          <h4 className="text-[9px] font-black text-indigo-400 uppercase tracking-[0.25em] italic">
+                          <h4 className="text-[9px] font-black text-orange-400 uppercase tracking-[0.25em] italic">
                             {category}
                           </h4>
                           <div className="flex-1 h-[1px] bg-zinc-800"></div>
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-4">
                           {groupedPackages[category].map(pkg => (
                             <button 
                               key={pkg.id}
-                              onClick={() => handlePackageSelect(selectedGame, pkg)}
-                              className={`group relative bg-[#0d0d0f] border p-4 rounded-xl transition-all text-left flex justify-between items-center shadow-sm ${
+                              onClick={() => setSelectedPackage(pkg)}
+                              className={`group relative bg-[#0d0d0f] border px-6 py-5 rounded-2xl transition-all text-left flex justify-between items-center overflow-hidden ${
                                 selectedPackage?.id === pkg.id 
-                                ? 'border-indigo-500 bg-indigo-500/5' 
-                                : 'border-zinc-800/60 hover:border-indigo-500/30'
+                                ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_20px_rgba(249,115,22,0.15)]' 
+                                : 'border-zinc-800/80 hover:border-orange-500/40 hover:bg-zinc-900/50 shadow-sm hover:shadow-lg'
                               }`}
                             >
-                              <p className="text-base font-black text-white italic tracking-tighter truncate">
-                                {pkg.amount > 1 ? pkg.amount : ''} {pkg.unit}
-                              </p>
-                              <div className="text-right shrink-0">
-                                <p className="text-lg font-black text-white italic tracking-tighter">
+                              <div className="flex flex-col relative z-10">
+                                <span className={`text-sm md:text-base font-black italic tracking-tight leading-none mb-1.5 transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-200 group-hover:text-white'}`}>
+                                  {pkg.amount > 1 ? pkg.amount : ''} {pkg.unit}
+                                </span>
+                                {pkg.isPopular && (
+                                  <span className="text-[7px] bg-orange-600 text-white px-1.5 py-0.5 rounded-sm font-black uppercase tracking-[0.15em] w-fit shadow-lg shadow-orange-600/20">
+                                    Hot Item
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex flex-col items-end shrink-0 relative z-10">
+                                <span className={`text-lg md:text-xl font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
                                   ৳{pkg.price}
-                                </p>
+                                </span>
+                              </div>
+                              
+                              {/* Decorative element background */}
+                              <div className={`absolute -right-3 -bottom-3 transition-all duration-500 ${selectedPackage?.id === pkg.id ? 'text-white/10 scale-110' : 'text-zinc-800/20 group-hover:text-orange-500/10 group-hover:scale-105'}`}>
+                                 <i className="fas fa-gem text-5xl md:text-6xl rotate-12"></i>
                               </div>
                             </button>
                           ))}
@@ -448,12 +469,12 @@ const App: React.FC = () => {
                             onClick={() => setSelectedPayment(method)}
                             className={`flex items-center gap-5 p-5 rounded-2xl transition-all border ${
                               selectedPayment?.id === method.id 
-                              ? 'border-indigo-500 bg-indigo-500/5' 
+                              ? 'border-orange-500 bg-orange-500/5' 
                               : 'bg-zinc-900/40 border-zinc-800'
                             }`}
                           >
-                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${selectedPayment?.id === method.id ? 'border-indigo-500' : 'border-zinc-700'}`}>
-                              {selectedPayment?.id === method.id && <div className="w-2.5 h-2.5 rounded-full bg-indigo-500"></div>}
+                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${selectedPayment?.id === method.id ? 'border-orange-500' : 'border-zinc-700'}`}>
+                              {selectedPayment?.id === method.id && <div className="w-2.5 h-2.5 rounded-full bg-orange-500"></div>}
                             </div>
                             <span className="font-black uppercase italic tracking-tighter text-lg text-white">{method.name}</span>
                           </button>
@@ -462,7 +483,7 @@ const App: React.FC = () => {
                       <div className="mt-10 pt-8 border-t border-zinc-800/50">
                         <button 
                           onClick={handleConfirmOrder}
-                          className="w-full py-6 rounded-2xl font-black uppercase italic tracking-widest transition-all bg-indigo-600 text-white shadow-xl hover:bg-indigo-700 active:scale-95"
+                          className="w-full py-6 rounded-2xl font-black uppercase italic tracking-widest transition-all bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95"
                         >
                           Confirm & Pay ৳{selectedPackage.price}
                         </button>
@@ -490,7 +511,7 @@ const App: React.FC = () => {
           <h2 className="text-5xl font-black text-white uppercase italic tracking-tighter">ORDER HISTORY</h2>
           {user && transactions.length > 0 ? (
             <div className="space-y-6">
-              {transactions.filter(t => !orderTrackId || t.id.includes(orderTrackId) || t.playerId.includes(orderTrackId)).map(trx => (
+              {transactions.map(trx => (
                 <div key={trx.id} className="relative bg-[#0e0e11] border border-zinc-800/80 p-8 rounded-[2rem] flex flex-col md:flex-row md:items-center justify-between group gap-6 overflow-hidden">
                   <div className="flex flex-1 min-w-0 flex-col">
                     <h3 className="text-white font-black uppercase italic tracking-tighter text-2xl mb-1 truncate leading-tight">
@@ -506,7 +527,7 @@ const App: React.FC = () => {
                       </div>
                       <div className="bg-[#09090b] px-4 py-2.5 rounded-xl border border-zinc-800/50">
                         <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest shrink-0">PLAYER:</span>
-                        <span className="text-indigo-400/80 font-mono text-xs ml-2">{trx.playerId}</span>
+                        <span className="text-orange-400/80 font-mono text-xs ml-2">{trx.playerId}</span>
                       </div>
                     </div>
                   </div>
@@ -531,7 +552,7 @@ const App: React.FC = () => {
       {activeTab === 'profile' && user && (
         <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-500 pb-20">
           <div className="bg-zinc-900/40 border border-zinc-800 rounded-[2.5rem] p-8 md:p-12 flex flex-col items-center">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-indigo-600 overflow-hidden shadow-2xl mb-8">
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-orange-600 overflow-hidden shadow-2xl mb-8">
               <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
             </div>
             
@@ -543,10 +564,9 @@ const App: React.FC = () => {
             </button>
 
             <div className="w-full max-w-2xl space-y-10">
-              {/* Account Data Section */}
               <div className="space-y-6">
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                  <span className="w-1 h-5 bg-indigo-600 rounded-full"></span> ACCOUNT DATA
+                  <span className="w-1 h-5 bg-orange-600 rounded-full"></span> ACCOUNT DATA
                 </h3>
                 
                 <div className="space-y-4">
@@ -558,14 +578,9 @@ const App: React.FC = () => {
                     <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-1">GMAIL (EMAIL)</p>
                     <div className="bg-black border border-zinc-800 px-5 py-5 rounded-2xl text-zinc-300 font-bold text-base tracking-tight">{user.email}</div>
                   </div>
-                  <div className="space-y-2">
-                    <p className="text-[9px] font-black text-zinc-500 uppercase tracking-widest ml-1">REGISTERED ON</p>
-                    <div className="bg-black border border-zinc-800 px-5 py-5 rounded-2xl text-zinc-300 font-bold text-base tracking-tight">{user.registeredDate || 'Mission Legacy'}</div>
-                  </div>
                 </div>
               </div>
 
-              {/* Security Protocols Section */}
               <div className="space-y-6">
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
                   <span className="w-1 h-5 bg-amber-500 rounded-full"></span> SECURITY PROTOCOLS
@@ -580,14 +595,14 @@ const App: React.FC = () => {
                         value={oldPassword}
                         onChange={(e) => setOldPassword(e.target.value)}
                         placeholder="ENTER OLD CODE"
-                        className="w-full bg-black border border-zinc-800 px-5 py-5 rounded-2xl text-white font-bold text-base focus:outline-none focus:border-indigo-500 transition-all placeholder:text-zinc-800"
+                        className="w-full bg-black border border-zinc-800 px-5 py-5 rounded-2xl text-white font-bold text-base focus:outline-none focus:border-orange-500 transition-all placeholder:text-zinc-800"
                       />
                       <input 
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         placeholder="ENTER NEW CODE"
-                        className="w-full bg-black border border-zinc-800 px-5 py-5 rounded-2xl text-white font-bold text-base focus:outline-none focus:border-indigo-500 transition-all placeholder:text-zinc-800"
+                        className="w-full bg-black border border-zinc-800 px-5 py-5 rounded-2xl text-white font-bold text-base focus:outline-none focus:border-orange-500 transition-all placeholder:text-zinc-800"
                       />
                     </div>
                   </div>
@@ -601,7 +616,7 @@ const App: React.FC = () => {
                   <button 
                     onClick={handleResetPassword}
                     disabled={isUpdatingPassword || !newPassword.trim() || !oldPassword.trim()}
-                    className="w-full bg-indigo-900/40 hover:bg-indigo-600 border border-indigo-500/30 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs transition-all disabled:opacity-50 active:scale-95 shadow-xl shadow-indigo-600/10 mt-2"
+                    className="w-full bg-orange-900/40 hover:bg-orange-600 border border-orange-500/30 text-white font-black py-5 rounded-2xl uppercase tracking-[0.2em] text-xs transition-all disabled:opacity-50 active:scale-95 shadow-xl shadow-orange-600/10 mt-2"
                   >
                     {isUpdatingPassword ? 'Updating Protocol...' : 'UPDATE PASSWORD'}
                   </button>

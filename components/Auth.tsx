@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { User } from '../types';
 
@@ -14,158 +13,197 @@ const Auth: React.FC<AuthProps> = ({ onLogin, onClose, initialMode = 'login' }) 
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  /**
+   * DATABASE SIMULATION PROTOCOL
+   * In a production environment, this would call a secure backend API.
+   * For this mission, we use a global 'adixo_db_users' grid in localStorage.
+   */
+  const getStoredUsers = () => {
+    const usersJson = localStorage.getItem('adixo_db_users');
+    return usersJson ? JSON.parse(usersJson) : {};
+  };
+
+  const saveUserToGrid = (email: string, userData: any) => {
+    const users = getStoredUsers();
+    users[email.toLowerCase().trim()] = userData;
+    localStorage.setItem('adixo_db_users', JSON.stringify(users));
+  };
+
+  const checkEmailExists = (email: string) => {
+    const users = getStoredUsers();
+    return !!users[email.toLowerCase().trim()];
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
-    // Simulated "Database" using localStorage
-    const storedUsersKey = 'adixo_db_users';
-    const usersJson = localStorage.getItem(storedUsersKey);
-    const users = usersJson ? JSON.parse(usersJson) : {};
+    const normalizedEmail = email.toLowerCase().trim();
+    const users = getStoredUsers();
 
-    if (isLogin) {
-      // LOGIN PROTOCOL
-      const normalizedEmail = email.toLowerCase().trim();
-      const existingUser = users[normalizedEmail];
-      
-      if (!existingUser) {
-        setError("Account not found. Please register first.");
-        return;
+    // Artificial latency for "Neural Authentication" feel
+    setTimeout(() => {
+      if (isLogin) {
+        // LOGIN PROTOCOL
+        const existingUser = users[normalizedEmail];
+        
+        if (!existingUser) {
+          setError("GRID ERROR: Account not found. Please register first.");
+          setIsLoading(false);
+          return;
+        }
+        
+        if (existingUser.password !== password) {
+          setError("SECURITY BREACH: Invalid password code."); 
+          setIsLoading(false);
+          return;
+        }
+        
+        // Success: Login
+        onLogin({
+          id: existingUser.id,
+          name: existingUser.name,
+          email: normalizedEmail,
+          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(existingUser.name)}&background=f97316&color=fff&bold=true`,
+          registeredDate: existingUser.registeredDate || 'Mission Legacy'
+        });
+      } else {
+        // REGISTER PROTOCOL
+        
+        // CRITICAL: Ensure unique email (1 Gmail = 1 Account)
+        if (checkEmailExists(normalizedEmail)) {
+          setError("DUPLICATE DETECTED: An account is already linked to this Gmail.");
+          setIsLoading(false);
+          return;
+        }
+        
+        const registeredDate = new Date().toLocaleDateString('en-US', { 
+          year: 'numeric', month: 'long', day: 'numeric' 
+        });
+
+        // Generate a stable 8-digit numeric Agent ID
+        const numericId = Math.floor(10000000 + Math.random() * 90000000).toString();
+
+        // Save entry to the global database
+        const newUser = { 
+          id: numericId,
+          name, 
+          email: normalizedEmail, 
+          password, 
+          registeredDate 
+        };
+        
+        saveUserToGrid(normalizedEmail, newUser);
+        
+        // Success: Initialize Session
+        onLogin({
+          id: numericId,
+          name: name,
+          email: normalizedEmail,
+          avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f97316&color=fff&bold=true`,
+          registeredDate: registeredDate
+        });
       }
-      
-      if (existingUser.password !== password) {
-        setError("Password wrong. Try again."); 
-        return;
-      }
-      
-      // Success: Login
-      onLogin({
-        id: existingUser.id,
-        name: existingUser.name,
-        email: email,
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(existingUser.name)}&background=6366f1&color=fff&bold=true`,
-        registeredDate: existingUser.registeredDate || 'Mission Legacy'
-      });
-    } else {
-      // REGISTER PROTOCOL
-      const normalizedEmail = email.toLowerCase().trim();
-      if (users[normalizedEmail]) {
-        setError("Email already registered in the grid.");
-        return;
-      }
-      
-      const registeredDate = new Date().toLocaleDateString('en-US', { 
-        year: 'numeric', month: 'long', day: 'numeric' 
-      });
-
-      // Generate a stable 8-digit numeric ID
-      const numericId = Math.floor(10000000 + Math.random() * 90000000).toString();
-
-      // Save all information to the "database"
-      const newUser = { 
-        id: numericId,
-        name, 
-        email: normalizedEmail, 
-        password, 
-        registeredDate 
-      };
-      
-      users[normalizedEmail] = newUser;
-      localStorage.setItem(storedUsersKey, JSON.stringify(users));
-      
-      // Success: Auto login after registration
-      onLogin({
-        id: numericId,
-        name: name,
-        email: email,
-        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6366f1&color=fff&bold=true`,
-        registeredDate: registeredDate
-      });
-    }
+      setIsLoading(false);
+    }, 1200);
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl max-w-sm w-full relative shadow-2xl">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in duration-300">
+      <div className="bg-[#0c0c0e] border border-zinc-800 p-8 rounded-[2.5rem] max-w-sm w-full relative shadow-[0_0_50px_-12px_rgba(249,115,22,0.5)]">
         <button 
           onClick={onClose} 
-          className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors"
+          className="absolute top-6 right-6 text-zinc-600 hover:text-white transition-colors p-2"
         >
           <i className="fas fa-times text-xl"></i>
         </button>
         
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-600/20">
-            <i className={`fas ${isLogin ? 'fa-lock' : 'fa-user-plus'} text-white text-2xl`}></i>
+        <div className="text-center mb-10">
+          <div className="w-20 h-20 bg-orange-600 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 shadow-xl shadow-orange-600/30 transform group-hover:rotate-12 transition-transform">
+            <i className={`fas ${isLogin ? 'fa-fingerprint' : 'fa-id-card'} text-white text-3xl`}></i>
           </div>
-          <h2 className="text-3xl font-black text-white uppercase italic tracking-tighter">
-            {isLogin ? 'Login' : 'Register'}
+          <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter mb-2">
+            {isLogin ? 'LOG IN' : 'SIGN UP'}
           </h2>
-          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest mt-1">
-            Access the Adixo TopUp Grid
+          <p className="text-orange-500 text-[10px] font-black uppercase tracking-[0.3em] animate-pulse">
+            Neural Authentication v3.1
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
-            <i className="fas fa-circle-exclamation text-red-500"></i>
-            <p className="text-[10px] font-black text-red-500 uppercase tracking-widest leading-none">{error}</p>
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-start gap-3 animate-in fade-in slide-in-from-top-2 duration-300">
+            <i className="fas fa-shield-virus text-red-500 mt-1"></i>
+            <p className="text-[10px] font-black text-red-500 uppercase tracking-widest leading-tight">{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {!isLogin && (
-            <div className="space-y-1">
-              <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Full Name</label>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Agent Name</label>
               <input 
                 type="text" 
                 value={name}
+                disabled={isLoading}
                 onChange={(e) => { setName(e.target.value); setError(null); }}
-                placeholder="Enter your name"
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors font-bold text-sm"
+                placeholder="Ex: Ghost Striker"
+                className="w-full bg-black border border-zinc-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-orange-500 transition-all font-bold text-sm shadow-inner"
                 required={!isLogin}
               />
             </div>
           )}
-          <div className="space-y-1">
-            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Email Address</label>
+          <div className="space-y-2">
+            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Gmail / Email</label>
             <input 
               type="email" 
               value={email}
+              disabled={isLoading}
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
               placeholder="agent@gmail.com"
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors font-bold text-sm"
+              className="w-full bg-black border border-zinc-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-orange-500 transition-all font-bold text-sm shadow-inner"
               required
             />
           </div>
-          <div className="space-y-1">
-            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Password</label>
+          <div className="space-y-2">
+            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest ml-1">Security Code</label>
             <input 
               type="password" 
               value={password}
+              disabled={isLoading}
               onChange={(e) => { setPassword(e.target.value); setError(null); }}
               placeholder="••••••••"
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 transition-colors font-bold text-sm"
+              className="w-full bg-black border border-zinc-800 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-orange-500 transition-all font-bold text-sm shadow-inner"
               required
             />
           </div>
           <button 
             type="submit" 
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black py-4 rounded-xl uppercase tracking-[0.2em] text-xs transition-all shadow-lg shadow-indigo-600/20 active:scale-95 mt-4"
+            disabled={isLoading}
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-black py-5 rounded-2xl uppercase tracking-[0.25em] text-xs transition-all shadow-xl shadow-orange-600/20 active:scale-95 mt-4 flex items-center justify-center gap-3"
           >
-            {isLogin ? 'Initialize Session' : 'Create Account'}
+            {isLoading ? (
+              <>
+                <i className="fas fa-spinner fa-spin"></i>
+                Verifying Grid...
+              </>
+            ) : (
+              isLogin ? 'Initialize Session' : 'Create Agent Account'
+            )}
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-zinc-800/50 text-center">
+        <div className="mt-10 pt-8 border-t border-zinc-800/50 text-center">
           <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">
-            {isLogin ? "No account found?" : "Already registered?"}
+            {isLogin ? "No identity found?" : "Already registered?"}
             <button 
               onClick={() => { setIsLogin(!isLogin); setError(null); }} 
-              className="text-indigo-500 ml-2 hover:text-indigo-400"
+              disabled={isLoading}
+              className="text-orange-500 ml-2 hover:text-orange-400 font-black"
             >
-              {isLogin ? 'Register Here' : 'Login Here'}
+              {isLogin ? 'Register Agent' : 'Access Session'}
             </button>
           </p>
         </div>

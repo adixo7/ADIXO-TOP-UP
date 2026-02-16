@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Game } from '../types';
 
@@ -19,13 +18,13 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
           alt={game.name} 
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
           onError={(e) => {
-            (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(game.name)}&background=18181b&color=6366f1&bold=true`;
+            (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(game.name)}&background=18181b&color=f97316&bold=true`;
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
         <div className="absolute bottom-2 left-2 right-2 md:bottom-3 md:left-3 md:right-3 lg:bottom-4 lg:left-4 lg:right-4">
-          <p className="text-indigo-400 text-[6px] md:text-[8px] lg:text-[9px] font-black uppercase tracking-widest mb-0.5">{game.category}</p>
-          <h3 className="text-white text-[9px] md:text-xs lg:text-sm font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-indigo-300 transition-colors">
+          <p className="text-orange-400 text-[6px] md:text-[8px] lg:text-[9px] font-black uppercase tracking-widest mb-0.5">{game.category}</p>
+          <h3 className="text-white text-[9px] md:text-xs lg:text-sm font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
             {game.name}
           </h3>
         </div>

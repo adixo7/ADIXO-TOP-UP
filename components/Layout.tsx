@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { User } from '../types';
 import Footer from './Footer';
@@ -59,16 +58,16 @@ const Layout: React.FC<LayoutProps> = ({
       {/* Header */}
       <header className="sticky top-0 z-50 glass-card border-b border-zinc-800/50 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
         <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => onTabChange('home')}>
-          <div className="w-8 h-8 md:w-10 md:h-10 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-600/40 group-hover:scale-105 transition-transform">
+          <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-600/40 group-hover:scale-105 transition-transform">
             <i className="fas fa-bolt text-white text-base md:text-xl"></i>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-lg md:text-2xl font-black tracking-tighter text-white uppercase italic logo-font leading-none">
-              ADIXO <span className="text-indigo-500">TOPUP</span>
+              ADIXO <span className="text-orange-500">TOPUP</span>
             </span>
             
             {/* Live Indicator Badge */}
-            <div className="flex items-center gap-1.5 bg-black/60 border border-indigo-500 px-2 py-1 rounded-[4px] shadow-[0_0_10px_rgba(79,70,229,0.3)] w-fit transition-all hover:border-indigo-400">
+            <div className="flex items-center gap-1.5 bg-black/60 border border-orange-500 px-2 py-1 rounded-[4px] shadow-[0_0_10px_rgba(249,115,22,0.3)] w-fit transition-all hover:border-orange-400">
               <div className="flex items-center justify-center">
                 <span className="relative flex h-1.5 w-1.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -83,13 +82,13 @@ const Layout: React.FC<LayoutProps> = ({
         <nav className="hidden md:flex items-center gap-8 text-zinc-400 font-bold uppercase tracking-widest text-xs">
           <button 
             onClick={() => onTabChange('home')}
-            className={`hover:text-white transition-all py-1 ${activeTab === 'home' ? 'text-white border-b-2 border-indigo-500' : ''}`}
+            className={`hover:text-white transition-all py-1 ${activeTab === 'home' ? 'text-white border-b-2 border-orange-500' : ''}`}
           >
             Home
           </button>
           <button 
             onClick={() => onTabChange('games')}
-            className={`hover:text-white transition-all py-1 ${activeTab === 'games' ? 'text-white border-b-2 border-indigo-500' : ''}`}
+            className={`hover:text-white transition-all py-1 ${activeTab === 'games' ? 'text-white border-b-2 border-orange-500' : ''}`}
           >
             Games
           </button>
@@ -100,14 +99,14 @@ const Layout: React.FC<LayoutProps> = ({
             className="hover:text-white transition-all py-1 flex items-center gap-2"
           >
             Support
-            <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></span>
+            <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
           </a>
         </nav>
 
         <div className="flex items-center gap-3 md:gap-4">
           <div className="relative flex items-center" ref={searchRef}>
             {isSearchOpen ? (
-              <div className="flex items-center bg-zinc-950 border border-indigo-500/50 rounded-xl overflow-hidden animate-in slide-in-from-right-4 duration-300">
+              <div className="flex items-center bg-zinc-950 border border-orange-500/50 rounded-xl overflow-hidden animate-in slide-in-from-right-4 duration-300">
                 <input 
                   autoFocus
                   type="text"
@@ -141,9 +140,9 @@ const Layout: React.FC<LayoutProps> = ({
               >
                 <div className="hidden lg:block text-right">
                   <p className="text-white text-xs font-black uppercase italic tracking-tighter truncate max-w-[120px]">{user.name}</p>
-                  <p className="text-[9px] text-indigo-500 font-bold uppercase tracking-widest">Elite Agent</p>
+                  <p className="text-[9px] text-orange-500 font-bold uppercase tracking-widest">Elite Agent</p>
                 </div>
-                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full border-2 overflow-hidden shadow-lg transition-all ${isProfileOpen ? 'border-white ring-4 ring-indigo-500/30' : 'border-indigo-500 shadow-indigo-500/20'}`}>
+                <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full border-2 overflow-hidden shadow-lg transition-all ${isProfileOpen ? 'border-white ring-4 ring-orange-500/30' : 'border-orange-500 shadow-orange-500/20'}`}>
                   <img src={user.avatar} alt={user.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                 </div>
               </div>
@@ -159,14 +158,14 @@ const Layout: React.FC<LayoutProps> = ({
                       onClick={() => handleMenuAction('profile')}
                       className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
                     >
-                      <i className="fas fa-user-shield text-indigo-500 group-hover:scale-110 transition-transform w-5 text-center"></i>
+                      <i className="fas fa-user-shield text-orange-500 group-hover:scale-110 transition-transform w-5 text-center"></i>
                       <span className="text-xs font-bold uppercase tracking-wider">PROFILE</span>
                     </button>
                     <button 
                       onClick={() => handleMenuAction('history')}
                       className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
                     >
-                      <i className="fas fa-history text-indigo-500 group-hover:rotate-[-15deg] transition-transform w-5 text-center"></i>
+                      <i className="fas fa-history text-orange-500 group-hover:rotate-[-15deg] transition-transform w-5 text-center"></i>
                       <span className="text-xs font-bold uppercase tracking-wider">Order History</span>
                     </button>
                   </div>
@@ -207,11 +206,11 @@ const Layout: React.FC<LayoutProps> = ({
 
       {/* Mobile Footer Nav */}
       <footer className="md:hidden sticky bottom-0 z-50 glass-card border-t border-zinc-800/50 px-6 py-3 flex justify-around">
-        <button onClick={() => onTabChange('home')} className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-indigo-500' : 'text-zinc-500'}`}>
+        <button onClick={() => onTabChange('home')} className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-orange-500' : 'text-zinc-500'}`}>
           <i className="fas fa-home"></i>
           <span className="text-[10px] font-black uppercase tracking-tighter">Home</span>
         </button>
-        <button onClick={() => onTabChange('games')} className={`flex flex-col items-center gap-1 ${activeTab === 'games' ? 'text-indigo-500' : 'text-zinc-500'}`}>
+        <button onClick={() => onTabChange('games')} className={`flex flex-col items-center gap-1 ${activeTab === 'games' ? 'text-orange-500' : 'text-zinc-500'}`}>
           <i className="fas fa-gamepad"></i>
           <span className="text-[10px] font-black uppercase tracking-tighter">Games</span>
         </button>
@@ -219,7 +218,7 @@ const Layout: React.FC<LayoutProps> = ({
           <i className="fas fa-headset"></i>
           <span className="text-[10px] font-black uppercase tracking-tighter">Support</span>
         </a>
-        <button onClick={user ? () => setIsProfileOpen(true) : () => onOpenAuth('login')} className={`flex flex-col items-center gap-1 ${user ? 'text-indigo-500' : 'text-zinc-500'}`}>
+        <button onClick={user ? () => setIsProfileOpen(true) : () => onOpenAuth('login')} className={`flex flex-col items-center gap-1 ${user ? 'text-orange-500' : 'text-zinc-500'}`}>
           <i className={user ? 'fas fa-user' : 'fas fa-sign-in-alt'}></i>
           <span className="text-[10px] font-black uppercase tracking-tighter">{user ? 'Account' : 'Login'}</span>
         </button>
