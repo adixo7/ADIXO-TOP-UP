@@ -36,17 +36,17 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
 
   const instructions = isBinance ? [
     { id: 1, text: "Open Binance App" },
-    { id: 2, text: "Select 'Send'" },
-    { id: 3, text: "Choose 'Binance ID'" },
-    { id: 4, text: `Enter: ${merchantNumber}` },
-    { id: 5, text: `Enter USD Amount` },
-    { id: 6, text: "Activity TrxID" }
+    { id: 2, text: "Scan Binance QR" },
+    { id: 3, text: "Enter USD Amount" },
+    { id: 4, text: "Confirm Payment" },
+    { id: 5, text: "Get Transaction ID" },
+    { id: 6, text: "Submit TrxID Below" }
   ] : [
     { id: 1, text: "Open bKash App" },
-    { id: 2, text: "Select 'Send Money'" },
-    { id: 3, text: "Enter Merchant No." },
-    { id: 4, text: merchantNumber },
-    { id: 5, text: `Amount: ৳${pkg.price}` },
+    { id: 2, text: "Tap 'Scan QR'" },
+    { id: 3, text: "Scan bKash QR" },
+    { id: 4, text: `Amount: ৳${pkg.price}` },
+    { id: 5, text: "Enter PIN & Send" },
     { id: 6, text: "Submit TrxID Below" }
   ];
 
@@ -85,24 +85,38 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
           </div>
         </div>
 
-        {/* Merchant Card - More Compact */}
-        <div className="bg-[#121214] rounded-xl border-l-4 border-zinc-800 p-4 relative mb-4" style={{ borderLeftColor: primaryColor }}>
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest block mb-1">{idLabel}</span>
-              <span className="text-2xl font-black tracking-tighter leading-none" style={{ color: primaryColor }}>
-                {merchantNumber}
-              </span>
-            </div>
-            <button 
-              onClick={handleCopy}
-              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-90 shadow-lg shrink-0"
-              style={{ backgroundColor: primaryColor, color: '#000' }}
-            >
-              <i className={`fas ${copySuccess ? 'fa-check' : 'fa-copy'}`}></i>
-            </button>
+        {/* QR Code Section */}
+        <div className="flex flex-col items-center mb-4 space-y-3">
+          <div className="bg-white p-2 rounded-2xl shadow-2xl border-4" style={{ borderColor: primaryColor }}>
+            <img 
+              src={isBinance ? "/images/binance-qr.jpg" : "/images/bkash-qr.jpg"} 
+              alt="Payment QR" 
+              className="w-40 h-40 object-contain"
+            />
           </div>
+          <p className="text-white text-[10px] font-black uppercase tracking-widest animate-pulse">Scan to Pay</p>
         </div>
+
+        {/* Merchant Card - Conditional for Binance */}
+        {isBinance && (
+          <div className="bg-[#121214] rounded-xl border-l-4 border-zinc-800 p-4 relative mb-4" style={{ borderLeftColor: primaryColor }}>
+            <div className="flex justify-between items-center">
+              <div>
+                <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest block mb-1">{idLabel}</span>
+                <span className="text-2xl font-black tracking-tighter leading-none" style={{ color: primaryColor }}>
+                  {merchantNumber}
+                </span>
+              </div>
+              <button 
+                onClick={handleCopy}
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-90 shadow-lg shrink-0"
+                style={{ backgroundColor: primaryColor, color: '#000' }}
+              >
+                <i className={`fas ${copySuccess ? 'fa-check' : 'fa-copy'}`}></i>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Heading Section */}
         <div className="text-center mb-4">
