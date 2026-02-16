@@ -54,17 +54,19 @@ const Layout: React.FC<LayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#050505] relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-[#050505] relative">
       {/* Dynamic Gaming Background */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(249,115,22,0.05),_transparent_70%)] animate-pulse"></div>
         <div className="absolute inset-0 bg-[linear-gradient(to_right,_rgba(255,255,255,0.02)_1px,_transparent_1px),_linear-gradient(to_bottom,_rgba(255,255,255,0.02)_1px,_transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,_black,_transparent_80%)]"></div>
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-600/10 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-600/5 blur-[120px] rounded-full"></div>
       </div>
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 glass-card border-b border-zinc-800/50 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between backdrop-blur-md bg-black/40">
+      {/* Content wrapper to ensure visibility above background */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        {/* Header */}
+        <header className="sticky top-0 z-50 glass-card border-b border-zinc-800/50 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between backdrop-blur-md bg-black/40">
         <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => onTabChange('home')}>
           <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-600/40 group-hover:scale-105 transition-transform">
             <i className="fas fa-bolt text-white text-base md:text-xl"></i>
@@ -212,25 +214,26 @@ const Layout: React.FC<LayoutProps> = ({
         <Footer />
       </main>
 
-      {/* Mobile Footer Nav */}
-      <footer className="md:hidden sticky bottom-0 z-50 glass-card border-t border-zinc-800/50 px-6 py-3 flex justify-around">
-        <button onClick={() => onTabChange('home')} className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-orange-500' : 'text-zinc-500'}`}>
-          <i className="fas fa-home"></i>
-          <span className="text-[10px] font-black uppercase tracking-tighter">Home</span>
-        </button>
-        <button onClick={() => onTabChange('games')} className={`flex flex-col items-center gap-1 ${activeTab === 'games' ? 'text-orange-500' : 'text-zinc-500'}`}>
-          <i className="fas fa-gamepad"></i>
-          <span className="text-[10px] font-black uppercase tracking-tighter">Games</span>
-        </button>
-        <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-1 text-zinc-500">
-          <i className="fas fa-headset"></i>
-          <span className="text-[10px] font-black uppercase tracking-tighter">Support</span>
-        </a>
-        <button onClick={user ? () => setIsProfileOpen(true) : () => onOpenAuth('login')} className={`flex flex-col items-center gap-1 ${user ? 'text-orange-500' : 'text-zinc-500'}`}>
-          <i className={user ? 'fas fa-user' : 'fas fa-sign-in-alt'}></i>
-          <span className="text-[10px] font-black uppercase tracking-tighter">{user ? 'Account' : 'Login'}</span>
-        </button>
-      </footer>
+        {/* Mobile Footer Nav */}
+        <footer className="md:hidden sticky bottom-0 z-50 glass-card border-t border-zinc-800/50 px-6 py-3 flex justify-around backdrop-blur-md bg-black/40">
+          <button onClick={() => onTabChange('home')} className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-orange-500' : 'text-zinc-500'}`}>
+            <i className="fas fa-home"></i>
+            <span className="text-[10px] font-black uppercase tracking-tighter">Home</span>
+          </button>
+          <button onClick={() => onTabChange('games')} className={`flex flex-col items-center gap-1 ${activeTab === 'games' ? 'text-orange-500' : 'text-zinc-500'}`}>
+            <i className="fas fa-gamepad"></i>
+            <span className="text-[10px] font-black uppercase tracking-tighter">Games</span>
+          </button>
+          <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-1 text-zinc-500">
+            <i className="fas fa-headset"></i>
+            <span className="text-[10px] font-black uppercase tracking-tighter">Support</span>
+          </a>
+          <button onClick={user ? () => setIsProfileOpen(true) : () => onOpenAuth('login')} className={`flex flex-col items-center gap-1 ${user ? 'text-orange-500' : 'text-zinc-500'}`}>
+            <i className={user ? 'fas fa-user' : 'fas fa-sign-in-alt'}></i>
+            <span className="text-[10px] font-black uppercase tracking-tighter">{user ? 'Account' : 'Login'}</span>
+          </button>
+        </footer>
+      </div>
     </div>
   );
 };
