@@ -52,102 +52,102 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/98 backdrop-blur-2xl animate-in fade-in duration-300">
-      <div className="w-full h-full md:h-auto md:max-w-xl bg-[#09090b] md:rounded-[2rem] md:border md:border-zinc-800 shadow-2xl flex flex-col p-4 md:p-6 overflow-hidden max-h-screen">
+      <div className="w-full h-full md:h-auto md:max-w-xl bg-[#09090b] md:rounded-[2rem] md:border md:border-zinc-800 shadow-2xl flex flex-col p-4 md:p-5 overflow-y-auto max-h-screen">
         
         {/* Header - Compact */}
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center gap-3">
-            <h2 className="text-lg font-black text-white uppercase italic tracking-tighter leading-none">
+        <div className="flex justify-between items-center mb-3">
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-black text-white uppercase italic tracking-tighter leading-none">
               {method.name} <span style={{ color: primaryColor }}>GATEWAY</span>
             </h2>
             <div className="flex items-center gap-1.5 bg-black/60 border border-zinc-800 px-2 py-0.5 rounded-[4px]">
                <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse"></span>
-               <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest">SECURE</span>
+               <span className="text-zinc-500 text-[7px] font-black uppercase tracking-widest">SECURE</span>
             </div>
           </div>
-          <button onClick={onCancel} className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-white transition-colors">
-            <i className="fas fa-times text-xs"></i>
+          <button onClick={onCancel} className="w-7 h-7 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-white transition-colors">
+            <i className="fas fa-times text-[10px]"></i>
           </button>
         </div>
 
         {/* Info Grid - Reduced Spacing */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-[#121214] p-3 rounded-2xl border border-zinc-800/60 flex flex-col items-center text-center">
-            <p className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">TOTAL DUE</p>
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="bg-[#121214] p-2 rounded-xl border border-zinc-800/60 flex flex-col items-center text-center">
+            <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mb-0.5">TOTAL DUE</p>
             <div className="flex items-baseline gap-0.5 italic" style={{ color: primaryColor }}>
-              <span className="text-sm font-black leading-none">{isBinance ? '$' : '৳'}</span>
-              <span className="text-xl font-black leading-none tracking-tighter">{pkg.price.toFixed(0)}</span>
+              <span className="text-xs font-black leading-none">{isBinance ? '$' : '৳'}</span>
+              <span className="text-lg font-black leading-none tracking-tighter">{pkg.price.toFixed(0)}</span>
             </div>
           </div>
-          <div className="bg-[#121214] p-3 rounded-2xl border border-zinc-800/60 flex flex-col items-center text-center">
-            <p className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">TARGET ID</p>
-            <p className="text-xs font-black text-white italic tracking-tighter truncate leading-none pt-0.5">{playerId}</p>
+          <div className="bg-[#121214] p-2 rounded-xl border border-zinc-800/60 flex flex-col items-center text-center">
+            <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mb-0.5">TARGET ID</p>
+            <p className="text-[10px] font-black text-white italic tracking-tighter truncate leading-none pt-0.5">{playerId}</p>
           </div>
         </div>
 
         {/* QR Code Section */}
-        <div className="flex flex-col items-center mb-4 space-y-3">
-          <div className="bg-white p-2 rounded-2xl shadow-2xl border-4" style={{ borderColor: primaryColor }}>
+        <div className="flex flex-col items-center mb-3 space-y-2">
+          <div className="bg-white p-1.5 rounded-xl shadow-2xl border-2" style={{ borderColor: primaryColor }}>
             <img 
               src={isBinance ? "/images/binance-qr.jpg" : "/images/bkash-qr.jpg"} 
               alt="Payment QR" 
-              className="w-40 h-40 object-contain"
+              className="w-32 h-32 object-contain"
             />
           </div>
-          <p className="text-white text-[10px] font-black uppercase tracking-widest animate-pulse">Scan to Pay</p>
+          <p className="text-white text-[9px] font-black uppercase tracking-widest animate-pulse">Scan to Pay</p>
         </div>
 
         {/* Merchant Card - Conditional for Binance */}
         {isBinance && (
-          <div className="bg-[#121214] rounded-xl border-l-4 border-zinc-800 p-4 relative mb-4" style={{ borderLeftColor: primaryColor }}>
+          <div className="bg-[#121214] rounded-xl border-l-4 border-zinc-800 p-3 relative mb-3" style={{ borderLeftColor: primaryColor }}>
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest block mb-1">{idLabel}</span>
-                <span className="text-2xl font-black tracking-tighter leading-none" style={{ color: primaryColor }}>
+                <span className="text-zinc-500 text-[7px] font-black uppercase tracking-widest block mb-0.5">{idLabel}</span>
+                <span className="text-xl font-black tracking-tighter leading-none" style={{ color: primaryColor }}>
                   {merchantNumber}
                 </span>
               </div>
               <button 
                 onClick={handleCopy}
-                className="w-10 h-10 rounded-xl flex items-center justify-center transition-all active:scale-90 shadow-lg shrink-0"
+                className="w-8 h-8 rounded-lg flex items-center justify-center transition-all active:scale-90 shadow-lg shrink-0"
                 style={{ backgroundColor: primaryColor, color: '#000' }}
               >
-                <i className={`fas ${copySuccess ? 'fa-check' : 'fa-copy'}`}></i>
+                <i className={`fas ${copySuccess ? 'fa-check' : 'fa-copy'} text-xs`}></i>
               </button>
             </div>
           </div>
         )}
 
         {/* Heading Section */}
-        <div className="text-center mb-4">
-          <h3 className="text-xl font-black text-white uppercase tracking-tighter italic leading-none">
+        <div className="text-center mb-3">
+          <h3 className="text-lg font-black text-white uppercase tracking-tighter italic leading-none">
             SECURE <span style={{ color: primaryColor }}>PAYMENT</span>
           </h3>
-          <p className="text-zinc-600 text-[8px] font-bold uppercase tracking-widest mt-1">Follow these steps to complete mission.</p>
+          <p className="text-zinc-600 text-[7px] font-bold uppercase tracking-widest mt-0.5">Follow these steps to complete mission.</p>
         </div>
 
         {/* Grid - Tightened */}
-        <div className="grid grid-cols-2 gap-2 mb-6 overflow-hidden">
+        <div className="grid grid-cols-2 gap-1.5 mb-4">
           {instructions.map((step) => (
-            <div key={step.id} className="bg-[#121214] border border-zinc-800/40 p-2.5 rounded-lg flex items-center gap-2 group">
+            <div key={step.id} className="bg-[#121214] border border-zinc-800/40 p-2 rounded-lg flex items-center gap-1.5 group">
               <div 
-                className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-black shrink-0"
+                className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-black shrink-0"
                 style={{ backgroundColor: secondaryColor, color: primaryColor, border: `1px solid ${primaryColor}40` }}
               >
                 {step.id}
               </div>
-              <p className="text-zinc-400 text-[9px] font-black uppercase tracking-tight leading-tight group-hover:text-white transition-colors truncate">{step.text}</p>
+              <p className="text-zinc-400 text-[8px] font-black uppercase tracking-tight leading-tight group-hover:text-white transition-colors truncate">{step.text}</p>
             </div>
           ))}
         </div>
 
         {/* Verification - Compact form at bottom */}
-        <div className="mt-auto pt-4 border-t border-zinc-800/50 space-y-4">
-          <div className="space-y-1.5">
+        <div className="mt-auto pt-3 border-t border-zinc-800/50 space-y-3">
+          <div className="space-y-1">
             <div className="flex justify-between items-center px-1">
-              <label className="text-[8px] font-black text-zinc-500 uppercase tracking-widest">TRANSACTION ID (TRXID)</label>
+              <label className="text-[7px] font-black text-zinc-500 uppercase tracking-widest">TRANSACTION ID (TRXID)</label>
               {isBinance && (
-                <a href="https://www.binance.com" target="_blank" className="text-[8px] font-black text-orange-500 uppercase tracking-widest hover:underline">Open App</a>
+                <a href="https://www.binance.com" target="_blank" className="text-[7px] font-black text-orange-500 uppercase tracking-widest hover:underline">Open App</a>
               )}
             </div>
             <input 
@@ -156,13 +156,13 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
               value={trxId}
               onChange={(e) => setTrxId(e.target.value.toUpperCase())}
               placeholder="ENTER TRXID HERE"
-              className="w-full bg-[#121214] border border-zinc-800 rounded-xl py-3 px-4 text-white text-base font-mono focus:outline-none focus:border-orange-600 transition-all placeholder:text-zinc-900"
+              className="w-full bg-[#121214] border border-zinc-800 rounded-lg py-2.5 px-3 text-white text-sm font-mono focus:outline-none focus:border-orange-600 transition-all placeholder:text-zinc-900"
             />
           </div>
           <button 
             onClick={handleVerify}
             disabled={trxId.length < 8 || isVerifying}
-            className="w-full bg-zinc-100 hover:bg-white text-black font-black py-4 rounded-xl uppercase tracking-widest text-[10px] transition-all disabled:opacity-50 active:scale-95 shadow-xl"
+            className="w-full bg-zinc-100 hover:bg-white text-black font-black py-3 rounded-lg uppercase tracking-widest text-[9px] transition-all disabled:opacity-50 active:scale-95 shadow-xl"
           >
             {isVerifying ? (
               <span className="flex items-center justify-center gap-2">
