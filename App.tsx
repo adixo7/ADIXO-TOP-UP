@@ -384,15 +384,9 @@ const App: React.FC = () => {
                 <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
                 TOP PC GAMES
               </h2>
-              <button 
-                onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setActiveTab('games'); }}
-                className="bg-zinc-900 hover:bg-zinc-800 text-orange-500 font-black px-4 py-2 rounded-xl uppercase tracking-widest text-[9px] transition-all border border-zinc-800"
-              >
-                VIEW ALL
-              </button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-              {GAMES.find(g => g.id === 'pc-games')?.packages.slice(0, 6).map((pkg, idx) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+              {GAMES.find(g => g.id === 'pc-games')?.packages.map((pkg, idx) => (
                 <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-3 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
                   <div className="aspect-[3/4] rounded-xl overflow-hidden mb-3 bg-zinc-950">
                     <img src={`/images/pc-game-${idx + 1}.png`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
