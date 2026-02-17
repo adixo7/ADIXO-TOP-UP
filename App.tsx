@@ -405,17 +405,11 @@ const App: React.FC = () => {
                          name.includes('cyberpunk 2077');
                 })
                 .slice(0, 5)
-                .map((pkg) => {
+                .map((pkg, idx) => {
                   const allPkgs = GAMES.find(g => g.id === 'pc-games')?.packages || [];
-                  const idx = allPkgs.findIndex(p => p.id === pkg.id);
-                  const imageExtensions: Record<number, string> = {
-                    1: 'jpg', 2: 'jpg', 3: 'webp', 4: 'jpg', 5: 'jpg', 
-                    6: 'jpg', 7: 'png', 8: 'webp', 9: 'png', 10: 'jpg',
-                    11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
-                    16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
-                  };
-                  let imageSrc = `/images/pc-game-${idx + 1}.${imageExtensions[idx + 1] || 'png'}`;
-                  if (pkg.id === 'pc-gta-5') imageSrc = '/images/gta-5-pkg.png';
+                  const baseIdx = allPkgs.findIndex(p => p.id === pkg.id);
+                  
+                  let imageSrc = pkg.image || `/images/pc-game-${baseIdx + 1}.png`;
                   
                   return (
                     <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
@@ -489,17 +483,11 @@ const App: React.FC = () => {
                 <div className="lg:col-span-2 space-y-10">
                   {selectedGame.id === 'pc-games' ? (
                     <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                      {selectedGame.packages.map((pkg, idx) => {
+                      {selectedGame.packages.map((pkg) => {
                         const allPkgs = GAMES.find(g => g.id === 'pc-games')?.packages || [];
                         const baseIdx = allPkgs.findIndex(p => p.id === pkg.id);
-                        const imageExtensions: Record<number, string> = {
-                          1: 'jpg', 2: 'jpg', 3: 'webp', 4: 'jpg', 5: 'jpg', 
-                          6: 'jpg', 7: 'png', 8: 'webp', 9: 'png', 10: 'jpg',
-                          11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
-                          16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
-                        };
-                        let imageSrc = `/images/pc-game-${baseIdx + 1}.${imageExtensions[baseIdx + 1] || 'png'}`;
-                        if (pkg.id === 'pc-gta-5') imageSrc = '/images/gta-5-pkg.png';
+                        
+                        let imageSrc = pkg.image || `/images/pc-game-${baseIdx + 1}.png`;
 
                         return (
                           <div 

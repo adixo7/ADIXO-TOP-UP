@@ -17,6 +17,7 @@ export interface Package {
   currency: string;
   isPopular?: boolean;
   category?: string; // New field for grouping
+  image?: string; // Image for the package cover
 }
 
 export interface Game {
