@@ -434,7 +434,10 @@ const App: React.FC = () => {
                   let imageSrc = pkg.image || `/images/pc-game-${baseIdx + 1}.png`;
                   
                   return (
-                    <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
+                    <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer relative" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
+                      <div className="absolute top-1.5 right-1.5 z-20 bg-red-600 text-white text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border border-red-500/50">
+                        30% OFF
+                      </div>
                       <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950">
                         <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                       </div>
