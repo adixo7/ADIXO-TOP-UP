@@ -114,7 +114,7 @@ const Layout: React.FC<LayoutProps> = ({
         </nav>
 
         <div className="flex items-center gap-3 md:gap-4">
-          <div className="relative flex items-center" ref={searchRef}>
+          <div className="relative hidden md:flex items-center" ref={searchRef}>
             {isSearchOpen ? (
               <div className="flex items-center bg-zinc-950 border border-orange-500/50 rounded-xl overflow-hidden animate-in slide-in-from-right-4 duration-300">
                 <input 
