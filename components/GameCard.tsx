@@ -27,9 +27,9 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
             30% OFF
           </div>
         )}
-        <div className="absolute bottom-1.5 left-1.5 right-1.5">
-          <p className="text-orange-400 text-[5px] font-black uppercase tracking-widest mb-0.5">{game.category}</p>
-          <h3 className="text-white text-[7px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+        <div className="absolute bottom-2 left-2 right-2">
+          <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-widest mb-1">{game.category}</p>
+          <h3 className="text-white text-[9px] md:text-[11px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
             {game.name}
           </h3>
         </div>
