@@ -207,8 +207,12 @@ const App: React.FC = () => {
       setAuthMode('login');
       return;
     }
+    if (!selectedPackage) {
+      alert("Please select a package first!");
+      return;
+    }
     if (!playerId.trim()) {
-      alert("Please enter your Player ID first!");
+      alert(selectedGame?.id === 'pc-games' ? "Please enter your Email or Whatsapp Number!" : "Please enter your Player ID!");
       return;
     }
     if (!selectedPayment) {
@@ -417,11 +421,12 @@ const App: React.FC = () => {
                   const name = pkg.unit.toLowerCase();
                   return name.includes('grand theft auto 5') || 
                          name.includes('forza horizon 5') || 
+                         name.includes('rdr 2') || 
                          name.includes('spider-man 2') || 
                          name.includes('fc™ 26') || 
                          name.includes('cyberpunk 2077');
                 })
-                .slice(0, 5)
+                .slice(0, 6)
                 .map((pkg, idx) => {
                   const allPkgs = GAMES.find(g => g.id === 'pc-games')?.packages || [];
                   const baseIdx = allPkgs.findIndex(p => p.id === pkg.id);
