@@ -361,6 +361,27 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
                 <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
+                TRENDING NOW
+              </h2>
+            </div>
+            {filteredGames.length > 0 ? (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
+                {filteredGames.filter(g => g.id !== 'pc-games').map(game => (
+                  <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-3xl">
+                <i className="fas fa-search-minus text-zinc-700 text-4xl mb-4"></i>
+                <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">No matches found.</p>
+              </div>
+            )}
+          </section>
+
+          <section>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
+                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
                 TOP PC GAMES
               </h2>
               <button 
@@ -384,27 +405,6 @@ const App: React.FC = () => {
                 </div>
               ))}
             </div>
-          </section>
-
-          <section>
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
-                TRENDING NOW
-              </h2>
-            </div>
-            {filteredGames.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
-                {(searchTerm ? filteredGames : filteredGames).map(game => (
-                  <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-20 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-3xl">
-                <i className="fas fa-search-minus text-zinc-700 text-4xl mb-4"></i>
-                <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">No matches found.</p>
-              </div>
-            )}
           </section>
 
           {!searchTerm && <Features />}
