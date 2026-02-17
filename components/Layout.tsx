@@ -68,8 +68,8 @@ const Layout: React.FC<LayoutProps> = ({
         {/* Header */}
         <header className="sticky top-0 z-50 glass-card border-b border-zinc-800/50 px-4 md:px-6 py-3 md:py-4 flex items-center justify-between backdrop-blur-md bg-black/40">
         <div className="flex items-center gap-2 md:gap-3 cursor-pointer group" onClick={() => onTabChange('home')}>
-          <div className="w-8 h-8 md:w-10 md:h-10 bg-orange-600 rounded-lg flex items-center justify-center shadow-lg shadow-orange-600/40 group-hover:scale-105 transition-transform">
-            <i className="fas fa-bolt text-white text-base md:text-xl"></i>
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center overflow-hidden shadow-lg shadow-orange-600/20 group-hover:scale-105 transition-transform">
+            <img src="/logo.png" alt="ADIXO TOPUP" className="w-full h-full object-cover" />
           </div>
           <div className="flex items-center gap-3">
             <span className="text-lg md:text-2xl font-black tracking-tighter text-white uppercase italic logo-font leading-none">

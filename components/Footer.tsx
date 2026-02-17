@@ -8,7 +8,9 @@ const Footer: React.FC = () => {
         {/* Logo and Description */}
         <div className="flex flex-col gap-4 max-w-sm">
           <div className="flex items-center gap-3">
-            <i className="fas fa-gamepad text-orange-500 text-2xl"></i>
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+              <img src="/logo.png" alt="ADIXO TOPUP" className="w-full h-full object-cover" />
+            </div>
             <span className="text-xl font-black tracking-tighter text-white uppercase italic logo-font">
               ADIXO <span className="text-orange-500">TOPUP</span>
             </span>
