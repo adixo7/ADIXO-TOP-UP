@@ -174,18 +174,18 @@ export const GAMES: Game[] = [
     id: 'pc-games',
     name: 'PC Games',
     category: 'PC Games',
-    image: '/images/pc-game-1.png',
+    image: '/images/gta-5-cover.jpg',
     banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop&q=80',
     idPlaceholder: 'Steam/Epic Account Email',
     description: 'Get the best PC games with 30% discount.',
     packages: [
+      { id: 'pc-gta-5', amount: 1, unit: 'Grand Theft Auto 5 | GTA V – Premium Online', price: 2049, oldPrice: 2990, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-1', amount: 1, unit: 'Red Dead Redemption 2 | RDR 2 | Rockstar Redeem', price: 2999, oldPrice: 6099, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-2', amount: 1, unit: 'HITMAN World of Assassination | Epic', price: 3050, oldPrice: 4357, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-3', amount: 1, unit: 'The Crew™ 2 | Steam Account', price: 3250, oldPrice: 4990, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-4', amount: 1, unit: 'EA SPORTS FC™ 26 | Steam Account', price: 3450, oldPrice: 9250, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-5', amount: 1, unit: 'Assetto Corsa Competizione | Steam', price: 3490, oldPrice: 4490, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-6', amount: 1, unit: 'Call of Duty : Black Ops III – Zombies Chronicles', price: 3699, oldPrice: 8990, currency: 'BDT', category: 'PC GAMES' },
-      { id: 'pc-7', amount: 1, unit: 'Call of Duty®: Modern Warfare® 2 – 2022 |', price: 3650, oldPrice: 9450, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-8', amount: 1, unit: 'Watch Dogs: Legion | Steam Account', price: 3799, oldPrice: 6150, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-9', amount: 1, unit: 'Cities: Skylines II | Steam Account', price: 3999, oldPrice: 4890, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-10', amount: 1, unit: 'Forza Horizon 5 – Premium Edition | Steam', price: 3999, oldPrice: 7499, currency: 'BDT', category: 'PC GAMES' },
@@ -193,12 +193,10 @@ export const GAMES: Game[] = [
       { id: 'pc-12', amount: 1, unit: 'RESIDENT EVIL 3 | Steam Account', price: 4299, oldPrice: 5650, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-13', amount: 1, unit: 'EA SPORTS FC™ 24 | Epic Account', price: 4990, oldPrice: 8990, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-14', amount: 1, unit: 'Cyberpunk 2077 | Epic Account', price: 5250, currency: 'BDT', category: 'PC GAMES' },
-      { id: 'pc-15', amount: 1, unit: 'Call of Duty®: Modern Warfare® 2 – 2022 |', price: 5290, oldPrice: 9450, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-16', amount: 1, unit: 'Grand Theft Auto: Vice City – The Definitive', price: 5650, oldPrice: 5950, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-17', amount: 1, unit: 'Marvel’s Spider-Man 2 | Steam Account', price: 5999, oldPrice: 6890, currency: 'BDT', category: 'PC GAMES' },
       { id: 'pc-18', amount: 1, unit: 'The Crew™ Motorfest | Standard Edition | Epic', price: 6550, currency: 'BDT', category: 'PC GAMES' },
-      { id: 'pc-19', amount: 1, unit: 'God of War | Epic Account', price: 6290, oldPrice: 6750, currency: 'BDT', category: 'PC GAMES' },
-      { id: 'pc-20', amount: 1, unit: 'Forza Motorsport | Premium Edition | Steam', price: 7399, currency: 'BDT', category: 'PC GAMES' }
+      { id: 'pc-19', amount: 1, unit: 'God of War | Epic Account', price: 6290, oldPrice: 6750, currency: 'BDT', category: 'PC GAMES' }
     ]
   }
 ];

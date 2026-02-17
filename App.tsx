@@ -394,11 +394,11 @@ const App: React.FC = () => {
                 View All <i className="fas fa-chevron-right text-[8px]"></i>
               </button>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
               {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => {
                   const name = pkg.unit.toLowerCase();
-                  return name.includes('gta 5') || 
+                  return name.includes('grand theft auto 5') || 
                          name.includes('forza horizon 5') || 
                          name.includes('rdr 2') || 
                          name.includes('fc™ 26') || 
@@ -414,11 +414,13 @@ const App: React.FC = () => {
                     11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
                     16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
                   };
-                  const ext = imageExtensions[idx + 1] || 'png';
+                  let imageSrc = `/images/pc-game-${idx + 1}.${imageExtensions[idx + 1] || 'png'}`;
+                  if (pkg.id === 'pc-gta-5') imageSrc = '/images/gta-5-pkg.png';
+                  
                   return (
                     <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
                       <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950">
-                        <img src={`/images/pc-game-${idx + 1}.${ext}`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                        <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                       </div>
                       <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
                       <div className="flex items-center gap-1.5">
@@ -486,41 +488,45 @@ const App: React.FC = () => {
 
                 <div className="lg:col-span-2 space-y-10">
                   {selectedGame.id === 'pc-games' ? (
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                       {selectedGame.packages.map((pkg, idx) => {
+                        const allPkgs = GAMES.find(g => g.id === 'pc-games')?.packages || [];
+                        const baseIdx = allPkgs.findIndex(p => p.id === pkg.id);
                         const imageExtensions: Record<number, string> = {
                           1: 'jpg', 2: 'jpg', 3: 'webp', 4: 'jpg', 5: 'jpg', 
                           6: 'jpg', 7: 'png', 8: 'webp', 9: 'png', 10: 'jpg',
                           11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
                           16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
                         };
-                        const ext = imageExtensions[idx + 1] || 'png';
+                        let imageSrc = `/images/pc-game-${baseIdx + 1}.${imageExtensions[baseIdx + 1] || 'png'}`;
+                        if (pkg.id === 'pc-gta-5') imageSrc = '/images/gta-5-pkg.png';
+
                         return (
                           <div 
                             key={pkg.id} 
-                            className={`bg-zinc-900/50 border rounded-2xl p-3 group transition-all cursor-pointer ${
+                            className={`bg-zinc-900/50 border rounded-xl p-2 group transition-all cursor-pointer ${
                               selectedPackage?.id === pkg.id 
                               ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
                               : 'border-zinc-800 hover:border-orange-500/50 shadow-sm'
                             }`}
                             onClick={() => setSelectedPackage(pkg)}
                           >
-                            <div className="aspect-[3/4] rounded-xl overflow-hidden mb-3 bg-zinc-950 relative">
-                              <img src={`/images/pc-game-${idx + 1}.${ext}`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                            <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950 relative">
+                              <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                               {pkg.oldPrice && (
-                                <div className="absolute top-2 right-2 bg-orange-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest shadow-lg shadow-orange-600/30">
+                                <div className="absolute top-1 right-1 bg-orange-600 text-white text-[6px] font-black px-1 py-0.5 rounded-full uppercase tracking-widest shadow-lg shadow-orange-600/30">
                                   Sale
                                 </div>
                               )}
                             </div>
-                            <h3 className="text-[10px] md:text-[11px] font-black text-white uppercase tracking-tight line-clamp-2 mb-2 leading-tight h-8 md:h-9">{pkg.unit}</h3>
+                            <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
                             <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2">
-                                <span className="text-orange-500 font-black text-sm md:text-base italic">৳{pkg.price}</span>
-                                {pkg.oldPrice && <span className="text-zinc-500 text-[9px] md:text-[10px] line-through">৳{pkg.oldPrice}</span>}
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                                {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
                               </div>
-                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500 text-white' : 'border-zinc-700'}`}>
-                                {selectedPackage?.id === pkg.id && <i className="fas fa-check text-[8px]"></i>}
+                              <div className={`w-3 h-3 rounded-full border flex items-center justify-center transition-colors ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500 text-white' : 'border-zinc-700'}`}>
+                                {selectedPackage?.id === pkg.id && <i className="fas fa-check text-[5px]"></i>}
                               </div>
                             </div>
                           </div>
