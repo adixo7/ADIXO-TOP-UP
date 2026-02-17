@@ -39,12 +39,29 @@ const App: React.FC = () => {
   }, [activeTab, selectedGame]);
 
   useEffect(() => {
-    const handlePopState = () => {
-      window.scrollTo(0, 0);
+    const handlePopState = (e: PopStateEvent) => {
+      // If we are deep in a game selection or similar, and user hits back, 
+      // we want to reset to home and scroll to top.
+      if (selectedGame || activeTab !== 'home') {
+        setSelectedGame(null);
+        setSelectedPackage(null);
+        setSelectedPayment(null);
+        setActiveTab('home');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [selectedGame, activeTab]);
+
+  // Push state when navigation happens to enable back button handling
+  useEffect(() => {
+    if (selectedGame || activeTab !== 'home') {
+      window.history.pushState({ path: activeTab, game: selectedGame?.id }, '');
+    }
+  }, [selectedGame, activeTab]);
 
   // Auth & Disclaimer Initialization
   useEffect(() => {
@@ -464,19 +481,26 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="space-y-4 px-2">
-                    <h3 className="text-xl font-bold text-white">Player ID / Username</h3>
+                    <h3 className="text-xl font-bold text-white">
+                      {selectedGame.id === 'pc-games' ? 'Email / Whatsapp number' : 'Player ID / Username'}
+                    </h3>
                     <div className="relative group">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
-                        <i className="fas fa-gamepad text-xl"></i>
+                        <i className={`fas ${selectedGame.id === 'pc-games' ? 'fa-envelope' : 'fa-gamepad'} text-xl`}></i>
                       </div>
                       <input 
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder={selectedGame.idPlaceholder}
+                        placeholder={selectedGame.id === 'pc-games' ? 'Enter Email or Whatsapp Number' : selectedGame.idPlaceholder}
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
+                    {selectedGame.id === 'pc-games' && (
+                      <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">
+                        * Note: We will send your purchased game's account ID and password to this Email or WhatsApp number.
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -492,13 +516,17 @@ const App: React.FC = () => {
                         return (
                           <div 
                             key={pkg.id} 
-                            className={`bg-zinc-900/50 border rounded-xl p-2 group transition-all cursor-pointer ${
+                            className={`bg-zinc-900/50 border rounded-xl p-2 group transition-all cursor-pointer relative ${
                               selectedPackage?.id === pkg.id 
                               ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
                               : 'border-zinc-800 hover:border-orange-500/50 shadow-sm'
                             }`}
                             onClick={() => setSelectedPackage(pkg)}
                           >
+                            {/* 30% Discount Badge */}
+                            <div className="absolute -top-1 -right-1 z-20 bg-red-600 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter shadow-lg shadow-red-600/20 border border-red-500/50 animate-pulse">
+                              30% OFF
+                            </div>
                             <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950 relative">
                               <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                               {pkg.oldPrice && (

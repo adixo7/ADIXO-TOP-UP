@@ -22,6 +22,11 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+        {game.id === 'pc-games' && (
+          <div className="absolute top-2 right-2 z-20 bg-red-600 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter shadow-lg shadow-red-600/20 border border-red-500/50">
+            30% OFF
+          </div>
+        )}
         <div className="absolute bottom-2 left-2 right-2 md:bottom-3 md:left-3 md:right-3 lg:bottom-4 lg:left-4 lg:right-4">
           <p className="text-orange-400 text-[6px] md:text-[8px] lg:text-[9px] font-black uppercase tracking-widest mb-0.5">{game.category}</p>
           <h3 className="text-white text-[9px] md:text-xs lg:text-sm font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">

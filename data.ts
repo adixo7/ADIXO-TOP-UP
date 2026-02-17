@@ -174,8 +174,8 @@ export const GAMES: Game[] = [
     id: 'pc-games',
     name: 'PC Games',
     category: 'PC Games',
-    image: '/images/gta-v.jpg',
-    banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop&q=80',
+    image: '/pc_games_cover.jpg',
+    banner: '/pc_games_cover.jpg',
     idPlaceholder: 'Steam/Epic Account Email',
     description: 'Get the best PC games with 30% discount.',
     packages: [
