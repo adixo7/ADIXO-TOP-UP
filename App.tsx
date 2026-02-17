@@ -378,11 +378,11 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
                 <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
-                TRENDING NOW
+                TOP-UP
               </h2>
             </div>
             {filteredGames.length > 0 ? (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-3 md:gap-4 lg:gap-6">
+              <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-2 md:gap-3">
                 {filteredGames.filter(g => g.id !== 'pc-games').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
@@ -412,12 +412,12 @@ const App: React.FC = () => {
               </button>
             </div>
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {GAMES.find(g => g.id === 'pc-games')?.packages
+                  {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => {
                   const name = pkg.unit.toLowerCase();
                   return name.includes('grand theft auto 5') || 
                          name.includes('forza horizon 5') || 
-                         name.includes('rdr 2') || 
+                         name.includes('spider-man 2') || 
                          name.includes('fc™ 26') || 
                          name.includes('cyberpunk 2077');
                 })
