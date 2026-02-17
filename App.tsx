@@ -441,36 +441,36 @@ const App: React.FC = () => {
                           </h4>
                           <div className="flex-1 h-[1px] bg-zinc-800"></div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 gap-3">
                           {groupedPackages[category].map(pkg => (
                             <button 
                               key={pkg.id}
                               onClick={() => setSelectedPackage(pkg)}
-                              className={`group relative bg-[#0d0d0f] border px-6 py-5 rounded-2xl transition-all text-left flex justify-between items-center overflow-hidden ${
+                              className={`group relative bg-[#0d0d0f] border px-4 py-3 rounded-xl transition-all text-left flex justify-between items-center overflow-hidden ${
                                 selectedPackage?.id === pkg.id 
-                                ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_20px_rgba(249,115,22,0.15)]' 
-                                : 'border-zinc-800/80 hover:border-orange-500/40 hover:bg-zinc-900/50 shadow-sm hover:shadow-lg'
+                                ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
+                                : 'border-zinc-800/80 hover:border-orange-500/40 hover:bg-zinc-900/50 shadow-sm'
                               }`}
                             >
                               <div className="flex flex-col relative z-10">
-                                <span className={`text-sm md:text-base font-black italic tracking-tight leading-none mb-1.5 transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-200 group-hover:text-white'}`}>
+                                <span className={`text-[11px] md:text-sm font-black italic tracking-tight leading-none mb-1 transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-200 group-hover:text-white'}`}>
                                   {pkg.amount > 1 ? pkg.amount : ''} {pkg.unit}
                                 </span>
                                 {pkg.isPopular && (
-                                  <span className="text-[7px] bg-orange-600 text-white px-1.5 py-0.5 rounded-sm font-black uppercase tracking-[0.15em] w-fit shadow-lg shadow-orange-600/20">
+                                  <span className="text-[6px] bg-orange-600 text-white px-1 py-0.5 rounded-sm font-black uppercase tracking-[0.1em] w-fit shadow-lg shadow-orange-600/20">
                                     Hot Item
                                   </span>
                                 )}
                               </div>
                               <div className="flex flex-col items-end shrink-0 relative z-10">
-                                <span className={`text-lg md:text-xl font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
+                                <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
                                   ৳{pkg.price}
                                 </span>
                               </div>
                               
                               {/* Decorative element background */}
-                              <div className={`absolute -right-3 -bottom-3 transition-all duration-500 ${selectedPackage?.id === pkg.id ? 'text-white/10 scale-110' : 'text-zinc-800/20 group-hover:text-orange-500/10 group-hover:scale-105'}`}>
-                                 <i className="fas fa-gem text-5xl md:text-6xl rotate-12"></i>
+                              <div className={`absolute -right-2 -bottom-2 transition-all duration-500 ${selectedPackage?.id === pkg.id ? 'text-white/5 scale-110' : 'text-zinc-800/10 group-hover:text-orange-500/5 group-hover:scale-105'}`}>
+                                 <i className="fas fa-gem text-3xl md:text-4xl rotate-12"></i>
                               </div>
                             </button>
                           ))}
