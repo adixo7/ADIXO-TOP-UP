@@ -384,29 +384,50 @@ const App: React.FC = () => {
                 <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
                 TOP PC GAMES
               </h2>
+              <button 
+                onClick={() => {
+                  setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null);
+                  setActiveTab('games');
+                }}
+                className="text-orange-500 text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-2"
+              >
+                View All <i className="fas fa-chevron-right text-[8px]"></i>
+              </button>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
-              {GAMES.find(g => g.id === 'pc-games')?.packages.map((pkg, idx) => {
-                const imageExtensions: Record<number, string> = {
-                  1: 'jpg', 2: 'jpg', 3: 'webp', 4: 'jpg', 5: 'jpg', 
-                  6: 'jpg', 7: 'png', 8: 'webp', 9: 'png', 10: 'jpg',
-                  11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
-                  16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
-                };
-                const ext = imageExtensions[idx + 1] || 'png';
-                return (
-                  <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
-                    <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950">
-                      <img src={`/images/pc-game-${idx + 1}.${ext}`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              {GAMES.find(g => g.id === 'pc-games')?.packages
+                .filter(pkg => {
+                  const name = pkg.unit.toLowerCase();
+                  return name.includes('gta 5') || 
+                         name.includes('forza horizon 5') || 
+                         name.includes('rdr 2') || 
+                         name.includes('fc™ 26') || 
+                         name.includes('cyberpunk 2077');
+                })
+                .slice(0, 5)
+                .map((pkg) => {
+                  const allPkgs = GAMES.find(g => g.id === 'pc-games')?.packages || [];
+                  const idx = allPkgs.findIndex(p => p.id === pkg.id);
+                  const imageExtensions: Record<number, string> = {
+                    1: 'jpg', 2: 'jpg', 3: 'webp', 4: 'jpg', 5: 'jpg', 
+                    6: 'jpg', 7: 'png', 8: 'webp', 9: 'png', 10: 'jpg',
+                    11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
+                    16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
+                  };
+                  const ext = imageExtensions[idx + 1] || 'png';
+                  return (
+                    <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
+                      <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950">
+                        <img src={`/images/pc-game-${idx + 1}.${ext}`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      </div>
+                      <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                        {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
+                      </div>
                     </div>
-                    <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
-                      {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
           </section>
 
@@ -464,57 +485,101 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-2 space-y-10">
-                  <div className="space-y-8">
-                    {sortedCategoryKeys.map((category) => (
-                      <div key={category} className="space-y-4">
-                        <div className="flex items-center gap-4">
-                          <h4 className="text-[9px] font-black text-orange-400 uppercase tracking-[0.25em] italic">
-                            {category}
-                          </h4>
-                          <div className="flex-1 h-[1px] bg-zinc-800"></div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3">
-                          {groupedPackages[category].map(pkg => (
-                            <button 
-                              key={pkg.id}
-                              onClick={() => setSelectedPackage(pkg)}
-                              className={`group relative bg-[#0d0d0f] border px-4 py-3 rounded-xl transition-all text-left flex justify-between items-center overflow-hidden ${
-                                selectedPackage?.id === pkg.id 
-                                ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
-                                : 'border-zinc-800/80 hover:border-orange-500/40 hover:bg-zinc-900/50 shadow-sm'
-                              }`}
-                            >
-                              <div className="flex flex-col relative z-10">
-                                <span className={`text-[11px] md:text-sm font-black italic tracking-tight leading-none mb-1 transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-200 group-hover:text-white'}`}>
-                                  {pkg.amount > 1 ? pkg.amount : ''} {pkg.unit}
-                                </span>
-                                {pkg.isPopular && (
-                                  <span className="text-[6px] bg-orange-600 text-white px-1 py-0.5 rounded-sm font-black uppercase tracking-[0.1em] w-fit shadow-lg shadow-orange-600/20">
-                                    Hot Item
+                  {selectedGame.id === 'pc-games' ? (
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      {selectedGame.packages.map((pkg, idx) => {
+                        const imageExtensions: Record<number, string> = {
+                          1: 'jpg', 2: 'jpg', 3: 'webp', 4: 'jpg', 5: 'jpg', 
+                          6: 'jpg', 7: 'png', 8: 'webp', 9: 'png', 10: 'jpg',
+                          11: 'jpg', 12: 'jpg', 13: 'jpg', 14: 'png', 15: 'jpg',
+                          16: 'jpg', 17: 'webp', 18: 'jpg', 19: 'jpg', 20: 'png', 21: 'jpg'
+                        };
+                        const ext = imageExtensions[idx + 1] || 'png';
+                        return (
+                          <div 
+                            key={pkg.id} 
+                            className={`bg-zinc-900/50 border rounded-2xl p-3 group transition-all cursor-pointer ${
+                              selectedPackage?.id === pkg.id 
+                              ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
+                              : 'border-zinc-800 hover:border-orange-500/50 shadow-sm'
+                            }`}
+                            onClick={() => setSelectedPackage(pkg)}
+                          >
+                            <div className="aspect-[3/4] rounded-xl overflow-hidden mb-3 bg-zinc-950 relative">
+                              <img src={`/images/pc-game-${idx + 1}.${ext}`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                              {pkg.oldPrice && (
+                                <div className="absolute top-2 right-2 bg-orange-600 text-white text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest shadow-lg shadow-orange-600/30">
+                                  Sale
+                                </div>
+                              )}
+                            </div>
+                            <h3 className="text-[10px] md:text-[11px] font-black text-white uppercase tracking-tight line-clamp-2 mb-2 leading-tight h-8 md:h-9">{pkg.unit}</h3>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <span className="text-orange-500 font-black text-sm md:text-base italic">৳{pkg.price}</span>
+                                {pkg.oldPrice && <span className="text-zinc-500 text-[9px] md:text-[10px] line-through">৳{pkg.oldPrice}</span>}
+                              </div>
+                              <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500 text-white' : 'border-zinc-700'}`}>
+                                {selectedPackage?.id === pkg.id && <i className="fas fa-check text-[8px]"></i>}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="space-y-8">
+                      {sortedCategoryKeys.map((category) => (
+                        <div key={category} className="space-y-4">
+                          <div className="flex items-center gap-4">
+                            <h4 className="text-[9px] font-black text-orange-400 uppercase tracking-[0.25em] italic">
+                              {category}
+                            </h4>
+                            <div className="flex-1 h-[1px] bg-zinc-800"></div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            {groupedPackages[category].map(pkg => (
+                              <button 
+                                key={pkg.id}
+                                onClick={() => setSelectedPackage(pkg)}
+                                className={`group relative bg-[#0d0d0f] border px-4 py-3 rounded-xl transition-all text-left flex justify-between items-center overflow-hidden ${
+                                  selectedPackage?.id === pkg.id 
+                                  ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
+                                  : 'border-zinc-800/80 hover:border-orange-500/40 hover:bg-zinc-900/50 shadow-sm'
+                                }`}
+                              >
+                                <div className="flex flex-col relative z-10">
+                                  <span className={`text-[11px] md:text-sm font-black italic tracking-tight leading-none mb-1 transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-200 group-hover:text-white'}`}>
+                                    {pkg.amount > 1 ? pkg.amount : ''} {pkg.unit}
                                   </span>
-                                )}
-                              </div>
-                              <div className="flex flex-col items-end shrink-0 relative z-10">
-                                <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
-                                  ৳{pkg.price}
-                                </span>
-                                {pkg.oldPrice && (
-                                  <span className={`text-[10px] line-through ${selectedPackage?.id === pkg.id ? 'text-white/50' : 'text-zinc-500'}`}>
-                                    ৳{pkg.oldPrice}
+                                  {pkg.isPopular && (
+                                    <span className="text-[6px] bg-orange-600 text-white px-1 py-0.5 rounded-sm font-black uppercase tracking-[0.1em] w-fit shadow-lg shadow-orange-600/20">
+                                      Hot Item
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="flex flex-col items-end shrink-0 relative z-10">
+                                  <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
+                                    ৳{pkg.price}
                                   </span>
-                                )}
-                              </div>
-                              
-                              {/* Decorative element background */}
-                              <div className={`absolute -right-2 -bottom-2 transition-all duration-500 ${selectedPackage?.id === pkg.id ? 'text-white/5 scale-110' : 'text-zinc-800/10 group-hover:text-orange-500/5 group-hover:scale-105'}`}>
-                                 <i className="fas fa-gem text-3xl md:text-4xl rotate-12"></i>
-                              </div>
-                            </button>
-                          ))}
+                                  {pkg.oldPrice && (
+                                    <span className={`text-[10px] line-through ${selectedPackage?.id === pkg.id ? 'text-white/50' : 'text-zinc-500'}`}>
+                                      ৳{pkg.oldPrice}
+                                    </span>
+                                  )}
+                                </div>
+                                
+                                {/* Decorative element background */}
+                                <div className={`absolute -right-2 -bottom-2 transition-all duration-500 ${selectedPackage?.id === pkg.id ? 'text-white/5 scale-110' : 'text-zinc-800/10 group-hover:text-orange-500/5 group-hover:scale-105'}`}>
+                                   <i className="fas fa-gem text-3xl md:text-4xl rotate-12"></i>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  )}
 
                   {selectedPackage && (
                     <div className="bg-[#0b0b0d] border border-zinc-800/60 p-6 md:p-8 rounded-[2rem] shadow-sm animate-in fade-in duration-500">
