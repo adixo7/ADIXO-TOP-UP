@@ -169,5 +169,33 @@ export const GAMES: Game[] = [
       { id: 'codm-weekly', amount: 1, unit: 'Weekly Supply Pass', price: 132, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'codm-monthly', amount: 1, unit: 'Monthly Supply Pass', price: 484, currency: 'BDT', category: 'MEMBERSHIP' }
     ]
+  },
+  {
+    id: 'pc-games',
+    name: 'PC Games',
+    category: 'PC Games',
+    image: '/images/pc-game-1.png',
+    banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop&q=80',
+    idPlaceholder: 'Steam/Epic Account Email',
+    description: 'Get the best PC games with 30% discount.',
+    packages: [
+      { id: 'pc-1', amount: 1, unit: 'Half-Life: Alyx | Steam Account', price: 3199, oldPrice: 4570, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-2', amount: 1, unit: 'Euro Truck Simulator 2 + American Truck', price: 3190, oldPrice: 4557, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-3', amount: 1, unit: 'HITMAN World of Assassination | Epic', price: 3050, oldPrice: 4357, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-4', amount: 1, unit: 'AARK: Ultimate Survivor Edition | Steam Account', price: 2999, oldPrice: 3490, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-5', amount: 1, unit: 'Sekiro™: Shadows Die Twice – GOTY Edition', price: 2999, oldPrice: 4890, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-6', amount: 1, unit: 'Red Dead Redemption 2 | RDR 2 | Rockstar Redeem', price: 2999, oldPrice: 6099, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-7', amount: 1, unit: 'Red Dead Online | Steam Account', price: 2990, oldPrice: 3299, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-8', amount: 1, unit: 'Forza Horizon 4 | Standard Edition', price: 2899, oldPrice: 4141, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-9', amount: 1, unit: 'Cricket 22 | Microsoft Account', price: 2890, oldPrice: 7500, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-10', amount: 1, unit: 'Ready or Not | Steam Account', price: 2550, oldPrice: 3890, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-11', amount: 1, unit: 'Assassin\'s Creed® Syndicate | Steam', price: 2550, oldPrice: 4999, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-12', amount: 1, unit: 'Taxi Life: A City Driving Simulator | Steam', price: 2499, oldPrice: 2950, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-13', amount: 1, unit: 'Hellblade: Senua\'s Sacrifice | Steam', price: 2499, oldPrice: 3299, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-14', amount: 1, unit: 'Marvel\'s Spider-Man: Miles Morales | Steam', price: 2499, oldPrice: 6990, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-15', amount: 1, unit: 'Marvel\'s Spider-Man Remastered | Steam', price: 2490, oldPrice: 8399, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-16', amount: 1, unit: 'Forza Horizon 5 – Standard Edition | Steam', price: 2490, oldPrice: 4790, currency: 'BDT', category: 'PC GAMES' },
+      { id: 'pc-17', amount: 1, unit: 'Mafia III: Definitive Edition | Steam Account', price: 2490, oldPrice: 3250, currency: 'BDT', category: 'PC GAMES' }
+    ]
   }
 ];

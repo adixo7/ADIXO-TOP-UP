@@ -13,6 +13,7 @@ export interface Package {
   bonus?: number;
   unit: string;
   price: number;
+  oldPrice?: number;
   currency: string;
   isPopular?: boolean;
   category?: string; // New field for grouping

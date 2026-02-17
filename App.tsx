@@ -361,6 +361,35 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
                 <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
+                TOP PC GAMES
+              </h2>
+              <button 
+                onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setActiveTab('games'); }}
+                className="bg-zinc-900 hover:bg-zinc-800 text-orange-500 font-black px-4 py-2 rounded-xl uppercase tracking-widest text-[9px] transition-all border border-zinc-800"
+              >
+                VIEW ALL
+              </button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {GAMES.find(g => g.id === 'pc-games')?.packages.slice(0, 6).map((pkg, idx) => (
+                <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-3 group hover:border-orange-500/50 transition-all cursor-pointer" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
+                  <div className="aspect-[3/4] rounded-xl overflow-hidden mb-3 bg-zinc-950">
+                    <img src={`/images/pc-game-${idx + 1}.png`} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <h3 className="text-[10px] font-black text-white uppercase tracking-tight line-clamp-2 mb-2 leading-tight h-8">{pkg.unit}</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-orange-500 font-black text-xs italic">৳{pkg.price}</span>
+                    {pkg.oldPrice && <span className="text-zinc-500 text-[10px] line-through">৳{pkg.oldPrice}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
+                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
                 TRENDING NOW
               </h2>
             </div>
@@ -466,6 +495,11 @@ const App: React.FC = () => {
                                 <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
                                   ৳{pkg.price}
                                 </span>
+                                {pkg.oldPrice && (
+                                  <span className={`text-[10px] line-through ${selectedPackage?.id === pkg.id ? 'text-white/50' : 'text-zinc-500'}`}>
+                                    ৳{pkg.oldPrice}
+                                  </span>
+                                )}
                               </div>
                               
                               {/* Decorative element background */}
