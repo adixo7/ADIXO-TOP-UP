@@ -453,10 +453,16 @@ const App: React.FC = () => {
           {selectedGame ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
               <button 
-                onClick={() => { setSelectedGame(null); setSelectedPackage(null); setSelectedPayment(null); }}
+                onClick={() => { 
+                  setSelectedGame(null); 
+                  setSelectedPackage(null); 
+                  setSelectedPayment(null);
+                  setActiveTab('home');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="mb-8 text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors"
               >
-                <i className="fas fa-arrow-left"></i> Back to Catalog
+                <i className="fas fa-arrow-left"></i> Back
               </button>
               
               <div className="grid lg:grid-cols-3 gap-12">
@@ -529,11 +535,6 @@ const App: React.FC = () => {
                             </div>
                             <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950 relative">
                               <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                              {pkg.oldPrice && (
-                                <div className="absolute top-1 right-1 bg-orange-600 text-white text-[6px] font-black px-1 py-0.5 rounded-full uppercase tracking-widest shadow-lg shadow-orange-600/30">
-                                  Sale
-                                </div>
-                              )}
                             </div>
                             <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
                             <div className="flex items-center justify-between">
