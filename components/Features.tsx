@@ -91,7 +91,7 @@ const Features: React.FC = () => {
       </div>
 
       {/* Grid layout: 2 columns on mobile, 3 columns on desktop. Last item centered on mobile. */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4 md:px-0">
+      <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4 md:px-0">
         {featureList.map((feature, idx) => (
           <div 
             key={idx} 
