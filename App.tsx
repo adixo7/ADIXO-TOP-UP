@@ -412,23 +412,6 @@ const App: React.FC = () => {
                 <p className="text-zinc-400 max-w-sm md:max-w-2xl text-[9px] md:text-[12px] font-medium leading-relaxed mb-6 mx-auto">
                   Instant delivery for Free Fire, PUBG Mobile and more with the best price in market
                 </p>
-                
-                <div className="flex flex-row justify-center gap-3">
-                  <button 
-                    onClick={() => setActiveTab('games')}
-                    className="bg-orange-600 hover:bg-orange-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all shadow-xl shadow-orange-600/30 active:scale-95"
-                  >
-                    BROWSE ARMORY
-                  </button>
-                  {!user && (
-                    <button 
-                      onClick={() => setAuthMode('register')}
-                      className="bg-transparent border border-zinc-700 text-white font-black px-5 md:px-8 py-2 md:py-2.5 rounded-xl uppercase tracking-[0.15em] text-[8px] md:text-[9px] transition-all hover:bg-zinc-800/40 active:scale-95"
-                    >
-                      SIGN UP
-                    </button>
-                  )}
-                </div>
               </div>
             </section>
           )}
