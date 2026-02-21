@@ -53,7 +53,7 @@ const Features: React.FC = () => {
               </div>
               <div>
                 <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Telegram Username</p>
-                <p className="text-white font-bold italic">@AdiX0_TV</p>
+                <p className="text-white font-bold italic">@AdiXO_TV</p>
               </div>
             </div>
           </div>
@@ -76,7 +76,7 @@ const Features: React.FC = () => {
             <p className="text-orange-500 text-xs font-bold uppercase tracking-[0.2em] mb-10">Head Administrator</p>
 
             <a 
-              href="https://t.me/AdiX0_TV" 
+              href="https://t.me/AdiXO_TV" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-full bg-orange-500 hover:bg-orange-600 text-black font-black italic uppercase tracking-wider py-5 px-8 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-orange-500/20"
