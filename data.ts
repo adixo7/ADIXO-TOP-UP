@@ -181,6 +181,13 @@ export const GAMES: Game[] = [
     packages: [
       { id: 'pc-gta-5', amount: 1, unit: 'Grand Theft Auto 5 | GTA V – Premium Online', price: 2254, oldPrice: 2990, currency: 'BDT', category: 'PC GAMES', image: '/images/gta-v.jpg' },
       { id: 'pc-1', amount: 1, unit: 'Red Dead Redemption 2 | RDR 2 | Rockstar Redeem', price: 3299, oldPrice: 6099, currency: 'BDT', category: 'PC GAMES', image: '/images/rdr2.jpg' },
+      { id: 'pc-hitman-2', amount: 1, unit: 'Hitman 2: Silent Assassin | Steam Account', price: 890, oldPrice: 2990, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150034_1771657382736.png' },
+      { id: 'pc-human-fall-flat', amount: 1, unit: 'Human: Fall Flat | Steam Account', price: 1150, oldPrice: 1490, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150052_1771657382738.png' },
+      { id: 'pc-fc-25', amount: 1, unit: 'EA SPORTS FC™ 25 | Steam Account', price: 1250, oldPrice: 8999, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150100_1771657382738.png' },
+      { id: 'pc-ranch-sim', amount: 1, unit: 'Ranch Simulator | Online | Steam Account', price: 1350, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150110_1771657382739.png' },
+      { id: 'pc-zero-hour', amount: 1, unit: 'Zero Hour | Steam Key', price: 1450, oldPrice: 1600, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150119_1771657382740.png' },
+      { id: 'pc-gta-4', amount: 1, unit: 'Grand Theft Auto IV | GTA 4 – The Complete', price: 1790, oldPrice: 2299, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150130_1771657382741.png' },
+      { id: 'pc-re-4', amount: 1, unit: 'Resident Evil 4 | Steam Account', price: 2150, oldPrice: 7490, currency: 'BDT', category: 'PC GAMES', image: '/images/games/Screenshot_2026-02-17_150152_1771657382741.png' },
       { id: 'pc-2', amount: 1, unit: 'HITMAN World of Assassination | Epic', price: 3355, oldPrice: 4357, currency: 'BDT', category: 'PC GAMES', image: '/images/hitman.jpg' },
       { id: 'pc-3', amount: 1, unit: 'The Crew™ 2 | Steam Account', price: 3575, oldPrice: 4990, currency: 'BDT', category: 'PC GAMES', image: '/images/the-crew-2.webp' },
       { id: 'pc-4', amount: 1, unit: 'EA SPORTS FC™ 26 | Steam Account', price: 3795, oldPrice: 9250, currency: 'BDT', category: 'PC GAMES', image: '/images/fc-26.jpg' },
