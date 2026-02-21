@@ -283,6 +283,12 @@ const App: React.FC = () => {
     game.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const searchedPackages = GAMES.flatMap(game => 
+    game.packages.map(pkg => ({ ...pkg, gameName: game.name, gameId: game.id, gameImage: game.image }))
+  ).filter(pkg => 
+    pkg.unit.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const groupedPackages: Record<string, Package[]> = (selectedGame?.packages || []).reduce((acc: Record<string, Package[]>, pkg) => {
     const cat = pkg.category || 'GENERAL';
     if (!acc[cat]) acc[cat] = [];
@@ -314,6 +320,83 @@ const App: React.FC = () => {
 
       {activeTab === 'home' && (
         <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
+          <section className="relative group max-w-2xl mx-auto">
+            <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-red-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative bg-[#0c0c0e] border border-orange-500/30 rounded-2xl flex items-center px-6 py-4 shadow-2xl">
+              <i className="fas fa-search text-orange-500 mr-4 text-xl animate-pulse"></i>
+              <input 
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="SEARCH ARMORY (GAMES, DIAMONDS, ACCOUNTS...)"
+                className="w-full bg-transparent border-none text-white font-black tracking-[0.2em] text-xs md:text-sm focus:outline-none placeholder:text-zinc-700 uppercase"
+              />
+              <div className="ml-4 flex gap-1">
+                <div className="w-1 h-4 bg-orange-600 animate-bounce"></div>
+                <div className="w-1 h-4 bg-orange-600 animate-bounce [animation-delay:0.2s]"></div>
+                <div className="w-1 h-4 bg-orange-600 animate-bounce [animation-delay:0.4s]"></div>
+              </div>
+            </div>
+            
+            {searchTerm && (
+              <div className="absolute top-full left-0 right-0 mt-4 bg-[#0c0c0e] border border-orange-500/30 rounded-2xl overflow-hidden z-50 shadow-2xl backdrop-blur-xl max-h-[60vh] overflow-y-auto">
+                {filteredGames.length > 0 && (
+                  <div className="p-4 border-b border-orange-500/10">
+                    <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-4">GAMES FOUND</p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                      {filteredGames.map(game => (
+                        <div 
+                          key={game.id} 
+                          onClick={() => { setSelectedGame(game); setActiveTab('games'); setSearchTerm(''); }}
+                          className="flex items-center gap-3 p-2 bg-zinc-900/50 rounded-xl hover:bg-orange-600/20 transition-all cursor-pointer group"
+                        >
+                          <img src={game.image} className="w-8 h-8 rounded-lg object-cover border border-zinc-800" alt={game.name} />
+                          <span className="text-[9px] font-black text-white uppercase truncate">{game.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {searchedPackages.length > 0 && (
+                  <div className="p-4">
+                    <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-4">PACKAGES FOUND</p>
+                    <div className="space-y-2">
+                      {searchedPackages.slice(0, 10).map(pkg => (
+                        <div 
+                          key={pkg.id} 
+                          onClick={() => { 
+                            const game = GAMES.find(g => g.id === pkg.gameId);
+                            if (game) {
+                              setSelectedGame(game);
+                              setSelectedPackage(pkg);
+                              setActiveTab('games');
+                              setSearchTerm('');
+                            }
+                          }}
+                          className="flex items-center justify-between p-3 bg-zinc-900/50 rounded-xl hover:bg-orange-600/20 transition-all cursor-pointer group border border-transparent hover:border-orange-500/30"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="text-[8px] bg-orange-600 text-white px-2 py-0.5 rounded font-black uppercase">{pkg.gameName}</div>
+                            <span className="text-[10px] font-black text-white uppercase tracking-tight">{pkg.unit}</span>
+                          </div>
+                          <span className="text-orange-500 font-black text-xs">৳{pkg.price}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {filteredGames.length === 0 && searchedPackages.length === 0 && (
+                  <div className="p-12 text-center">
+                    <i className="fas fa-ghost text-zinc-800 text-4xl mb-4"></i>
+                    <p className="text-zinc-600 font-black uppercase tracking-widest text-xs">TARGET NOT FOUND IN ARMORY</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </section>
+
           {!searchTerm && (
             <section className="relative h-[180px] md:h-[240px] rounded-[3rem] overflow-hidden group shadow-2xl border border-orange-500/20 bg-[#0c0c0e]">
               <div className="absolute inset-0 bg-orange-600/5 group-hover:bg-orange-600/10 transition-colors"></div>
