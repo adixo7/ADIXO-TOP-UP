@@ -27,38 +27,7 @@ const Features: React.FC = () => {
 
   return (
     <section className="py-12 md:py-20 animate-in fade-in duration-1000">
-      <div className="text-center mb-10 md:mb-16 px-4">
-        <p className="text-zinc-400 text-sm md:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
-          Instant delivery for your favorite games. Secure payments, 24/7 support, and the best prices in the market.
-        </p>
-      </div>
-
-      {/* Grid layout: 2 columns on mobile, 3 columns on desktop. Last item centered on mobile. */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4 md:px-0">
-        {featureList.map((feature, idx) => (
-          <div 
-            key={idx} 
-            className={`
-              bg-[#0c0c0e] border border-zinc-800/50 p-4 md:p-10 rounded-2xl flex flex-col items-center text-center group hover:border-orange-500/30 transition-all duration-500 hover:translate-y-[-4px]
-              ${idx === 2 ? 'col-span-2 mx-auto w-[calc(50%-8px)] md:col-span-1 md:w-full' : 'w-full'}
-            `}
-          >
-            {/* Icon container */}
-            <div className={`w-12 h-12 md:w-16 md:h-16 ${feature.bg} rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-8 shadow-inner border border-white/5`}>
-              <i className={`fas ${feature.icon} ${feature.color} text-base md:text-2xl`}></i>
-            </div>
-            
-            {/* Typography */}
-            <h3 className="text-white text-[10px] md:text-xl font-black uppercase italic tracking-tighter mb-2 md:mb-4 leading-tight">
-              {feature.title}
-            </h3>
-            <p className="text-zinc-500 text-[9px] md:text-sm font-medium leading-tight max-w-[120px] md:max-w-[200px]">
-              {feature.description}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-12 md:mt-24 max-w-5xl mx-auto px-4">
+      <div className="max-w-5xl mx-auto px-4 mb-12 md:mb-20">
         <div className="bg-[#0c0c0e] border border-zinc-800/50 rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[400px]">
           {/* Left Side: Support Info */}
           <div className="flex-1 p-8 md:p-12 flex flex-col justify-between border-b md:border-b-0 md:border-r border-zinc-800/50">
@@ -119,6 +88,32 @@ const Features: React.FC = () => {
             <p className="mt-6 text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Typical response time: &lt; 5 mins</p>
           </div>
         </div>
+      </div>
+
+      {/* Grid layout: 2 columns on mobile, 3 columns on desktop. Last item centered on mobile. */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4 md:px-0">
+        {featureList.map((feature, idx) => (
+          <div 
+            key={idx} 
+            className={`
+              bg-[#0c0c0e] border border-zinc-800/50 p-4 md:p-10 rounded-2xl flex flex-col items-center text-center group hover:border-orange-500/30 transition-all duration-500 hover:translate-y-[-4px]
+              ${idx === 2 ? 'col-span-2 mx-auto w-[calc(50%-8px)] md:col-span-1 md:w-full' : 'w-full'}
+            `}
+          >
+            {/* Icon container */}
+            <div className={`w-12 h-12 md:w-16 md:h-16 ${feature.bg} rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-8 shadow-inner border border-white/5`}>
+              <i className={`fas ${feature.icon} ${feature.color} text-base md:text-2xl`}></i>
+            </div>
+            
+            {/* Typography */}
+            <h3 className="text-white text-[10px] md:text-xl font-black uppercase italic tracking-tighter mb-2 md:mb-4 leading-tight">
+              {feature.title}
+            </h3>
+            <p className="text-zinc-500 text-[9px] md:text-sm font-medium leading-tight max-w-[120px] md:max-w-[200px]">
+              {feature.description}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );
