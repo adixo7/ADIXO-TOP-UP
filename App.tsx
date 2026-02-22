@@ -476,7 +476,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
                   <div className="p-2 flex items-center justify-between bg-zinc-900">
-                    <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                    <span className="text-orange-500 font-black text-[10px] md:text-xs italic uppercase">GLORY BOT</span>
                     <i className="fas fa-chevron-right text-[8px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
                   </div>
                 </div>

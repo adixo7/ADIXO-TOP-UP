@@ -174,12 +174,12 @@ export const GAMES: Game[] = [
     id: 'ai-bots',
     name: 'AI BOTS',
     category: 'AI BOTS',
-    image: '/images/free-fire-bots.png',
-    banner: '/images/free-fire-bots.png',
+    image: '/images/glory-bots-cover.jpg',
+    banner: '/images/glory-bots-cover.jpg',
     idPlaceholder: 'Account ID / Details',
     description: 'Advanced AI Bots for your gaming experience.',
     packages: [
-      { id: 'ff-glory-bots', amount: 1, unit: 'FREE FIRE GLORY BOTS', price: 500, currency: 'BDT', category: 'AI BOTS', image: '/images/free-fire-bots.png' }
+      { id: 'ff-glory-bots', amount: 1, unit: 'FREE FIRE GLORY BOTS', price: 500, currency: 'BDT', category: 'AI BOTS', image: '/images/glory-bots-cover.jpg' }
     ]
   },
   {
