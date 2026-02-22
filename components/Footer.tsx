@@ -9,10 +9,10 @@ const Footer: React.FC = () => {
         <div className="flex flex-col gap-4 max-w-sm">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
-              <img src="/logo.png" alt="ADIXO TOPUP" className="w-full h-full object-cover" />
+              <img src="/adixo-logo.png" alt="ADIXO STORE" className="w-full h-full object-cover" />
             </div>
             <span className="text-xl font-black tracking-tighter text-white uppercase italic logo-font">
-              ADIXO <span className="text-orange-500">TOPUP</span>
+              ADIXO <span className="text-orange-500">STORE</span>
             </span>
           </div>
           <p className="text-zinc-500 text-sm leading-relaxed font-medium">
@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
 
         {/* Copyright */}
         <div className="text-zinc-600 text-[10px] font-bold uppercase tracking-widest md:text-right">
-          © 2024 ADIXO TOPUP. All rights reserved.
+          © 2024 ADIXO STORE. All rights reserved.
         </div>
 
       </div>

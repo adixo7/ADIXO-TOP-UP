@@ -435,7 +435,7 @@ const App: React.FC = () => {
             </div>
             {filteredGames.length > 0 ? (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4">
-                {filteredGames.filter(g => g.id !== 'pc-games').map(game => (
+                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
@@ -445,6 +445,36 @@ const App: React.FC = () => {
                 <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">No matches found.</p>
               </div>
             )}
+          </section>
+
+          <section>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
+                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
+                AI BOTS
+              </h2>
+            </div>
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {GAMES.find(g => g.id === 'ai-bots')?.packages.map((pkg) => (
+                <div 
+                  key={pkg.id} 
+                  className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer relative" 
+                  onClick={() => { 
+                    setSelectedGame(GAMES.find(g => g.id === 'ai-bots') || null); 
+                    setSelectedPackage(pkg); 
+                    setActiveTab('games'); 
+                  }}
+                >
+                  <div className="aspect-square rounded-lg overflow-hidden mb-2 bg-zinc-950">
+                    <img src={pkg.image} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
 
           <section>
