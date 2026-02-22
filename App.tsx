@@ -454,23 +454,30 @@ const App: React.FC = () => {
                 AI BOTS
               </h2>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
               {GAMES.find(g => g.id === 'ai-bots')?.packages.map((pkg) => (
                 <div 
                   key={pkg.id} 
-                  className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer relative" 
+                  className="group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-md hover:-translate-y-1 hover:shadow-[0_10px_25px_-5px_rgba(249,115,22,0.3)]" 
                   onClick={() => { 
                     setSelectedGame(GAMES.find(g => g.id === 'ai-bots') || null); 
                     setSelectedPackage(pkg); 
                     setActiveTab('games'); 
                   }}
                 >
-                  <div className="aspect-square rounded-lg overflow-hidden mb-2 bg-zinc-950">
+                  <div className="aspect-square rounded-lg overflow-hidden mb-0 bg-zinc-950 relative">
                     <img src={pkg.image} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-widest mb-1">AI BOTS</p>
+                      <h3 className="text-white text-[9px] md:text-[11px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+                        {pkg.unit}
+                      </h3>
+                    </div>
                   </div>
-                  <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
-                  <div className="flex items-center gap-1.5">
+                  <div className="p-2 flex items-center justify-between bg-zinc-900">
                     <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                    <i className="fas fa-chevron-right text-[8px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
                   </div>
                 </div>
               ))}
@@ -493,7 +500,7 @@ const App: React.FC = () => {
                 View All <i className="fas fa-chevron-right text-[8px]"></i>
               </button>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
                   {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => {
                   const name = pkg.unit.toLowerCase();
@@ -512,17 +519,30 @@ const App: React.FC = () => {
                   let imageSrc = pkg.image || `/images/pc-game-${baseIdx + 1}.png`;
                   
                   return (
-                    <div key={pkg.id} className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-2 group hover:border-orange-500/50 transition-all cursor-pointer relative" onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}>
-                      <div className="absolute top-1.5 right-1.5 z-20 bg-red-600 text-white text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border border-red-500/50">
-                        30% OFF
+                    <div 
+                      key={pkg.id} 
+                      className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-md" 
+                      onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}
+                    >
+                      <div className="aspect-[3/4] overflow-hidden relative">
+                        <div className="absolute top-1.5 right-1.5 z-20 bg-red-600 text-white text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border border-red-500/50">
+                          30% OFF
+                        </div>
+                        <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-2 left-2 right-2">
+                          <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-widest mb-1">PC GAMES</p>
+                          <h3 className="text-white text-[9px] md:text-[11px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+                            {pkg.unit}
+                          </h3>
+                        </div>
                       </div>
-                      <div className="aspect-[3/4] rounded-lg overflow-hidden mb-2 bg-zinc-950">
-                        <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                      </div>
-                      <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
-                        {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
+                      <div className="p-2 flex items-center justify-between bg-zinc-900">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                          {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
+                        </div>
+                        <i className="fas fa-chevron-right text-[8px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
                       </div>
                     </div>
                   );

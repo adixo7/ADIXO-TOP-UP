@@ -10,7 +10,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
   return (
     <div 
       onClick={() => onClick(game)}
-      className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-md"
+      className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-md hover:-translate-y-1 hover:shadow-[0_10px_25px_-5px_rgba(249,115,22,0.3)]"
     >
       <div className="aspect-square overflow-hidden relative">
         <img 
@@ -33,6 +33,10 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
             {game.name}
           </h3>
         </div>
+      </div>
+      <div className="p-2 flex items-center justify-between bg-zinc-900">
+        <span className="text-orange-500 font-black text-[10px] md:text-xs italic uppercase">Top-Up</span>
+        <i className="fas fa-chevron-right text-[8px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
       </div>
     </div>
   );
