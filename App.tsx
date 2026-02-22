@@ -711,30 +711,30 @@ const App: React.FC = () => {
                   )}
 
                   {selectedPackage && (
-                    <div className="bg-[#0b0b0d] border border-zinc-800/60 p-6 md:p-8 rounded-[2rem] shadow-sm animate-in fade-in duration-500">
-                      <h3 className="text-xl font-bold text-white mb-8 uppercase tracking-tight">Payment Method</h3>
-                      <div className="flex flex-col gap-4">
+                    <div className="bg-[#0b0b0d] border border-zinc-800/60 p-4 rounded-[1.5rem] shadow-sm animate-in fade-in duration-500">
+                      <h3 className="text-xs font-bold text-white mb-4 uppercase tracking-tight">Payment Method</h3>
+                      <div className="grid grid-cols-2 gap-3">
                         {PAYMENT_METHODS.map(method => (
                           <button 
                             key={method.id}
                             onClick={() => setSelectedPayment(method)}
-                            className={`flex items-center gap-5 p-5 rounded-2xl transition-all border ${
+                            className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${
                               selectedPayment?.id === method.id 
                               ? 'border-orange-500 bg-orange-500/5' 
                               : 'bg-zinc-900/40 border-zinc-800'
                             }`}
                           >
-                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${selectedPayment?.id === method.id ? 'border-orange-500' : 'border-zinc-700'}`}>
-                              {selectedPayment?.id === method.id && <div className="w-2.5 h-2.5 rounded-full bg-orange-500"></div>}
+                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${selectedPayment?.id === method.id ? 'border-orange-500' : 'border-zinc-700'}`}>
+                              {selectedPayment?.id === method.id && <div className="w-2 rounded-full bg-orange-500 aspect-square"></div>}
                             </div>
-                            <span className="font-black uppercase italic tracking-tighter text-lg text-white">{method.name}</span>
+                            <span className="font-black uppercase italic tracking-tighter text-[10px] text-white truncate">{method.name}</span>
                           </button>
                         ))}
                       </div>
-                      <div className="mt-10 pt-8 border-t border-zinc-800/50">
+                      <div className="mt-6 pt-4 border-t border-zinc-800/50">
                         <button 
                           onClick={handleConfirmOrder}
-                          className="w-full py-6 rounded-2xl font-black uppercase italic tracking-widest transition-all bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95"
+                          className="w-full py-3.5 rounded-xl font-black uppercase italic tracking-widest transition-all bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95 text-[10px]"
                         >
                           Confirm & Pay ৳{selectedPackage.price}
                         </button>
