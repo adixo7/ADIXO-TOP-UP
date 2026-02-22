@@ -179,7 +179,12 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Account ID / Details',
     description: 'Advanced AI Bots for your gaming experience.',
     packages: [
-      { id: 'ff-glory-bots', amount: 1, unit: 'FREE FIRE GLORY BOTS', price: 500, currency: 'BDT', category: 'AI BOTS', image: '/images/glory-bots-cover.jpg' }
+      { id: 'ff-glory-bots', amount: 1, unit: 'FREE FIRE GLORY BOTS', price: 500, currency: 'BDT', category: 'AI BOTS', image: '/images/glory-bots-cover.jpg' },
+      { id: 'regional-elite', amount: 1, unit: 'REGIONAL ELITE', price: 14, currency: 'USD', category: 'AI BOTS', description: 'Guild Lvl 6 + Region Top 100' },
+      { id: 'regional-master', amount: 1, unit: 'REGIONAL MASTER', price: 18, currency: 'USD', category: 'AI BOTS', description: 'Guild Lvl 6 + Region Top 50', isPopular: true },
+      { id: 'regional-grandmaster', amount: 1, unit: 'REGIONAL GRANDMASTER', price: 26, currency: 'USD', category: 'AI BOTS', description: 'Guild Lvl 7 + Region Top 30' },
+      { id: 'starter-bots', amount: 2, unit: 'STARTER BOTS', price: 11, currency: 'USD', category: 'AI BOTS', description: '2 Bots for 1 Week' },
+      { id: 'pro-bots', amount: 4, unit: 'PRO BOTS', price: 20, currency: 'USD', category: 'AI BOTS', description: '4 Bots for 1 Week' }
     ]
   },
   {
