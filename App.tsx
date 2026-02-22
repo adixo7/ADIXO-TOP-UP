@@ -427,38 +427,38 @@ const App: React.FC = () => {
           )}
 
           <section>
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
+                <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
                 TOP-UP
               </h2>
             </div>
             {filteredGames.length > 0 ? (
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3 md:gap-4">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
                 {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-3xl">
-                <i className="fas fa-search-minus text-zinc-700 text-4xl mb-4"></i>
-                <p className="text-zinc-500 font-bold uppercase tracking-widest text-xs">No matches found.</p>
+              <div className="text-center py-12 md:py-16 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-2xl md:rounded-3xl">
+                <i className="fas fa-search-minus text-zinc-700 text-2xl md:text-3xl mb-3 md:mb-4"></i>
+                <p className="text-zinc-500 font-bold uppercase tracking-widest text-[8px] md:text-[10px]">No matches found.</p>
               </div>
             )}
           </section>
 
           <section>
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
+                <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
                 AI BOTS
               </h2>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
               {GAMES.find(g => g.id === 'ai-bots')?.packages.map((pkg) => (
                 <div 
                   key={pkg.id} 
-                  className="group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-md hover:-translate-y-1 hover:shadow-[0_10px_25px_-5px_rgba(249,115,22,0.3)]" 
+                  className="group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-sm hover:-translate-y-1 hover:shadow-[0_8px_20px_-5px_rgba(249,115,22,0.25)]" 
                   onClick={() => { 
                     setSelectedGame(GAMES.find(g => g.id === 'ai-bots') || null); 
                     setSelectedPackage(pkg); 
@@ -468,16 +468,16 @@ const App: React.FC = () => {
                   <div className="aspect-square rounded-lg overflow-hidden mb-0 bg-zinc-950 relative">
                     <img src={pkg.image} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-widest mb-1">AI BOTS</p>
-                      <h3 className="text-white text-[9px] md:text-[11px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+                    <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                      <p className="text-orange-400 text-[5px] md:text-[7px] font-black uppercase tracking-widest mb-0.5">AI BOTS</p>
+                      <h3 className="text-white text-[8px] md:text-[10px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
                         {pkg.unit}
                       </h3>
                     </div>
                   </div>
-                  <div className="p-2 flex items-center justify-between bg-zinc-900">
-                    <span className="text-orange-500 font-black text-[10px] md:text-xs italic uppercase">GLORY BOT</span>
-                    <i className="fas fa-chevron-right text-[8px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
+                  <div className="p-1.5 flex items-center justify-between bg-zinc-900">
+                    <span className="text-orange-500 font-black text-[8px] md:text-[10px] italic uppercase">GLORY BOT</span>
+                    <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
                   </div>
                 </div>
               ))}
@@ -485,9 +485,9 @@ const App: React.FC = () => {
           </section>
 
           <section>
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                <span className="w-1.5 h-6 bg-orange-600 rounded-full"></span> 
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
+                <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
                 TOP PC GAMES
               </h2>
               <button 
@@ -495,13 +495,13 @@ const App: React.FC = () => {
                   setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null);
                   setActiveTab('games');
                 }}
-                className="text-orange-500 text-[10px] font-black uppercase tracking-widest hover:underline flex items-center gap-2"
+                className="text-orange-500 text-[8px] font-black uppercase tracking-widest hover:underline flex items-center gap-1.5 md:gap-2"
               >
-                View All <i className="fas fa-chevron-right text-[8px]"></i>
+                View All <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
               </button>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
-                  {GAMES.find(g => g.id === 'pc-games')?.packages
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
+              {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => {
                   const name = pkg.unit.toLowerCase();
                   return name.includes('grand theft auto 5') || 
@@ -521,28 +521,28 @@ const App: React.FC = () => {
                   return (
                     <div 
                       key={pkg.id} 
-                      className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-md" 
+                      className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-sm" 
                       onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}
                     >
                       <div className="aspect-[3/4] overflow-hidden relative">
-                        <div className="absolute top-1.5 right-1.5 z-20 bg-red-600 text-white text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border border-red-500/50">
+                        <div className="absolute top-1 right-1 z-20 bg-red-600 text-white text-[4px] md:text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border border-red-500/50">
                           30% OFF
                         </div>
                         <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        <div className="absolute bottom-2 left-2 right-2">
-                          <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-widest mb-1">PC GAMES</p>
-                          <h3 className="text-white text-[9px] md:text-[11px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+                        <div className="absolute bottom-1.5 left-1.5 right-1.5">
+                          <p className="text-orange-400 text-[5px] md:text-[7px] font-black uppercase tracking-widest mb-0.5">PC GAMES</p>
+                          <h3 className="text-white text-[8px] md:text-[10px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
                             {pkg.unit}
                           </h3>
                         </div>
                       </div>
-                      <div className="p-2 flex items-center justify-between bg-zinc-900">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
-                          {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
+                      <div className="p-1.5 flex items-center justify-between bg-zinc-900">
+                        <div className="flex items-center gap-1">
+                          <span className="text-orange-500 font-black text-[8px] md:text-[10px] italic">৳{pkg.price}</span>
+                          {pkg.oldPrice && <span className="text-zinc-500 text-[6px] md:text-[7px] line-through">৳{pkg.oldPrice}</span>}
                         </div>
-                        <i className="fas fa-chevron-right text-[8px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
+                        <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
                       </div>
                     </div>
                   );
