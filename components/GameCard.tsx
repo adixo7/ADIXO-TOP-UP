@@ -29,7 +29,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
         )}
         <div className="absolute bottom-1.5 left-1.5 right-1.5">
           <p className="text-orange-400 text-[5px] md:text-[7px] font-black uppercase tracking-widest mb-0.5">{game.category}</p>
-          <h3 className="text-white text-[8px] md:text-[10px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+          <h3 className={`text-white font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors ${game.id === 'ai-bots' ? 'text-[6px] md:text-[8px]' : 'text-[8px] md:text-[10px]'}`}>
             {game.name}
           </h3>
         </div>
