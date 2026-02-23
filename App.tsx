@@ -458,33 +458,61 @@ const App: React.FC = () => {
                 AI BOTS
               </h2>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
-              {GAMES.find(g => g.id === 'ai-bots')?.packages.map((pkg) => (
-                <div 
-                  key={pkg.id} 
-                  className="group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-sm hover:-translate-y-1 hover:shadow-[0_8px_20px_-5px_rgba(249,115,22,0.25)]" 
-                  onClick={() => { 
-                    setSelectedGame(GAMES.find(g => g.id === 'ai-bots') || null); 
-                    setSelectedPackage(pkg); 
-                    setActiveTab('games'); 
-                  }}
-                >
-                  <div className="aspect-square rounded-lg overflow-hidden mb-0 bg-zinc-950 relative">
-                    <img src={pkg.image || '/images/glory-bots-cover.jpg'} alt={pkg.unit} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <div className="absolute bottom-1.5 left-1.5 right-1.5">
-                      <p className="text-orange-400 text-[5px] md:text-[7px] font-black uppercase tracking-widest mb-0.5">AI BOTS</p>
-                      <h3 className="text-white text-[8px] md:text-[10px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
-                        {pkg.unit}
-                      </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {(() => {
+                const game = GAMES.find(g => g.id === 'ai-bots');
+                const proBot = game?.packages.find(p => p.id === 'pro-bots');
+                if (!proBot) return null;
+                
+                return (
+                  <div 
+                    key={proBot.id} 
+                    className="group cursor-pointer bg-zinc-900 rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
+                    onClick={() => { 
+                      setSelectedGame(game || null); 
+                      setActiveTab('games'); 
+                    }}
+                  >
+                    <div className="absolute top-4 right-4 z-20">
+                      <span className="bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest animate-pulse">
+                        Pro Version
+                      </span>
+                    </div>
+                    <div className="aspect-[16/9] overflow-hidden bg-zinc-950 relative">
+                      <img 
+                        src={proBot.image || '/images/glory-bots-cover.jpg'} 
+                        alt={proBot.unit} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/40 to-transparent"></div>
+                      
+                      <div className="absolute bottom-6 left-6 right-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <i className="fas fa-robot text-orange-500 text-sm"></i>
+                          <p className="text-orange-500 text-[10px] font-black uppercase tracking-[0.3em]">Advanced AI Systems</p>
+                        </div>
+                        <h3 className="text-white text-2xl md:text-3xl font-black uppercase italic tracking-tighter leading-none group-hover:text-orange-400 transition-colors mb-2">
+                          {proBot.unit}
+                        </h3>
+                        <p className="text-zinc-400 text-xs font-bold uppercase tracking-wide line-clamp-2">
+                          Unlock all regional boost and bot hire packages including Regional Elite, Master, and Grandmaster.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="p-6 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
+                      <div className="flex flex-col">
+                        <span className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Starting From</span>
+                        <span className="text-orange-500 font-black text-xl italic uppercase">${proBot.price}</span>
+                      </div>
+                      <div className="flex items-center gap-3 bg-orange-600/10 px-4 py-2 rounded-xl group-hover:bg-orange-600 transition-all duration-300">
+                        <span className="text-white font-black text-xs uppercase tracking-widest group-hover:translate-x-[-4px] transition-transform">View All</span>
+                        <i className="fas fa-arrow-right text-xs text-orange-500 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                      </div>
                     </div>
                   </div>
-                  <div className="p-1.5 flex items-center justify-between bg-zinc-900">
-                    <span className="text-orange-500 font-black text-[8px] md:text-[10px] italic uppercase">GLORY BOT</span>
-                    <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
-                  </div>
-                </div>
-              ))}
+                );
+              })()}
             </div>
           </section>
 

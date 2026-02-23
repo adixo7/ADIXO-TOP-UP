@@ -30,3 +30,4 @@ Premium gaming credit hub for Free Fire, PUBG, and more. A React + Vite + TypeSc
 
 ## Recent Changes
 - 2026-02-16: Initial Replit setup - configured Vite for port 5000 with allowedHosts, removed conflicting importmap from index.html
+- 2026-02-23: Refactored AI BOTS section on home page to only show a "Pro Bots" entry point that leads to the full package selection view.
