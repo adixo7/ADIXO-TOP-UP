@@ -290,13 +290,26 @@ const App: React.FC = () => {
   );
 
   const groupedPackages: Record<string, Package[]> = (selectedGame?.packages || []).reduce((acc: Record<string, Package[]>, pkg) => {
+    if (selectedGame?.id === 'ai-bots' && pkg.id === 'ff-glory-bots') {
+      return {
+        'REGIONAL BOOST': [
+          { id: 'regional-elite', amount: 1, unit: 'REGIONAL ELITE', price: 14, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 6 + Region Top 100', image: '/assets/Screenshot_2026-02-22_173818_1771878616972.png' },
+          { id: 'regional-master', amount: 1, unit: 'REGIONAL MASTER', price: 18, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 6 + Region Top 50', isPopular: true, image: '/assets/Screenshot_2026-02-22_173818_1771878616972.png' },
+          { id: 'regional-grandmaster', amount: 1, unit: 'REGIONAL GRANDMASTER', price: 26, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 7 + Region Top 30', image: '/assets/Screenshot_2026-02-22_173818_1771878616972.png' }
+        ],
+        'BOTS HIRE': [
+          { id: 'starter-bots', amount: 2, unit: 'STARTER BOTS', price: 11, currency: 'USD', category: 'BOTS HIRE', description: '2 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878616973.png' },
+          { id: 'pro-bots', amount: 4, unit: 'PRO BOTS', price: 20, currency: 'USD', category: 'BOTS HIRE', description: '4 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878616973.png' }
+        ]
+      };
+    }
     const cat = pkg.category || 'GENERAL';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(pkg);
     return acc;
   }, {} as Record<string, Package[]>);
 
-  const categorySortOrder = ['DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
+  const categorySortOrder = ['REGIONAL BOOST', 'BOTS HIRE', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
   const sortedCategoryKeys = Object.keys(groupedPackages).sort((a, b) => {
     const indexA = categorySortOrder.indexOf(a);
     const indexB = categorySortOrder.indexOf(b);
