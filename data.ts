@@ -174,8 +174,8 @@ export const GAMES: Game[] = [
     id: 'ai-bots',
     name: 'AI BOTS',
     category: 'AI BOTS',
-    image: '/glory-bots.png',
-    banner: '/glory-bots.png',
+    image: '/glory-bots-cover.png',
+    banner: '/glory-bots-cover.png',
     idPlaceholder: 'Account ID / Details',
     description: 'Advanced AI Bots for your gaming experience.',
     packages: [
