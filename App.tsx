@@ -300,7 +300,7 @@ const App: React.FC = () => {
     return acc;
   }, {} as Record<string, Package[]>);
 
-  const categorySortOrder = ['REGIONAL BOOST', 'BOTS HIRE', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
+  const categorySortOrder = ['GLORY PACKAGE', 'HIRE BOTS', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
   const sortedCategoryKeys = Object.keys(groupedPackages).sort((a, b) => {
     const indexA = categorySortOrder.indexOf(a);
     const indexB = categorySortOrder.indexOf(b);
@@ -652,73 +652,76 @@ const App: React.FC = () => {
 
                 <div className="lg:col-span-2 space-y-10">
                   {selectedGame.id === 'ai-bots' ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {selectedGame.packages.map((pkg) => (
-                        <div 
-                          key={pkg.id} 
-                          className={`relative group cursor-pointer bg-zinc-900/50 rounded-2xl overflow-hidden border ${pkg.isPopular ? 'border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.1)]' : 'border-zinc-800'} transition-all duration-300 hover:-translate-y-1 hover:bg-zinc-900 ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900' : ''}`}
-                          onClick={() => setSelectedPackage(pkg)}
-                        >
-                          {pkg.isPopular && (
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-orange-500 text-black text-[10px] font-black px-4 py-1 rounded-b-xl uppercase tracking-widest z-10">
-                              Best Value
-                            </div>
-                          )}
-                          
-                          <div className="p-8 flex flex-col items-center text-center">
-                            <div className="w-12 h-12 bg-zinc-950 rounded-xl flex items-center justify-center mb-6 border border-zinc-800 group-hover:border-orange-500/50 transition-colors">
-                              <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : 'fa-robot'} text-xl ${pkg.id.includes('elite') ? 'text-blue-400' : pkg.id.includes('master') ? 'text-orange-400' : pkg.id.includes('grandmaster') ? 'text-purple-400' : 'text-orange-500'}`}></i>
-                            </div>
-                            
-                            <h3 className="text-white text-xl font-black uppercase tracking-tight mb-2">{pkg.unit}</h3>
-                            <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-6">{pkg.description}</p>
-                            
-                            <div className="flex items-baseline gap-1 mb-8">
-                              <span className="text-4xl font-black text-white">{pkg.price}</span>
-                              <span className="text-orange-500 font-black text-xl italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
-                            </div>
-                            
-                            <div className="space-y-3 w-full mb-8">
-                              {pkg.id.includes('regional') ? (
-                                <>
-                                  <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                    <i className="fas fa-check text-green-500"></i>
-                                    <span>{pkg.id.includes('grandmaster') ? 'Guild Level 7 Boost' : 'Guild Level 6 Boost'}</span>
+                    <div className="space-y-12">
+                      {sortedCategoryKeys.map(category => (
+                        <div key={category} className="space-y-6">
+                          <h3 className="text-sm font-black text-orange-500 uppercase tracking-[0.3em] flex items-center gap-3">
+                            <span className="w-8 h-[1px] bg-orange-500/30"></span>
+                            {category}
+                            <span className="w-8 h-[1px] bg-orange-500/30"></span>
+                          </h3>
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {groupedPackages[category].map((pkg) => (
+                              <div 
+                                key={pkg.id} 
+                                className={`relative group cursor-pointer bg-zinc-900/40 rounded-xl overflow-hidden border ${pkg.isPopular ? 'border-orange-500/50 shadow-lg' : 'border-zinc-800/50'} transition-all duration-300 hover:border-orange-500/50 ${selectedPackage?.id === pkg.id ? 'ring-1 ring-orange-500 bg-zinc-900/80' : ''}`}
+                                onClick={() => setSelectedPackage(pkg)}
+                              >
+                                {pkg.isPopular && (
+                                  <div className="absolute top-0 right-0 bg-orange-500 text-black text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10">
+                                    BEST
                                   </div>
-                                  <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                    <i className="fas fa-check text-green-500"></i>
-                                    <span>Region Top {pkg.id.includes('elite') ? '100' : pkg.id.includes('master') ? '50' : '30'} Rank</span>
+                                )}
+                                
+                                <div className="p-4 flex flex-col items-center text-center">
+                                  <div className="w-10 h-10 bg-zinc-950/50 rounded-lg flex items-center justify-center mb-3 border border-zinc-800 group-hover:border-orange-500/30 transition-colors">
+                                    <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : 'fa-robot'} text-base ${pkg.id.includes('elite') ? 'text-blue-400' : pkg.id.includes('master') ? 'text-orange-400' : pkg.id.includes('grandmaster') ? 'text-purple-400' : 'text-orange-500'}`}></i>
                                   </div>
-                                  <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                    <i className="fas fa-check text-green-500"></i>
-                                    <span>{pkg.id.includes('elite') ? 'Instant Delivery' : pkg.id.includes('master') ? 'Priority Support' : 'VIP Support'}</span>
+                                  
+                                  <h3 className="text-white text-[11px] font-black uppercase tracking-tight mb-1">{pkg.unit}</h3>
+                                  <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mb-3 line-clamp-1">{pkg.description}</p>
+                                  
+                                  <div className="flex items-baseline gap-0.5 mb-4">
+                                    <span className="text-xl font-black text-white">{pkg.price}</span>
+                                    <span className="text-orange-500 font-black text-xs italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
                                   </div>
-                                </>
-                              ) : (
-                                <>
-                                  <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                    <i className="fas fa-check text-green-500"></i>
-                                    <span>{pkg.amount} Active Bots</span>
+                                  
+                                  <div className="space-y-1.5 w-full mb-4">
+                                    {pkg.id.includes('regional') ? (
+                                      <>
+                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                          <span>{pkg.id.includes('grandmaster') ? 'Lvl 7 Boost' : 'Lvl 6 Boost'}</span>
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                          <span>Top {pkg.id.includes('elite') ? '100' : pkg.id.includes('master') ? '50' : '30'} Rank</span>
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                          <span>{pkg.amount} Bots</span>
+                                        </div>
+                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                          <span>7 Days</span>
+                                        </div>
+                                      </>
+                                    )}
+                                    <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                      <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                      <span>100% Safe</span>
+                                    </div>
                                   </div>
-                                  <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                    <i className="fas fa-check text-green-500"></i>
-                                    <span>7 Days Duration</span>
+                                  
+                                  <div className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[8px] transition-all ${selectedPackage?.id === pkg.id ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/20' : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 hover:text-white'}`}>
+                                    {selectedPackage?.id === pkg.id ? 'SELECTED' : 'SELECT'}
                                   </div>
-                                  <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                    <i className="fas fa-check text-green-500"></i>
-                                    <span>24/7 Uptime</span>
-                                  </div>
-                                </>
-                              )}
-                              <div className="flex items-center gap-2 text-[11px] font-bold text-zinc-400 uppercase">
-                                <i className="fas fa-check text-green-500"></i>
-                                <span>100% Safe Method</span>
+                                </div>
                               </div>
-                            </div>
-                            
-                            <div className={`w-full py-4 rounded-xl font-black uppercase tracking-widest text-xs transition-all ${selectedPackage?.id === pkg.id ? 'bg-orange-500 text-black' : 'bg-zinc-800 text-white hover:bg-zinc-700'}`}>
-                              {selectedPackage?.id === pkg.id ? 'SELECTED' : (pkg.id.includes('bots') ? 'Select Bots' : 'Select Package')}
-                            </div>
+                            ))}
                           </div>
                         </div>
                       ))}
