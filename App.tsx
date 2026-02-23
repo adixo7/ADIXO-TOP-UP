@@ -482,7 +482,7 @@ const App: React.FC = () => {
                       </div>
                       <div className="aspect-[16/9] overflow-hidden bg-zinc-950 relative">
                         <img 
-                          src={'/ai-bots-banner.png'} 
+                          src={'/images/glory-bots-cover.png'} 
                           alt={proBot.unit} 
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" 
                         />
