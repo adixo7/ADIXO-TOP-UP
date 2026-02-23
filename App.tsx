@@ -480,7 +480,7 @@ const App: React.FC = () => {
                     </div>
                     <div className="aspect-[16/9] overflow-hidden bg-zinc-950 relative">
                       <img 
-                        src={proBot.image || '/images/glory-bots-cover.jpg'} 
+                        src={proBot.image || '/glory-bots.png'} 
                         alt={proBot.unit} 
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" 
                       />
@@ -491,18 +491,18 @@ const App: React.FC = () => {
                           <i className="fas fa-robot text-orange-500 text-sm"></i>
                           <p className="text-orange-500 text-[10px] font-black uppercase tracking-[0.3em]">Advanced AI Systems</p>
                         </div>
-                        <h3 className="text-white text-2xl md:text-3xl font-black uppercase italic tracking-tighter leading-none group-hover:text-orange-400 transition-colors mb-2">
+                        <h3 className="text-white text-xl md:text-2xl font-black uppercase italic tracking-tighter leading-none group-hover:text-orange-400 transition-colors mb-2">
                           {proBot.unit}
                         </h3>
-                        <p className="text-zinc-400 text-xs font-bold uppercase tracking-wide line-clamp-2">
-                          Unlock all regional boost and bot hire packages including Regional Elite, Master, and Grandmaster.
+                        <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-wide line-clamp-2">
+                          LEVEL UP YOUR GUILD WITH AI AUTOMATED GUILD BOTS
                         </p>
                       </div>
                     </div>
                     
                     <div className="p-6 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
                       <div className="flex flex-col">
-                        <span className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Starting From</span>
+                        <span className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">SALE</span>
                         <span className="text-orange-500 font-black text-xl italic uppercase">${proBot.price}</span>
                       </div>
                       <div className="flex items-center gap-3 bg-orange-600/10 px-4 py-2 rounded-xl group-hover:bg-orange-600 transition-all duration-300">
