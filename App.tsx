@@ -240,6 +240,7 @@ const App: React.FC = () => {
       amount: selectedPackage.amount,
       unit: selectedPackage.unit,
       price: selectedPackage.price,
+      currency: selectedPackage.currency,
       paymentMethod: selectedPayment.name,
       date: orderTime,
       timestamp: now,
@@ -256,12 +257,14 @@ const App: React.FC = () => {
     }, FIVE_MINUTES);
 
     const packageName = `${selectedPackage.amount} ${selectedPackage.unit}`;
+    const currencySymbol = selectedPackage.currency === 'USD' ? '$' : '৳';
     const messageTemplate = `✨ NEW TOP-UP ORDER ✨
 --------------------------
 📦 Order ID: ${orderId}
 🎮 Game: ${selectedGame.name}
 👤 Player ID: ${playerId}
 💎 Package: ${packageName}
+💰 Price: ${currencySymbol}${selectedPackage.price}
 💳 Method: ${selectedPayment.name}
 🔑 TrxID: ${trxId}
 ⏰ Time: ${orderTime}
@@ -286,23 +289,11 @@ const App: React.FC = () => {
   const searchedPackages = GAMES.flatMap(game => 
     game.packages.map(pkg => ({ ...pkg, gameName: game.name, gameId: game.id, gameImage: game.image }))
   ).filter(pkg => 
-    pkg.unit.toLowerCase().includes(searchTerm.toLowerCase())
+    pkg.unit.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (pkg.description || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const groupedPackages: Record<string, Package[]> = (selectedGame?.packages || []).reduce((acc: Record<string, Package[]>, pkg) => {
-    if (selectedGame?.id === 'ai-bots' && pkg.id === 'ff-glory-bots') {
-      return {
-        'REGIONAL BOOST': [
-          { id: 'regional-elite', amount: 1, unit: 'REGIONAL ELITE', price: 14, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 6 + Region Top 100', image: '/assets/Screenshot_2026-02-22_173818_1771878616972.png' },
-          { id: 'regional-master', amount: 1, unit: 'REGIONAL MASTER', price: 18, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 6 + Region Top 50', isPopular: true, image: '/assets/Screenshot_2026-02-22_173818_1771878616972.png' },
-          { id: 'regional-grandmaster', amount: 1, unit: 'REGIONAL GRANDMASTER', price: 26, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 7 + Region Top 30', image: '/assets/Screenshot_2026-02-22_173818_1771878616972.png' }
-        ],
-        'BOTS HIRE': [
-          { id: 'starter-bots', amount: 2, unit: 'STARTER BOTS', price: 11, currency: 'USD', category: 'BOTS HIRE', description: '2 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878616973.png' },
-          { id: 'pro-bots', amount: 4, unit: 'PRO BOTS', price: 20, currency: 'USD', category: 'BOTS HIRE', description: '4 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878616973.png' }
-        ]
-      };
-    }
     const cat = pkg.category || 'GENERAL';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(pkg);
@@ -393,7 +384,7 @@ const App: React.FC = () => {
                             <div className="text-[8px] bg-orange-600 text-white px-2 py-0.5 rounded font-black uppercase">{pkg.gameName}</div>
                             <span className="text-[10px] font-black text-white uppercase tracking-tight">{pkg.unit}</span>
                           </div>
-                          <span className="text-orange-500 font-black text-xs">৳{pkg.price}</span>
+                          <span className="text-orange-500 font-black text-xs">{pkg.currency === 'USD' ? '$' : '৳'}{pkg.price}</span>
                         </div>
                       ))}
                     </div>
@@ -431,7 +422,7 @@ const App: React.FC = () => {
                         <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest truncate">{trx.amount} {trx.unit}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-orange-500 text-[10px] font-black italic">৳{trx.price}</p>
+                        <p className="text-orange-500 text-[10px] font-black italic">{trx.currency === 'USD' ? '$' : '৳'}{trx.price}</p>
                       </div>
                    </div>
                  ))}

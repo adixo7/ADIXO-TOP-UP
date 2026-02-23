@@ -179,7 +179,11 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Account ID / Details',
     description: 'Advanced AI Bots for your gaming experience.',
     packages: [
-      { id: 'ff-glory-bots', amount: 1, unit: 'FREE FIRE GUILD GLORY', price: 0, currency: 'BDT', category: 'AI BOTS', image: '/images/glory-bots-cover.jpg' }
+      { id: 'regional-elite', amount: 1, unit: 'REGIONAL ELITE', price: 14, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 6 + Region Top 100', image: '/assets/Screenshot_2026-02-22_173818_1771878989302.png' },
+      { id: 'regional-master', amount: 1, unit: 'REGIONAL MASTER', price: 18, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 6 + Region Top 50', isPopular: true, image: '/assets/Screenshot_2026-02-22_173818_1771878989302.png' },
+      { id: 'regional-grandmaster', amount: 1, unit: 'REGIONAL GRANDMASTER', price: 26, currency: 'USD', category: 'REGIONAL BOOST', description: 'Guild Lvl 7 + Region Top 30', image: '/assets/Screenshot_2026-02-22_173818_1771878989302.png' },
+      { id: 'starter-bots', amount: 2, unit: 'STARTER BOTS', price: 11, currency: 'USD', category: 'BOTS HIRE', description: '2 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878989303.png' },
+      { id: 'pro-bots', amount: 4, unit: 'PRO BOTS', price: 20, currency: 'USD', category: 'BOTS HIRE', description: '4 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878989303.png' }
     ]
   },
   {

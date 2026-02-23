@@ -48,6 +48,7 @@ export interface Transaction {
   amount: number;
   unit: string;
   price: number;
+  currency?: string;
   paymentMethod: string;
   date: string; // Display string
   timestamp: number; // For status calculation
