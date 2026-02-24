@@ -300,7 +300,7 @@ const App: React.FC = () => {
     return acc;
   }, {} as Record<string, Package[]>);
 
-  const categorySortOrder = ['GLORY PACKAGE', 'HIRE BOTS', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
+  const categorySortOrder = ['MYSTERY BOX', 'GLORY PACKAGE', 'HIRE BOTS', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
   const sortedCategoryKeys = Object.keys(groupedPackages).sort((a, b) => {
     const indexA = categorySortOrder.indexOf(a);
     const indexB = categorySortOrder.indexOf(b);
@@ -449,6 +449,60 @@ const App: React.FC = () => {
                 <p className="text-zinc-500 font-bold uppercase tracking-widest text-[8px] md:text-[10px]">No matches found.</p>
               </div>
             )}
+          </section>
+
+          <section className="relative">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
+                <span className="w-1 h-4 md:h-5 bg-purple-600 rounded-full"></span> 
+                MYSTERY BOX
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-4">
+              {(() => {
+                const game = GAMES.find(g => g.id === 'ai-bots');
+                const mysteryPackages = game?.packages.filter(p => p.category === 'MYSTERY BOX') || [];
+                
+                return mysteryPackages.map(pkg => (
+                  <div 
+                    key={pkg.id} 
+                    className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-purple-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(168,85,247,0.3)] relative"
+                    onClick={() => { 
+                      setSelectedGame(game || null); 
+                      setSelectedPackage(pkg);
+                      setActiveTab('games'); 
+                    }}
+                  >
+                    <div className="aspect-square overflow-hidden bg-zinc-950 relative">
+                      <div className="absolute inset-0 flex items-center justify-center p-4">
+                        <i className={`fas fa-box-open text-purple-500 text-4xl md:text-6xl animate-bounce duration-1000`}></i>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
+                      
+                      <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
+                        <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-purple-400 transition-colors mb-0.5">
+                          {pkg.unit}
+                        </h3>
+                        <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
+                          {pkg.description}
+                        </p>
+                      </div>
+                      
+                      <div className="absolute top-2 right-2 bg-purple-600 text-white text-[8px] font-black px-2 py-1 rounded-md">
+                        ${pkg.price}
+                      </div>
+                    </div>
+                    
+                    <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-purple-500/10 flex items-center justify-between">
+                      <span className="text-purple-500 font-black text-[8px] md:text-[10px] italic uppercase">MYSTERY</span>
+                      <div className="flex items-center gap-1.5 md:gap-2 bg-purple-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-purple-600 transition-all duration-300">
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">Select</span>
+                      </div>
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
           </section>
 
           <section className="relative">

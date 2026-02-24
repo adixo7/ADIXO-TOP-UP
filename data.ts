@@ -183,7 +183,10 @@ export const GAMES: Game[] = [
       { id: 'regional-master', amount: 1, unit: 'REGIONAL MASTER', price: 18, currency: 'USD', category: 'GLORY PACKAGE', description: 'Guild Lvl 6 + Region Top 50', isPopular: true, image: '/assets/Screenshot_2026-02-22_173818_1771878989302.png' },
       { id: 'regional-grandmaster', amount: 1, unit: 'REGIONAL GRANDMASTER', price: 26, currency: 'USD', category: 'GLORY PACKAGE', description: 'Guild Lvl 7 + Region Top 30', image: '/assets/Screenshot_2026-02-22_173818_1771878989302.png' },
       { id: 'starter-bots', amount: 2, unit: 'STARTER BOTS', price: 11, currency: 'USD', category: 'HIRE BOTS', description: '2 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878989303.png' },
-      { id: 'pro-bots', amount: 4, unit: 'GLORY BOTS', price: 20, currency: 'USD', category: 'HIRE BOTS', description: '4 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878989303.png' }
+      { id: 'pro-bots', amount: 4, unit: 'GLORY BOTS', price: 20, currency: 'USD', category: 'HIRE BOTS', description: '4 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878989303.png' },
+      { id: 'mystery-basic', amount: 4, unit: 'BASIC MYSTERY BOX', price: 2, currency: 'USD', category: 'MYSTERY BOX', description: '4 Bots | Glory: 50k - 370k | Instant Delivery', image: '/images/mystery-box-basic.png' },
+      { id: 'mystery-epic', amount: 4, unit: 'EPIC MYSTERY BOX', price: 4, currency: 'USD', category: 'MYSTERY BOX', description: '4 Bots | Glory: 350k - 1.2M | Instant Delivery', image: '/images/mystery-box-epic.png' },
+      { id: 'mystery-super', amount: 4, unit: 'SUPER MYSTERY BOX', price: 8, currency: 'USD', category: 'MYSTERY BOX', description: '4 Bots | Glory: 1.2M - 3.4M | Instant Delivery', image: '/images/mystery-box-super.png' }
     ]
   },
   {
