@@ -475,9 +475,12 @@ const App: React.FC = () => {
                         setActiveTab('games'); 
                       }}
                     >
-                      <div className="absolute top-4 right-4 z-20">
+                      <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 items-start">
+                        <span className="bg-orange-600 text-white text-[8px] font-black px-2 py-0.5 rounded-sm uppercase tracking-widest">
+                          PRO
+                        </span>
                         <span className="bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest animate-pulse">
-                          Pro Version
+                          VERSION
                         </span>
                       </div>
                       <div className="aspect-[16/9] overflow-hidden bg-zinc-950 relative">
