@@ -9,6 +9,7 @@ import PaymentGateway from './components/PaymentGateway';
 import ChatWidget from './components/ChatWidget';
 import Features from './components/Features';
 import DisclaimerPopup from './components/DisclaimerPopup';
+import CouponRedeem from './components/CouponRedeem';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -634,6 +635,9 @@ const App: React.FC = () => {
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
+                    
+                    <CouponRedeem onRedeem={(code) => console.log('Redeeming coupon:', code)} />
+
                     {selectedGame.id === 'pc-games' && (
                       <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">
                         * Note: We will send your purchased game's account ID and password to this Email or WhatsApp number.
