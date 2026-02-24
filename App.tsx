@@ -493,18 +493,18 @@ const App: React.FC = () => {
                             <i className="fas fa-robot text-orange-500 text-sm"></i>
                             <p className="text-orange-500 text-[10px] font-black uppercase tracking-[0.3em]">Advanced AI Systems</p>
                           </div>
-                          <h3 className="text-white text-xl md:text-2xl font-black uppercase italic tracking-tighter leading-none group-hover:text-orange-400 transition-colors mb-2">
+                          <h3 className="text-white text-base md:text-lg font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-1">
                             {proBot.unit}
                           </h3>
-                          <p className="text-zinc-400 text-[10px] font-bold uppercase tracking-wide line-clamp-2">
+                          <p className="text-zinc-400 text-[8px] font-bold uppercase tracking-wide line-clamp-2">
                             LEVEL UP YOUR GUILD WITH AI AUTOMATED GUILD BOTS
                           </p>
                         </div>
                       </div>
                       
-                      <div className="p-6 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
+                      <div className="p-4 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
                         <div className="flex flex-col">
-                          <span className="text-orange-500 font-black text-sm italic uppercase">100% SECURE</span>
+                          <span className="text-orange-500 font-black text-xs italic uppercase">SAFE</span>
                         </div>
                         <div className="flex items-center gap-3 bg-orange-600/10 px-4 py-2 rounded-xl group-hover:bg-orange-600 transition-all duration-300">
                           <span className="text-white font-black text-xs uppercase tracking-widest group-hover:translate-x-[-4px] transition-transform">View All</span>
