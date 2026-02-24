@@ -458,7 +458,7 @@ const App: React.FC = () => {
                 AI BOTS
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {(() => {
                 const game = GAMES.find(g => g.id === 'ai-bots');
                 const proBot = game?.packages.find(p => p.id === 'pro-bots');
@@ -473,15 +473,15 @@ const App: React.FC = () => {
                       setActiveTab('games'); 
                     }}
                   >
-                    <div className="absolute top-4 left-4 z-20 flex flex-col items-start scale-90 origin-top-left">
-                      <div className="bg-orange-600 text-white text-[10px] font-black px-3 py-1 rounded-sm uppercase tracking-widest shadow-lg">
+                    <div className="absolute top-3 left-3 z-20 flex flex-col items-start scale-[0.8] origin-top-left">
+                      <div className="bg-orange-600 text-white text-[9px] font-black px-2 py-0.5 rounded-sm uppercase tracking-widest shadow-lg">
                         PRO
                       </div>
-                      <div className="bg-zinc-900/90 backdrop-blur-sm border border-orange-500/50 text-white text-[12px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] -mt-1 shadow-xl">
+                      <div className="bg-zinc-900/90 backdrop-blur-sm border border-orange-500/50 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-[0.2em] -mt-1 shadow-xl">
                         VERSION
                       </div>
                     </div>
-                    <div className="aspect-[16/9] overflow-hidden bg-zinc-950 relative">
+                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
                       <img 
                         src={'/images/glory-bots-cover.png'} 
                         alt={proBot.unit} 
@@ -489,27 +489,27 @@ const App: React.FC = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/40 to-transparent"></div>
                       
-                      <div className="absolute bottom-6 left-6 right-6">
-                        <div className="flex items-center gap-2 mb-2">
-                          <i className="fas fa-robot text-orange-500 text-sm"></i>
-                          <p className="text-orange-500 text-[10px] font-black uppercase tracking-[0.3em]">Advanced AI Systems</p>
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="flex items-center gap-2 mb-1">
+                          <i className="fas fa-robot text-orange-500 text-[10px]"></i>
+                          <p className="text-orange-500 text-[8px] font-black uppercase tracking-[0.3em]">Advanced AI Systems</p>
                         </div>
-                        <h3 className="text-white text-base md:text-lg font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-1">
+                        <h3 className="text-white text-sm md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-0.5">
                           {proBot.unit}
                         </h3>
-                        <p className="text-zinc-400 text-[8px] font-bold uppercase tracking-wide line-clamp-2">
+                        <p className="text-zinc-400 text-[7px] font-bold uppercase tracking-wide line-clamp-1">
                           LEVEL UP YOUR GUILD WITH AI AUTOMATED GUILD BOTS
                         </p>
                       </div>
                     </div>
                     
-                    <div className="p-4 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
+                    <div className="p-3 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
                       <div className="flex flex-col">
-                        <span className="text-orange-500 font-black text-xs italic uppercase">SAFE</span>
+                        <span className="text-orange-500 font-black text-sm italic uppercase">SAFE</span>
                       </div>
-                      <div className="flex items-center gap-3 bg-orange-600/10 px-4 py-2 rounded-xl group-hover:bg-orange-600 transition-all duration-300">
-                        <span className="text-white font-black text-xs uppercase tracking-widest group-hover:translate-x-[-4px] transition-transform">View All</span>
-                        <i className="fas fa-arrow-right text-xs text-orange-500 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                      <div className="flex items-center gap-2 bg-orange-600/10 px-3 py-1.5 rounded-lg group-hover:bg-orange-600 transition-all duration-300">
+                        <span className="text-white font-black text-[10px] uppercase tracking-widest group-hover:translate-x-[-2px] transition-transform">View All</span>
+                        <i className="fas fa-arrow-right text-[10px] text-orange-500 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                       </div>
                     </div>
                   </div>
