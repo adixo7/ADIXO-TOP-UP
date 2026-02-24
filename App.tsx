@@ -32,6 +32,7 @@ const App: React.FC = () => {
   const [newPassword, setNewPassword] = useState('');
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [updateMsg, setUpdateMsg] = useState<{type: 'success' | 'error', text: string} | null>(null);
+  const [isCouponApplied, setIsCouponApplied] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -294,10 +295,26 @@ const App: React.FC = () => {
     (pkg.description || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleRedeemCoupon = (code: string) => {
+    if (code.toUpperCase() === 'ASMYSTERY7') {
+      setIsCouponApplied(true);
+      return { success: true, message: 'COUPON APPLIED SUCCESSFUL! ALL MYSTERY BOX PRICES DROPPED BY 10%' };
+    } else {
+      return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
+    }
+  };
+
   const groupedPackages: Record<string, Package[]> = (selectedGame?.packages || []).reduce((acc: Record<string, Package[]>, pkg) => {
     const cat = pkg.category || 'GENERAL';
     if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(pkg);
+    
+    // Apply coupon discount if applicable
+    let finalPkg = { ...pkg };
+    if (isCouponApplied && cat === 'MYSTERY BOX') {
+      finalPkg.price = Math.floor(pkg.price * 0.9);
+    }
+    
+    acc[cat].push(finalPkg);
     return acc;
   }, {} as Record<string, Package[]>);
 
@@ -636,7 +653,7 @@ const App: React.FC = () => {
                       />
                     </div>
                     
-                    <CouponRedeem onRedeem={(code) => console.log('Redeeming coupon:', code)} />
+                      <CouponRedeem onRedeem={handleRedeemCoupon} />
 
                     {selectedGame.id === 'pc-games' && (
                       <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">

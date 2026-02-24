@@ -1,11 +1,17 @@
 import React from 'react';
 
 interface CouponRedeemProps {
-  onRedeem: (code: string) => void;
+  onRedeem: (code: string) => { success: boolean; message: string };
 }
 
 const CouponRedeem: React.FC<CouponRedeemProps> = ({ onRedeem }) => {
   const [couponCode, setCouponCode] = React.useState('');
+  const [status, setStatus] = React.useState<{ success: boolean; message: string } | null>(null);
+
+  const handleApply = () => {
+    const result = onRedeem(couponCode);
+    setStatus(result);
+  };
 
   return (
     <div className="relative group">
@@ -22,17 +28,25 @@ const CouponRedeem: React.FC<CouponRedeemProps> = ({ onRedeem }) => {
           <input
             type="text"
             value={couponCode}
-            onChange={(e) => setCouponCode(e.target.value)}
+            onChange={(e) => {
+              setCouponCode(e.target.value);
+              setStatus(null);
+            }}
             placeholder="ENTER COUPON CODE"
             className="flex-1 bg-zinc-900/50 border border-zinc-800 rounded-xl px-4 py-2.5 text-white text-[10px] font-bold tracking-widest focus:outline-none focus:border-orange-500/50 transition-colors placeholder:text-zinc-700 uppercase"
           />
           <button
-            onClick={() => onRedeem(couponCode)}
+            onClick={handleApply}
             className="bg-orange-600 hover:bg-orange-500 text-white px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all active:scale-95 shadow-lg shadow-orange-600/20"
           >
             Apply
           </button>
         </div>
+        {status && (
+          <p className={`mt-3 text-[9px] font-black uppercase tracking-widest animate-in fade-in slide-in-from-top-1 duration-300 ${status.success ? 'text-green-500' : 'text-red-500'}`}>
+            {status.message}
+          </p>
+        )}
       </div>
     </div>
   );
