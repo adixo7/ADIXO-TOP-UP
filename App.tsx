@@ -311,7 +311,8 @@ const App: React.FC = () => {
     // Apply coupon discount if applicable
     let finalPkg = { ...pkg };
     if (isCouponApplied && cat === 'MYSTERY BOX') {
-      finalPkg.price = Math.floor(pkg.price * 0.9);
+      finalPkg.oldPrice = pkg.price;
+      finalPkg.price = Number((pkg.price * 0.9).toFixed(2));
     }
     
     acc[cat].push(finalPkg);
@@ -694,9 +695,12 @@ const App: React.FC = () => {
                                   <h3 className="text-white text-[11px] font-black uppercase tracking-tight mb-1">{pkg.unit}</h3>
                                   <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mb-3 line-clamp-1">{pkg.description}</p>
                                   
-                                  <div className="flex items-baseline gap-0.5 mb-4">
+                                  <div className="flex items-baseline gap-1.5 mb-4">
                                     <span className="text-xl font-black text-white">{pkg.price}</span>
                                     <span className="text-orange-500 font-black text-xs italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
+                                    {pkg.oldPrice && <span className="text-zinc-500 text-[10px] line-through decoration-red-500/50 italic ml-1">
+                                      {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
+                                    </span>}
                                   </div>
                                   
                                   <div className="space-y-1.5 w-full mb-4">
@@ -810,14 +814,16 @@ const App: React.FC = () => {
                                   )}
                                 </div>
                                 <div className="flex flex-col items-end shrink-0 relative z-10">
-                                  <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
-                                    ৳{pkg.price}
-                                  </span>
-                                  {pkg.oldPrice && (
-                                    <span className={`text-[10px] line-through ${selectedPackage?.id === pkg.id ? 'text-white/50' : 'text-zinc-500'}`}>
-                                      ৳{pkg.oldPrice}
+                                  <div className="flex items-center gap-1.5">
+                                    <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-orange-500 group-hover:text-orange-400'}`}>
+                                      ৳{pkg.price}
                                     </span>
-                                  )}
+                                    {pkg.oldPrice && (
+                                      <span className={`text-[10px] line-through decoration-red-500/50 italic ${selectedPackage?.id === pkg.id ? 'text-white/50' : 'text-zinc-500'}`}>
+                                        ৳{pkg.oldPrice}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
                                 
                                 {/* Decorative element background */}
