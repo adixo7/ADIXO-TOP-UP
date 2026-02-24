@@ -678,7 +678,12 @@ const App: React.FC = () => {
                             {groupedPackages[category].map((pkg) => (
                               <div 
                                 key={pkg.id} 
-                                className={`relative group cursor-pointer bg-zinc-900/40 rounded-xl overflow-hidden border ${pkg.isPopular ? 'border-orange-500/50 shadow-lg' : 'border-zinc-800/50'} transition-all duration-300 hover:border-orange-500/50 ${selectedPackage?.id === pkg.id ? 'ring-1 ring-orange-500 bg-zinc-900/80' : ''}`}
+                                className={`relative group cursor-pointer bg-zinc-900/40 rounded-xl overflow-hidden border transition-all duration-300 ${
+                                  pkg.id === 'mystery-basic' ? 'border-sky-500/30 hover:border-sky-500/60' :
+                                  pkg.id === 'mystery-epic' ? 'border-red-500/30 hover:border-red-500/60' :
+                                  pkg.id === 'mystery-super' ? 'border-purple-500/30 hover:border-purple-500/60' :
+                                  pkg.isPopular ? 'border-orange-500/50 shadow-lg' : 'border-zinc-800/50'
+                                } hover:border-orange-500/50 ${selectedPackage?.id === pkg.id ? 'ring-1 ring-orange-500 bg-zinc-900/80' : ''}`}
                                 onClick={() => setSelectedPackage(pkg)}
                               >
                                 {pkg.isPopular && (
@@ -688,8 +693,21 @@ const App: React.FC = () => {
                                 )}
                                 
                                 <div className="p-4 flex flex-col items-center text-center">
-                                  <div className="w-10 h-10 bg-zinc-950/50 rounded-lg flex items-center justify-center mb-3 border border-zinc-800 group-hover:border-orange-500/30 transition-colors">
-                                    <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : 'fa-robot'} text-base ${pkg.id.includes('elite') ? 'text-blue-400' : pkg.id.includes('master') ? 'text-orange-400' : pkg.id.includes('grandmaster') ? 'text-purple-400' : 'text-orange-500'}`}></i>
+                                  <div className={`w-10 h-10 bg-zinc-950/50 rounded-lg flex items-center justify-center mb-3 border transition-colors ${
+                                    pkg.id === 'mystery-basic' ? 'border-sky-500/50 group-hover:border-sky-400' :
+                                    pkg.id === 'mystery-epic' ? 'border-red-500/50 group-hover:border-red-400' :
+                                    pkg.id === 'mystery-super' ? 'border-purple-500/50 group-hover:border-purple-400' :
+                                    'border-zinc-800 group-hover:border-orange-500/30'
+                                  }`}>
+                                    <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : 'fa-robot'} text-base ${
+                                      pkg.id === 'mystery-basic' ? 'text-sky-400' :
+                                      pkg.id === 'mystery-epic' ? 'text-red-400' :
+                                      pkg.id === 'mystery-super' ? 'text-purple-400' :
+                                      pkg.id.includes('elite') ? 'text-blue-400' : 
+                                      pkg.id.includes('master') ? 'text-orange-400' : 
+                                      pkg.id.includes('grandmaster') ? 'text-purple-400' : 
+                                      'text-orange-500'
+                                    }`}></i>
                                   </div>
                                   
                                   <h3 className="text-white text-[11px] font-black uppercase tracking-tight mb-1">{pkg.unit}</h3>
@@ -723,7 +741,12 @@ const App: React.FC = () => {
                                         </div>
                                         <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
                                           <i className="fas fa-check text-green-500/70 text-[6px]"></i>
-                                          <span>7 Days</span>
+                                          <span>{
+                                            pkg.id === 'mystery-basic' ? '50k - 370k glory' :
+                                            pkg.id === 'mystery-epic' ? '350k - 1.2M glory' :
+                                            pkg.id === 'mystery-super' ? '1.2M - 3.4M glory' :
+                                            '7 Days'
+                                          }</span>
                                         </div>
                                       </>
                                     )}
