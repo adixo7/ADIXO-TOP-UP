@@ -618,10 +618,10 @@ const App: React.FC = () => {
               
               <div className="grid lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-1 space-y-8">
-                  <div className="bg-zinc-900 rounded-[2rem] p-8 border border-zinc-800 shadow-xl overflow-hidden relative">
-                    <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-32 object-cover opacity-20 grayscale" />
-                    <div className="relative pt-12">
-                      <div className="w-24 h-24 rounded-2xl overflow-hidden border-2 border-orange-500 mb-6 shadow-xl shadow-orange-500/20 bg-zinc-950">
+                    <div className="bg-zinc-900 rounded-[2rem] p-6 border border-zinc-800 shadow-xl overflow-hidden relative">
+                    <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-24 object-cover opacity-20 grayscale" />
+                    <div className="relative pt-8">
+                      <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-orange-500 mb-4 shadow-xl shadow-orange-500/20 bg-zinc-950">
                         <img 
                            src={selectedGame.image} 
                            alt={selectedGame.name} 
@@ -631,25 +631,25 @@ const App: React.FC = () => {
                            }}
                         />
                       </div>
-                      <h2 className="text-3xl font-black text-white uppercase italic tracking-tighter mb-2">{selectedGame.name}</h2>
-                      <p className="text-orange-400 text-xs font-bold uppercase tracking-widest mb-6">{selectedGame.category}</p>
-                      <p className="text-zinc-400 text-sm leading-relaxed mb-8">{selectedGame.description}</p>
+                      <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter mb-1">{selectedGame.name}</h2>
+                      <p className="text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-4">{selectedGame.category}</p>
+                      <p className="text-zinc-400 text-xs leading-relaxed mb-4">{selectedGame.description}</p>
                     </div>
                   </div>
 
                   <div className="space-y-4 px-2">
                     <h3 className="text-xl font-bold text-white">
-                      {selectedGame.id === 'pc-games' ? 'Email / Whatsapp number' : 'Player ID / Username'}
+                      {selectedGame.id === 'pc-games' ? 'Email / Whatsapp number' : selectedGame.id === 'ai-bots' ? 'GUILD ID' : 'Player ID / Username'}
                     </h3>
                     <div className="relative group">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
-                        <i className={`fas ${selectedGame.id === 'pc-games' ? 'fa-envelope' : 'fa-gamepad'} text-xl`}></i>
+                        <i className={`fas ${selectedGame.id === 'pc-games' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : 'fa-gamepad'} text-xl`}></i>
                       </div>
                       <input 
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder={selectedGame.id === 'pc-games' ? 'Enter Email or Whatsapp Number' : selectedGame.idPlaceholder}
+                        placeholder={selectedGame.id === 'pc-games' ? 'Enter Email or Whatsapp Number' : selectedGame.id === 'ai-bots' ? 'ENTER GUILD ID' : selectedGame.idPlaceholder}
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
