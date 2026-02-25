@@ -134,19 +134,22 @@ const App: React.FC = () => {
     return () => {
       Object.values(timerRefs.current).forEach(t => clearTimeout(t as any));
     };
-  }, [user]);
+  }, [user?.id]); // Use user.id as dependency for more stable effect
 
   const handleCompleteItem = (trxId: string) => {
-    setUser(currentUser => {
-      if (!currentUser) return null;
-      const storageKey = `adixo_transactions_${currentUser.id}`;
+    setTransactions(prev => {
+      const updated = prev.map(t => t.id === trxId ? { ...t, status: 'completed' as const } : t);
       
-      setTransactions(prev => {
-        const updated = prev.map(t => t.id === trxId ? { ...t, status: 'completed' as const } : t);
-        localStorage.setItem(storageKey, JSON.stringify(updated));
-        return updated;
+      // Get current user from state to construct key
+      setUser(currentUser => {
+        if (currentUser) {
+          const storageKey = `adixo_transactions_${currentUser.id}`;
+          localStorage.setItem(storageKey, JSON.stringify(updated));
+        }
+        return currentUser;
       });
-      return currentUser;
+      
+      return updated;
     });
   };
 
@@ -265,9 +268,11 @@ const App: React.FC = () => {
     };
 
     const storageKey = `adixo_transactions_${user.id}`;
-    const updated = [newTransaction, ...transactions];
-    setTransactions(updated);
-    localStorage.setItem(storageKey, JSON.stringify(updated));
+    setTransactions(prev => {
+      const updated = [newTransaction, ...prev];
+      localStorage.setItem(storageKey, JSON.stringify(updated));
+      return updated;
+    });
     
     timerRefs.current[orderId] = setTimeout(() => {
       handleCompleteItem(orderId);
