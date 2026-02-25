@@ -16,6 +16,11 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
   const [copySuccess, setCopySuccess] = useState(false);
 
   const isBinance = method.id === 'binance';
+  const exchangeRate = 126;
+  const displayPrice = isBinance 
+    ? (pkg.currency === 'USD' ? pkg.price : pkg.price / exchangeRate)
+    : (pkg.currency === 'BDT' ? pkg.price : pkg.price * exchangeRate);
+  
   const merchantNumber = isBinance ? "1118923099" : "01884-699655";
   const primaryColor = isBinance ? '#F3BA2F' : '#D12053';
   const secondaryColor = isBinance ? 'rgba(243, 186, 47, 0.1)' : 'rgba(209, 32, 83, 0.1)';
@@ -45,7 +50,7 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
     { id: 1, text: "Open bKash App" },
     { id: 2, text: "Tap 'Scan QR'" },
     { id: 3, text: "Scan bKash QR" },
-    { id: 4, text: `Amount: ৳${pkg.price}` },
+    { id: 4, text: `Amount: ৳${displayPrice.toFixed(0)}` },
     { id: 5, text: "Enter PIN & Send" },
     { id: 6, text: "Submit TrxID Below" }
   ];
@@ -76,7 +81,9 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
             <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mb-0.5">TOTAL DUE</p>
             <div className="flex items-baseline gap-0.5 italic" style={{ color: primaryColor }}>
               <span className="text-xs font-black leading-none">{isBinance ? '$' : '৳'}</span>
-              <span className="text-lg font-black leading-none tracking-tighter">{pkg.price.toFixed(0)}</span>
+              <span className="text-lg font-black leading-none tracking-tighter">
+                {isBinance ? displayPrice.toFixed(2) : displayPrice.toFixed(0)}
+              </span>
             </div>
           </div>
           <div className="bg-[#121214] p-2 rounded-xl border border-zinc-800/60 flex flex-col items-center text-center">

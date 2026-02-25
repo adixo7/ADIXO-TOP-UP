@@ -234,6 +234,13 @@ const App: React.FC = () => {
       hour: '2-digit', minute: '2-digit', second: '2-digit' 
     });
 
+    const exchangeRate = 126;
+    const displayPrice = selectedPayment.id === 'binance'
+      ? (selectedPackage.currency === 'USD' ? selectedPackage.price : selectedPackage.price / exchangeRate)
+      : (selectedPackage.currency === 'BDT' ? selectedPackage.price : selectedPackage.price * exchangeRate);
+    const displayCurrency = selectedPayment.id === 'binance' ? 'USD' : 'BDT';
+    const currencySymbol = displayCurrency === 'USD' ? '$' : '৳';
+
     const newTransaction: Transaction = {
       id: orderId,
       gameId: selectedGame.id,
@@ -241,8 +248,8 @@ const App: React.FC = () => {
       playerId: playerId,
       amount: selectedPackage.amount,
       unit: selectedPackage.unit,
-      price: selectedPackage.price,
-      currency: selectedPackage.currency,
+      price: displayPrice,
+      currency: displayCurrency,
       paymentMethod: selectedPayment.name,
       date: orderTime,
       timestamp: now,
@@ -259,14 +266,13 @@ const App: React.FC = () => {
     }, FIVE_MINUTES);
 
     const packageName = `${selectedPackage.amount} ${selectedPackage.unit}`;
-    const currencySymbol = selectedPackage.currency === 'USD' ? '$' : '৳';
     const messageTemplate = `✨ NEW TOP-UP ORDER ✨
 --------------------------
 📦 Order ID: ${orderId}
 🎮 Game: ${selectedGame.name}
 👤 Player ID: ${playerId}
 💎 Package: ${packageName}
-💰 Price: ${currencySymbol}${selectedPackage.price}
+💰 Price: ${currencySymbol}${displayPrice.toFixed(selectedPayment.id === 'binance' ? 2 : 0)}
 💳 Method: ${selectedPayment.name}
 🔑 TrxID: ${trxId}
 ⏰ Time: ${orderTime}
