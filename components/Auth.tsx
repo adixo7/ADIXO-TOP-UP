@@ -22,7 +22,13 @@ const Auth: React.FC<AuthProps> = ({ onLogin, onClose, initialMode = 'login' }) 
    */
   const getStoredUsers = () => {
     const usersJson = localStorage.getItem('adixo_db_users');
-    return usersJson ? JSON.parse(usersJson) : {};
+    if (!usersJson) return {};
+    try {
+      return JSON.parse(usersJson);
+    } catch (e) {
+      console.error("Failed to parse users grid", e);
+      return {};
+    }
   };
 
   const saveUserToGrid = (email: string, userData: any) => {

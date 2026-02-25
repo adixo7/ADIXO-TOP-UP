@@ -174,8 +174,16 @@ const App: React.FC = () => {
       const storedUsersKey = 'adixo_db_users';
       const usersJson = localStorage.getItem(storedUsersKey);
       if (usersJson) {
-        const users = JSON.parse(usersJson);
-        const emailKey = user.email.toLowerCase();
+        let users;
+        try {
+          users = JSON.parse(usersJson);
+        } catch (e) {
+          setUpdateMsg({ type: 'error', text: 'Account grid corruption. Try again later.' });
+          setIsUpdatingPassword(false);
+          return;
+        }
+        
+        const emailKey = user.email.toLowerCase().trim();
         if (users[emailKey]) {
           // Verify old password first
           if (users[emailKey].password === oldPassword) {
