@@ -681,93 +681,98 @@ const App: React.FC = () => {
                             <span className="w-8 h-[1px] bg-orange-500/30"></span>
                           </h3>
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {groupedPackages[category].map((pkg) => (
-                              <div 
-                                key={pkg.id} 
-                                className={`relative group cursor-pointer bg-zinc-900/40 rounded-xl overflow-hidden border transition-all duration-300 ${
-                                  pkg.id === 'mystery-basic' ? 'border-sky-500/30 hover:border-sky-500/60' :
-                                  pkg.id === 'mystery-epic' ? 'border-red-500/30 hover:border-red-500/60' :
-                                  pkg.id === 'mystery-super' ? 'border-purple-500/30 hover:border-purple-500/60' :
-                                  pkg.isPopular ? 'border-orange-500/50 shadow-lg' : 'border-zinc-800/50'
-                                } hover:border-orange-500/50 ${selectedPackage?.id === pkg.id ? 'ring-1 ring-orange-500 bg-zinc-900/80' : ''}`}
-                                onClick={() => setSelectedPackage(pkg)}
-                              >
-                                {pkg.isPopular && (
-                                  <div className="absolute top-0 right-0 bg-orange-500 text-black text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10">
-                                    BEST
-                                  </div>
-                                )}
-                                
-                                <div className="p-4 flex flex-col items-center text-center">
-                                  <div className={`w-10 h-10 bg-zinc-950/50 rounded-lg flex items-center justify-center mb-3 border transition-colors ${
-                                    pkg.id === 'mystery-basic' ? 'border-sky-500/50 group-hover:border-sky-400' :
-                                    pkg.id === 'mystery-epic' ? 'border-red-500/50 group-hover:border-red-400' :
-                                    pkg.id === 'mystery-super' ? 'border-purple-500/50 group-hover:border-purple-400' :
-                                    'border-zinc-800 group-hover:border-orange-500/30'
-                                  }`}>
-                                    <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : 'fa-robot'} text-base ${
-                                      pkg.id === 'mystery-basic' ? 'text-sky-400' :
-                                      pkg.id === 'mystery-epic' ? 'text-red-400' :
-                                      pkg.id === 'mystery-super' ? 'text-purple-400' :
-                                      pkg.id.includes('elite') ? 'text-blue-400' : 
-                                      pkg.id.includes('master') ? 'text-orange-400' : 
-                                      pkg.id.includes('grandmaster') ? 'text-purple-400' : 
-                                      'text-orange-500'
-                                    }`}></i>
-                                  </div>
+                            {groupedPackages[category].map((pkg) => {
+                              const isMystery = category === 'MYSTERY BOX';
+                              const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
+                                                   pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
+                                                   pkg.id === 'mystery-super' ? { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', icon: 'text-purple-400', iconBg: 'border-purple-500/50', glow: 'shadow-[0_0_20px_rgba(168,85,247,0.15)]' } :
+                                                   { border: 'border-zinc-800/50', hover: 'hover:border-orange-500/50', icon: 'text-orange-500', iconBg: 'border-zinc-800', glow: '' };
+
+                              return (
+                                <div 
+                                  key={pkg.id} 
+                                  className={`relative group cursor-pointer bg-zinc-900/40 rounded-xl overflow-hidden border transition-all duration-500 ${
+                                    mysteryTheme.border
+                                  } ${mysteryTheme.hover} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''}`}
+                                  onClick={() => setSelectedPackage(pkg)}
+                                >
+                                  {pkg.isPopular && (
+                                    <div className="absolute top-0 right-0 bg-orange-500 text-black text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10">
+                                      BEST
+                                    </div>
+                                  )}
                                   
-                                  <h3 className="text-white text-[11px] font-black uppercase tracking-tight mb-1">{pkg.unit}</h3>
-                                  <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mb-3 line-clamp-1">{pkg.description}</p>
-                                  
-                                  <div className="flex items-baseline gap-1.5 mb-4">
-                                    <span className="text-xl font-black text-white">{pkg.price}</span>
-                                    <span className="text-orange-500 font-black text-xs italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
-                                    {pkg.oldPrice && <span className="text-zinc-500 text-[10px] line-through decoration-red-500/50 italic ml-1">
-                                      {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
-                                    </span>}
-                                  </div>
-                                  
-                                  <div className="space-y-1.5 w-full mb-4">
-                                    {pkg.id.includes('regional') ? (
-                                      <>
-                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
-                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
-                                          <span>{pkg.id.includes('grandmaster') ? 'Lvl 7 Boost' : 'Lvl 6 Boost'}</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
-                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
-                                          <span>Top {pkg.id.includes('elite') ? '100' : pkg.id.includes('master') ? '50' : '30'} Rank</span>
-                                        </div>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
-                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
-                                          <span>{pkg.amount} Bots</span>
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
-                                          <i className="fas fa-check text-green-500/70 text-[6px]"></i>
-                                          <span>{
-                                            pkg.id === 'mystery-basic' ? '50k - 370k glory' :
-                                            pkg.id === 'mystery-epic' ? '350k - 1.2M glory' :
-                                            pkg.id === 'mystery-super' ? '1.2M - 3.4M glory' :
-                                            '7 Days'
-                                          }</span>
-                                        </div>
-                                      </>
-                                    )}
-                                    <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
-                                      <i className="fas fa-check text-green-500/70 text-[6px]"></i>
-                                      <span>100% Safe</span>
+                                  <div className="p-4 flex flex-col items-center text-center">
+                                    <div className={`w-12 h-12 bg-zinc-950/80 rounded-2xl flex items-center justify-center mb-3 border transition-all duration-500 group-hover:scale-110 ${
+                                      mysteryTheme.iconBg
+                                    } ${isMystery ? 'group-hover:rotate-12 shadow-inner' : ''}`}>
+                                      <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : isMystery ? 'fa-box-open' : 'fa-robot'} text-xl ${
+                                        mysteryTheme.icon
+                                      } ${isMystery ? 'animate-pulse' : ''}`}></i>
+                                    </div>
+                                    
+                                    <h3 className={`text-white text-[11px] font-black uppercase tracking-tight mb-1 ${isMystery ? 'tracking-[0.1em]' : ''}`}>{pkg.unit}</h3>
+                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mb-3 line-clamp-1">{pkg.description}</p>
+                                    
+                                    <div className="flex items-baseline gap-1.5 mb-4">
+                                      <span className="text-xl font-black text-white">{pkg.price}</span>
+                                      <span className="text-orange-500 font-black text-xs italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
+                                      {pkg.oldPrice && <span className="text-zinc-500 text-[10px] line-through decoration-red-500/50 italic ml-1">
+                                        {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
+                                      </span>}
+                                    </div>
+                                    
+                                    <div className="space-y-1.5 w-full mb-4">
+                                      {pkg.id.includes('regional') ? (
+                                        <>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                            <span>{pkg.id.includes('grandmaster') ? 'Lvl 7 Boost' : 'Lvl 6 Boost'}</span>
+                                          </div>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                            <span>Top {pkg.id.includes('elite') ? '100' : pkg.id.includes('master') ? '50' : '30'} Rank</span>
+                                          </div>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className={`fas fa-check ${isMystery ? mysteryTheme.icon : 'text-green-500/70'} text-[6px]`}></i>
+                                            <span>{pkg.amount} Bots</span>
+                                          </div>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className={`fas fa-check ${isMystery ? mysteryTheme.icon : 'text-green-500/70'} text-[6px]`}></i>
+                                            <span>{
+                                              pkg.id === 'mystery-basic' ? '50k - 370k glory' :
+                                              pkg.id === 'mystery-epic' ? '350k - 1.2M glory' :
+                                              pkg.id === 'mystery-super' ? '1.2M - 3.4M glory' :
+                                              '7 Days'
+                                            }</span>
+                                          </div>
+                                        </>
+                                      )}
+                                      <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                        <i className={`fas fa-check ${isMystery ? mysteryTheme.icon : 'text-green-500/70'} text-[6px]`}></i>
+                                        <span>100% Safe</span>
+                                      </div>
+                                    </div>
+                                    
+                                    <div className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[8px] transition-all duration-300 ${selectedPackage?.id === pkg.id ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/40' : 'bg-zinc-800/50 text-zinc-400 group-hover:bg-zinc-800 group-hover:text-white'}`}>
+                                      {selectedPackage?.id === pkg.id ? 'READY TO ORDER' : 'SELECT BOX'}
                                     </div>
                                   </div>
-                                  
-                                  <div className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[8px] transition-all ${selectedPackage?.id === pkg.id ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/20' : 'bg-zinc-800/50 text-zinc-400 hover:bg-zinc-800 hover:text-white'}`}>
-                                    {selectedPackage?.id === pkg.id ? 'SELECTED' : 'SELECT'}
-                                  </div>
+
+                                  {/* Special Mystery Box Overlay Effects */}
+                                  {isMystery && (
+                                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none bg-gradient-to-br ${
+                                      pkg.id === 'mystery-basic' ? 'from-sky-500 to-transparent' :
+                                      pkg.id === 'mystery-epic' ? 'from-red-500 to-transparent' :
+                                      'from-purple-500 to-transparent'
+                                    }`}></div>
+                                  )}
                                 </div>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       ))}
