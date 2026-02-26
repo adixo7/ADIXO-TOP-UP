@@ -135,7 +135,7 @@ export const GAMES: Game[] = [
       { id: 'bs-lbw', amount: 1, unit: 'Lucky Bag Week', price: 124, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-vpo', amount: 1, unit: 'Valor Pre-Order Offer', price: 240, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-uslc', amount: 1, unit: 'Ultra Skin Lucky Chest', price: 59, currency: 'BDT', category: 'MEMBERSHIP' },
-      { id: 'bs-spe', amount: 1, unit: 'Strike Pass Elite', price: 390, oldPrice: 450, currency: 'BDT', category: 'MEMBERSHIP' },
+      { id: 'bs-spe', amount: 1, unit: 'Strike Pass Elite', price: 455, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-spp', amount: 1, unit: 'Strike Pass Premium', price: 1020, currency: 'BDT', category: 'MEMBERSHIP' },
       
       { id: 'bs-lup', amount: 1, unit: 'Level Up Pass', price: 235, currency: 'BDT', category: 'LEVEL UP PASS' },

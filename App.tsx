@@ -350,7 +350,7 @@ const App: React.FC = () => {
         'bs-2260': 1835,
         'bs-5800': 4580,
         'bs-lup': 230,
-        'bs-spe': 320,
+        'bs-spe': 390,
         'bs-spp': 930,
         'bs-uslc': 58,
         'bs-lbw': 125
