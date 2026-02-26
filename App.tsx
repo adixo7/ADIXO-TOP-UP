@@ -440,33 +440,6 @@ const App: React.FC = () => {
           </section>
 
 
-          {user && transactions.length > 0 && !searchTerm && (
-            <section className="bg-orange-600/5 border border-orange-500/20 rounded-[2.5rem] p-8 animate-in slide-in-from-left-4 duration-500">
-               <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                    <span className="w-1 h-5 bg-orange-600 rounded-full"></span> 
-                    Recent Activity
-                  </h2>
-                  <button onClick={() => setActiveTab('history')} className="text-orange-500 text-[9px] font-black uppercase tracking-widest hover:underline">Full Order History</button>
-               </div>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                 {transactions.slice(0, 3).map(trx => (
-                   <div key={trx.id} className="bg-zinc-900 border border-zinc-800/50 p-4 rounded-2xl flex items-center gap-4 group">
-                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${trx.status === 'processing' ? 'bg-amber-500/10 text-amber-500' : 'bg-green-500/10 text-green-500'}`}>
-                        <i className={`fas ${trx.status === 'processing' ? 'fa-sync fa-spin' : 'fa-check-circle'} text-sm`}></i>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-white text-xs font-black uppercase tracking-tight truncate">{trx.gameName}</p>
-                        <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest truncate">{trx.amount} {trx.unit}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-orange-500 text-[10px] font-black italic">{trx.currency === 'USD' ? '$' : '৳'}{trx.price}</p>
-                      </div>
-                   </div>
-                 ))}
-               </div>
-            </section>
-          )}
 
           <section>
             <div className="flex items-center justify-between mb-4 md:mb-6">
