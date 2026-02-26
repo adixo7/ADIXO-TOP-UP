@@ -201,7 +201,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, onClose, initialMode = 'login' }) 
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-zinc-800/50 text-center">
+        <div className="mt-8 pt-6 border-t border-zinc-800/50 text-center space-y-4">
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest">
             {isLogin ? "No identity found?" : "Already registered?"}
             <button 
@@ -212,6 +212,15 @@ const Auth: React.FC<AuthProps> = ({ onLogin, onClose, initialMode = 'login' }) 
               {isLogin ? 'Register' : 'Access Session'}
             </button>
           </p>
+
+          {isLogin && (
+            <div className="p-3 bg-zinc-900/50 border border-zinc-800/50 rounded-xl">
+              <p className="text-[8px] text-zinc-400 font-medium leading-relaxed uppercase tracking-wider">
+                <i className="fas fa-info-circle text-orange-500 mr-1"></i>
+                Note: Accounts registered via mobile devices are restricted to mobile access and cannot be used for PC login sessions.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>
