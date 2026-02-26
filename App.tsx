@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const [updateMsg, setUpdateMsg] = useState<{type: 'success' | 'error', text: string} | null>(null);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
+  const [isRamadanCouponApplied, setIsRamadanCouponApplied] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -315,9 +316,13 @@ const App: React.FC = () => {
   );
 
   const handleRedeemCoupon = (code: string) => {
-    if (code.toUpperCase() === 'ASMYSTERY7') {
+    const upperCode = code.toUpperCase();
+    if (upperCode === 'ASMYSTERY7') {
       setIsCouponApplied(true);
       return { success: true, message: 'COUPON APPLIED SUCCESSFUL! ALL MYSTERY BOX PRICES DROPPED BY 10%' };
+    } else if (upperCode === 'CGRAMADAN15') {
+      setIsRamadanCouponApplied(true);
+      return { success: true, message: 'CODE SUCCESSFULLY REDEEMED ! DISCOUNT OFFERS HAVE BEEN ACTIVATED TO BLOOD STRIKE PACKAGES' };
     } else {
       return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
     }
@@ -332,6 +337,29 @@ const App: React.FC = () => {
     if (isCouponApplied && cat === 'MYSTERY BOX') {
       finalPkg.oldPrice = pkg.price;
       finalPkg.price = Number((pkg.price * 0.9).toFixed(2));
+    }
+
+    // Apply Ramadan coupon for Blood Strike
+    if (isRamadanCouponApplied && selectedGame?.id === 'bs') {
+      const ramadanPrices: Record<string, number> = {
+        'bs-51': 43,
+        'bs-105': 93,
+        'bs-320': 275,
+        'bs-540': 462,
+        'bs-1100': 925,
+        'bs-2260': 1835,
+        'bs-5800': 4580,
+        'bs-lup': 230,
+        'bs-spe': 320,
+        'bs-spp': 930,
+        'bs-uslc': 58,
+        'bs-lbw': 125
+      };
+
+      if (ramadanPrices[pkg.id]) {
+        finalPkg.oldPrice = pkg.price;
+        finalPkg.price = ramadanPrices[pkg.id];
+      }
     }
     
     acc[cat].push(finalPkg);

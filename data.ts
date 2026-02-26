@@ -131,10 +131,9 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Player ID',
     description: 'Fast-paced striker battle royale with intense tactical combat.',
     packages: [
-      { id: 'bs-vsp', amount: 1, unit: 'Value Season Pass', price: 119, currency: 'BDT', category: 'MEMBERSHIP' },
+      { id: 'bs-vsp', amount: 1, unit: 'Value Season Pass', price: 135, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-lbw', amount: 1, unit: 'Lucky Bag Week', price: 124, currency: 'BDT', category: 'MEMBERSHIP' },
-      { id: 'bs-vpo', amount: 1, unit: 'Valor Pre-Order Offer', price: 218, currency: 'BDT', category: 'MEMBERSHIP' },
-      { id: 'bs-rtr', amount: 1, unit: 'Rags to Riches', price: 213, currency: 'BDT', category: 'MEMBERSHIP' },
+      { id: 'bs-vpo', amount: 1, unit: 'Valor Pre-Order Offer', price: 240, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-uslc', amount: 1, unit: 'Ultra Skin Lucky Chest', price: 59, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-spe', amount: 1, unit: 'Strike Pass Elite', price: 455, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'bs-spp', amount: 1, unit: 'Strike Pass Premium', price: 1020, currency: 'BDT', category: 'MEMBERSHIP' },
