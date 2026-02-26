@@ -906,34 +906,40 @@ const App: React.FC = () => {
       )}
 
       {activeTab === 'history' && (
-        <div className="max-w-5xl mx-auto space-y-12 animate-in fade-in duration-500 pb-20">
-          <h2 className="text-5xl font-black text-white uppercase italic tracking-tighter">ORDER HISTORY</h2>
+        <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-20 px-4">
+          <h2 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
+            <span className="w-1 h-6 bg-orange-600 rounded-full"></span>
+            ORDER HISTORY
+          </h2>
           {user && transactions.length > 0 ? (
-            <div className="space-y-6">
+            <div className="space-y-4">
               {transactions.map(trx => (
-                <div key={trx.id} className="relative bg-[#0e0e11] border border-zinc-800/80 p-8 rounded-[2rem] flex flex-col md:flex-row md:items-center justify-between group gap-6 overflow-hidden">
-                  <div className="flex flex-1 min-w-0 flex-col">
-                    <h3 className="text-white font-black uppercase italic tracking-tighter text-2xl mb-1 truncate leading-tight">
-                      {trx.gameName} - {trx.amount} {trx.unit}
-                    </h3>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-zinc-500 mb-6">
-                      {trx.date} • {trx.paymentMethod}
-                    </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      <div className="bg-[#09090b] px-4 py-2.5 rounded-xl border border-zinc-800/50">
-                        <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest shrink-0">ORDER:</span>
-                        <span className="text-zinc-400 font-mono text-xs ml-2">{trx.id}</span>
-                      </div>
-                      <div className="bg-[#09090b] px-4 py-2.5 rounded-xl border border-zinc-800/50">
-                        <span className="text-[9px] font-black text-zinc-600 uppercase tracking-widest shrink-0">PLAYER:</span>
-                        <span className="text-orange-400/80 font-mono text-xs ml-2">{trx.playerId}</span>
+                <div key={trx.id} className="relative bg-[#0c0c0e] border border-zinc-800/50 p-4 md:p-6 rounded-2xl flex flex-col gap-4 group hover:border-orange-500/30 transition-all duration-300">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-black uppercase italic tracking-tight text-base md:text-lg truncate leading-tight mb-1">
+                        {trx.gameName} - {trx.amount} {trx.unit}
+                      </h3>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">
+                        {trx.date} • {trx.paymentMethod}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-2xl font-black text-white italic tracking-tighter leading-none mb-2">৳{trx.price}</p>
+                      <div className={`inline-flex px-3 py-1 rounded-lg border text-[8px] font-black uppercase tracking-widest ${trx.status === 'processing' ? 'text-amber-500 border-amber-500/20 bg-amber-500/5' : 'text-green-500 border-green-500/20 bg-green-500/5'}`}>
+                        {trx.status.toUpperCase()}
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-2">
-                    <p className="text-4xl font-black text-white italic tracking-tighter">৳{trx.price}</p>
-                    <div className={`px-5 py-2 rounded-xl border text-[9px] font-black uppercase tracking-widest ${trx.status === 'processing' ? 'text-amber-500 border-amber-500/20' : 'text-green-500 border-green-500/20'}`}>
-                      {trx.status.toUpperCase()}
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-black/40 px-4 py-2.5 rounded-xl border border-zinc-800/30 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+                      <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest shrink-0">ORDER ID</span>
+                      <span className="text-zinc-400 font-mono text-[10px] truncate">{trx.id}</span>
+                    </div>
+                    <div className="bg-black/40 px-4 py-2.5 rounded-xl border border-zinc-800/30 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+                      <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest shrink-0">PLAYER ID</span>
+                      <span className="text-orange-400/80 font-mono text-[10px] truncate">{trx.playerId}</span>
                     </div>
                   </div>
                 </div>
