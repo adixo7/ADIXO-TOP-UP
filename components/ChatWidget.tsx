@@ -5,6 +5,12 @@ const ChatWidget: React.FC = () => {
 
   const supportOptions = [
     {
+      name: 'ADIXO AI SUPPORT',
+      url: '#',
+      icon: 'fa-robot',
+      description: 'Active 24/7 for all your queries'
+    },
+    {
       name: 'Telegram Official Group',
       url: 'https://t.me/adixoglory',
       icon: 'fa-users',
