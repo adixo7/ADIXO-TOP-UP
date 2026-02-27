@@ -1,30 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showAiChat, setShowAiChat] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([
     { role: 'ai', text: 'Hello! I am ADIXO AI SUPPORT. How can I help you today?' }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (!inputValue.trim() || isLoading) return;
     
     const userMsg = inputValue.trim();
     setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
     setInputValue('');
+    setIsLoading(true);
 
-    // Simple AI Response simulation
-    setTimeout(() => {
-      let aiResponse = "I'm here to help! For payments, you can use bKash, Rocket, Nagad, or Binance. To redeem a code, use the 'Redeem' option in the menu.";
-      if (userMsg.toLowerCase().includes('payment')) {
-        aiResponse = "We support multiple payment methods including bKash, Nagad, Rocket, and Binance. Select a package and follow the instructions to complete your payment.";
-      } else if (userMsg.toLowerCase().includes('redeem')) {
-        aiResponse = "You can redeem your gift cards or coupons in the 'COUPON REDEEM' section of the website. Just enter your code and click REDEEM.";
+    try {
+      // Check for API key in environment or fallback to simulation
+      const apiKey = (window as any).GEMINI_API_KEY || "";
+      
+      if (apiKey) {
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        
+        const chat = model.startChat({
+          history: messages.map(m => ({
+            role: m.role === 'user' ? 'user' : 'model',
+            parts: [{ text: m.text }],
+          })),
+          generationConfig: {
+            maxOutputTokens: 500,
+          },
+        });
+
+        const result = await chat.sendMessage(userMsg);
+        const response = await result.response;
+        const text = response.text();
+        setMessages(prev => [...prev, { role: 'ai', text: text }]);
+      } else {
+        // Fallback to enhanced simulation if no API key is provided
+        setTimeout(() => {
+          let aiResponse = "I'm here to help! For payments, you can use bKash, Rocket, Nagad, or Binance. To redeem a code, use the 'Redeem' option in the menu.";
+          if (userMsg.toLowerCase().includes('payment')) {
+            aiResponse = "We support multiple payment methods including bKash, Nagad, Rocket, and Binance. Select a package and follow the instructions to complete your payment.";
+          } else if (userMsg.toLowerCase().includes('redeem')) {
+            aiResponse = "You can redeem your gift cards or coupons in the 'COUPON REDEEM' section of the website. Just enter your code and click REDEEM.";
+          } else if (userMsg.toLowerCase().includes('hi') || userMsg.toLowerCase().includes('hello')) {
+            aiResponse = "Hello! Welcome to Adixo Support. How can I assist you with your top-up or account today?";
+          }
+          setMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
+          setIsLoading(false);
+        }, 1000);
+        return;
       }
-      setMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
-    }, 1000);
+    } catch (error) {
+      console.error("AI Error:", error);
+      setMessages(prev => [...prev, { role: 'ai', text: "I'm having trouble connecting to my brain right now. Please try again or contact our Telegram support!" }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const supportOptions = [
@@ -159,6 +205,16 @@ const ChatWidget: React.FC = () => {
                 </div>
               </div>
             ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-zinc-900 text-zinc-300 border border-zinc-800 p-3 rounded-2xl rounded-tl-none flex gap-1">
+                  <span className="w-1.5 h-1.5 bg-zinc-600 rounded-full animate-bounce"></span>
+                  <span className="w-1.5 h-1.5 bg-zinc-600 rounded-full animate-bounce [animation-delay:0.2s]"></span>
+                  <span className="w-1.5 h-1.5 bg-zinc-600 rounded-full animate-bounce [animation-delay:0.4s]"></span>
+                </div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Chat Input */}
@@ -168,14 +224,16 @@ const ChatWidget: React.FC = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              placeholder="TYPE YOUR QUERY..."
-              className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2 text-[10px] font-black text-white placeholder:text-zinc-700 focus:outline-none focus:border-orange-500/50 uppercase"
+              placeholder={isLoading ? "AI IS THINKING..." : "TYPE YOUR QUERY..."}
+              disabled={isLoading}
+              className="flex-1 bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2 text-[10px] font-black text-white placeholder:text-zinc-700 focus:outline-none focus:border-orange-500/50 uppercase disabled:opacity-50"
             />
             <button 
               onClick={handleSendMessage}
-              className="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center hover:bg-orange-500 transition-colors"
+              disabled={isLoading}
+              className="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center hover:bg-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <i className="fas fa-paper-plane text-white text-xs"></i>
+              <i className={`fas ${isLoading ? 'fa-spinner fa-spin' : 'fa-paper-plane'} text-white text-xs`}></i>
             </button>
           </div>
         </div>
