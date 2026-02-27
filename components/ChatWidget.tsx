@@ -33,6 +33,17 @@ const ChatWidget: React.FC = () => {
       
       const systemInstruction = `You are the official AI customer support assistant for ADIXO TopUp, a gaming currency selling website. Your job is to help customers with all types of problems related to game top-ups, payments, delivery, refunds, wrong Player ID, order status, safety concerns, reseller inquiries, and technical issues.
 
+Use the following FAQ to provide accurate answers:
+- Website: Choose game/package, enter Player ID, pay, we deliver safely.
+- Safety: No passwords needed. Only Player ID/UID. Authorized methods used.
+- Delivery: 5-15 mins, up to a few hours if delayed.
+- Wrong ID: Cannot be reversed if completed. Double-check before ordering.
+- Issues: Contact Telegram @AdiXO_TV with Order ID + payment screenshot + Player ID.
+- Tracking: Ask on Telegram @AdiXO_TV or check channel ADIXO Glory.
+- Payments: bKash, Nagad, Rocket, Binance Pay. No hidden fees.
+- Refunds: Only before delivery. Duplicate payments can be refunded via @AdiXO_TV.
+- Support: Telegram @AdiXO_TV for fast support. Official channel: ADIXO Glory.
+
 Always give clear step-by-step instructions.
 Always reassure customers about account safety.
 Never ask for passwords.
@@ -70,18 +81,28 @@ Your goal is to reduce customer confusion and build trust.`;
           let aiResponse = "I am the official ADIXO AI assistant. How can I help you with your top-up, payment, or delivery today?";
           const input = userMsg.toLowerCase();
           
-          if (input.includes('payment') || input.includes('bkash') || input.includes('nagad') || input.includes('binance')) {
-            aiResponse = "We support bKash, Nagad, Rocket, and Binance. To pay: 1. Select your game and package. 2. Enter Player ID. 3. Choose payment method. 4. Complete the transaction in the gateway. Your account safety is our priority!";
-          } else if (input.includes('refund')) {
-            aiResponse = "Refunds are processed if the top-up hasn't been delivered yet. If you made a mistake, please contact our support team on Telegram (@AdiXO_TV) with your Order ID for assistance.";
+          if (input.includes('how') && input.includes('work')) {
+            aiResponse = "On ADIXO TopUp, you choose your game and package, enter your Player ID, and make a payment. We then deliver the currency safely and quickly (usually 5-15 mins) to your account!";
+          } else if (input.includes('safe') || input.includes('legit') || input.includes('security')) {
+            aiResponse = "Yes, ADIXO TopUp is 100% safe. We use authorized methods and NEVER ask for your password. We only need your Player ID/UID for delivery.";
+          } else if (input.includes('password')) {
+            aiResponse = "No, we never ask for passwords. Only your Player ID/UID is required to send the game currency.";
+          } else if (input.includes('how long') || input.includes('time') || input.includes('delivery')) {
+            aiResponse = "Delivery usually takes 5-15 minutes after payment confirmation. In rare cases, it might take up to a few hours.";
           } else if (input.includes('wrong id') || input.includes('wrong player id')) {
-            aiResponse = "Don't worry! If you entered the wrong Player ID, please contact our official support on Telegram (@AdiXO_TV) immediately with your Order ID and the correct Player ID.";
-          } else if (input.includes('delay') || input.includes('not received')) {
-            aiResponse = "Orders usually take 5-30 minutes. If it's delayed, it might be due to server load or verification. Please check your order status in 'History' or contact support if it's been over an hour.";
-          } else if (input.includes('safe') || input.includes('security')) {
-            aiResponse = "Yes, ADIXO TopUp is 100% safe. We only use official top-up methods. We will NEVER ask for your password. Only your Player ID is required.";
-          } else if (input.includes('reseller')) {
-            aiResponse = "We welcome resellers! For bulk pricing and partnership inquiries, please contact our Official Support ID on Telegram (@AdiXO_TV).";
+            aiResponse = "If the Player ID is wrong and the top-up is completed, it cannot be reversed. Please double-check your ID next time. For assistance, contact @AdiXO_TV on Telegram.";
+          } else if (input.includes('not received') || input.includes('paid but')) {
+            aiResponse = "Please send your Order ID, payment screenshot, and Player ID to our support on Telegram: @AdiXO_TV. We will resolve it as soon as possible!";
+          } else if (input.includes('payment') || input.includes('bkash') || input.includes('nagad') || input.includes('binance')) {
+            aiResponse = "We accept bKash, Nagad, Rocket, and Binance Pay. There are no hidden fees—the price you see is what you pay!";
+          } else if (input.includes('refund')) {
+            aiResponse = "Refunds are possible only before the top-up is delivered. If you paid twice by accident, send both payment proofs to @AdiXO_TV on Telegram.";
+          } else if (input.includes('cancel')) {
+            aiResponse = "You can cancel an order before it's delivered. Once processed, cancellation is not possible.";
+          } else if (input.includes('contact') || input.includes('support')) {
+            aiResponse = "You can contact us via Telegram for fast support: @AdiXO_TV. Follow our official channel 'ADIXO Glory' for updates!";
+          } else if (input.includes('discount') || input.includes('coupon')) {
+            aiResponse = "We offer special discounts sometimes! Follow our Telegram channel 'ADIXO Glory' or ask support for any current offers.";
           }
           
           setMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
