@@ -31,12 +31,27 @@ const ChatWidget: React.FC = () => {
       // Check for API key in environment or fallback to simulation
       const apiKey = (window as any).GEMINI_API_KEY || "";
       
+      const systemInstruction = `You are the official AI customer support assistant for ADIXO TopUp, a gaming currency selling website. Your job is to help customers with all types of problems related to game top-ups, payments, delivery, refunds, wrong Player ID, order status, safety concerns, reseller inquiries, and technical issues.
+
+Always give clear step-by-step instructions.
+Always reassure customers about account safety.
+Never ask for passwords.
+If a user makes a mistake (wrong ID, wrong payment, duplicate payment), guide them calmly.
+If payment is delayed, explain possible reasons and suggest contacting support.
+If refund is requested, explain policy clearly.
+If something is outside website services, politely redirect.
+
+Your goal is to reduce customer confusion and build trust.`;
+
       if (apiKey) {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ 
+          model: "gemini-1.5-flash",
+          systemInstruction: systemInstruction,
+        });
         
         const chat = model.startChat({
-          history: messages.map(m => ({
+          history: messages.slice(1).map(m => ({
             role: m.role === 'user' ? 'user' : 'model',
             parts: [{ text: m.text }],
           })),
@@ -52,14 +67,23 @@ const ChatWidget: React.FC = () => {
       } else {
         // Fallback to enhanced simulation if no API key is provided
         setTimeout(() => {
-          let aiResponse = "I'm here to help! For payments, you can use bKash, Rocket, Nagad, or Binance. To redeem a code, use the 'Redeem' option in the menu.";
-          if (userMsg.toLowerCase().includes('payment')) {
-            aiResponse = "We support multiple payment methods including bKash, Nagad, Rocket, and Binance. Select a package and follow the instructions to complete your payment.";
-          } else if (userMsg.toLowerCase().includes('redeem')) {
-            aiResponse = "You can redeem your gift cards or coupons in the 'COUPON REDEEM' section of the website. Just enter your code and click REDEEM.";
-          } else if (userMsg.toLowerCase().includes('hi') || userMsg.toLowerCase().includes('hello')) {
-            aiResponse = "Hello! Welcome to Adixo Support. How can I assist you with your top-up or account today?";
+          let aiResponse = "I am the official ADIXO AI assistant. How can I help you with your top-up, payment, or delivery today?";
+          const input = userMsg.toLowerCase();
+          
+          if (input.includes('payment') || input.includes('bkash') || input.includes('nagad') || input.includes('binance')) {
+            aiResponse = "We support bKash, Nagad, Rocket, and Binance. To pay: 1. Select your game and package. 2. Enter Player ID. 3. Choose payment method. 4. Complete the transaction in the gateway. Your account safety is our priority!";
+          } else if (input.includes('refund')) {
+            aiResponse = "Refunds are processed if the top-up hasn't been delivered yet. If you made a mistake, please contact our support team on Telegram (@AdiXO_TV) with your Order ID for assistance.";
+          } else if (input.includes('wrong id') || input.includes('wrong player id')) {
+            aiResponse = "Don't worry! If you entered the wrong Player ID, please contact our official support on Telegram (@AdiXO_TV) immediately with your Order ID and the correct Player ID.";
+          } else if (input.includes('delay') || input.includes('not received')) {
+            aiResponse = "Orders usually take 5-30 minutes. If it's delayed, it might be due to server load or verification. Please check your order status in 'History' or contact support if it's been over an hour.";
+          } else if (input.includes('safe') || input.includes('security')) {
+            aiResponse = "Yes, ADIXO TopUp is 100% safe. We only use official top-up methods. We will NEVER ask for your password. Only your Player ID is required.";
+          } else if (input.includes('reseller')) {
+            aiResponse = "We welcome resellers! For bulk pricing and partnership inquiries, please contact our Official Support ID on Telegram (@AdiXO_TV).";
           }
+          
           setMessages(prev => [...prev, { role: 'ai', text: aiResponse }]);
           setIsLoading(false);
         }, 1000);
