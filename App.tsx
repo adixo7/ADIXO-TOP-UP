@@ -919,7 +919,12 @@ const App: React.FC = () => {
                             <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${selectedPayment?.id === method.id ? 'border-orange-500' : 'border-zinc-700'}`}>
                               {selectedPayment?.id === method.id && <div className="w-2 rounded-full bg-orange-500 aspect-square"></div>}
                             </div>
-                            <span className="font-black uppercase italic tracking-tighter text-[10px] text-white truncate">{method.name}</span>
+                            <div className="flex flex-col">
+                              <span className="font-black uppercase italic tracking-tighter text-[10px] text-white truncate">{method.name}</span>
+                              {method.id === 'bkash' && (
+                                <span className="text-red-500 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">DISABLED</span>
+                              )}
+                            </div>
                           </button>
                         ))}
                       </div>
