@@ -10,6 +10,7 @@ import ChatWidget from './components/ChatWidget';
 import Features from './components/Features';
 import DisclaimerPopup from './components/DisclaimerPopup';
 import CouponRedeem from './components/CouponRedeem';
+import MaintenancePopup from './components/MaintenancePopup';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -26,8 +27,22 @@ const App: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [orderTrackId, setOrderTrackId] = useState('');
+  const [showMaintenance, setShowMaintenance] = useState(false);
   
   // Profile specific states
+  const handlePaymentSelect = (method: PaymentMethod) => {
+    if (method.id === 'bkash') {
+      setShowMaintenance(true);
+      return;
+    }
+    setSelectedPayment(method);
+    setIsGatewayOpen(true);
+  };
+
+  const handleDisclaimerClose = () => {
+    setShowDisclaimer(false);
+  };
+
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
@@ -386,6 +401,7 @@ const App: React.FC = () => {
       searchTerm={searchTerm}
       onSearchChange={setSearchTerm}
     >
+      {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
 
       {activeTab === 'home' && (
@@ -893,7 +909,7 @@ const App: React.FC = () => {
                         {PAYMENT_METHODS.map(method => (
                           <button 
                             key={method.id}
-                            onClick={() => setSelectedPayment(method)}
+                            onClick={() => handlePaymentSelect(method)}
                             className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${
                               selectedPayment?.id === method.id 
                               ? 'border-orange-500 bg-orange-500/5' 
