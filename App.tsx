@@ -36,7 +36,6 @@ const App: React.FC = () => {
       return;
     }
     setSelectedPayment(method);
-    setIsGatewayOpen(true);
   };
 
   const handleDisclaimerClose = () => {
