@@ -26,23 +26,27 @@ const MaintenancePopup: React.FC<MaintenancePopupProps> = ({ onClose }) => {
 
           <div className="space-y-3 md:space-y-4 text-zinc-400 text-xs md:text-sm leading-relaxed">
             <p>
-              We are currently performing scheduled maintenance on our <span className="text-white font-bold">bKash Payment Gateway</span> to provide you with a more secure and seamless experience.
+              For <span className="text-white font-bold">bKash</span> payments, please contact us directly via our Telegram. Our team will assist you and process your order promptly and securely.
             </p>
-            
-            <div className="bg-black/40 border border-zinc-800/50 p-3 md:p-4 rounded-xl italic">
-              "Our systems are being optimized for better performance and instant transaction processing."
-            </div>
 
-            <p>
-              bKash payments will be enabled shortly. In the meantime, you can use our <span className="text-yellow-500 font-bold italic">Binance Gateway</span> for instant top-ups.
-            </p>
+            <div className="bg-black/40 border border-zinc-800/50 p-3 md:p-4 rounded-xl">
+              <p className="text-zinc-300 text-xs md:text-sm leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
+                বিকাশের মাধ্যমে পেমেন্ট করার জন্য অনুগ্রহ করে নিচে টেলিগ্রাম আইডিটিতে যোগাযোগ করুন।
+              </p>
+            </div>
           </div>
 
-          <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-zinc-800/50 w-full">
-            <p className="text-zinc-500 text-[8px] md:text-[10px] font-black uppercase tracking-widest mb-3 md:mb-4">
-              Reach out to us on Telegram: <span className="text-orange-500">@AdiXO_TV</span>
-            </p>
-            
+          <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-zinc-800/50 w-full space-y-3">
+            <a
+              href="https://t.me/AdiXO_TV"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full bg-[#229ED9] hover:bg-[#1a8ec0] text-white font-black py-3 md:py-4 rounded-xl uppercase tracking-widest text-[10px] md:text-xs transition-all active:scale-95 shadow-lg shadow-blue-500/20"
+            >
+              <i className="fab fa-telegram text-sm md:text-base"></i>
+              Contact @AdiXO_TV on Telegram
+            </a>
+
             <button 
               onClick={onClose}
               className="w-full bg-orange-500 hover:bg-orange-600 text-black font-black py-3 md:py-4 rounded-xl uppercase tracking-widest text-[10px] md:text-xs transition-all active:scale-95 shadow-lg shadow-orange-500/20"
