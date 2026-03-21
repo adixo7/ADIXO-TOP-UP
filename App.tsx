@@ -333,6 +333,9 @@ const App: React.FC = () => {
   );
 
   const handleRedeemCoupon = (code: string) => {
+    if (!user) {
+      return { success: false, message: 'YOU MUST SIGN IN TO REDEEM A COUPON' };
+    }
     const upperCode = code.toUpperCase();
     if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15') {
       return { success: false, message: 'THIS COUPON CODE HAS EXPIRED' };
