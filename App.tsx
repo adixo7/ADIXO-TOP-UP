@@ -356,8 +356,8 @@ const App: React.FC = () => {
       finalPkg.price = Number((pkg.price * 0.9).toFixed(2));
     }
 
-    // Apply RAMADANAS coupon: 10% off all GLORY PACKAGE, round up decimals
-    if (isRamadanasApplied && cat === 'GLORY PACKAGE') {
+    // Apply RAMADANAS coupon: 10% off MYSTERY BOX, GLORY PACKAGE, HIRE BOTS, round up decimals
+    if (isRamadanasApplied && (cat === 'GLORY PACKAGE' || cat === 'MYSTERY BOX' || cat === 'HIRE BOTS')) {
       finalPkg.oldPrice = pkg.price;
       finalPkg.price = Math.ceil(pkg.price * 0.9);
     }
