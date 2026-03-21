@@ -11,6 +11,7 @@ import Features from './components/Features';
 import DisclaimerPopup from './components/DisclaimerPopup';
 import CouponRedeem from './components/CouponRedeem';
 import MaintenancePopup from './components/MaintenancePopup';
+import Confetti from './components/Confetti';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -48,6 +49,8 @@ const App: React.FC = () => {
   const [updateMsg, setUpdateMsg] = useState<{type: 'success' | 'error', text: string} | null>(null);
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const [isRamadanCouponApplied, setIsRamadanCouponApplied] = useState(false);
+  const [isRamadanasApplied, setIsRamadanasApplied] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -333,6 +336,10 @@ const App: React.FC = () => {
     const upperCode = code.toUpperCase();
     if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15') {
       return { success: false, message: 'THIS COUPON CODE HAS EXPIRED' };
+    } else if (upperCode === 'RAMADANAS') {
+      setIsRamadanasApplied(true);
+      setShowConfetti(true);
+      return { success: true, message: '🎉 RAMADANAS CODE REDEEMED! 10% OFF ALL GLORY PACKAGES ACTIVATED!' };
     } else {
       return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
     }
@@ -347,6 +354,12 @@ const App: React.FC = () => {
     if (isCouponApplied && cat === 'MYSTERY BOX') {
       finalPkg.oldPrice = pkg.price;
       finalPkg.price = Number((pkg.price * 0.9).toFixed(2));
+    }
+
+    // Apply RAMADANAS coupon: 10% off all GLORY PACKAGE, round up decimals
+    if (isRamadanasApplied && cat === 'GLORY PACKAGE') {
+      finalPkg.oldPrice = pkg.price;
+      finalPkg.price = Math.ceil(pkg.price * 0.9);
     }
 
     // Apply Ramadan coupon for Blood Strike
@@ -398,6 +411,7 @@ const App: React.FC = () => {
     >
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
+      <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
       {activeTab === 'home' && (
         <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
