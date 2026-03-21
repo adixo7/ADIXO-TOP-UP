@@ -331,12 +331,8 @@ const App: React.FC = () => {
 
   const handleRedeemCoupon = (code: string) => {
     const upperCode = code.toUpperCase();
-    if (upperCode === 'ASMYSTERY7') {
-      setIsCouponApplied(true);
-      return { success: true, message: 'COUPON APPLIED SUCCESSFUL! ALL MYSTERY BOX PRICES DROPPED BY 10%' };
-    } else if (upperCode === 'CGRAMADAN15') {
-      setIsRamadanCouponApplied(true);
-      return { success: true, message: 'CODE SUCCESSFULLY REDEEMED ! DISCOUNT OFFERS HAVE BEEN ACTIVATED TO BLOOD STRIKE PACKAGES' };
+    if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15') {
+      return { success: false, message: 'THIS COUPON CODE HAS EXPIRED' };
     } else {
       return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
     }
