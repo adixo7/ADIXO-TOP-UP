@@ -189,6 +189,21 @@ export const GAMES: Game[] = [
     ]
   },
   {
+    id: 'event-bypass',
+    name: 'Event Bypass',
+    category: 'EVENT BYPASS',
+    image: '/images/glory-bots-cover.png',
+    banner: '/images/glory-bots-cover.png',
+    idPlaceholder: 'Player ID / Account ID',
+    description: 'Bypass events and unlock exclusive rewards with our validity packages.',
+    packages: [
+      { id: 'eb-7', amount: 7, unit: 'Days Validity', price: 250, currency: 'BDT', category: 'EVENT BYPASS', description: '7 Days Event Bypass Access' },
+      { id: 'eb-14', amount: 14, unit: 'Days Validity', price: 460, currency: 'BDT', category: 'EVENT BYPASS', description: '14 Days Event Bypass Access', isPopular: true },
+      { id: 'eb-30', amount: 30, unit: 'Days Validity', price: 830, currency: 'BDT', category: 'EVENT BYPASS', description: '30 Days Event Bypass Access' },
+      { id: 'eb-60', amount: 60, unit: 'Days Validity', price: 1400, currency: 'BDT', category: 'EVENT BYPASS', description: '60 Days Event Bypass Access' }
+    ]
+  },
+  {
     id: 'pc-games',
     name: 'PC Games',
     category: 'PC Games',
