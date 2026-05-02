@@ -185,7 +185,10 @@ export const GAMES: Game[] = [
       { id: 'pro-bots', amount: 4, unit: 'GLORY BOTS', price: 2520, currency: 'BDT', category: 'HIRE BOTS', description: '4 Bots for 1 Week', image: '/assets/Screenshot_2026-02-22_173855_1771878989303.png' },
       { id: 'mystery-basic', amount: 4, unit: 'BASIC MYSTERY BOX', price: 252, currency: 'BDT', category: 'MYSTERY BOX', description: '4 BOTS | 50K - 370K GLORY | 100% SAFE', image: '/images/mystery/boxes.png' },
       { id: 'mystery-epic', amount: 4, unit: 'EPIC MYSTERY BOX', price: 504, currency: 'BDT', category: 'MYSTERY BOX', description: '4 BOTS | 350K - 1.2M GLORY | 100% SAFE', image: '/images/mystery/boxes.png' },
-      { id: 'mystery-super', amount: 4, unit: 'SUPER MYSTERY BOX', price: 1008, currency: 'BDT', category: 'MYSTERY BOX', description: '4 BOTS | 1.2M - 3.4M GLORY | 100% SAFE', image: '/images/mystery/boxes.png' }
+      { id: 'mystery-super', amount: 4, unit: 'SUPER MYSTERY BOX', price: 1008, currency: 'BDT', category: 'MYSTERY BOX', description: '4 BOTS | 1.2M - 3.4M GLORY | 100% SAFE', image: '/images/mystery/boxes.png' },
+      { id: 'guild-level-5', amount: 5, unit: 'LEVEL 5', price: 500, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Boost your guild to Level 5' },
+      { id: 'guild-level-6', amount: 6, unit: 'LEVEL 6', price: 800, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Boost your guild to Level 6' },
+      { id: 'guild-level-7-bonus', amount: 7, unit: 'LEVEL 7 + 5 WEEK GLORY BONUS', price: 1200, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Guild Lvl 7 + 5 Weeks Glory Bonus', isBonus: true }
     ]
   },
   {

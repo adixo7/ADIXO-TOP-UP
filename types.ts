@@ -16,6 +16,7 @@ export interface Package {
   oldPrice?: number;
   currency: string;
   isPopular?: boolean;
+  isBonus?: boolean;
   category?: string; // New field for grouping
   image?: string; // Image for the package cover
   description?: string;

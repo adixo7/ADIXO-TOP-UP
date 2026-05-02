@@ -388,7 +388,7 @@ const App: React.FC = () => {
     return acc;
   }, {} as Record<string, Package[]>);
 
-  const categorySortOrder = ['MYSTERY BOX', 'GLORY PACKAGE', 'HIRE BOTS', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
+  const categorySortOrder = ['MYSTERY BOX', 'GUILD LEVEL UP', 'GLORY PACKAGE', 'HIRE BOTS', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
   const sortedCategoryKeys = Object.keys(groupedPackages).sort((a, b) => {
     const indexA = categorySortOrder.indexOf(a);
     const indexB = categorySortOrder.indexOf(b);
@@ -753,17 +753,21 @@ const App: React.FC = () => {
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                             {groupedPackages[category].map((pkg) => {
                               const isMystery = category === 'MYSTERY BOX';
+                              const isGuildLevelUp = category === 'GUILD LEVEL UP';
+                              const isBonus = !!pkg.isBonus;
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
                                                    pkg.id === 'mystery-super' ? { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', icon: 'text-purple-400', iconBg: 'border-purple-500/50', glow: 'shadow-[0_0_20px_rgba(168,85,247,0.15)]' } :
+                                                   isBonus ? { border: 'border-amber-400/50', hover: 'hover:border-amber-400/80', icon: 'text-amber-400', iconBg: 'border-amber-400/50', glow: 'shadow-[0_0_28px_rgba(251,191,36,0.25)]' } :
+                                                   isGuildLevelUp ? { border: 'border-emerald-500/30', hover: 'hover:border-emerald-500/60', icon: 'text-emerald-400', iconBg: 'border-emerald-500/40', glow: '' } :
                                                    { border: 'border-zinc-800/50', hover: 'hover:border-orange-500/50', icon: 'text-orange-500', iconBg: 'border-zinc-800', glow: '' };
 
                               return (
                                 <div 
                                   key={pkg.id} 
-                                  className={`relative group cursor-pointer bg-zinc-900/40 rounded-xl overflow-hidden border transition-all duration-500 ${
-                                    mysteryTheme.border
-                                  } ${mysteryTheme.hover} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''}`}
+                                  className={`relative group cursor-pointer rounded-xl overflow-hidden border transition-all duration-500 ${
+                                    isBonus ? 'bg-gradient-to-br from-amber-950/40 via-zinc-900/80 to-zinc-900' : 'bg-zinc-900/40'
+                                  } ${mysteryTheme.border} ${mysteryTheme.hover} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''} ${isBonus ? mysteryTheme.glow : ''}`}
                                   onClick={() => setSelectedPackage(pkg)}
                                 >
                                   {pkg.isPopular && (
@@ -771,21 +775,35 @@ const App: React.FC = () => {
                                       BEST
                                     </div>
                                   )}
+
+                                  {/* Gift ribbon for bonus package */}
+                                  {isBonus && (
+                                    <>
+                                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 z-10"></div>
+                                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-full bg-amber-400/20 z-10 pointer-events-none"></div>
+                                      <div className="absolute top-0 left-0 bg-amber-400 text-black text-[6px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10">
+                                        BONUS
+                                      </div>
+                                    </>
+                                  )}
                                   
                                   <div className="p-4 flex flex-col items-center text-center">
-                                    <div className={`w-12 h-12 bg-zinc-950/80 rounded-2xl flex items-center justify-center mb-3 border transition-all duration-500 group-hover:scale-110 ${
-                                      mysteryTheme.iconBg
-                                    } ${isMystery ? 'group-hover:rotate-12 shadow-inner' : ''}`}>
-                                      <i className={`fas ${pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') : isMystery ? 'fa-box-open' : 'fa-robot'} text-xl ${
-                                        mysteryTheme.icon
-                                      } ${isMystery ? 'animate-pulse' : ''}`}></i>
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border transition-all duration-500 group-hover:scale-110 ${
+                                      isBonus ? 'bg-amber-950/60' : 'bg-zinc-950/80'
+                                    } ${mysteryTheme.iconBg} ${isMystery ? 'group-hover:rotate-12 shadow-inner' : ''} ${isBonus ? 'group-hover:rotate-6 group-hover:scale-110' : ''}`}>
+                                      <i className={`fas ${
+                                        isBonus ? 'fa-gift' :
+                                        isGuildLevelUp ? 'fa-arrow-up' :
+                                        pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') :
+                                        isMystery ? 'fa-box-open' : 'fa-robot'
+                                      } text-xl ${mysteryTheme.icon} ${isMystery ? 'animate-pulse' : ''} ${isBonus ? 'animate-bounce' : ''}`}></i>
                                     </div>
                                     
-                                    <h3 className={`text-white text-[11px] font-black uppercase tracking-tight mb-1 ${isMystery ? 'tracking-[0.1em]' : ''}`}>{pkg.unit}</h3>
+                                    <h3 className={`text-[11px] font-black uppercase tracking-tight mb-1 ${isMystery ? 'tracking-[0.1em]' : ''} ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.unit}</h3>
                                     <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mb-3 line-clamp-1">{pkg.description}</p>
                                     
                                     <div className="flex items-baseline gap-1.5 mb-4">
-                                      <span className="text-xl font-black text-white">{pkg.price}</span>
+                                      <span className={`text-xl font-black ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.price}</span>
                                       <span className="text-orange-500 font-black text-xs italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
                                       {pkg.oldPrice && <span className="text-zinc-500 text-[10px] line-through decoration-red-500/50 italic ml-1">
                                         {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
@@ -793,7 +811,20 @@ const App: React.FC = () => {
                                     </div>
                                     
                                     <div className="space-y-1.5 w-full mb-4">
-                                      {pkg.id.includes('regional') ? (
+                                      {isGuildLevelUp ? (
+                                        <>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className={`fas fa-check ${mysteryTheme.icon} text-[6px]`}></i>
+                                            <span>Guild Level {pkg.amount} Boost</span>
+                                          </div>
+                                          {isBonus && (
+                                            <div className="flex items-center gap-1.5 text-[8px] font-bold text-amber-500/80 uppercase">
+                                              <i className="fas fa-gift text-amber-400 text-[6px]"></i>
+                                              <span>5 Week Glory Bonus</span>
+                                            </div>
+                                          )}
+                                        </>
+                                      ) : pkg.id.includes('regional') ? (
                                         <>
                                           <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
                                             <i className="fas fa-check text-green-500/70 text-[6px]"></i>
@@ -822,13 +853,19 @@ const App: React.FC = () => {
                                         </>
                                       )}
                                       <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
-                                        <i className={`fas fa-check ${isMystery ? mysteryTheme.icon : 'text-green-500/70'} text-[6px]`}></i>
+                                        <i className={`fas fa-check ${isMystery ? mysteryTheme.icon : isBonus ? 'text-amber-400' : 'text-green-500/70'} text-[6px]`}></i>
                                         <span>100% Safe</span>
                                       </div>
                                     </div>
                                     
-                                    <div className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[8px] transition-all duration-300 ${selectedPackage?.id === pkg.id ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/40' : 'bg-zinc-800/50 text-zinc-400 group-hover:bg-zinc-800 group-hover:text-white'}`}>
-                                      {selectedPackage?.id === pkg.id ? 'READY TO ORDER' : 'SELECT BOX'}
+                                    <div className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[8px] transition-all duration-300 ${
+                                      selectedPackage?.id === pkg.id
+                                        ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/40'
+                                        : isBonus
+                                        ? 'bg-amber-900/40 text-amber-400 group-hover:bg-amber-500/20 group-hover:text-amber-300'
+                                        : 'bg-zinc-800/50 text-zinc-400 group-hover:bg-zinc-800 group-hover:text-white'
+                                    }`}>
+                                      {selectedPackage?.id === pkg.id ? 'READY TO ORDER' : isBonus ? 'CLAIM GIFT' : 'SELECT BOX'}
                                     </div>
                                   </div>
 
@@ -839,6 +876,10 @@ const App: React.FC = () => {
                                       pkg.id === 'mystery-epic' ? 'from-red-500 to-transparent' :
                                       'from-purple-500 to-transparent'
                                     }`}></div>
+                                  )}
+                                  {/* Gift shimmer effect */}
+                                  {isBonus && (
+                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none bg-gradient-to-br from-amber-400 to-transparent"></div>
                                   )}
                                 </div>
                               );
