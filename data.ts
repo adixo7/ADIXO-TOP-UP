@@ -188,7 +188,7 @@ export const GAMES: Game[] = [
       { id: 'mystery-super', amount: 4, unit: 'SUPER MYSTERY BOX', price: 1008, currency: 'BDT', category: 'MYSTERY BOX', description: '4 BOTS | 1.2M - 3.4M GLORY | 100% SAFE', image: '/images/mystery/boxes.png' },
       { id: 'guild-level-5', amount: 5, unit: 'LEVEL 5', price: 500, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Boost your guild to Level 5' },
       { id: 'guild-level-6', amount: 6, unit: 'LEVEL 6', price: 800, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Boost your guild to Level 6' },
-      { id: 'guild-level-7-bonus', amount: 7, unit: 'LEVEL 7 + 5 WEEK GLORY BONUS', price: 1200, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Guild Lvl 7 + 5 Weeks Glory Bonus', isBonus: true }
+      { id: 'guild-level-7-bonus', amount: 7, unit: 'LEVEL 7 + 4 WEEK GLORY BONUS', price: 1200, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Guild Lvl 7 + 4 Weeks Glory Bonus', isBonus: true }
     ]
   },
   {

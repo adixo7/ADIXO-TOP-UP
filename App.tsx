@@ -819,7 +819,7 @@ const App: React.FC = () => {
                                           {isBonus && (
                                             <div className="flex items-center gap-1.5 text-[8px] font-bold text-amber-500/80 uppercase">
                                               <i className="fas fa-gift text-amber-400 text-[6px]"></i>
-                                              <span>5 Week Glory Bonus</span>
+                                              <span>4 Week Glory Bonus</span>
                                             </div>
                                           )}
                                         </>
