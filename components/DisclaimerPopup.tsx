@@ -18,26 +18,27 @@ const DisclaimerPopup: React.FC<DisclaimerPopupProps> = ({ onClose }) => {
         
         <div className="text-center mb-6">
           <div className="w-14 h-14 bg-orange-500/10 border border-orange-500/30 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-500/10">
-            <i className="fas fa-handshake text-orange-500 text-2xl"></i>
+            <i className="fas fa-shield-alt text-orange-500 text-2xl"></i>
           </div>
           <h2 className="text-xl font-black text-white uppercase italic tracking-tighter mb-3 gaming-font">
-            ADIXO X CG AHNAF
+            WELCOME TO ADIXO
           </h2>
           
           <div className="space-y-3 text-zinc-400 text-xs font-medium leading-relaxed">
             <p>
-              It is a collaboration running between <span className="text-white font-bold uppercase italic">ADIXO</span> and <span className="text-white font-bold uppercase italic">CG AHNAF</span>.
+              This is the <span className="text-white font-bold uppercase italic">Official Website</span> of <span className="text-orange-500 font-bold uppercase italic">ADIXO</span>. For authentic products and services, always order from this official site only.
             </p>
-            <p>
-              For authentic products, only order from our official website.
-            </p>
-            
-            <div className="bg-zinc-900/50 border border-zinc-800 p-3 rounded-xl italic text-[10px]">
-              "Our methods are 100% safe and based on real-player optimization techniques."
+
+            <div className="bg-zinc-900/50 border border-zinc-800 p-3 rounded-xl text-[10px] space-y-1 text-left">
+              <p className="text-[9px] uppercase tracking-widest text-zinc-500 font-black mb-2 text-center">What We Offer</p>
+              <p><i className="fas fa-gem text-orange-500 mr-2"></i>Game top-ups (Diamonds, UC, Gold & more)</p>
+              <p><i className="fas fa-robot text-orange-500 mr-2"></i>AI Glory Bots for guild leveling & ranking</p>
+              <p><i className="fas fa-desktop text-orange-500 mr-2"></i>PC game accounts at discounted prices</p>
             </div>
 
             <div className="pt-2 space-y-2">
-              <p className="text-[9px] uppercase tracking-widest text-zinc-500 font-black">Official Channels</p>
+              <p className="text-[9px] uppercase tracking-widest text-zinc-500 font-black">Support & Contact</p>
+              <p className="text-[10px] text-zinc-400">For any type of support, reach us through our official channels:</p>
               <div className="flex flex-col gap-1.5">
                 <a 
                   href="https://t.me/adixoglory" 
@@ -47,7 +48,7 @@ const DisclaimerPopup: React.FC<DisclaimerPopupProps> = ({ onClose }) => {
                 >
                   <i className="fab fa-telegram"></i> @adixoglory
                 </a>
-                <p className="text-[9px] text-zinc-500 leading-none">Official updates group</p>
+                <p className="text-[9px] text-zinc-500 leading-none">Updates & Announcements</p>
                 
                 <a 
                   href="https://t.me/AdiXO_TV" 
@@ -57,7 +58,7 @@ const DisclaimerPopup: React.FC<DisclaimerPopupProps> = ({ onClose }) => {
                 >
                   <i className="fas fa-headset"></i> @AdiXO_TV
                 </a>
-                <p className="text-[9px] text-zinc-500 leading-none">Payment issues support</p>
+                <p className="text-[9px] text-zinc-500 leading-none">Payment & Order Support</p>
               </div>
             </div>
           </div>
