@@ -337,12 +337,8 @@ const App: React.FC = () => {
       return { success: false, message: 'YOU MUST SIGN IN TO REDEEM A COUPON' };
     }
     const upperCode = code.toUpperCase();
-    if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15') {
+    if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15' || upperCode === 'RAMADANAS') {
       return { success: false, message: 'THIS COUPON CODE HAS EXPIRED' };
-    } else if (upperCode === 'RAMADANAS') {
-      setIsRamadanasApplied(true);
-      setShowConfetti(true);
-      return { success: true, message: '🎉 RAMADANAS CODE REDEEMED! 10% OFF ALL GLORY PACKAGES ACTIVATED!' };
     } else {
       return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
     }
