@@ -573,9 +573,12 @@ const App: React.FC = () => {
                     onClick={() => { setSelectedGame(ebGame); setActiveTab('games'); }}
                   >
                     <div className="aspect-video overflow-hidden bg-zinc-950 relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-purple-900/40 to-zinc-950"></div>
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,_rgba(59,130,246,0.2),_transparent_60%)]"></div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/30 to-transparent"></div>
+                      <img
+                        src="/images/event-bypass-cover.png"
+                        alt="Event Bypass"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/40 to-transparent"></div>
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-bolt text-blue-400 text-[8px] md:text-[10px]"></i>
