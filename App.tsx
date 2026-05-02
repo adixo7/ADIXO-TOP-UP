@@ -887,51 +887,51 @@ const App: React.FC = () => {
                       })}
                     </div>
                   ) : selectedGame.id === 'event-bypass' ? (
-                    <div className="space-y-6">
-                      <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {selectedGame.packages.map(pkg => {
                           const days = pkg.amount;
                           const isSelected = selectedPackage?.id === pkg.id;
                           const themes: Record<number, { gradient: string; glow: string; accent: string; badge?: string }> = {
-                            7:  { gradient: 'from-cyan-900/40 to-zinc-900', glow: 'shadow-[0_0_24px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', badge: '' },
-                            14: { gradient: 'from-blue-900/50 to-zinc-900', glow: 'shadow-[0_0_28px_rgba(59,130,246,0.25)]', accent: 'text-blue-400', badge: 'HOT' },
-                            30: { gradient: 'from-violet-900/40 to-zinc-900', glow: 'shadow-[0_0_24px_rgba(139,92,246,0.15)]', accent: 'text-violet-400', badge: '' },
-                            60: { gradient: 'from-purple-900/50 to-zinc-900', glow: 'shadow-[0_0_28px_rgba(168,85,247,0.25)]', accent: 'text-purple-400', badge: 'BEST' },
+                            7:  { gradient: 'from-cyan-900/40 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', badge: '' },
+                            14: { gradient: 'from-blue-900/50 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(59,130,246,0.25)]', accent: 'text-blue-400', badge: 'HOT' },
+                            30: { gradient: 'from-violet-900/40 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(139,92,246,0.15)]', accent: 'text-violet-400', badge: '' },
+                            60: { gradient: 'from-purple-900/50 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(168,85,247,0.25)]', accent: 'text-purple-400', badge: 'BEST' },
                           };
                           const theme = themes[days] || themes[7];
                           return (
                             <button
                               key={pkg.id}
                               onClick={() => setSelectedPackage(pkg)}
-                              className={`group relative bg-gradient-to-br ${theme.gradient} border rounded-2xl p-5 transition-all duration-300 text-left overflow-hidden ${
+                              className={`group relative bg-gradient-to-br ${theme.gradient} border rounded-xl p-3 transition-all duration-300 text-left overflow-hidden ${
                                 isSelected
                                   ? `border-blue-400 ${theme.glow} scale-[1.02]`
                                   : 'border-zinc-700/50 hover:border-blue-500/50 hover:scale-[1.01]'
                               }`}
                             >
                               {theme.badge && (
-                                <div className="absolute top-3 right-3 bg-blue-500 text-white text-[7px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest shadow-lg shadow-blue-500/40">
+                                <div className="absolute top-2 right-2 bg-blue-500 text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest">
                                   {theme.badge}
                                 </div>
                               )}
                               {isSelected && (
-                                <div className="absolute inset-0 bg-blue-400/5 pointer-events-none rounded-2xl"></div>
+                                <div className="absolute inset-0 bg-blue-400/5 pointer-events-none rounded-xl"></div>
                               )}
-                              <div className="flex flex-col gap-3">
-                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center bg-black/30 border border-white/10 ${theme.glow}`}>
-                                  <i className={`fas fa-lock-open ${theme.accent} text-base`}></i>
+                              <div className="flex flex-col gap-2">
+                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center bg-black/30 border border-white/10`}>
+                                  <i className={`fas fa-lock-open ${theme.accent} text-xs`}></i>
                                 </div>
                                 <div>
-                                  <p className={`text-4xl font-black ${theme.accent} leading-none`}>{days}</p>
-                                  <p className="text-zinc-400 text-[9px] font-black uppercase tracking-[0.3em] mt-0.5">Days Validity</p>
+                                  <p className={`text-2xl font-black ${theme.accent} leading-none`}>{days}</p>
+                                  <p className="text-zinc-400 text-[7px] font-black uppercase tracking-[0.2em] mt-0.5">Days Validity</p>
                                 </div>
-                                <div className="flex items-end justify-between mt-1">
+                                <div className="flex items-end justify-between">
                                   <div>
-                                    <p className="text-white font-black text-xl leading-none">৳{pkg.price}</p>
-                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">BDT</p>
+                                    <p className="text-white font-black text-sm leading-none">৳{pkg.price}</p>
+                                    <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest mt-0.5">BDT</p>
                                   </div>
-                                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? 'border-blue-400 bg-blue-400' : 'border-zinc-600 group-hover:border-blue-500'}`}>
-                                    {isSelected && <i className="fas fa-check text-black text-[8px]"></i>}
+                                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${isSelected ? 'border-blue-400 bg-blue-400' : 'border-zinc-600 group-hover:border-blue-500'}`}>
+                                    {isSelected && <i className="fas fa-check text-black text-[6px]"></i>}
                                   </div>
                                 </div>
                               </div>
