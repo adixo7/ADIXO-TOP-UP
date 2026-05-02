@@ -521,7 +521,7 @@ const App: React.FC = () => {
                 AI BOTS
               </h2>
             </div>
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {/* Glory Bots card */}
               {(() => {
                 const game = GAMES.find(g => g.id === 'ai-bots');
