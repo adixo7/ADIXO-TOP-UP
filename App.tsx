@@ -780,7 +780,6 @@ const App: React.FC = () => {
                                   {isBonus && (
                                     <>
                                       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 z-10"></div>
-                                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-full bg-amber-400/20 z-10 pointer-events-none"></div>
                                       <div className="absolute top-0 left-0 bg-amber-400 text-black text-[6px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10">
                                         BONUS
                                       </div>
