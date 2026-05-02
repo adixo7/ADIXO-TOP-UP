@@ -192,8 +192,8 @@ export const GAMES: Game[] = [
     id: 'event-bypass',
     name: 'Event Bypass',
     category: 'EVENT BYPASS',
-    image: '/images/glory-bots-cover.png',
-    banner: '/images/glory-bots-cover.png',
+    image: '/images/event-bypass-cover.png',
+    banner: '/images/event-bypass-cover.png',
     idPlaceholder: 'Player ID / Account ID',
     description: 'Bypass events and unlock exclusive rewards with our validity packages.',
     packages: [
