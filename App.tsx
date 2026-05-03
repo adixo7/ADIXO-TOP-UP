@@ -32,6 +32,13 @@ const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
     { days: 10, price: 800 },
     { days: 30, price: 1800 },
   ],
+  'ff-drip-apkmod': [
+    { days: 1, price: 180 },
+    { days: 3, price: 450 },
+    { days: 7, price: 800 },
+    { days: 15, price: 1000 },
+    { days: 30, price: 1600 },
+  ],
 };
 
 const App: React.FC = () => {
