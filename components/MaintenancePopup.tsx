@@ -2,9 +2,10 @@ import React from 'react';
 
 interface MaintenancePopupProps {
   onClose: () => void;
+  methodName?: string;
 }
 
-const MaintenancePopup: React.FC<MaintenancePopupProps> = ({ onClose }) => {
+const MaintenancePopup: React.FC<MaintenancePopupProps> = ({ onClose, methodName = 'bKash' }) => {
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
       <div className="w-full max-w-[90%] md:max-w-md bg-[#121214] rounded-2xl md:rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden relative">
@@ -26,12 +27,12 @@ const MaintenancePopup: React.FC<MaintenancePopupProps> = ({ onClose }) => {
 
           <div className="space-y-3 md:space-y-4 text-zinc-400 text-xs md:text-sm leading-relaxed">
             <p>
-              For <span className="text-white font-bold">bKash</span> payments, please contact us directly via our Telegram. Our team will assist you and process your order promptly and securely.
+              For <span className="text-white font-bold">{methodName}</span> payments, please contact us directly via our Telegram. Our team will assist you and process your order promptly and securely.
             </p>
 
             <div className="bg-black/40 border border-zinc-800/50 p-3 md:p-4 rounded-xl">
               <p className="text-zinc-300 text-xs md:text-sm leading-relaxed" style={{ fontFamily: 'sans-serif' }}>
-                বিকাশের মাধ্যমে পেমেন্ট করার জন্য অনুগ্রহ করে নিচে টেলিগ্রাম আইডিটিতে যোগাযোগ করুন।
+                {methodName} এর মাধ্যমে পেমেন্ট করার জন্য অনুগ্রহ করে নিচে টেলিগ্রাম আইডিটিতে যোগাযোগ করুন।
               </p>
             </div>
           </div>

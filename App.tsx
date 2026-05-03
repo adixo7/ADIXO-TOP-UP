@@ -62,11 +62,13 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [orderTrackId, setOrderTrackId] = useState('');
   const [showMaintenance, setShowMaintenance] = useState(false);
+  const [maintenanceMethod, setMaintenanceMethod] = useState<string>('bKash');
   const paymentSectionRef = useRef<HTMLDivElement>(null);
   
   // Profile specific states
   const handlePaymentSelect = (method: PaymentMethod) => {
-    if (method.id === 'bkash') {
+    if (method.id === 'bkash' || method.id === 'nagad' || method.id === 'rocket') {
+      setMaintenanceMethod(method.name);
       setShowMaintenance(true);
       return;
     }
@@ -442,7 +444,7 @@ const App: React.FC = () => {
       searchTerm={searchTerm}
       onSearchChange={setSearchTerm}
     >
-      {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} />}
+      {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
@@ -1226,6 +1228,9 @@ const App: React.FC = () => {
                               <span className="font-black uppercase italic tracking-tighter text-[10px] text-white truncate">{method.name}</span>
                               {method.id === 'bkash' && (
                                 <span className="text-red-500 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">DISABLED</span>
+                              )}
+                              {(method.id === 'nagad' || method.id === 'rocket') && (
+                                <span className="text-orange-400 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">SUPPORT</span>
                               )}
                             </div>
                           </button>
