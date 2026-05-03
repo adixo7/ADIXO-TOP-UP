@@ -22,11 +22,10 @@ const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
     { days: 15, price: 900 },
     { days: 30, price: 1400 },
   ],
-  default: [
+  'ff-brmod-pc': [
     { days: 1, price: 150 },
-    { days: 7, price: 500 },
-    { days: 15, price: 900 },
-    { days: 30, price: 1400 },
+    { days: 10, price: 800 },
+    { days: 30, price: 1550 },
   ],
 };
 
@@ -1339,36 +1338,45 @@ const App: React.FC = () => {
             </div>
 
             {/* Tier options */}
-            <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-3">Select Duration</p>
-            <div className="grid grid-cols-2 gap-2 mb-5">
-              {(FF_PANEL_TIERS[ffPanelPopupPkg.id] || FF_PANEL_TIERS.default).map((tier, idx) => (
+            {FF_PANEL_TIERS[ffPanelPopupPkg.id] ? (
+              <>
+                <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-3">Select Duration</p>
+                <div className={`grid gap-2 mb-5 ${FF_PANEL_TIERS[ffPanelPopupPkg.id].length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+                  {FF_PANEL_TIERS[ffPanelPopupPkg.id].map((tier, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setFfPanelTierIdx(idx)}
+                      className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border transition-all duration-200 ${
+                        ffPanelTierIdx === idx
+                          ? 'border-orange-500 bg-orange-500/10'
+                          : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-600'
+                      }`}
+                    >
+                      <span className={`text-xl font-black leading-none ${ffPanelTierIdx === idx ? 'text-orange-400' : 'text-white'}`}>{tier.days}</span>
+                      <span className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-0.5">Day{tier.days > 1 ? 's' : ''}</span>
+                      <span className={`text-xs font-black mt-1.5 ${ffPanelTierIdx === idx ? 'text-orange-500' : 'text-zinc-400'}`}>৳{tier.price}</span>
+                    </button>
+                  ))}
+                </div>
                 <button
-                  key={idx}
-                  onClick={() => setFfPanelTierIdx(idx)}
-                  className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border transition-all duration-200 ${
-                    ffPanelTierIdx === idx
-                      ? 'border-orange-500 bg-orange-500/10'
-                      : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-600'
-                  }`}
+                  onClick={() => {
+                    const tier = FF_PANEL_TIERS[ffPanelPopupPkg.id][ffPanelTierIdx];
+                    setSelectedPackage({ ...ffPanelPopupPkg, price: tier.price, unit: `${ffPanelPopupPkg.unit} (${tier.days} Day${tier.days > 1 ? 's' : ''})` });
+                    setFfPanelPopupPkg(null);
+                  }}
+                  className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-black font-black uppercase tracking-widest text-[10px] rounded-xl transition-all shadow-lg shadow-orange-500/30"
                 >
-                  <span className={`text-xl font-black leading-none ${ffPanelTierIdx === idx ? 'text-orange-400' : 'text-white'}`}>{tier.days}</span>
-                  <span className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-0.5">Day{tier.days > 1 ? 's' : ''}</span>
-                  <span className={`text-xs font-black mt-1.5 ${ffPanelTierIdx === idx ? 'text-orange-500' : 'text-zinc-400'}`}>৳{tier.price}</span>
+                  Confirm Selection
                 </button>
-              ))}
-            </div>
-
-            {/* Confirm */}
-            <button
-              onClick={() => {
-                const tier = (FF_PANEL_TIERS[ffPanelPopupPkg.id] || FF_PANEL_TIERS.default)[ffPanelTierIdx];
-                setSelectedPackage({ ...ffPanelPopupPkg, price: tier.price, unit: `${ffPanelPopupPkg.unit} (${tier.days} Day${tier.days > 1 ? 's' : ''})` });
-                setFfPanelPopupPkg(null);
-              }}
-              className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-black font-black uppercase tracking-widest text-[10px] rounded-xl transition-all shadow-lg shadow-orange-500/30"
-            >
-              Confirm Selection
-            </button>
+              </>
+            ) : (
+              <div className="text-center py-4">
+                <i className="fas fa-headset text-2xl text-emerald-500 mb-3 block"></i>
+                <p className="text-zinc-300 text-xs font-bold mb-1">Contact us for pricing</p>
+                <p className="text-zinc-600 text-[10px]">Pricing for this panel varies. Please reach us on</p>
+                <p className="text-emerald-400 text-[11px] font-black mt-1">@adixoglory</p>
+              </div>
+            )}
           </div>
         </div>
       )}
