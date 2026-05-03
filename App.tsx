@@ -388,7 +388,7 @@ const App: React.FC = () => {
     return acc;
   }, {} as Record<string, Package[]>);
 
-  const categorySortOrder = ['MYSTERY BOX', 'GUILD LEVEL UP', 'GLORY PACKAGE', 'HIRE BOTS', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
+  const categorySortOrder = ['MYSTERY BOX', 'GUILD LEVEL UP', 'GLORY PACKAGE', 'HIRE BOTS', 'FF PANEL', 'DIAMOND TOPUP', 'MEMBERSHIP', 'LEVEL UP PASS', 'GENERAL'];
   const sortedCategoryKeys = Object.keys(groupedPackages).sort((a, b) => {
     const indexA = categorySortOrder.indexOf(a);
     const indexB = categorySortOrder.indexOf(b);
@@ -793,6 +793,7 @@ const App: React.FC = () => {
                                       <i className={`fas ${
                                         isBonus ? 'fa-gift' :
                                         isGuildLevelUp ? 'fa-arrow-up' :
+                                        category === 'FF PANEL' ? 'fa-terminal' :
                                         pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') :
                                         isMystery ? 'fa-box-open' : 'fa-robot'
                                       } text-sm ${mysteryTheme.icon} ${isMystery ? 'animate-pulse' : ''} ${isBonus ? 'animate-bounce' : ''}`}></i>
@@ -810,7 +811,18 @@ const App: React.FC = () => {
                                     </div>
                                     
                                     <div className="space-y-1 w-full mb-2">
-                                      {isGuildLevelUp ? (
+                                      {category === 'FF PANEL' ? (
+                                        <>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                            <span>Instant Delivery</span>
+                                          </div>
+                                          <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
+                                            <i className="fas fa-check text-green-500/70 text-[6px]"></i>
+                                            <span>Panel Access</span>
+                                          </div>
+                                        </>
+                                      ) : isGuildLevelUp ? (
                                         <>
                                           <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
                                             <i className={`fas fa-check ${mysteryTheme.icon} text-[6px]`}></i>

@@ -188,7 +188,24 @@ export const GAMES: Game[] = [
       { id: 'mystery-super', amount: 4, unit: 'SUPER MYSTERY BOX', price: 1008, currency: 'BDT', category: 'MYSTERY BOX', description: '4 BOTS | 1.2M - 3.4M GLORY | 100% SAFE', image: '/images/mystery/boxes.png' },
       { id: 'guild-level-5', amount: 5, unit: 'LEVEL 5', price: 550, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Boost your guild to Level 5' },
       { id: 'guild-level-6', amount: 6, unit: 'LEVEL 6', price: 850, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Boost your guild to Level 6' },
-      { id: 'guild-level-7-bonus', amount: 7, unit: 'LEVEL 7 + 4 WEEK GLORY BONUS', price: 1400, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Guild Lvl 7 + 4 Weeks Glory Bonus', isBonus: true }
+      { id: 'guild-level-7-bonus', amount: 7, unit: 'LEVEL 7 + 4 WEEK GLORY BONUS', price: 1400, currency: 'BDT', category: 'GUILD LEVEL UP', description: 'Guild Lvl 7 + 4 Weeks Glory Bonus', isBonus: true },
+      { id: 'ff-brmod-android', amount: 1, unit: 'BRMOD ANDROID ROOT', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'BRMod Android Root Panel' },
+      { id: 'ff-brmod-pc', amount: 1, unit: 'BRMOD SILENTAIM PC', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'BRMod SilentAim PC Panel' },
+      { id: 'ff-snake-carrom', amount: 1, unit: 'SNAKE CARROM POOL', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Snake Carrom Pool Panel' },
+      { id: 'ff-drip-apkmod', amount: 1, unit: 'DRIP CLIENT APKMOD', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Drip Client APK Mod Panel' },
+      { id: 'ff-hg-cheat', amount: 1, unit: 'HG CHEAT APKMOD', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'HG Cheat APK Mod Panel' },
+      { id: 'ff-lkteam', amount: 1, unit: 'LKTEAM ROOT + PC', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'LKTeam Root + PC Panel' },
+      { id: 'ff-drip-root', amount: 1, unit: 'DRIP CLIENT ROOT', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Drip Client Root Panel' },
+      { id: 'ff-8bp-ezteam', amount: 1, unit: '8BP EZTEAM ANDROID', price: 100, currency: 'BDT', category: 'FF PANEL', description: '8BP EZTeam Android Panel' },
+      { id: 'ff-psh4x', amount: 1, unit: 'PSH4X 8BALL POOL', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'PSH4X 8Ball Pool Panel' },
+      { id: 'ff-patoteam', amount: 1, unit: 'PATOTEAM APKMOD', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'PaToTeam APK Mod Panel' },
+      { id: 'ff-fluorite-ios', amount: 1, unit: 'FLUORITE IOS FF', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Fluorite iOS FF Panel' },
+      { id: 'ff-esign', amount: 1, unit: 'ESIGN CERTIFICATE', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'eSign Certificate Panel' },
+      { id: 'ff-akloader', amount: 1, unit: 'AKLOADER ANDROID', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'AKLoader Android Panel' },
+      { id: 'ff-prime-apkmod', amount: 1, unit: 'PRIME APKMOD', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Prime APK Mod Panel' },
+      { id: 'ff-gbox', amount: 1, unit: 'GBOX OFFICIAL', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'GBox Official Panel' },
+      { id: 'ff-haxxcker', amount: 1, unit: 'HAXXCKER ROOT', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Haxxcker Root Panel' },
+      { id: 'ff-drip-pc-exe', amount: 1, unit: 'DRIP CLIENT PC EXE', price: 100, currency: 'BDT', category: 'FF PANEL', description: 'Drip Client PC EXE Panel' }
     ]
   },
   {
