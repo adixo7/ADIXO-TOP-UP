@@ -15,12 +15,29 @@ import Confetti from './components/Confetti';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
+const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
+  'ff-brmod-android': [
+    { days: 1, price: 150 },
+    { days: 7, price: 500 },
+    { days: 15, price: 900 },
+    { days: 30, price: 1400 },
+  ],
+  default: [
+    { days: 1, price: 150 },
+    { days: 7, price: 500 },
+    { days: 15, price: 900 },
+    { days: 30, price: 1400 },
+  ],
+};
+
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [user, setUser] = useState<User | null>(null);
   const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+  const [ffPanelPopupPkg, setFfPanelPopupPkg] = useState<Package | null>(null);
+  const [ffPanelTierIdx, setFfPanelTierIdx] = useState<number>(0);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
   const [isGatewayOpen, setIsGatewayOpen] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
@@ -787,7 +804,7 @@ const App: React.FC = () => {
                       {selectedGame.packages.map(pkg => (
                         <button
                           key={pkg.id}
-                          onClick={() => setSelectedPackage(pkg)}
+                          onClick={() => { setFfPanelPopupPkg(pkg); setFfPanelTierIdx(0); }}
                           className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 text-left group ${
                             selectedPackage?.id === pkg.id
                               ? 'bg-orange-500/10 border-orange-500 text-white'
@@ -1303,6 +1320,57 @@ const App: React.FC = () => {
           onComplete={handlePaymentComplete}
           onCancel={() => setIsGatewayOpen(false)}
         />
+      )}
+
+      {/* FF Panel Duration Popup */}
+      {ffPanelPopupPkg && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={() => setFfPanelPopupPkg(null)}>
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+          <div className="relative bg-[#0f0f11] border border-zinc-800 rounded-2xl p-6 w-full max-w-sm shadow-2xl" onClick={e => e.stopPropagation()}>
+            {/* Header */}
+            <div className="flex items-start justify-between mb-5">
+              <div>
+                <p className="text-emerald-400 text-[9px] font-black uppercase tracking-[0.3em] mb-1">FF Panel</p>
+                <h3 className="text-white font-black uppercase text-sm leading-tight">{ffPanelPopupPkg.unit}</h3>
+              </div>
+              <button onClick={() => setFfPanelPopupPkg(null)} className="text-zinc-500 hover:text-white transition-colors mt-0.5">
+                <i className="fas fa-times text-sm"></i>
+              </button>
+            </div>
+
+            {/* Tier options */}
+            <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-3">Select Duration</p>
+            <div className="grid grid-cols-2 gap-2 mb-5">
+              {(FF_PANEL_TIERS[ffPanelPopupPkg.id] || FF_PANEL_TIERS.default).map((tier, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setFfPanelTierIdx(idx)}
+                  className={`flex flex-col items-center justify-center py-3 px-2 rounded-xl border transition-all duration-200 ${
+                    ffPanelTierIdx === idx
+                      ? 'border-orange-500 bg-orange-500/10'
+                      : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-600'
+                  }`}
+                >
+                  <span className={`text-xl font-black leading-none ${ffPanelTierIdx === idx ? 'text-orange-400' : 'text-white'}`}>{tier.days}</span>
+                  <span className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-0.5">Day{tier.days > 1 ? 's' : ''}</span>
+                  <span className={`text-xs font-black mt-1.5 ${ffPanelTierIdx === idx ? 'text-orange-500' : 'text-zinc-400'}`}>৳{tier.price}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Confirm */}
+            <button
+              onClick={() => {
+                const tier = (FF_PANEL_TIERS[ffPanelPopupPkg.id] || FF_PANEL_TIERS.default)[ffPanelTierIdx];
+                setSelectedPackage({ ...ffPanelPopupPkg, price: tier.price, unit: `${ffPanelPopupPkg.unit} (${tier.days} Day${tier.days > 1 ? 's' : ''})` });
+                setFfPanelPopupPkg(null);
+              }}
+              className="w-full py-3 bg-orange-500 hover:bg-orange-400 text-black font-black uppercase tracking-widest text-[10px] rounded-xl transition-all shadow-lg shadow-orange-500/30"
+            >
+              Confirm Selection
+            </button>
+          </div>
+        </div>
       )}
 
       <ChatWidget />
