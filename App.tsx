@@ -27,6 +27,11 @@ const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
     { days: 10, price: 800 },
     { days: 30, price: 1550 },
   ],
+  'ff-snake-carrom': [
+    { days: 3, price: 500 },
+    { days: 10, price: 800 },
+    { days: 30, price: 1800 },
+  ],
 };
 
 const App: React.FC = () => {
