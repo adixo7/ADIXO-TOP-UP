@@ -9,6 +9,18 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     color: '#D12053'
   },
   {
+    id: 'nagad',
+    name: 'Nagad',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Nagad.svg/512px-Nagad.svg.png',
+    color: '#F05A28'
+  },
+  {
+    id: 'rocket',
+    name: 'Rocket',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/DBBL_Rocket_Logo.png/120px-DBBL_Rocket_Logo.png',
+    color: '#8B35C9'
+  },
+  {
     id: 'binance',
     name: 'Binance',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Binance_Logo.png',

@@ -1231,6 +1231,7 @@ const App: React.FC = () => {
                           </button>
                         ))}
                       </div>
+
                       <div className="mt-6 pt-4 border-t border-zinc-800/50">
                         <button 
                           onClick={handleConfirmOrder}
