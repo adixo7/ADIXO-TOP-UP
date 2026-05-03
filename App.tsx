@@ -1402,7 +1402,7 @@ const App: React.FC = () => {
 
       {/* FF Panel Duration Popup */}
       {ffPanelPopupPkg && (
-        <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-4" onClick={() => setFfPanelPopupPkg(null)}>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" onClick={() => setFfPanelPopupPkg(null)}>
           <div className="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
           <div className="relative w-full max-w-sm" onClick={e => e.stopPropagation()}>
             {/* Card */}
