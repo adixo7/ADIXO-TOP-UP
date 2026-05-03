@@ -5,25 +5,25 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   {
     id: 'bkash',
     name: 'bKash',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/BKash_logo.svg/512px-BKash_logo.svg.png',
+    logo: '/images/payment/bkash.png',
     color: '#D12053'
   },
   {
     id: 'nagad',
     name: 'Nagad',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Nagad.svg/512px-Nagad.svg.png',
+    logo: '/images/payment/nagad.webp',
     color: '#F05A28'
   },
   {
     id: 'rocket',
     name: 'Rocket',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/DBBL_Rocket_Logo.png/120px-DBBL_Rocket_Logo.png',
+    logo: '/images/payment/rocket.png',
     color: '#8B35C9'
   },
   {
     id: 'binance',
     name: 'Binance',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Binance_Logo.png',
+    logo: '/images/payment/binance.png',
     color: '#F3BA2F'
   }
 ];
