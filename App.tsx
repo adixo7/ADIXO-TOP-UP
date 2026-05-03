@@ -552,7 +552,7 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-4 md:mb-6">
               <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
                 <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
-                AI BOTS
+                TOOLS
               </h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -666,7 +666,7 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-emerald-500/10 flex items-center justify-between">
-                      <span className="text-emerald-400 font-black text-xs md:text-sm italic uppercase">17 TOOLS</span>
+                      <span className="text-emerald-400 font-black text-xs md:text-sm italic uppercase">PROTECTED</span>
                       <div className="flex items-center gap-1.5 md:gap-2 bg-emerald-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-emerald-600 transition-all duration-300">
                         <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">View All</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-emerald-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
