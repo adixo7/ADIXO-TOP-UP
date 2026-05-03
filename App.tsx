@@ -1224,6 +1224,7 @@ const App: React.FC = () => {
                             <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${selectedPayment?.id === method.id ? 'border-orange-500' : 'border-zinc-700'}`}>
                               {selectedPayment?.id === method.id && <div className="w-2 rounded-full bg-orange-500 aspect-square"></div>}
                             </div>
+                            <img src={method.logo} alt={method.name} className="w-7 h-7 rounded-lg object-cover shrink-0" />
                             <div className="flex flex-col">
                               <span className="font-black uppercase italic tracking-tighter text-[10px] text-white truncate">{method.name}</span>
                               {method.id === 'bkash' && (
