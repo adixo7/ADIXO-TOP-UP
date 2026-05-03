@@ -754,26 +754,28 @@ const App: React.FC = () => {
 
                   <div className="space-y-4 px-2">
                     <h3 className="text-xl font-bold text-white">
-                      {selectedGame.id === 'pc-games' ? 'Email / Whatsapp number' : selectedGame.id === 'ai-bots' ? 'GUILD ID' : selectedGame.id === 'ff-panel' ? 'Player ID' : 'Player ID / Username'}
+                      {selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'Email / WhatsApp Number' : selectedGame.id === 'ai-bots' ? 'GUILD ID' : 'Player ID / Username'}
                     </h3>
                     <div className="relative group">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
-                        <i className={`fas ${selectedGame.id === 'pc-games' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : selectedGame.id === 'ff-panel' ? 'fa-terminal' : 'fa-gamepad'} text-xl`}></i>
+                        <i className={`fas ${selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : 'fa-gamepad'} text-xl`}></i>
                       </div>
                       <input 
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder={selectedGame.id === 'pc-games' ? 'Enter Email or Whatsapp Number' : selectedGame.id === 'ai-bots' ? 'ENTER GUILD ID' : selectedGame.id === 'ff-panel' ? 'Enter Player ID' : selectedGame.idPlaceholder}
+                        placeholder={selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'Enter Email or WhatsApp Number' : selectedGame.id === 'ai-bots' ? 'ENTER GUILD ID' : selectedGame.idPlaceholder}
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
                     
                       <CouponRedeem onRedeem={handleRedeemCoupon} />
 
-                    {selectedGame.id === 'pc-games' && (
+                    {(selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel') && (
                       <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">
-                        * Note: We will send your purchased game's account ID and password to this Email or WhatsApp number.
+                        {selectedGame.id === 'ff-panel'
+                          ? '* Note: Your license key will be sent to this Email or WhatsApp number after payment.'
+                          : '* Note: We will send your purchased game\'s account ID and password to this Email or WhatsApp number.'}
                       </p>
                     )}
                   </div>
