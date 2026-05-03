@@ -612,9 +612,11 @@ const App: React.FC = () => {
                     onClick={() => { setSelectedGame(ffGame); setActiveTab('games'); }}
                   >
                     <div className="aspect-video overflow-hidden bg-zinc-950 relative">
-                      <div className="w-full h-full bg-gradient-to-br from-emerald-950 via-zinc-900 to-zinc-950 flex items-center justify-center group-hover:scale-110 transition-transform duration-700">
-                        <i className="fas fa-terminal text-5xl text-emerald-500/40 group-hover:text-emerald-400/70 transition-colors duration-500"></i>
-                      </div>
+                      <img
+                        src="/images/ff-panel-cover.avif"
+                        alt="FF Panel"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-100"
+                      />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/40 to-transparent"></div>
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">

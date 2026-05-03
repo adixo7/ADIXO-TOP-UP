@@ -195,8 +195,8 @@ export const GAMES: Game[] = [
     id: 'ff-panel',
     name: 'FF PANEL',
     category: 'FF PANEL',
-    image: '/images/event-bypass-cover.png',
-    banner: '/images/event-bypass-cover.png',
+    image: '/images/ff-panel-cover.avif',
+    banner: '/images/ff-panel-cover.avif',
     idPlaceholder: 'Player ID / Account ID',
     description: 'Premium FF Panel tools and APK mods.',
     packages: [
