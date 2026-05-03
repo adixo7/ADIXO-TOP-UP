@@ -62,6 +62,7 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [orderTrackId, setOrderTrackId] = useState('');
   const [showMaintenance, setShowMaintenance] = useState(false);
+  const paymentSectionRef = useRef<HTMLDivElement>(null);
   
   // Profile specific states
   const handlePaymentSelect = (method: PaymentMethod) => {
@@ -1145,7 +1146,67 @@ const App: React.FC = () => {
                   )}
 
                   {selectedPackage && (
-                    <div className="bg-[#0b0b0d] border border-zinc-800/60 p-4 rounded-[1.5rem] shadow-sm animate-in fade-in duration-500">
+                    <div ref={paymentSectionRef} className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+
+                      {selectedGame?.id === 'ff-panel' && (
+                        <div className="bg-[#0b0b0d] border border-emerald-500/30 rounded-[1.5rem] p-4 shadow-xl shadow-emerald-500/5 relative overflow-hidden">
+                          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
+                          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-emerald-500/80 via-emerald-400/40 to-transparent rounded-t-[1.5rem]"></div>
+
+                          <div className="relative flex items-start gap-4">
+                            <div className="w-14 h-14 rounded-2xl overflow-hidden border border-emerald-500/30 shrink-0 shadow-lg shadow-emerald-500/10">
+                              <img
+                                src="/images/ff-panel-cover.avif"
+                                alt="FF Panel"
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-[8px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                                  <i className="fas fa-terminal mr-1"></i>FF PANEL
+                                </span>
+                                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-500 bg-zinc-800/60 px-2 py-0.5 rounded-full">
+                                  <i className="fas fa-check-circle text-green-500 mr-1"></i>SELECTED
+                                </span>
+                              </div>
+                              <h3 className="text-sm font-black text-white uppercase italic tracking-tight leading-tight mb-0.5">
+                                {selectedPackage.unit}
+                              </h3>
+                              <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-widest">
+                                License key sent via Email / WhatsApp
+                              </p>
+                            </div>
+
+                            <div className="shrink-0 text-right">
+                              <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">TOTAL</p>
+                              <p className="text-xl font-black text-emerald-400 italic leading-none">৳{selectedPackage.price.toLocaleString()}</p>
+                              <p className="text-[8px] font-black text-zinc-600 uppercase tracking-wider mt-0.5">BDT</p>
+                            </div>
+                          </div>
+
+                          <div className="relative mt-3 pt-3 border-t border-zinc-800/50 grid grid-cols-3 gap-2">
+                            <div className="flex flex-col items-center gap-1 text-center">
+                              <i className="fas fa-bolt text-emerald-400 text-[10px]"></i>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Instant</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Delivery</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-1 text-center border-x border-zinc-800/50">
+                              <i className="fas fa-shield-alt text-emerald-400 text-[10px]"></i>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">100%</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Safe</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-1 text-center">
+                              <i className="fas fa-headset text-emerald-400 text-[10px]"></i>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">24/7</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Support</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                    <div className="bg-[#0b0b0d] border border-zinc-800/60 p-4 rounded-[1.5rem] shadow-sm">
                       <h3 className="text-xs font-bold text-white mb-4 uppercase tracking-tight">Payment Method</h3>
                       <div className="grid grid-cols-2 gap-3">
                         {PAYMENT_METHODS.map(method => (
@@ -1178,6 +1239,7 @@ const App: React.FC = () => {
                           Confirm & Pay {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price}
                         </button>
                       </div>
+                    </div>
                     </div>
                   )}
                 </div>
@@ -1409,6 +1471,9 @@ const App: React.FC = () => {
                         const tier = FF_PANEL_TIERS[ffPanelPopupPkg.id][ffPanelTierIdx];
                         setSelectedPackage({ ...ffPanelPopupPkg, price: tier.price, unit: `${ffPanelPopupPkg.unit} (${tier.days} Day${tier.days > 1 ? 's' : ''})` });
                         setFfPanelPopupPkg(null);
+                        setTimeout(() => {
+                          paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 150);
                       }}
                       className="w-full py-3.5 rounded-2xl bg-orange-500 hover:bg-orange-400 active:scale-[0.98] text-black font-black uppercase tracking-widest text-[10px] transition-all shadow-lg shadow-orange-500/25"
                     >
