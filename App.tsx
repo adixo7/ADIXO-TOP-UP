@@ -750,7 +750,7 @@ const App: React.FC = () => {
                             {category}
                             <span className="w-8 h-[1px] bg-orange-500/30"></span>
                           </h3>
-                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                             {groupedPackages[category].map((pkg) => {
                               const isMystery = category === 'MYSTERY BOX';
                               const isGuildLevelUp = category === 'GUILD LEVEL UP';
@@ -786,8 +786,8 @@ const App: React.FC = () => {
                                     </>
                                   )}
                                   
-                                  <div className="p-4 flex flex-col items-center text-center">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-3 border transition-all duration-500 group-hover:scale-110 ${
+                                  <div className="p-2.5 flex flex-col items-center text-center">
+                                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center mb-2 border transition-all duration-500 group-hover:scale-110 ${
                                       isBonus ? 'bg-amber-950/60' : 'bg-zinc-950/80'
                                     } ${mysteryTheme.iconBg} ${isMystery ? 'group-hover:rotate-12 shadow-inner' : ''} ${isBonus ? 'group-hover:rotate-6 group-hover:scale-110' : ''}`}>
                                       <i className={`fas ${
@@ -795,21 +795,21 @@ const App: React.FC = () => {
                                         isGuildLevelUp ? 'fa-arrow-up' :
                                         pkg.id.includes('regional') ? (pkg.id.includes('elite') ? 'fa-globe' : pkg.id.includes('master') ? 'fa-trophy' : 'fa-shield-alt') :
                                         isMystery ? 'fa-box-open' : 'fa-robot'
-                                      } text-xl ${mysteryTheme.icon} ${isMystery ? 'animate-pulse' : ''} ${isBonus ? 'animate-bounce' : ''}`}></i>
+                                      } text-sm ${mysteryTheme.icon} ${isMystery ? 'animate-pulse' : ''} ${isBonus ? 'animate-bounce' : ''}`}></i>
                                     </div>
                                     
-                                    <h3 className={`text-[11px] font-black uppercase tracking-tight mb-1 ${isMystery ? 'tracking-[0.1em]' : ''} ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.unit}</h3>
-                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mb-3 line-clamp-1">{pkg.description}</p>
+                                    <h3 className={`text-[9px] font-black uppercase tracking-tight mb-0.5 ${isMystery ? 'tracking-[0.1em]' : ''} ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.unit}</h3>
+                                    <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest mb-2 line-clamp-1">{pkg.description}</p>
                                     
-                                    <div className="flex items-baseline gap-1.5 mb-4">
-                                      <span className={`text-xl font-black ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.price}</span>
-                                      <span className="text-orange-500 font-black text-xs italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
-                                      {pkg.oldPrice && <span className="text-zinc-500 text-[10px] line-through decoration-red-500/50 italic ml-1">
+                                    <div className="flex items-baseline gap-1 mb-2">
+                                      <span className={`text-base font-black ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.price}</span>
+                                      <span className="text-orange-500 font-black text-[10px] italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
+                                      {pkg.oldPrice && <span className="text-zinc-500 text-[8px] line-through decoration-red-500/50 italic ml-1">
                                         {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
                                       </span>}
                                     </div>
                                     
-                                    <div className="space-y-1.5 w-full mb-4">
+                                    <div className="space-y-1 w-full mb-2">
                                       {isGuildLevelUp ? (
                                         <>
                                           <div className="flex items-center gap-1.5 text-[8px] font-bold text-zinc-500 uppercase">
@@ -857,7 +857,7 @@ const App: React.FC = () => {
                                       </div>
                                     </div>
                                     
-                                    <div className={`w-full py-2 rounded-lg font-black uppercase tracking-widest text-[8px] transition-all duration-300 ${
+                                    <div className={`w-full py-1.5 rounded-lg font-black uppercase tracking-widest text-[7px] transition-all duration-300 ${
                                       selectedPackage?.id === pkg.id
                                         ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/40'
                                         : isBonus
