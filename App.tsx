@@ -778,7 +778,32 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-2 space-y-10">
-                  {(selectedGame.id === 'ai-bots' || selectedGame.id === 'ff-panel') ? (
+                  {selectedGame.id === 'ff-panel' ? (
+                    <div className="space-y-2">
+                      {selectedGame.packages.map(pkg => (
+                        <button
+                          key={pkg.id}
+                          onClick={() => setSelectedPackage(pkg)}
+                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 text-left group ${
+                            selectedPackage?.id === pkg.id
+                              ? 'bg-orange-500/10 border-orange-500 text-white'
+                              : 'bg-zinc-900/60 border-zinc-800/60 hover:border-emerald-500/50 hover:bg-zinc-900'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <i className={`fas fa-terminal text-[10px] ${selectedPackage?.id === pkg.id ? 'text-orange-500' : 'text-emerald-500/60 group-hover:text-emerald-400'}`}></i>
+                            <span className={`text-[11px] font-black uppercase tracking-wide ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-300 group-hover:text-white'}`}>{pkg.unit}</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <span className={`text-[11px] font-black italic ${selectedPackage?.id === pkg.id ? 'text-orange-400' : 'text-zinc-500 group-hover:text-zinc-300'}`}>৳{pkg.price}</span>
+                            <div className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500' : 'border-zinc-700 group-hover:border-emerald-500'}`}>
+                              {selectedPackage?.id === pkg.id && <i className="fas fa-check text-black text-[6px]"></i>}
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  ) : selectedGame.id === 'ai-bots' ? (
                     <div className="space-y-12">
                       {sortedCategoryKeys.map(category => (
                         <div key={category} className="space-y-6">
