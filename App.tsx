@@ -39,6 +39,11 @@ const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
     { days: 15, price: 1000 },
     { days: 30, price: 1600 },
   ],
+  'ff-hg-cheat': [
+    { days: 1, price: 200 },
+    { days: 10, price: 600 },
+    { days: 30, price: 1500 },
+  ],
 };
 
 const App: React.FC = () => {
