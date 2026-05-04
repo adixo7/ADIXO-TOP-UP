@@ -1186,35 +1186,61 @@ const App: React.FC = () => {
                           </div>
                           <div className="grid grid-cols-2 gap-3">
                             {groupedPackages[category].map(pkg => {
-                              const isCouponDeal = isPsdis7Applied && (pkg.id === 'ff-weekly-mem' || pkg.id === 'ff-monthly-mem');
+                              const isWeeklyDeal = isPsdis7Applied && pkg.id === 'ff-weekly-mem';
+                              const isMonthlyDeal = isPsdis7Applied && pkg.id === 'ff-monthly-mem';
+                              const isCouponDeal = isWeeklyDeal || isMonthlyDeal;
                               return (
                               <button 
                                 key={pkg.id}
                                 onClick={() => setSelectedPackage(pkg)}
                                 className={`group relative bg-[#0d0d0f] border px-4 py-3 rounded-xl transition-all text-left flex justify-between items-center overflow-hidden ${
-                                  selectedPackage?.id === pkg.id 
+                                  selectedPackage?.id === pkg.id
                                   ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]'
-                                  : isCouponDeal
+                                  : isMonthlyDeal
+                                  ? 'border-amber-400/80 bg-gradient-to-br from-amber-950/40 to-[#0d0d0f] shadow-[0_0_24px_rgba(251,191,36,0.3)]'
+                                  : isWeeklyDeal
                                   ? 'border-emerald-400/70 bg-emerald-500/5 shadow-[0_0_18px_rgba(52,211,153,0.25)]'
                                   : 'border-zinc-800/80 hover:border-orange-500/40 hover:bg-zinc-900/50 shadow-sm'
                                 }`}
                               >
-                                {/* Animated shimmer border for coupon deal */}
-                                {isCouponDeal && selectedPackage?.id !== pkg.id && (
+                                {/* Top gold shimmer line for monthly */}
+                                {isMonthlyDeal && selectedPackage?.id !== pkg.id && (
+                                  <>
+                                    <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500/80 via-yellow-300/60 to-amber-500/80 rounded-t-xl"></span>
+                                    <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
+                                      <span className="absolute inset-0 animate-pulse bg-gradient-to-br from-amber-400/10 via-transparent to-yellow-500/5"></span>
+                                    </span>
+                                  </>
+                                )}
+
+                                {/* Animated shimmer for weekly */}
+                                {isWeeklyDeal && selectedPackage?.id !== pkg.id && (
                                   <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
                                     <span className="absolute inset-0 animate-pulse bg-gradient-to-r from-emerald-500/10 via-transparent to-emerald-500/10"></span>
                                   </span>
                                 )}
 
-                                {/* Coupon deal badge */}
-                                {isCouponDeal && (
+                                {/* Monthly PREMIUM badge */}
+                                {isMonthlyDeal && (
+                                  <span className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-yellow-400 text-black text-[6px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10 flex items-center gap-1">
+                                    <i className="fas fa-crown text-[5px]"></i> PREMIUM
+                                  </span>
+                                )}
+
+                                {/* Weekly DEAL badge */}
+                                {isWeeklyDeal && (
                                   <span className="absolute top-0 right-0 bg-emerald-500 text-black text-[6px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10 flex items-center gap-1">
                                     <i className="fas fa-tag text-[5px]"></i> DEAL
                                   </span>
                                 )}
 
                                 <div className="flex flex-col relative z-10">
-                                  <span className={`text-[11px] md:text-sm font-black italic tracking-tight leading-none mb-1 transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : isCouponDeal ? 'text-emerald-100' : 'text-zinc-200 group-hover:text-white'}`}>
+                                  <span className={`text-[11px] md:text-sm font-black italic tracking-tight leading-none mb-1 transition-colors ${
+                                    selectedPackage?.id === pkg.id ? 'text-white'
+                                    : isMonthlyDeal ? 'text-amber-100'
+                                    : isWeeklyDeal ? 'text-emerald-100'
+                                    : 'text-zinc-200 group-hover:text-white'
+                                  }`}>
                                     {pkg.amount > 1 ? pkg.amount : ''} {pkg.unit}
                                   </span>
                                   {pkg.isPopular && (
@@ -1225,7 +1251,12 @@ const App: React.FC = () => {
                                 </div>
                                 <div className="flex flex-col items-end shrink-0 relative z-10">
                                   <div className="flex items-center gap-1.5">
-                                    <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${selectedPackage?.id === pkg.id ? 'text-white' : isCouponDeal ? 'text-emerald-400' : 'text-orange-500 group-hover:text-orange-400'}`}>
+                                    <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${
+                                      selectedPackage?.id === pkg.id ? 'text-white'
+                                      : isMonthlyDeal ? 'text-amber-400'
+                                      : isWeeklyDeal ? 'text-emerald-400'
+                                      : 'text-orange-500 group-hover:text-orange-400'
+                                    }`}>
                                       ৳{pkg.price}
                                     </span>
                                     {pkg.oldPrice && (
@@ -1237,8 +1268,13 @@ const App: React.FC = () => {
                                 </div>
                                 
                                 {/* Decorative element background */}
-                                <div className={`absolute -right-2 -bottom-2 transition-all duration-500 ${selectedPackage?.id === pkg.id ? 'text-white/5 scale-110' : isCouponDeal ? 'text-emerald-500/10 scale-110' : 'text-zinc-800/10 group-hover:text-orange-500/5 group-hover:scale-105'}`}>
-                                   <i className="fas fa-gem text-3xl md:text-4xl rotate-12"></i>
+                                <div className={`absolute -right-2 -bottom-2 transition-all duration-500 ${
+                                  selectedPackage?.id === pkg.id ? 'text-white/5 scale-110'
+                                  : isMonthlyDeal ? 'text-amber-400/15 scale-125'
+                                  : isWeeklyDeal ? 'text-emerald-500/10 scale-110'
+                                  : 'text-zinc-800/10 group-hover:text-orange-500/5 group-hover:scale-105'
+                                }`}>
+                                   <i className={`fas ${isMonthlyDeal ? 'fa-crown' : 'fa-gem'} text-3xl md:text-4xl rotate-12`}></i>
                                 </div>
                               </button>
                               );
