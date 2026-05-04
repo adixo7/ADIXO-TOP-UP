@@ -1259,7 +1259,7 @@ const App: React.FC = () => {
                                     ৳{pkg.price}
                                   </span>
                                   {pkg.oldPrice && (
-                                    <span className="text-[11px] line-through decoration-red-500 font-bold text-red-400 leading-none mt-0.5">
+                                    <span className={`text-[11px] line-through decoration-red-500 italic leading-none mt-0.5 ${selectedPackage?.id === pkg.id ? 'text-red-400/70' : 'text-red-400/80'}`}>
                                       ৳{pkg.oldPrice}
                                     </span>
                                   )}
