@@ -1250,21 +1250,19 @@ const App: React.FC = () => {
                                   )}
                                 </div>
                                 <div className="flex flex-col items-end shrink-0 relative z-10">
-                                  <div className="flex items-center gap-1.5">
-                                    <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${
-                                      selectedPackage?.id === pkg.id ? 'text-white'
-                                      : isMonthlyDeal ? 'text-amber-400'
-                                      : isWeeklyDeal ? 'text-emerald-400'
-                                      : 'text-orange-500 group-hover:text-orange-400'
-                                    }`}>
-                                      ৳{pkg.price}
+                                  <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${
+                                    selectedPackage?.id === pkg.id ? 'text-white'
+                                    : isMonthlyDeal ? 'text-amber-400'
+                                    : isWeeklyDeal ? 'text-emerald-400'
+                                    : 'text-orange-500 group-hover:text-orange-400'
+                                  }`}>
+                                    ৳{pkg.price}
+                                  </span>
+                                  {pkg.oldPrice && (
+                                    <span className="text-[11px] line-through decoration-red-500 font-bold text-red-400 leading-none mt-0.5">
+                                      ৳{pkg.oldPrice}
                                     </span>
-                                    {pkg.oldPrice && (
-                                      <span className={`text-[10px] line-through decoration-red-500 italic ${selectedPackage?.id === pkg.id ? 'text-red-400/70' : 'text-red-400/80'}`}>
-                                        ৳{pkg.oldPrice}
-                                      </span>
-                                    )}
-                                  </div>
+                                  )}
                                 </div>
                                 
                                 {/* Decorative element background */}
