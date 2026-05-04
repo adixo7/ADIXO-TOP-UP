@@ -444,6 +444,7 @@ const App: React.FC = () => {
         return { success: false, message: 'THIS COUPON IS ONLY VALID FOR FREE FIRE MEMBERSHIPS' };
       }
       setIsPsdis7Applied(true);
+      setShowConfetti(true);
       return { success: true, message: 'COUPON APPLIED! WEEKLY ৳145 & MONTHLY ৳725' };
     } else {
       return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
