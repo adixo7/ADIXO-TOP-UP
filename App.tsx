@@ -44,6 +44,69 @@ const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
     { days: 10, price: 600 },
     { days: 30, price: 1500 },
   ],
+  'ff-lkteam': [
+    { days: 1, price: 160 },
+    { days: 10, price: 400 },
+    { days: 30, price: 900 },
+  ],
+  'ff-drip-root': [
+    { days: 1, price: 150 },
+    { days: 7, price: 650 },
+    { days: 30, price: 1550 },
+  ],
+  'ff-8bp-ezteam': [
+    { days: 1, price: 180 },
+    { days: 7, price: 4400 },
+    { days: 30, price: 900 },
+  ],
+  'ff-psh4x': [
+    { days: 0, price: 600 },
+  ],
+  'ff-patoteam': [
+    { days: 1, price: 300 },
+    { days: 3, price: 500 },
+    { days: 7, price: 800 },
+    { days: 15, price: 1300 },
+    { days: 30, price: 2000 },
+  ],
+  'ff-fluorite-ios': [
+    { days: 1, price: 900 },
+    { days: 7, price: 2500 },
+    { days: 15, price: 3500 },
+    { days: 30, price: 5000 },
+  ],
+  'ff-esign': [
+    { days: 15, price: 600 },
+    { days: 30, price: 1000 },
+    { days: 60, price: 1750 },
+  ],
+  'ff-akloader': [
+    { days: 7, price: 2000 },
+    { days: 15, price: 3500 },
+    { days: 30, price: 5000 },
+  ],
+  'ff-prime-apkmod': [
+    { days: 3, price: 250 },
+    { days: 7, price: 500 },
+    { days: 10, price: 700 },
+    { days: 15, price: 1000 },
+    { days: 30, price: 1750 },
+  ],
+  'ff-gbox': [
+    { days: 30, price: 2000 },
+    { days: 60, price: 3800 },
+  ],
+  'ff-haxxcker': [
+    { days: 10, price: 1200 },
+    { days: 15, price: 2000 },
+    { days: 30, price: 3850 },
+  ],
+  'ff-drip-pc-exe': [
+    { days: 1, price: 280 },
+    { days: 7, price: 800 },
+    { days: 15, price: 1450 },
+    { days: 30, price: 2700 },
+  ],
 };
 
 const App: React.FC = () => {
@@ -1456,7 +1519,7 @@ const App: React.FC = () => {
                             </div>
                             <div className="text-left">
                               <span className={`text-sm font-black ${ffPanelTierIdx === idx ? 'text-white' : 'text-zinc-300'}`}>
-                                {tier.days} {tier.days === 1 ? 'Day' : 'Days'}
+                                {tier.days === 0 ? 'Permanent' : `${tier.days} ${tier.days === 1 ? 'Day' : 'Days'}`}
                               </span>
                             </div>
                           </div>
@@ -1476,7 +1539,7 @@ const App: React.FC = () => {
                     <button
                       onClick={() => {
                         const tier = FF_PANEL_TIERS[ffPanelPopupPkg.id][ffPanelTierIdx];
-                        setSelectedPackage({ ...ffPanelPopupPkg, price: tier.price, unit: `${ffPanelPopupPkg.unit} (${tier.days} Day${tier.days > 1 ? 's' : ''})` });
+                        setSelectedPackage({ ...ffPanelPopupPkg, price: tier.price, unit: `${ffPanelPopupPkg.unit} (${tier.days === 0 ? 'Permanent' : `${tier.days} Day${tier.days > 1 ? 's' : ''}`})` });
                         setFfPanelPopupPkg(null);
                         setTimeout(() => {
                           paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
