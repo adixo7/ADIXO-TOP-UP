@@ -149,6 +149,7 @@ const App: React.FC = () => {
   const [isCouponApplied, setIsCouponApplied] = useState(false);
   const [isRamadanCouponApplied, setIsRamadanCouponApplied] = useState(false);
   const [isRamadanasApplied, setIsRamadanasApplied] = useState(false);
+  const [isPsdis7Applied, setIsPsdis7Applied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
@@ -438,6 +439,12 @@ const App: React.FC = () => {
     const upperCode = code.toUpperCase();
     if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15' || upperCode === 'RAMADANAS') {
       return { success: false, message: 'THIS COUPON CODE HAS EXPIRED' };
+    } else if (upperCode === 'PSDIS7') {
+      if (selectedGame?.id !== 'ff') {
+        return { success: false, message: 'THIS COUPON IS ONLY VALID FOR FREE FIRE MEMBERSHIPS' };
+      }
+      setIsPsdis7Applied(true);
+      return { success: true, message: 'COUPON APPLIED! WEEKLY ৳145 & MONTHLY ৳725' };
     } else {
       return { success: false, message: 'COUPON INVALID OR REDEEMED PREVIOUSLY' };
     }
@@ -458,6 +465,18 @@ const App: React.FC = () => {
     if (isRamadanasApplied && (cat === 'GLORY PACKAGE' || cat === 'MYSTERY BOX' || cat === 'HIRE BOTS')) {
       finalPkg.oldPrice = pkg.price;
       finalPkg.price = Math.ceil(pkg.price * 0.9);
+    }
+
+    // Apply PSDIS7 coupon: FF Weekly Membership → 145, Monthly Membership → 725
+    if (isPsdis7Applied && selectedGame?.id === 'ff' && cat === 'MEMBERSHIP') {
+      const psdis7Prices: Record<string, number> = {
+        'ff-weekly-mem': 145,
+        'ff-monthly-mem': 725,
+      };
+      if (psdis7Prices[pkg.id] !== undefined) {
+        finalPkg.oldPrice = pkg.price;
+        finalPkg.price = psdis7Prices[pkg.id];
+      }
     }
 
     // Apply Ramadan coupon for Blood Strike
@@ -1191,7 +1210,7 @@ const App: React.FC = () => {
                                       ৳{pkg.price}
                                     </span>
                                     {pkg.oldPrice && (
-                                      <span className={`text-[10px] line-through decoration-red-500/50 italic ${selectedPackage?.id === pkg.id ? 'text-white/50' : 'text-zinc-500'}`}>
+                                      <span className={`text-[10px] line-through decoration-red-500 italic ${selectedPackage?.id === pkg.id ? 'text-red-400/70' : 'text-red-400/80'}`}>
                                         ৳{pkg.oldPrice}
                                       </span>
                                     )}
