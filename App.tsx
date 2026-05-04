@@ -1249,7 +1249,7 @@ const App: React.FC = () => {
                                     </span>
                                   )}
                                 </div>
-                                <div className="flex flex-col items-end shrink-0 relative z-10">
+                                <div className="flex items-center gap-2 shrink-0 relative z-10">
                                   <span className={`text-sm md:text-lg font-black italic tracking-tighter transition-colors ${
                                     selectedPackage?.id === pkg.id ? 'text-white'
                                     : isMonthlyDeal ? 'text-amber-400'
@@ -1259,7 +1259,7 @@ const App: React.FC = () => {
                                     ৳{pkg.price}
                                   </span>
                                   {pkg.oldPrice && (
-                                    <span className="text-[11px] line-through decoration-red-500 font-bold text-red-400 leading-none mt-0.5">
+                                    <span className="text-[11px] line-through decoration-red-500 font-bold text-red-400">
                                       ৳{pkg.oldPrice}
                                     </span>
                                   )}
