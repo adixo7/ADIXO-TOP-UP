@@ -1126,11 +1126,11 @@ const App: React.FC = () => {
                         {selectedGame.packages.map(pkg => {
                           const days = pkg.amount;
                           const isSelected = selectedPackage?.id === pkg.id;
-                          const themes: Record<number, { gradient: string; glow: string; accent: string; badge?: string }> = {
-                            5:  { gradient: 'from-cyan-900/40 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', badge: '' },
-                            14: { gradient: 'from-blue-900/50 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(59,130,246,0.25)]', accent: 'text-blue-400', badge: 'HOT' },
-                            30: { gradient: 'from-violet-900/40 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(139,92,246,0.15)]', accent: 'text-violet-400', badge: '' },
-                            60: { gradient: 'from-purple-900/50 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(168,85,247,0.25)]', accent: 'text-purple-400', badge: 'BEST' },
+                          const themes: Record<number, { gradient: string; glow: string; accent: string; badge?: string; name: string; chance: string }> = {
+                            5:  { gradient: 'from-cyan-900/40 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', badge: '', name: 'BASIC', chance: '60%' },
+                            14: { gradient: 'from-blue-900/50 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(59,130,246,0.25)]', accent: 'text-blue-400', badge: 'HOT', name: 'HYPER', chance: '75%' },
+                            30: { gradient: 'from-violet-900/40 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(139,92,246,0.15)]', accent: 'text-violet-400', badge: '', name: 'PREMIUM', chance: '90%' },
+                            60: { gradient: 'from-purple-900/50 to-zinc-900', glow: 'shadow-[0_0_16px_rgba(168,85,247,0.25)]', accent: 'text-purple-400', badge: 'BEST', name: 'SUPER', chance: '96%' },
                           };
                           const theme = themes[days] || themes[5];
                           return (
@@ -1152,12 +1152,18 @@ const App: React.FC = () => {
                                 <div className="absolute inset-0 bg-blue-400/5 pointer-events-none rounded-xl"></div>
                               )}
                               <div className="flex flex-col gap-2">
-                                <div className={`w-7 h-7 rounded-lg flex items-center justify-center bg-black/30 border border-white/10`}>
-                                  <i className={`fas fa-lock-open ${theme.accent} text-xs`}></i>
+                                <div className="flex items-center gap-1.5">
+                                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center bg-black/30 border border-white/10 shrink-0`}>
+                                    <i className={`fas fa-lock-open ${theme.accent} text-xs`}></i>
+                                  </div>
+                                  <p className={`text-[10px] font-black uppercase tracking-widest ${theme.accent}`}>{theme.name}</p>
                                 </div>
                                 <div>
-                                  <p className={`text-2xl font-black ${theme.accent} leading-none`}>{days}</p>
-                                  <p className="text-zinc-400 text-[7px] font-black uppercase tracking-[0.2em] mt-0.5">Event Bypass</p>
+                                  <p className={`text-xl font-black ${theme.accent} leading-none`}>{days} <span className="text-[9px] font-bold text-zinc-400 normal-case tracking-normal">Event Bypass</span></p>
+                                  <div className="flex items-center gap-1 mt-1">
+                                    <i className="fas fa-unlock text-[7px] text-green-400"></i>
+                                    <p className="text-green-400 text-[8px] font-black uppercase tracking-[0.15em]">{theme.chance} Unlock Chance</p>
+                                  </div>
                                 </div>
                                 <div className="flex items-end justify-between">
                                   <div>
