@@ -1173,7 +1173,7 @@ const App: React.FC = () => {
 
                               {/* Stock Out tag */}
                               {isStockOut && (
-                                <span className="absolute top-2 left-2 z-10 bg-red-600/90 text-white text-[6px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest flex items-center gap-1">
+                                <span className="absolute top-2 right-2 z-10 bg-red-600/90 text-white text-[6px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest flex items-center gap-1">
                                   <i className="fas fa-ban text-[5px]"></i> Stock Out
                                 </span>
                               )}
@@ -1688,27 +1688,34 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Stock Out Toast */}
+      {/* Stock Out Modal */}
       {stockOutToast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[999] animate-bounce-once">
-          <div className="bg-zinc-900 border border-red-500/60 rounded-xl px-4 py-3 shadow-2xl shadow-red-900/30 flex items-start gap-3 min-w-[260px] max-w-[320px]">
-            <div className="w-7 h-7 rounded-full bg-red-600/20 border border-red-500/50 flex items-center justify-center shrink-0 mt-0.5">
-              <i className="fas fa-ban text-red-400 text-xs"></i>
+        <div
+          className="fixed inset-0 z-[999] flex items-center justify-center p-6 backdrop-blur-sm bg-black/60"
+          onClick={() => setStockOutToast(null)}
+        >
+          <div
+            className="bg-zinc-900 border border-red-500/50 rounded-2xl p-6 shadow-2xl shadow-red-900/30 w-full max-w-[300px] text-center"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="w-12 h-12 rounded-full bg-red-600/20 border border-red-500/40 flex items-center justify-center mx-auto mb-3">
+              <i className="fas fa-ban text-red-400 text-lg"></i>
             </div>
-            <div className="flex-1">
-              <p className="text-white text-[11px] font-black uppercase tracking-wide">{stockOutToast} — Unavailable</p>
-              <p className="text-zinc-400 text-[9px] mt-0.5 leading-relaxed">This package is currently out of stock. For updates or assistance, contact support.</p>
-              <a
-                href="https://t.me/AdiXO_TV"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-black text-sky-400 hover:text-sky-300 transition-colors uppercase tracking-widest"
-              >
-                <i className="fab fa-telegram text-[9px]"></i> @AdiXO_TV
-              </a>
-            </div>
-            <button onClick={() => setStockOutToast(null)} className="text-zinc-600 hover:text-zinc-400 transition-colors mt-0.5">
-              <i className="fas fa-times text-[9px]"></i>
+            <p className="text-white text-sm font-black uppercase tracking-wide mb-1">{stockOutToast} — Out of Stock</p>
+            <p className="text-zinc-400 text-[10px] leading-relaxed mb-4">This package is currently unavailable. Contact our support for updates or assistance.</p>
+            <a
+              href="https://t.me/AdiXO_TV"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full bg-sky-600/20 hover:bg-sky-600/30 border border-sky-500/40 text-sky-400 text-[10px] font-black uppercase tracking-widest py-2 rounded-lg transition-colors mb-3"
+            >
+              <i className="fab fa-telegram text-xs"></i> Contact @AdiXO_TV
+            </a>
+            <button
+              onClick={() => setStockOutToast(null)}
+              className="w-full text-zinc-500 hover:text-zinc-300 text-[9px] font-bold uppercase tracking-widest transition-colors"
+            >
+              Close
             </button>
           </div>
         </div>
