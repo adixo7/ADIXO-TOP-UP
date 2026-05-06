@@ -1126,20 +1126,22 @@ const App: React.FC = () => {
                         {selectedGame.packages.map(pkg => {
                           const days = pkg.amount;
                           const isSelected = selectedPackage?.id === pkg.id;
-                          type EbTheme = { gradient: string; border: string; glow: string; accent: string; accentHex: string; badgeBg: string; badge?: string; name: string; chance: string; iconBg: string; shimmer: boolean; topLine: boolean; topLineColor: string; sparkle: boolean };
+                          type EbTheme = { gradient: string; border: string; glow: string; accent: string; accentHex: string; badgeBg: string; badge?: string; name: string; chance: string; iconBg: string; shimmer: boolean; topLine: boolean; topLineColor: string; sparkle: boolean; stockOut?: boolean };
                           const themes: Record<number, EbTheme> = {
-                            5:  { gradient: 'from-cyan-950/60 to-zinc-900', border: 'border-cyan-800/50', glow: 'shadow-[0_0_14px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', accentHex: 'rgba(6,182,212,0.2)', badgeBg: 'bg-cyan-600', badge: '', name: 'BASIC', chance: '60%', iconBg: 'bg-cyan-900/40 border-cyan-700/40', shimmer: false, topLine: false, topLineColor: '', sparkle: false },
-                            14: { gradient: 'from-blue-950/70 to-zinc-900', border: 'border-blue-600/60', glow: 'shadow-[0_0_20px_rgba(59,130,246,0.3)]', accent: 'text-blue-400', accentHex: 'rgba(59,130,246,0.15)', badgeBg: 'bg-blue-500', badge: 'HOT', name: 'HYPER', chance: '75%', iconBg: 'bg-blue-900/50 border-blue-600/40', shimmer: false, topLine: true, topLineColor: 'from-blue-600/60 via-blue-400/40 to-blue-600/60', sparkle: false },
+                            5:  { gradient: 'from-cyan-950/60 to-zinc-900', border: 'border-cyan-800/50', glow: 'shadow-[0_0_14px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', accentHex: 'rgba(6,182,212,0.2)', badgeBg: 'bg-cyan-600', badge: '', name: 'BASIC', chance: '60%', iconBg: 'bg-cyan-900/40 border-cyan-700/40', shimmer: false, topLine: false, topLineColor: '', sparkle: false, stockOut: true },
+                            14: { gradient: 'from-blue-950/70 to-zinc-900', border: 'border-blue-600/60', glow: 'shadow-[0_0_20px_rgba(59,130,246,0.3)]', accent: 'text-blue-400', accentHex: 'rgba(59,130,246,0.15)', badgeBg: 'bg-blue-500', badge: 'HOT', name: 'HYPER', chance: '75%', iconBg: 'bg-blue-900/50 border-blue-600/40', shimmer: false, topLine: true, topLineColor: 'from-blue-600/60 via-blue-400/40 to-blue-600/60', sparkle: false, stockOut: true },
                             30: { gradient: 'from-violet-950/80 to-zinc-900', border: 'border-violet-500/70', glow: 'shadow-[0_0_24px_rgba(139,92,246,0.35)]', accent: 'text-violet-300', accentHex: 'rgba(139,92,246,0.15)', badgeBg: 'bg-violet-600', badge: '', name: 'PREMIUM', chance: '90%', iconBg: 'bg-violet-900/60 border-violet-500/50', shimmer: true, topLine: true, topLineColor: 'from-violet-500/80 via-fuchsia-400/60 to-violet-500/80', sparkle: false },
                             60: { gradient: 'from-purple-950/90 via-fuchsia-950/50 to-zinc-900', border: 'border-fuchsia-400/80', glow: 'shadow-[0_0_32px_rgba(217,70,239,0.4)]', accent: 'text-fuchsia-300', accentHex: 'rgba(217,70,239,0.12)', badgeBg: 'bg-gradient-to-r from-fuchsia-500 to-purple-500', badge: 'BEST', name: 'SUPER', chance: '96%', iconBg: 'bg-fuchsia-900/60 border-fuchsia-400/50', shimmer: true, topLine: true, topLineColor: 'from-fuchsia-500 via-yellow-300/60 to-fuchsia-500', sparkle: true },
                           };
                           const theme = themes[days] || themes[5];
+                          const isStockOut = theme.stockOut === true;
                           return (
                             <button
                               key={pkg.id}
-                              onClick={() => setSelectedPackage(pkg)}
+                              onClick={() => !isStockOut && setSelectedPackage(pkg)}
+                              disabled={isStockOut}
                               className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-xl p-3 transition-all duration-300 text-left overflow-hidden ${
-                                isSelected ? `${theme.glow} scale-[1.02]` : 'hover:scale-[1.01]'
+                                isStockOut ? 'opacity-50 cursor-not-allowed grayscale' : isSelected ? `${theme.glow} scale-[1.02]` : 'hover:scale-[1.01]'
                               }`}
                             >
                               {/* Top shimmer line */}
@@ -1162,8 +1164,16 @@ const App: React.FC = () => {
                                 </>
                               )}
 
+                              {/* Stock Out overlay */}
+                              {isStockOut && (
+                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl bg-black/40 backdrop-blur-[1px]">
+                                  <i className="fas fa-ban text-red-500 text-lg mb-1"></i>
+                                  <span className="text-red-400 text-[8px] font-black uppercase tracking-[0.2em]">Stock Out</span>
+                                </div>
+                              )}
+
                               {/* Badge */}
-                              {theme.badge && (
+                              {theme.badge && !isStockOut && (
                                 <div className={`absolute top-2 right-2 ${theme.badgeBg} text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10`}>
                                   {theme.badge}
                                 </div>
