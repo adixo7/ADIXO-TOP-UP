@@ -1123,16 +1123,16 @@ const App: React.FC = () => {
                     </div>
                   ) : selectedGame.id === 'event-bypass' ? (
                     <div className="space-y-4">
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {selectedGame.packages.map(pkg => {
                           const days = pkg.amount;
                           const isSelected = selectedPackage?.id === pkg.id;
                           type EbTheme = { gradient: string; border: string; glow: string; accent: string; accentHex: string; badgeBg: string; badge?: string; name: string; chance: string; iconBg: string; shimmer: boolean; topLine: boolean; topLineColor: string; sparkle: boolean; stockOut?: boolean };
                           const themes: Record<number, EbTheme> = {
-                            5:  { gradient: 'from-cyan-950/60 to-zinc-900', border: 'border-cyan-800/50', glow: 'shadow-[0_0_14px_rgba(6,182,212,0.15)]', accent: 'text-cyan-400', accentHex: 'rgba(6,182,212,0.2)', badgeBg: 'bg-cyan-600', badge: '', name: 'BASIC', chance: '60%', iconBg: 'bg-cyan-900/40 border-cyan-700/40', shimmer: false, topLine: false, topLineColor: '', sparkle: false, stockOut: true },
-                            14: { gradient: 'from-blue-950/70 to-zinc-900', border: 'border-blue-600/60', glow: 'shadow-[0_0_20px_rgba(59,130,246,0.3)]', accent: 'text-blue-400', accentHex: 'rgba(59,130,246,0.15)', badgeBg: 'bg-blue-500', badge: 'HOT', name: 'HYPER', chance: '75%', iconBg: 'bg-blue-900/50 border-blue-600/40', shimmer: false, topLine: true, topLineColor: 'from-blue-600/60 via-blue-400/40 to-blue-600/60', sparkle: false, stockOut: true },
-                            30: { gradient: 'from-violet-950/80 to-zinc-900', border: 'border-violet-500/70', glow: 'shadow-[0_0_24px_rgba(139,92,246,0.35)]', accent: 'text-violet-300', accentHex: 'rgba(139,92,246,0.15)', badgeBg: 'bg-violet-600', badge: '', name: 'PREMIUM', chance: '90%', iconBg: 'bg-violet-900/60 border-violet-500/50', shimmer: true, topLine: true, topLineColor: 'from-violet-500/80 via-fuchsia-400/60 to-violet-500/80', sparkle: false },
-                            60: { gradient: 'from-purple-950/90 via-fuchsia-950/50 to-zinc-900', border: 'border-fuchsia-400/80', glow: 'shadow-[0_0_32px_rgba(217,70,239,0.4)]', accent: 'text-fuchsia-300', accentHex: 'rgba(217,70,239,0.12)', badgeBg: 'bg-gradient-to-r from-fuchsia-500 to-purple-500', badge: 'BEST', name: 'SUPER', chance: '96%', iconBg: 'bg-fuchsia-900/60 border-fuchsia-400/50', shimmer: true, topLine: true, topLineColor: 'from-fuchsia-500 via-yellow-300/60 to-fuchsia-500', sparkle: true },
+                            5:  { gradient: 'from-cyan-950/60 to-zinc-900', border: 'border-cyan-800/50', glow: 'shadow-[0_0_20px_rgba(6,182,212,0.25)]', accent: 'text-cyan-400', accentHex: 'rgba(6,182,212,0.12)', badgeBg: 'bg-cyan-600', badge: '', name: 'BASIC', chance: '60%', iconBg: 'bg-cyan-900/50 border-cyan-600/50', shimmer: false, topLine: false, topLineColor: '', sparkle: false, stockOut: true },
+                            14: { gradient: 'from-blue-950/70 to-zinc-900', border: 'border-blue-500/70', glow: 'shadow-[0_0_28px_rgba(59,130,246,0.35)]', accent: 'text-blue-400', accentHex: 'rgba(59,130,246,0.12)', badgeBg: 'bg-blue-500', badge: 'HOT', name: 'HYPER', chance: '75%', iconBg: 'bg-blue-900/60 border-blue-500/50', shimmer: false, topLine: true, topLineColor: 'from-blue-600/70 via-blue-400/50 to-blue-600/70', sparkle: false, stockOut: true },
+                            30: { gradient: 'from-violet-950/80 to-zinc-900', border: 'border-violet-400/80', glow: 'shadow-[0_0_32px_rgba(139,92,246,0.45)]', accent: 'text-violet-300', accentHex: 'rgba(139,92,246,0.12)', badgeBg: 'bg-violet-600', badge: '', name: 'PREMIUM', chance: '90%', iconBg: 'bg-violet-900/70 border-violet-400/60', shimmer: true, topLine: true, topLineColor: 'from-violet-500 via-fuchsia-400/70 to-violet-500', sparkle: false },
+                            60: { gradient: 'from-purple-950/90 via-fuchsia-950/60 to-zinc-900', border: 'border-fuchsia-400', glow: 'shadow-[0_0_40px_rgba(217,70,239,0.5)]', accent: 'text-fuchsia-300', accentHex: 'rgba(217,70,239,0.1)', badgeBg: 'bg-gradient-to-r from-fuchsia-500 to-purple-500', badge: 'BEST', name: 'SUPER', chance: '96%', iconBg: 'bg-fuchsia-900/70 border-fuchsia-400/60', shimmer: true, topLine: true, topLineColor: 'from-fuchsia-500 via-yellow-300/70 to-fuchsia-500', sparkle: true },
                           };
                           const theme = themes[days] || themes[5];
                           const isStockOut = theme.stockOut === true;
@@ -1147,74 +1147,80 @@ const App: React.FC = () => {
                                   setSelectedPackage(pkg);
                                 }
                               }}
-                              className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-xl p-3 transition-all duration-300 text-left overflow-hidden ${
-                                isStockOut ? 'cursor-not-allowed' : isSelected ? `${theme.glow} scale-[1.02]` : 'hover:scale-[1.01]'
+                              className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-2xl p-5 transition-all duration-300 text-left overflow-hidden ${
+                                isStockOut ? 'cursor-not-allowed' : isSelected ? `${theme.glow} scale-[1.02]` : `hover:scale-[1.01] hover:${theme.glow}`
                               }`}
                             >
                               {/* Top shimmer line */}
                               {theme.topLine && (
-                                <span className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${theme.topLineColor} rounded-t-xl`}></span>
+                                <span className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${theme.topLineColor} rounded-t-2xl`}></span>
                               )}
 
                               {/* Pulsing shimmer overlay for PREMIUM + SUPER */}
                               {theme.shimmer && (
-                                <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
-                                  <span className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 via-transparent to-white/5"></span>
+                                <span className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden">
+                                  <span className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/[0.04] via-transparent to-white/[0.04]"></span>
                                 </span>
                               )}
 
                               {/* Sparkle corner glows for SUPER */}
                               {theme.sparkle && (
                                 <>
-                                  <span className="absolute -top-3 -left-3 w-12 h-12 bg-fuchsia-500/20 rounded-full blur-xl pointer-events-none"></span>
-                                  <span className="absolute -bottom-3 -right-3 w-12 h-12 bg-purple-500/20 rounded-full blur-xl pointer-events-none"></span>
+                                  <span className="absolute -top-5 -left-5 w-20 h-20 bg-fuchsia-500/25 rounded-full blur-2xl pointer-events-none"></span>
+                                  <span className="absolute -bottom-5 -right-5 w-20 h-20 bg-purple-500/25 rounded-full blur-2xl pointer-events-none"></span>
                                 </>
                               )}
 
                               {/* Stock Out tag */}
                               {isStockOut && (
-                                <span className="absolute top-2 right-2 z-10 bg-red-600/90 text-white text-[6px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest flex items-center gap-1">
-                                  <i className="fas fa-ban text-[5px]"></i> Stock Out
+                                <span className="absolute top-3 right-3 z-10 bg-red-600/90 text-white text-[7px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest flex items-center gap-1">
+                                  <i className="fas fa-ban text-[6px]"></i> Stock Out
                                 </span>
                               )}
 
                               {/* Badge */}
                               {theme.badge && !isStockOut && (
-                                <div className={`absolute top-2 right-2 ${theme.badgeBg} text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10`}>
+                                <div className={`absolute top-3 right-3 ${theme.badgeBg} text-white text-[7px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest z-10`}>
                                   {theme.badge}
                                 </div>
                               )}
 
                               {isSelected && (
-                                <div className="absolute inset-0 rounded-xl pointer-events-none" style={{background: theme.accentHex}}></div>
+                                <div className="absolute inset-0 rounded-2xl pointer-events-none" style={{background: theme.accentHex}}></div>
                               )}
 
-                              <div className="flex flex-col gap-2 relative z-10">
+                              <div className="flex flex-col gap-3 relative z-10">
                                 {/* Icon + Name */}
-                                <div className="flex items-center gap-1.5">
-                                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center border shrink-0 ${theme.iconBg}`}>
-                                    <i className={`fas fa-lock-open ${theme.accent} text-xs`}></i>
+                                <div className="flex items-center gap-2">
+                                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center border shrink-0 ${theme.iconBg}`}>
+                                    <i className={`fas fa-lock-open ${theme.accent} text-base`}></i>
                                   </div>
-                                  <p className={`text-[10px] font-black uppercase tracking-widest ${theme.accent}`}>{theme.name}</p>
+                                  <p className={`text-xs font-black uppercase tracking-widest ${theme.accent}`}>{theme.name}</p>
                                 </div>
 
-                                {/* Amount + unlock rate */}
+                                {/* Amount */}
                                 <div>
-                                  <p className={`text-xl font-black ${theme.accent} leading-none`}>{days} <span className="text-[9px] font-bold text-zinc-400 normal-case tracking-normal">Event Bypass</span></p>
-                                  <div className="flex items-center gap-1 mt-1">
-                                    <i className={`fas fa-unlock text-[7px] ${theme.accent}`}></i>
-                                    <p className={`text-[8px] font-black uppercase tracking-[0.15em] ${theme.accent}`}>{theme.chance} Unlock Chance</p>
-                                  </div>
+                                  <p className={`text-3xl font-black ${theme.accent} leading-none`}>{days}</p>
+                                  <p className="text-[10px] font-bold text-zinc-400 mt-0.5 uppercase tracking-wider">Event Bypass</p>
+                                </div>
+
+                                {/* Divider */}
+                                <div className="h-px bg-white/10 w-full"></div>
+
+                                {/* Unlock chance */}
+                                <div className="flex items-center gap-1.5">
+                                  <i className={`fas fa-unlock text-[9px] ${theme.accent}`}></i>
+                                  <p className={`text-[9px] font-black uppercase tracking-[0.15em] ${theme.accent}`}>{theme.chance} Unlock Chance</p>
                                 </div>
 
                                 {/* Price */}
-                                <div className="flex items-end justify-between">
+                                <div className="flex items-center justify-between pt-1">
                                   <div>
-                                    <p className="text-white font-black text-sm leading-none">৳{pkg.price}</p>
-                                    <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest mt-0.5">BDT</p>
+                                    <p className="text-white font-black text-lg leading-none">৳{pkg.price}</p>
+                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">BDT</p>
                                   </div>
-                                  <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-all ${isSelected ? `${theme.border} bg-current` : 'border-zinc-600 group-hover:border-blue-500'}`}>
-                                    {isSelected && <i className="fas fa-check text-black text-[6px]"></i>}
+                                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? 'border-white bg-white' : 'border-zinc-600 group-hover:border-white/50'}`}>
+                                    {isSelected && <i className="fas fa-check text-black text-[7px]"></i>}
                                   </div>
                                 </div>
                               </div>
