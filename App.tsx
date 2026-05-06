@@ -1142,7 +1142,7 @@ const App: React.FC = () => {
                               onClick={() => {
                                 if (isStockOut) {
                                   setStockOutToast(theme.name);
-                                  setTimeout(() => setStockOutToast(null), 3500);
+                                  setTimeout(() => setStockOutToast(null), 6000);
                                 } else {
                                   setSelectedPackage(pkg);
                                 }
