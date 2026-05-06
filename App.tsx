@@ -151,6 +151,7 @@ const App: React.FC = () => {
   const [isRamadanasApplied, setIsRamadanasApplied] = useState(false);
   const [isPsdis7Applied, setIsPsdis7Applied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [stockOutToast, setStockOutToast] = useState<string | null>(null);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -1138,10 +1139,16 @@ const App: React.FC = () => {
                           return (
                             <button
                               key={pkg.id}
-                              onClick={() => !isStockOut && setSelectedPackage(pkg)}
-                              disabled={isStockOut}
+                              onClick={() => {
+                                if (isStockOut) {
+                                  setStockOutToast(theme.name);
+                                  setTimeout(() => setStockOutToast(null), 3500);
+                                } else {
+                                  setSelectedPackage(pkg);
+                                }
+                              }}
                               className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-xl p-3 transition-all duration-300 text-left overflow-hidden ${
-                                isStockOut ? 'opacity-50 cursor-not-allowed grayscale' : isSelected ? `${theme.glow} scale-[1.02]` : 'hover:scale-[1.01]'
+                                isStockOut ? 'cursor-not-allowed' : isSelected ? `${theme.glow} scale-[1.02]` : 'hover:scale-[1.01]'
                               }`}
                             >
                               {/* Top shimmer line */}
@@ -1164,12 +1171,11 @@ const App: React.FC = () => {
                                 </>
                               )}
 
-                              {/* Stock Out overlay */}
+                              {/* Stock Out tag */}
                               {isStockOut && (
-                                <div className="absolute inset-0 z-20 flex flex-col items-center justify-center rounded-xl bg-black/40 backdrop-blur-[1px]">
-                                  <i className="fas fa-ban text-red-500 text-lg mb-1"></i>
-                                  <span className="text-red-400 text-[8px] font-black uppercase tracking-[0.2em]">Stock Out</span>
-                                </div>
+                                <span className="absolute top-2 left-2 z-10 bg-red-600/90 text-white text-[6px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest flex items-center gap-1">
+                                  <i className="fas fa-ban text-[5px]"></i> Stock Out
+                                </span>
                               )}
 
                               {/* Badge */}
@@ -1678,6 +1684,32 @@ const App: React.FC = () => {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Stock Out Toast */}
+      {stockOutToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[999] animate-bounce-once">
+          <div className="bg-zinc-900 border border-red-500/60 rounded-xl px-4 py-3 shadow-2xl shadow-red-900/30 flex items-start gap-3 min-w-[260px] max-w-[320px]">
+            <div className="w-7 h-7 rounded-full bg-red-600/20 border border-red-500/50 flex items-center justify-center shrink-0 mt-0.5">
+              <i className="fas fa-ban text-red-400 text-xs"></i>
+            </div>
+            <div className="flex-1">
+              <p className="text-white text-[11px] font-black uppercase tracking-wide">{stockOutToast} — Unavailable</p>
+              <p className="text-zinc-400 text-[9px] mt-0.5 leading-relaxed">This package is currently out of stock. For updates or assistance, contact support.</p>
+              <a
+                href="https://t.me/AdiXO_TV"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 mt-1.5 text-[9px] font-black text-sky-400 hover:text-sky-300 transition-colors uppercase tracking-widest"
+              >
+                <i className="fab fa-telegram text-[9px]"></i> @AdiXO_TV
+              </a>
+            </div>
+            <button onClick={() => setStockOutToast(null)} className="text-zinc-600 hover:text-zinc-400 transition-colors mt-0.5">
+              <i className="fas fa-times text-[9px]"></i>
+            </button>
           </div>
         </div>
       )}
