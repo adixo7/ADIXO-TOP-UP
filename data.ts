@@ -235,8 +235,8 @@ export const GAMES: Game[] = [
     id: 'level-up',
     name: 'LEVEL UP',
     category: 'LEVEL UP',
-    image: '',
-    banner: '',
+    image: '/level-up-bg.png',
+    banner: '/level-up-bg.png',
     idPlaceholder: 'Player ID / Account ID',
     description: 'Boost your Free Fire character level with our premium level up service.',
     packages: [
