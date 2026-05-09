@@ -773,8 +773,8 @@ const App: React.FC = () => {
                     onClick={() => { setSelectedGame(luGame); setActiveTab('games'); }}
                   >
                     <div className="aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
-                      <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-zinc-900 to-[#0c0c0e]"></div>
-                      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 60% 40%, rgba(139,92,246,0.6) 0%, transparent 65%)' }}></div>
+                      <img src="/level-up-bg.png" alt="Level Up" className="absolute inset-0 w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/30"></div>
                       <div className="absolute top-3 right-3 flex gap-0.5 opacity-40 group-hover:opacity-70 transition-opacity">
                         {[1,2,3,4,5].map(i => (
                           <div key={i} className="w-0.5 bg-violet-400 rounded-full transition-all duration-300" style={{ height: `${8 + i * 4}px` }}></div>
