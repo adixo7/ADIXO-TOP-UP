@@ -780,11 +780,6 @@ const App: React.FC = () => {
                           <div key={i} className="w-0.5 bg-violet-400 rounded-full transition-all duration-300" style={{ height: `${8 + i * 4}px` }}></div>
                         ))}
                       </div>
-                      <div className="relative z-10 flex flex-col items-center gap-1">
-                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-2xl bg-violet-500/20 border border-violet-500/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-violet-500/30 transition-all duration-500 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
-                          <i className="fas fa-arrow-up text-violet-400 text-base md:text-xl"></i>
-                        </div>
-                      </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
