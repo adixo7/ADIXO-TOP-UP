@@ -1573,6 +1573,99 @@ const App: React.FC = () => {
                   {selectedPackage && (
                     <div ref={paymentSectionRef} className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
+                      {/* Universal Product Detail Box */}
+                      <div className="relative rounded-[1.5rem] overflow-hidden border border-orange-500/25 shadow-2xl shadow-orange-500/5 bg-[#0b0b0d]">
+                        {/* Top accent line */}
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500/80 via-orange-400/40 to-transparent"></div>
+
+                        {/* Banner strip */}
+                        {selectedGame?.banner && (
+                          <div className="absolute top-0 left-0 right-0 h-20 overflow-hidden">
+                            <img src={selectedGame.banner} alt="" className="w-full h-full object-cover opacity-10 blur-sm scale-105" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0b0b0d]"></div>
+                          </div>
+                        )}
+
+                        <div className="relative p-4">
+                          {/* Header row */}
+                          <div className="flex items-center gap-3 mb-4">
+                            <div className="w-12 h-12 rounded-2xl overflow-hidden border border-orange-500/30 shrink-0 shadow-lg shadow-orange-500/10 bg-zinc-900">
+                              <img
+                                src={selectedGame?.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedGame?.name || '')}&background=18181b&color=f97316&bold=true`}
+                                alt={selectedGame?.name}
+                                className="w-full h-full object-cover"
+                                onError={(e) => { (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedGame?.name || '')}&background=18181b&color=f97316&bold=true`; }}
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2 mb-0.5">
+                                <span className="text-[8px] font-black uppercase tracking-widest text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full">
+                                  <i className="fas fa-gamepad mr-1"></i>{selectedGame?.category}
+                                </span>
+                                <span className="text-[8px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                                  <i className="fas fa-check-circle mr-1"></i>Selected
+                                </span>
+                              </div>
+                              <h3 className="text-sm font-black text-white uppercase italic tracking-tight leading-tight truncate">
+                                {selectedGame?.name}
+                              </h3>
+                            </div>
+                          </div>
+
+                          {/* Package detail */}
+                          <div className="bg-black/40 rounded-xl p-3 mb-3 border border-zinc-800/50">
+                            <div className="flex items-center justify-between">
+                              <div>
+                                <p className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-1">Package</p>
+                                <p className="text-white font-black text-base uppercase italic leading-tight">
+                                  {selectedPackage.amount} {selectedPackage.unit}
+                                </p>
+                                {selectedPackage.description && (
+                                  <p className="text-zinc-500 text-[9px] font-bold mt-0.5">{selectedPackage.description}</p>
+                                )}
+                              </div>
+                              <div className="text-right shrink-0">
+                                <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Total</p>
+                                <p className="text-2xl font-black text-orange-400 italic leading-none">
+                                  {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price.toLocaleString()}
+                                </p>
+                                <p className="text-[8px] font-black text-zinc-600 uppercase tracking-wider mt-0.5">{selectedPackage.currency}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Player ID row (if entered) */}
+                          {playerId.trim() && (
+                            <div className="flex items-center gap-2 bg-zinc-900/60 rounded-xl px-3 py-2 mb-3 border border-zinc-800/40">
+                              <i className="fas fa-user text-orange-400 text-[10px] shrink-0"></i>
+                              <div className="flex-1 min-w-0">
+                                <span className="text-[7px] font-black uppercase tracking-widest text-zinc-600 block">Player ID</span>
+                                <span className="text-zinc-300 font-mono text-[10px] truncate block">{playerId}</span>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Trust badges */}
+                          <div className="grid grid-cols-3 gap-2 pt-3 border-t border-zinc-800/50">
+                            <div className="flex flex-col items-center gap-1 text-center">
+                              <i className="fas fa-bolt text-orange-400 text-[10px]"></i>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Instant</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Delivery</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-1 text-center border-x border-zinc-800/50">
+                              <i className="fas fa-shield-alt text-orange-400 text-[10px]"></i>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">100%</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Safe</span>
+                            </div>
+                            <div className="flex flex-col items-center gap-1 text-center">
+                              <i className="fas fa-headset text-orange-400 text-[10px]"></i>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">24/7</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Support</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       {selectedGame?.id === 'ff-panel' && (
                         <div className="bg-[#0b0b0d] border border-emerald-500/30 rounded-[1.5rem] p-4 shadow-xl shadow-emerald-500/5 relative overflow-hidden">
                           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
