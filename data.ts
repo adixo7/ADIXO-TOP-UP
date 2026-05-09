@@ -244,6 +244,7 @@ export const GAMES: Game[] = [
       { id: 'lu-30-40', amount: 40,  unit: 'Level 30 → 40',  price: 850,   currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 30 to 40' },
       { id: 'lu-40-50', amount: 50,  unit: 'Level 40 → 50',  price: 1800,  currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 40 to 50' },
       { id: 'lu-50-60', amount: 60,  unit: 'Level 50 → 60',  price: 3000,  currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 50 to 60' },
+      { id: 'lu-60-70', amount: 70,  unit: 'Level 60 → 70',  price: 8000,  currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 60 to 70' },
       { id: 'lu-70-80', amount: 80,  unit: 'Level 70 → 80',  price: 20000, currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 70 to 80' },
       { id: 'lu-80-90', amount: 90,  unit: 'Level 80 → 90',  price: 38000, currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 80 to 90' },
       { id: 'lu-90-100',amount: 100, unit: 'Level 90 → 100', price: 55000, currency: 'BDT', category: 'LEVEL UP SERVICE', description: 'Boost from Level 90 to 100', isPopular: true }
