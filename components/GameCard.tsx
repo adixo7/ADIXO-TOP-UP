@@ -14,7 +14,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
     >
       <div className="aspect-square overflow-hidden relative">
         <img 
-          src={game.image} 
+          src={game.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(game.name)}&background=18181b&color=f97316&bold=true`} 
           alt={game.name} 
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
           onError={(e) => {

@@ -566,7 +566,7 @@ const App: React.FC = () => {
                           onClick={() => { setSelectedGame(game); setActiveTab('games'); setSearchTerm(''); }}
                           className="flex items-center gap-3 p-2 bg-zinc-900/50 rounded-xl hover:bg-orange-600/20 transition-all cursor-pointer group"
                         >
-                          <img src={game.image} className="w-8 h-8 rounded-lg object-cover border border-zinc-800" alt={game.name} />
+                          <img src={game.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(game.name)}&background=18181b&color=f97316&bold=true`} className="w-8 h-8 rounded-lg object-cover border border-zinc-800" alt={game.name} />
                           <span className="text-[9px] font-black text-white uppercase truncate">{game.name}</span>
                         </div>
                       ))}
@@ -624,7 +624,7 @@ const App: React.FC = () => {
             </div>
             {filteredGames.length > 0 ? (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
-                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel').map(game => (
+                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'level-up').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
@@ -763,6 +763,52 @@ const App: React.FC = () => {
                   </div>
                 );
               })()}
+              {/* Level Up card */}
+              {(() => {
+                const luGame = GAMES.find(g => g.id === 'level-up');
+                if (!luGame) return null;
+                return (
+                  <div
+                    className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-violet-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(139,92,246,0.35)] relative"
+                    onClick={() => { setSelectedGame(luGame); setActiveTab('games'); }}
+                  >
+                    <div className="aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
+                      <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-zinc-900 to-[#0c0c0e]"></div>
+                      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 60% 40%, rgba(139,92,246,0.6) 0%, transparent 65%)' }}></div>
+                      <div className="absolute top-3 right-3 flex gap-0.5 opacity-40 group-hover:opacity-70 transition-opacity">
+                        {[1,2,3,4,5].map(i => (
+                          <div key={i} className="w-0.5 bg-violet-400 rounded-full transition-all duration-300" style={{ height: `${8 + i * 4}px` }}></div>
+                        ))}
+                      </div>
+                      <div className="relative z-10 flex flex-col items-center gap-1">
+                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-2xl bg-violet-500/20 border border-violet-500/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-violet-500/30 transition-all duration-500 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                          <i className="fas fa-arrow-up text-violet-400 text-base md:text-xl"></i>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
+                      <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
+                        <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
+                          <i className="fas fa-chart-line text-violet-400 text-[8px] md:text-[10px]"></i>
+                          <p className="text-violet-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">Rank Boost</p>
+                        </div>
+                        <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-violet-400 transition-colors mb-0.5">
+                          LEVEL UP
+                        </h3>
+                        <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
+                          BOOST YOUR CHARACTER LEVEL INSTANTLY
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-violet-500/10 flex items-center justify-between">
+                      <span className="text-violet-400 font-black text-xs md:text-sm italic uppercase">PREMIUM</span>
+                      <div className="flex items-center gap-1.5 md:gap-2 bg-violet-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-violet-600 transition-all duration-300">
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">View All</span>
+                        <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-violet-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </section>
 
@@ -856,11 +902,11 @@ const App: React.FC = () => {
               <div className="grid lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-1 space-y-8">
                     <div className="bg-zinc-900 rounded-[2rem] p-6 border border-zinc-800 shadow-xl overflow-hidden relative">
-                    <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-24 object-cover opacity-20 grayscale" />
+                    {selectedGame.banner && <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-24 object-cover opacity-20 grayscale" />}
                     <div className="relative pt-8">
                       <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-orange-500 mb-4 shadow-xl shadow-orange-500/20 bg-zinc-950">
                         <img 
-                           src={selectedGame.image} 
+                           src={selectedGame.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedGame.name)}&background=18181b&color=f97316&bold=true`} 
                            alt={selectedGame.name} 
                            className="w-full h-full object-cover" 
                            onError={(e) => {
@@ -904,7 +950,88 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-2 space-y-10">
-                  {selectedGame.id === 'ff-panel' ? (
+                  {selectedGame.id === 'level-up' ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 rounded-xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center">
+                        <i className="fas fa-arrow-up text-violet-400 text-sm"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-black text-white uppercase tracking-widest">Level Up Service</h3>
+                        <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Select your target level range</p>
+                      </div>
+                    </div>
+                    {selectedGame.packages.map((pkg, idx) => {
+                      const isSelected = selectedPackage?.id === pkg.id;
+                      const tiers = [
+                        { label: 'STARTER',  color: 'text-sky-400',    glow: 'rgba(56,189,248,0.2)' },
+                        { label: 'BRONZE',   color: 'text-orange-400', glow: 'rgba(251,146,60,0.2)' },
+                        { label: 'SILVER',   color: 'text-zinc-300',   glow: 'rgba(212,212,216,0.2)' },
+                        { label: 'GOLD',     color: 'text-yellow-400', glow: 'rgba(250,204,21,0.2)' },
+                        { label: 'PLATINUM', color: 'text-cyan-400',   glow: 'rgba(34,211,238,0.25)' },
+                        { label: 'DIAMOND',  color: 'text-violet-400', glow: 'rgba(167,139,250,0.25)' },
+                        { label: 'LEGEND',   color: 'text-red-400',    glow: 'rgba(248,113,113,0.3)' },
+                      ];
+                      const tier = tiers[idx] || tiers[0];
+                      const parts = pkg.unit.replace('Level ', '').split(' → ');
+                      const fromLvl = parts[0];
+                      const toLvl = parts[1];
+                      return (
+                        <button
+                          key={pkg.id}
+                          onClick={() => setSelectedPackage(pkg)}
+                          className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl border transition-all duration-300 text-left group relative overflow-hidden ${
+                            isSelected
+                              ? 'bg-violet-500/15 border-violet-500 shadow-[0_0_20px_rgba(139,92,246,0.2)]'
+                              : 'bg-zinc-900/60 border-zinc-800/60 hover:border-violet-500/50 hover:bg-zinc-900'
+                          }`}
+                        >
+                          {pkg.isPopular && (
+                            <div className="absolute top-0 right-0 bg-violet-500 text-white text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest">
+                              TOP
+                            </div>
+                          )}
+                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            style={{ background: `radial-gradient(ellipse at left center, ${tier.glow} 0%, transparent 65%)` }}>
+                          </div>
+                          <div className="flex items-center gap-3 relative z-10">
+                            <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
+                              isSelected ? 'border-violet-500/60 bg-violet-500/20' : 'border-zinc-700/60 bg-zinc-900 group-hover:border-violet-500/40'
+                            }`}>
+                              <i className={`fas fa-arrow-up text-[10px] ${isSelected ? 'text-violet-400' : tier.color} group-hover:scale-110 transition-transform`}></i>
+                            </div>
+                            <div>
+                              <div className="mb-0.5">
+                                <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${tier.color}`}>{tier.label}</span>
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-white font-black text-xs tracking-wide">Lv. {fromLvl}</span>
+                                <i className="fas fa-long-arrow-alt-right text-zinc-600 text-[8px]"></i>
+                                <span className={`font-black text-xs tracking-wide ${isSelected ? 'text-violet-300' : 'text-white'}`}>Lv. {toLvl}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3 relative z-10">
+                            <span className={`font-black text-base ${isSelected ? 'text-violet-300' : 'text-white'}`}>
+                              ৳{pkg.price.toLocaleString()}
+                            </span>
+                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${
+                              isSelected ? 'border-violet-500 bg-violet-500' : 'border-zinc-700 group-hover:border-violet-500/60'
+                            }`}>
+                              {isSelected && <i className="fas fa-check text-white text-[7px]"></i>}
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                    <div className="mt-4 p-3 rounded-xl bg-violet-950/20 border border-violet-500/15 flex items-start gap-2.5">
+                      <i className="fas fa-shield-alt text-violet-400 text-[10px] mt-0.5"></i>
+                      <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide leading-relaxed">
+                        100% safe · no password required · delivery within 24–72 hrs · support @AdiXO_TV
+                      </p>
+                    </div>
+                  </div>
+                  ) : selectedGame.id === 'ff-panel' ? (
                     <div className="space-y-2">
                       {selectedGame.packages.map(pkg => (
                         <button
