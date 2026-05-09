@@ -1029,6 +1029,16 @@ const App: React.FC = () => {
                           blob1: 'rgba(248,113,113,0.25)', blob2: 'rgba(239,68,68,0.15)',
                           glow: isSelected ? '0 0 50px rgba(248,113,113,0.6)' : '0 2px 18px rgba(0,0,0,0.7)',
                           badge: { bg: '#1a0505', text: '#f87171', border: 'rgba(248,113,113,0.5)' },
+                          stars: true, pulse: false,
+                        },
+                        {
+                          label: 'SUPREME', icon: 'fa-infinity',
+                          labelColor: '#fde047', priceColor: '#fef08a',
+                          border: isSelected ? 'rgba(253,224,71,1)' : 'rgba(253,224,71,0.45)',
+                          bg: 'linear-gradient(120deg,rgba(20,15,0,0.99) 0%,rgba(35,25,0,0.98) 100%)',
+                          blob1: 'rgba(253,224,71,0.28)', blob2: 'rgba(234,179,8,0.18)',
+                          glow: isSelected ? '0 0 60px rgba(253,224,71,0.7)' : '0 2px 20px rgba(0,0,0,0.8)',
+                          badge: { bg: '#1a1200', text: '#fde047', border: 'rgba(253,224,71,0.6)' },
                           stars: true, pulse: true,
                         },
                       ];
