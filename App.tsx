@@ -951,28 +951,93 @@ const App: React.FC = () => {
 
                 <div className="lg:col-span-2 space-y-10">
                   {selectedGame.id === 'level-up' ? (
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-10 h-10 rounded-xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center">
-                        <i className="fas fa-arrow-up text-violet-400 text-sm"></i>
+                  <div className="space-y-2.5">
+                    {/* Header */}
+                    <div className="flex items-center gap-3 mb-5">
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{background:'linear-gradient(135deg,rgba(139,92,246,0.25),rgba(99,102,241,0.1))',border:'1px solid rgba(139,92,246,0.35)'}}>
+                        <i className="fas fa-arrow-up text-violet-400 text-xs"></i>
                       </div>
                       <div>
                         <h3 className="text-sm font-black text-white uppercase tracking-widest">Level Up Service</h3>
                         <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Select your target level range</p>
                       </div>
                     </div>
+
                     {selectedGame.packages.map((pkg, idx) => {
                       const isSelected = selectedPackage?.id === pkg.id;
                       const tiers = [
-                        { label: 'STARTER',  color: 'text-sky-400',    glow: 'rgba(56,189,248,0.2)' },
-                        { label: 'BRONZE',   color: 'text-orange-400', glow: 'rgba(251,146,60,0.2)' },
-                        { label: 'SILVER',   color: 'text-zinc-300',   glow: 'rgba(212,212,216,0.2)' },
-                        { label: 'GOLD',     color: 'text-yellow-400', glow: 'rgba(250,204,21,0.2)' },
-                        { label: 'PLATINUM', color: 'text-cyan-400',   glow: 'rgba(34,211,238,0.25)' },
-                        { label: 'DIAMOND',  color: 'text-violet-400', glow: 'rgba(167,139,250,0.25)' },
-                        { label: 'LEGEND',   color: 'text-red-400',    glow: 'rgba(248,113,113,0.3)' },
+                        {
+                          label: 'STARTER', icon: 'fa-seedling',
+                          labelColor: '#7dd3fc', priceColor: '#7dd3fc',
+                          border: isSelected ? 'rgba(56,189,248,0.7)' : 'rgba(56,189,248,0.2)',
+                          bg: 'linear-gradient(120deg,rgba(12,20,40,0.95) 0%,rgba(7,30,55,0.9) 100%)',
+                          blob1: 'rgba(56,189,248,0.12)', blob2: 'rgba(14,165,233,0.07)',
+                          glow: isSelected ? '0 0 22px rgba(56,189,248,0.3)' : '0 2px 12px rgba(0,0,0,0.5)',
+                          badge: { bg: '#0c1a2e', text: '#7dd3fc', border: 'rgba(56,189,248,0.3)' },
+                          stars: false, pulse: false,
+                        },
+                        {
+                          label: 'BRONZE', icon: 'fa-medal',
+                          labelColor: '#fb923c', priceColor: '#fdba74',
+                          border: isSelected ? 'rgba(251,146,60,0.8)' : 'rgba(251,146,60,0.25)',
+                          bg: 'linear-gradient(120deg,rgba(25,12,5,0.97) 0%,rgba(40,18,6,0.93) 100%)',
+                          blob1: 'rgba(251,146,60,0.14)', blob2: 'rgba(234,88,12,0.08)',
+                          glow: isSelected ? '0 0 24px rgba(251,146,60,0.35)' : '0 2px 12px rgba(0,0,0,0.5)',
+                          badge: { bg: '#1e0e04', text: '#fb923c', border: 'rgba(251,146,60,0.3)' },
+                          stars: false, pulse: false,
+                        },
+                        {
+                          label: 'SILVER', icon: 'fa-shield-alt',
+                          labelColor: '#e2e8f0', priceColor: '#f1f5f9',
+                          border: isSelected ? 'rgba(226,232,240,0.7)' : 'rgba(226,232,240,0.2)',
+                          bg: 'linear-gradient(120deg,rgba(15,20,28,0.97) 0%,rgba(22,28,40,0.93) 100%)',
+                          blob1: 'rgba(200,210,230,0.1)', blob2: 'rgba(148,163,184,0.07)',
+                          glow: isSelected ? '0 0 26px rgba(226,232,240,0.25)' : '0 2px 12px rgba(0,0,0,0.5)',
+                          badge: { bg: '#111827', text: '#cbd5e1', border: 'rgba(203,213,225,0.3)' },
+                          stars: false, pulse: false,
+                        },
+                        {
+                          label: 'GOLD', icon: 'fa-crown',
+                          labelColor: '#fbbf24', priceColor: '#fde68a',
+                          border: isSelected ? 'rgba(251,191,36,0.85)' : 'rgba(251,191,36,0.3)',
+                          bg: 'linear-gradient(120deg,rgba(24,16,0,0.97) 0%,rgba(40,25,0,0.93) 100%)',
+                          blob1: 'rgba(251,191,36,0.18)', blob2: 'rgba(245,158,11,0.1)',
+                          glow: isSelected ? '0 0 30px rgba(251,191,36,0.4)' : '0 2px 12px rgba(0,0,0,0.5)',
+                          badge: { bg: '#1c1100', text: '#fbbf24', border: 'rgba(251,191,36,0.4)' },
+                          stars: false, pulse: false,
+                        },
+                        {
+                          label: 'PLATINUM', icon: 'fa-gem',
+                          labelColor: '#22d3ee', priceColor: '#67e8f9',
+                          border: isSelected ? 'rgba(34,211,238,0.8)' : 'rgba(34,211,238,0.3)',
+                          bg: 'linear-gradient(120deg,rgba(0,18,28,0.97) 0%,rgba(0,30,45,0.95) 100%)',
+                          blob1: 'rgba(34,211,238,0.18)', blob2: 'rgba(6,182,212,0.1)',
+                          glow: isSelected ? '0 0 35px rgba(34,211,238,0.45)' : '0 2px 14px rgba(0,0,0,0.6)',
+                          badge: { bg: '#001620', text: '#22d3ee', border: 'rgba(34,211,238,0.4)' },
+                          stars: true, pulse: false,
+                        },
+                        {
+                          label: 'DIAMOND', icon: 'fa-star',
+                          labelColor: '#a78bfa', priceColor: '#c4b5fd',
+                          border: isSelected ? 'rgba(167,139,250,0.9)' : 'rgba(167,139,250,0.35)',
+                          bg: 'linear-gradient(120deg,rgba(10,5,30,0.98) 0%,rgba(20,8,50,0.96) 100%)',
+                          blob1: 'rgba(139,92,246,0.22)', blob2: 'rgba(99,102,241,0.14)',
+                          glow: isSelected ? '0 0 40px rgba(139,92,246,0.55)' : '0 2px 16px rgba(0,0,0,0.6)',
+                          badge: { bg: '#0d0520', text: '#a78bfa', border: 'rgba(167,139,250,0.45)' },
+                          stars: true, pulse: false,
+                        },
+                        {
+                          label: 'LEGEND', icon: 'fa-fire',
+                          labelColor: '#f87171', priceColor: '#fca5a5',
+                          border: isSelected ? 'rgba(248,113,113,0.95)' : 'rgba(248,113,113,0.4)',
+                          bg: 'linear-gradient(120deg,rgba(25,5,5,0.98) 0%,rgba(45,5,5,0.97) 100%)',
+                          blob1: 'rgba(248,113,113,0.25)', blob2: 'rgba(239,68,68,0.15)',
+                          glow: isSelected ? '0 0 50px rgba(248,113,113,0.6)' : '0 2px 18px rgba(0,0,0,0.7)',
+                          badge: { bg: '#1a0505', text: '#f87171', border: 'rgba(248,113,113,0.5)' },
+                          stars: true, pulse: true,
+                        },
                       ];
-                      const tier = tiers[idx] || tiers[0];
+                      const t = tiers[idx] || tiers[0];
                       const parts = pkg.unit.replace('Level ', '').split(' → ');
                       const fromLvl = parts[0];
                       const toLvl = parts[1];
@@ -980,52 +1045,95 @@ const App: React.FC = () => {
                         <button
                           key={pkg.id}
                           onClick={() => setSelectedPackage(pkg)}
-                          className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl border transition-all duration-300 text-left group relative overflow-hidden ${
-                            isSelected
-                              ? 'bg-violet-500/15 border-violet-500 shadow-[0_0_20px_rgba(139,92,246,0.2)]'
-                              : 'bg-zinc-900/60 border-zinc-800/60 hover:border-violet-500/50 hover:bg-zinc-900'
-                          }`}
+                          className="w-full text-left group relative overflow-hidden rounded-2xl transition-all duration-400"
+                          style={{
+                            background: t.bg,
+                            border: `1px solid ${t.border}`,
+                            boxShadow: t.glow,
+                            transition: 'all 0.35s ease',
+                          }}
                         >
-                          {pkg.isPopular && (
-                            <div className="absolute top-0 right-0 bg-violet-500 text-white text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest">
-                              TOP
+                          {/* Ambient blob 1 */}
+                          <div className="absolute pointer-events-none" style={{
+                            top: '-20%', left: '-5%', width: '55%', height: '160%',
+                            background: `radial-gradient(ellipse, ${t.blob1} 0%, transparent 70%)`,
+                          }} />
+                          {/* Ambient blob 2 */}
+                          <div className="absolute pointer-events-none" style={{
+                            bottom: '-30%', right: '10%', width: '45%', height: '140%',
+                            background: `radial-gradient(ellipse, ${t.blob2} 0%, transparent 70%)`,
+                          }} />
+                          {/* Star particles for premium tiers */}
+                          {t.stars && (
+                            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                              {[{x:'15%',y:'25%',s:'1.5px'},{x:'35%',y:'70%',s:'1px'},{x:'60%',y:'20%',s:'2px'},{x:'80%',y:'60%',s:'1px'},{x:'90%',y:'30%',s:'1.5px'}].map((p,i) => (
+                                <div key={i} className={t.pulse ? 'animate-ping' : 'animate-pulse'} style={{
+                                  position:'absolute', left:p.x, top:p.y,
+                                  width:p.s, height:p.s, borderRadius:'50%',
+                                  background: t.labelColor, opacity: 0.5,
+                                  animationDelay: `${i * 0.4}s`, animationDuration: '2.5s',
+                                }} />
+                              ))}
                             </div>
                           )}
-                          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                            style={{ background: `radial-gradient(ellipse at left center, ${tier.glow} 0%, transparent 65%)` }}>
-                          </div>
-                          <div className="flex items-center gap-3 relative z-10">
-                            <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
-                              isSelected ? 'border-violet-500/60 bg-violet-500/20' : 'border-zinc-700/60 bg-zinc-900 group-hover:border-violet-500/40'
-                            }`}>
-                              <i className={`fas fa-arrow-up text-[10px] ${isSelected ? 'text-violet-400' : tier.color} group-hover:scale-110 transition-transform`}></i>
+                          {/* Shine line on hover */}
+                          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            style={{ background: `linear-gradient(105deg, transparent 35%, ${t.blob1} 50%, transparent 65%)` }} />
+
+                          {/* TOP badge */}
+                          {pkg.isPopular && (
+                            <div className="absolute top-0 right-0 z-20 text-[7px] font-black px-2.5 py-1 rounded-bl-xl uppercase tracking-widest"
+                              style={{ background: t.labelColor, color: '#000' }}>
+                              ★ TOP
                             </div>
-                            <div>
-                              <div className="mb-0.5">
-                                <span className={`text-[8px] font-black uppercase tracking-[0.2em] ${tier.color}`}>{tier.label}</span>
-                              </div>
+                          )}
+
+                          <div className="relative z-10 flex items-center px-4 py-3">
+                            {/* Tier badge */}
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl flex flex-col items-center justify-center mr-4 transition-transform duration-300 group-hover:scale-110"
+                              style={{ background: t.badge.bg, border: `1px solid ${t.badge.border}` }}>
+                              <i className={`fas ${t.icon} text-sm`} style={{ color: t.labelColor }}></i>
+                            </div>
+
+                            {/* Label + levels */}
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[8px] font-black uppercase tracking-[0.25em] mb-0.5" style={{ color: t.labelColor }}>{t.label}</p>
                               <div className="flex items-center gap-1.5">
-                                <span className="text-white font-black text-xs tracking-wide">Lv. {fromLvl}</span>
-                                <i className="fas fa-long-arrow-alt-right text-zinc-600 text-[8px]"></i>
-                                <span className={`font-black text-xs tracking-wide ${isSelected ? 'text-violet-300' : 'text-white'}`}>Lv. {toLvl}</span>
+                                <span className="text-white font-black text-[11px]">Lv. {fromLvl}</span>
+                                <svg width="16" height="8" viewBox="0 0 16 8" className="opacity-50"><path d="M0 4h12M9 1l3 3-3 3" stroke={t.labelColor} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                <span className="font-black text-[11px]" style={{ color: t.labelColor }}>Lv. {toLvl}</span>
+                              </div>
+                            </div>
+
+                            {/* Price */}
+                            <div className="flex items-center gap-3 flex-shrink-0">
+                              <div className="text-right">
+                                <span className="font-black text-lg leading-none" style={{ color: t.priceColor, textShadow: `0 0 14px ${t.blob1}` }}>
+                                  ৳{pkg.price.toLocaleString()}
+                                </span>
+                              </div>
+                              {/* Selector circle */}
+                              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                                style={{
+                                  border: `1.5px solid ${isSelected ? t.labelColor : 'rgba(255,255,255,0.15)'}`,
+                                  background: isSelected ? t.labelColor : 'transparent',
+                                }}>
+                                {isSelected && <i className="fas fa-check text-black text-[7px]"></i>}
                               </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-3 relative z-10">
-                            <span className={`font-black text-base ${isSelected ? 'text-violet-300' : 'text-white'}`}>
-                              ৳{pkg.price.toLocaleString()}
-                            </span>
-                            <div className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${
-                              isSelected ? 'border-violet-500 bg-violet-500' : 'border-zinc-700 group-hover:border-violet-500/60'
-                            }`}>
-                              {isSelected && <i className="fas fa-check text-white text-[7px]"></i>}
-                            </div>
-                          </div>
+
+                          {/* Bottom glow strip */}
+                          <div className="h-[1.5px] w-full transition-all duration-500"
+                            style={{ background: isSelected ? `linear-gradient(90deg, transparent, ${t.labelColor}, transparent)` : 'transparent' }} />
                         </button>
                       );
                     })}
-                    <div className="mt-4 p-3 rounded-xl bg-violet-950/20 border border-violet-500/15 flex items-start gap-2.5">
-                      <i className="fas fa-shield-alt text-violet-400 text-[10px] mt-0.5"></i>
+
+                    {/* Footer note */}
+                    <div className="mt-3 px-4 py-3 rounded-xl flex items-center gap-2.5"
+                      style={{ background: 'rgba(139,92,246,0.05)', border: '1px solid rgba(139,92,246,0.12)' }}>
+                      <i className="fas fa-shield-alt text-violet-400 text-[10px] flex-shrink-0"></i>
                       <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide leading-relaxed">
                         100% safe · no password required · delivery within 24–72 hrs · support @AdiXO_TV
                       </p>
