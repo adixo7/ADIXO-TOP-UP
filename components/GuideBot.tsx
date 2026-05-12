@@ -54,7 +54,7 @@ const ANSWERS: Record<TopicKey, { text: string; chips: TopicKey[]; supportLinks?
     chips: ['how_to_order', 'coupons', 'payment_methods'],
   },
   coupons: {
-    text: "Yes, we have exclusive coupon deals! 🎉\n\nCurrently active:\n🏷️ **PSDIS7** — Discount on FF Weekly & Monthly Membership\n\nHow to use:\n**1.** Open Free Fire packages\n**2.** Find the Coupon section below the packages\n**3.** Type your code and hit **Redeem**\n**4.** The discounted price applies instantly + confetti! 🎊\n\nFollow **@adixoglory** on Telegram for latest deals!",
+    text: "We regularly release exclusive coupon deals! 🎉\n\nNo active coupons at the moment. Stay tuned!\n\nHow to use a coupon:\n**1.** Open Free Fire packages\n**2.** Find the Coupon section below the packages\n**3.** Type your code and hit **Redeem**\n**4.** The discounted price applies instantly + confetti! 🎊\n\nFollow **@adixoglory** on Telegram for latest deals!",
     chips: ['how_to_order', 'available_games', 'support'],
     supportLinks: true,
   },

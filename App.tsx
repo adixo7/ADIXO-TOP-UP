@@ -440,9 +440,9 @@ const App: React.FC = () => {
       return { success: false, message: 'YOU MUST SIGN IN TO REDEEM A COUPON' };
     }
     const upperCode = code.toUpperCase();
-    if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15' || upperCode === 'RAMADANAS') {
+    if (upperCode === 'ASMYSTERY7' || upperCode === 'CGRAMADAN15' || upperCode === 'RAMADANAS' || upperCode === 'PSDIS7') {
       return { success: false, message: 'THIS COUPON CODE HAS EXPIRED' };
-    } else if (upperCode === 'PSDIS7') {
+    } else if (false && upperCode === 'PSDIS7') {
       if (selectedGame?.id !== 'ff') {
         return { success: false, message: 'THIS COUPON IS ONLY VALID FOR FREE FIRE MEMBERSHIPS' };
       }
