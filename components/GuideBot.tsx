@@ -109,6 +109,17 @@ const GuideBot: React.FC = () => {
   const [showTopics, setShowTopics] = useState(false);
   const [hasNewMsg, setHasNewMsg] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (isOpen && containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -165,7 +176,7 @@ const GuideBot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-24 md:bottom-6 right-6 z-[200] flex flex-col items-end">
+    <div ref={containerRef} className="fixed bottom-24 md:bottom-6 right-6 z-[200] flex flex-col items-end">
       {isOpen && (
         <div
           className="w-[22rem] md:w-[26rem] bg-zinc-950 border border-zinc-800 rounded-3xl shadow-[0_0_80px_-12px_rgba(0,0,0,0.95)] flex flex-col mb-4 overflow-hidden"
