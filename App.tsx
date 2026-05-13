@@ -1207,7 +1207,7 @@ const App: React.FC = () => {
                                 >
                                   {pkg.isPopular && (
                                     <div className="absolute top-0 right-0 bg-orange-500 text-black text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10">
-                                      BEST
+                                      {t('product.best')}
                                     </div>
                                   )}
 
@@ -1216,7 +1216,7 @@ const App: React.FC = () => {
                                     <>
                                       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 z-10"></div>
                                       <div className="absolute top-0 left-0 bg-amber-400 text-black text-[6px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10">
-                                        BONUS
+                                        {t('product.bonus')}
                                       </div>
                                     </>
                                   )}
@@ -1426,7 +1426,7 @@ const App: React.FC = () => {
                               {/* Stock Out tag */}
                               {isStockOut && (
                                 <span className="absolute top-3 right-3 z-10 bg-red-600/90 text-white text-[7px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest flex items-center gap-1">
-                                  <i className="fas fa-ban text-[6px]"></i> Stock Out
+                                  <i className="fas fa-ban text-[6px]"></i> {t('product.stockOut')}
                                 </span>
                               )}
 
@@ -1453,7 +1453,7 @@ const App: React.FC = () => {
                                 {/* Amount */}
                                 <div>
                                   <p className={`text-3xl font-black ${theme.accent} leading-none`}>{days}</p>
-                                  <p className="text-[10px] font-bold text-zinc-400 mt-0.5 uppercase tracking-wider">Event Bypass</p>
+                                  <p className="text-[10px] font-bold text-zinc-400 mt-0.5 uppercase tracking-wider">{t('product.eventBypass')}</p>
                                 </div>
 
                                 {/* Divider */}
@@ -1462,14 +1462,14 @@ const App: React.FC = () => {
                                 {/* Unlock chance */}
                                 <div className="flex items-center gap-1.5">
                                   <i className={`fas fa-unlock text-[9px] ${theme.accent}`}></i>
-                                  <p className={`text-[9px] font-black uppercase tracking-[0.15em] ${theme.accent}`}>{theme.chance} Unlock Chance</p>
+                                  <p className={`text-[9px] font-black uppercase tracking-[0.15em] ${theme.accent}`}>{theme.chance} {t('product.unlockChance')}</p>
                                 </div>
 
                                 {/* Price */}
                                 <div className="flex items-center justify-between pt-1">
                                   <div>
                                     <p className="text-white font-black text-lg leading-none">৳{pkg.price}</p>
-                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">BDT</p>
+                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">{t('product.bdt')}</p>
                                   </div>
                                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? 'border-white bg-white' : 'border-zinc-600 group-hover:border-white/50'}`}>
                                     {isSelected && <i className="fas fa-check text-black text-[7px]"></i>}
@@ -1530,14 +1530,14 @@ const App: React.FC = () => {
                                 {/* Monthly PREMIUM badge */}
                                 {isMonthlyDeal && (
                                   <span className="absolute top-0 right-0 bg-gradient-to-r from-amber-500 to-yellow-400 text-black text-[6px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10 flex items-center gap-1">
-                                    <i className="fas fa-crown text-[5px]"></i> PREMIUM
+                                    <i className="fas fa-crown text-[5px]"></i> {t('product.premiumBadge')}
                                   </span>
                                 )}
 
                                 {/* Weekly DEAL badge */}
                                 {isWeeklyDeal && (
                                   <span className="absolute top-0 right-0 bg-emerald-500 text-black text-[6px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10 flex items-center gap-1">
-                                    <i className="fas fa-tag text-[5px]"></i> DEAL
+                                    <i className="fas fa-tag text-[5px]"></i> {t('product.deal')}
                                   </span>
                                 )}
 
@@ -1552,7 +1552,7 @@ const App: React.FC = () => {
                                   </span>
                                   {pkg.isPopular && (
                                     <span className="text-[6px] bg-orange-600 text-white px-1 py-0.5 rounded-sm font-black uppercase tracking-[0.1em] w-fit shadow-lg shadow-orange-600/20">
-                                      Hot Item
+                                      {t('product.hotItem')}
                                     </span>
                                   )}
                                 </div>
@@ -1994,8 +1994,8 @@ const App: React.FC = () => {
             <div className="w-12 h-12 rounded-full bg-red-600/20 border border-red-500/40 flex items-center justify-center mx-auto mb-3">
               <i className="fas fa-ban text-red-400 text-lg"></i>
             </div>
-            <p className="text-white text-sm font-black uppercase tracking-wide mb-1">{stockOutToast} — Out of Stock</p>
-            <p className="text-zinc-400 text-[10px] leading-relaxed mb-4">This package is currently unavailable. Contact our support for updates or assistance.</p>
+            <p className="text-white text-sm font-black uppercase tracking-wide mb-1">{stockOutToast} — {t('product.outOfStock')}</p>
+            <p className="text-zinc-400 text-[10px] leading-relaxed mb-4">{t('product.stockOutMsg')}</p>
             <a
               href="https://t.me/AdiXO_TV"
               target="_blank"
@@ -2008,7 +2008,7 @@ const App: React.FC = () => {
               onClick={() => setStockOutToast(null)}
               className="w-full text-zinc-500 hover:text-zinc-300 text-[9px] font-bold uppercase tracking-widest transition-colors"
             >
-              Close
+              {t('product.stockOutClose')}
             </button>
           </div>
         </div>
