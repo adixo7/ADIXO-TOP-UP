@@ -203,11 +203,6 @@ const App: React.FC = () => {
       setShowDisclaimer(true);
     }
 
-    // Show language popup on first-ever visit (no stored language preference)
-    const langShown = sessionStorage.getItem('adixo_lang_shown');
-    if (!langShown) {
-      setShowLangPopup(true);
-    }
   }, []);
 
   const handleCloseDisclaimer = () => {
