@@ -95,7 +95,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Level Up
     'levelup.header': 'Level Up Service',
     'levelup.subtitle': 'Select your target level range',
-    'levelup.safeNote': '100% safe · no password required · delivery within 24–72 hrs · support @AdiXO_TV',
+    'levelup.safeNote': '100% safe · access token process · delivery within 24–72 hrs · support @AdiXO_TV',
     // Features section
     'features.liveSupport': '24/7 Live Support',
     'features.needHelp': 'Need Help',

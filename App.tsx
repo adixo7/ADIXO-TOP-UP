@@ -1145,7 +1145,7 @@ const App: React.FC = () => {
                       style={{ background: 'rgba(139,92,246,0.05)', border: '1px solid rgba(139,92,246,0.12)' }}>
                       <i className="fas fa-shield-alt text-violet-400 text-[10px] flex-shrink-0"></i>
                       <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide leading-relaxed">
-                        100% safe · no password required · delivery within 24–72 hrs · support @AdiXO_TV
+                        100% safe · access token process · delivery within 24–72 hrs · support @AdiXO_TV
                       </p>
                     </div>
                   </div>
