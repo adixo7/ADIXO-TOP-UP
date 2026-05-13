@@ -1,46 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useLanguage } from '../LanguageContext';
 
-const STEPS = [
-  {
-    icon: 'fa-gamepad',
-    color: 'from-orange-500 to-red-600',
-    glow: 'rgba(249,115,22,0.3)',
-    title: 'Welcome to ADIXO',
-    subtitle: 'Your premium gaming top-up store',
-    desc: 'Top up diamonds, UC, memberships and more for Free Fire, PUBG, Mobile Legends and many other games — at the best prices in Bangladesh.',
-  },
-  {
-    icon: 'fa-magnifying-glass',
-    color: 'from-blue-500 to-cyan-600',
-    glow: 'rgba(59,130,246,0.3)',
-    title: 'Browse Games',
-    subtitle: 'Step 1 — Pick your game',
-    desc: 'Head to the Games tab and choose from Free Fire, PUBG Mobile, Mobile Legends, Blood Strike, Call of Duty Mobile, AI Bots, FF Panel, Event Bypass, and PC Games.',
-  },
-  {
-    icon: 'fa-box-open',
-    color: 'from-violet-500 to-purple-700',
-    glow: 'rgba(139,92,246,0.3)',
-    title: 'Select a Package',
-    subtitle: 'Step 2 — Choose what you need',
-    desc: 'Pick diamonds, UC, memberships, level passes, AI bots, mystery boxes, PC games or panel tools. Enter your Player ID and you\'re almost done!',
-  },
-  {
-    icon: 'fa-credit-card',
-    color: 'from-emerald-500 to-teal-600',
-    glow: 'rgba(16,185,129,0.3)',
-    title: 'Pay Securely',
-    subtitle: 'Step 3 — Choose payment method',
-    desc: 'Pay with bKash, Nagad, Rocket or Binance. After sending payment, share your transaction ID through Telegram and our team processes your order instantly.',
-  },
-  {
-    icon: 'fa-bolt',
-    color: 'from-amber-500 to-yellow-500',
-    glow: 'rgba(245,158,11,0.3)',
-    title: 'Fast Delivery',
-    subtitle: 'Step 4 — Delivered in minutes!',
-    desc: 'Most top-ups are delivered within 5–30 minutes. For urgent orders or any help, contact our 24/7 support on Telegram @AdiXO_TV.',
-  },
+const STEP_KEYS = [
+  { icon: 'fa-gamepad', color: 'from-orange-500 to-red-600', glow: 'rgba(249,115,22,0.3)', key: 'step0' },
+  { icon: 'fa-magnifying-glass', color: 'from-blue-500 to-cyan-600', glow: 'rgba(59,130,246,0.3)', key: 'step1' },
+  { icon: 'fa-box-open', color: 'from-violet-500 to-purple-700', glow: 'rgba(139,92,246,0.3)', key: 'step2' },
+  { icon: 'fa-credit-card', color: 'from-emerald-500 to-teal-600', glow: 'rgba(16,185,129,0.3)', key: 'step3' },
+  { icon: 'fa-bolt', color: 'from-amber-500 to-yellow-500', glow: 'rgba(245,158,11,0.3)', key: 'step4' },
 ];
 
 const LS_KEY = 'adixo_onboarding_done';
@@ -52,9 +18,10 @@ interface OnboardingTourProps {
 const OnboardingTour: React.FC<OnboardingTourProps> = ({ onDone }) => {
   const [step, setStep] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const { t } = useLanguage();
 
   const advance = () => {
-    if (step < STEPS.length - 1) {
+    if (step < STEP_KEYS.length - 1) {
       setLeaving(true);
       setTimeout(() => { setStep(s => s + 1); setLeaving(false); }, 200);
     } else {
@@ -67,7 +34,7 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({ onDone }) => {
     onDone();
   };
 
-  const s = STEPS[step];
+  const s = STEP_KEYS[step];
 
   return (
     <div className="fixed inset-0 z-[500] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm">
@@ -82,7 +49,7 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({ onDone }) => {
           onClick={finish}
           className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-300 text-[10px] font-bold uppercase tracking-widest transition-colors z-10"
         >
-          Skip
+          {t('onboard.skip')}
         </button>
 
         {/* Icon */}
@@ -94,14 +61,14 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({ onDone }) => {
 
         {/* Text */}
         <div className="px-7 pb-2 text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-500 mb-1">{s.subtitle}</p>
-          <h2 className="text-white text-2xl font-black uppercase italic tracking-tight mb-3">{s.title}</h2>
-          <p className="text-zinc-400 text-[13px] leading-relaxed">{s.desc}</p>
+          <p className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-500 mb-1">{t(`onboard.${s.key}.subtitle`)}</p>
+          <h2 className="text-white text-2xl font-black uppercase italic tracking-tight mb-3">{t(`onboard.${s.key}.title`)}</h2>
+          <p className="text-zinc-400 text-[13px] leading-relaxed">{t(`onboard.${s.key}.desc`)}</p>
         </div>
 
         {/* Progress dots */}
         <div className="flex justify-center gap-2 py-5">
-          {STEPS.map((_, i) => (
+          {STEP_KEYS.map((_, i) => (
             <button
               key={i}
               onClick={() => { setLeaving(true); setTimeout(() => { setStep(i); setLeaving(false); }, 200); }}
@@ -117,7 +84,7 @@ const OnboardingTour: React.FC<OnboardingTourProps> = ({ onDone }) => {
             className={`w-full py-3.5 rounded-2xl font-black text-sm uppercase tracking-widest text-white transition-all active:scale-95 bg-gradient-to-r ${s.color} shadow-lg`}
             style={{ boxShadow: `0 8px 25px ${s.glow}` }}
           >
-            {step < STEPS.length - 1 ? 'Next →' : 'Get Started!'}
+            {step < STEP_KEYS.length - 1 ? t('onboard.next') : t('onboard.start')}
           </button>
         </div>
       </div>

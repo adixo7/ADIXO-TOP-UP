@@ -1,28 +1,31 @@
 import React from 'react';
+import { useLanguage } from '../LanguageContext';
 
 const Features: React.FC = () => {
+  const { t } = useLanguage();
+
   const featureList = [
     {
-      title: "Instant Delivery",
-      description: "Credits added to your account in seconds",
-      icon: "fa-bolt",
-      color: "text-orange-400",
-      bg: "bg-orange-500/5"
+      titleKey: 'features.instantDelivery',
+      descKey: 'features.instantDeliveryDesc',
+      icon: 'fa-bolt',
+      color: 'text-orange-400',
+      bg: 'bg-orange-500/5',
     },
     {
-      title: "Secure Payment",
-      description: "100% secure transaction processing",
-      icon: "fa-shield-halved",
-      color: "text-orange-400",
-      bg: "bg-orange-500/5"
+      titleKey: 'features.securePayment',
+      descKey: 'features.securePaymentDesc',
+      icon: 'fa-shield-halved',
+      color: 'text-orange-400',
+      bg: 'bg-orange-500/5',
     },
     {
-      title: "Best Prices",
-      description: "Competitive rates and discounts",
-      icon: "fa-credit-card",
-      color: "text-orange-400",
-      bg: "bg-orange-500/5"
-    }
+      titleKey: 'features.bestPrices',
+      descKey: 'features.bestPricesDesc',
+      icon: 'fa-credit-card',
+      color: 'text-orange-400',
+      bg: 'bg-orange-500/5',
+    },
   ];
 
   return (
@@ -34,16 +37,17 @@ const Features: React.FC = () => {
             <div>
               <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-4">
                 <i className="far fa-comment-dots text-orange-500 text-[8px]"></i>
-                <span className="text-orange-500 text-[8px] font-bold tracking-widest uppercase">24/7 Live Support</span>
+                <span className="text-orange-500 text-[8px] font-bold tracking-widest uppercase">{t('features.liveSupport')}</span>
               </div>
-              
+
               <h2 className="text-white text-2xl md:text-3xl font-black italic uppercase tracking-tighter leading-none mb-3">
-                Need Help<br />With<br />
-                <span className="text-orange-500">Your Order?</span>
+                {t('features.needHelp')}<br />
+                {t('features.with') && <>{t('features.with')}<br /></>}
+                <span className="text-orange-500">{t('features.yourOrder')}</span>
               </h2>
-              
+
               <p className="text-zinc-400 text-[10px] md:text-xs leading-relaxed mb-5 max-w-[200px]">
-                Our dedicated support team is ready to assist you. Contact our head administrator directly on Telegram for instant resolution of any queries.
+                {t('features.supportDesc')}
               </p>
             </div>
 
@@ -52,7 +56,7 @@ const Features: React.FC = () => {
                 <i className="fab fa-telegram-plane text-orange-500 text-sm"></i>
               </div>
               <div>
-                <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest">Telegram Username</p>
+                <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest">{t('features.telegramUsername')}</p>
                 <p className="text-white text-xs font-bold italic">@AdiXO_TV</p>
               </div>
             </div>
@@ -63,9 +67,9 @@ const Features: React.FC = () => {
             <div className="relative mb-4">
               <div className="w-24 h-24 md:w-28 md:h-28 rounded-full border-[3px] border-zinc-800 p-1 relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <img 
-                  src="/images/support-avatar.jpg" 
-                  alt="Support Admin" 
+                <img
+                  src="/images/support-avatar.jpg"
+                  alt="Support Admin"
                   className="w-full h-full rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-110"
                 />
               </div>
@@ -73,44 +77,41 @@ const Features: React.FC = () => {
             </div>
 
             <h3 className="text-white text-lg font-black italic uppercase tracking-tight mb-0.5">Adixo Support</h3>
-            <p className="text-orange-500 text-[8px] font-bold uppercase tracking-[0.2em] mb-5">Head Administrator</p>
+            <p className="text-orange-500 text-[8px] font-bold uppercase tracking-[0.2em] mb-5">{t('features.headAdmin')}</p>
 
-            <a 
-              href="https://t.me/AdiXO_TV" 
-              target="_blank" 
+            <a
+              href="https://t.me/AdiXO_TV"
+              target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-orange-500 hover:bg-orange-600 text-black font-black italic uppercase tracking-wider py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-orange-500/20 text-[11px]"
             >
-              Message on Telegram
+              {t('features.messageOnTelegram')}
               <i className="fas fa-external-link-alt text-[9px]"></i>
             </a>
-            
-            <p className="mt-3 text-zinc-500 text-[7px] font-bold uppercase tracking-widest">Typical response time: &lt; 5 mins</p>
+
+            <p className="mt-3 text-zinc-500 text-[7px] font-bold uppercase tracking-widest">{t('features.responseTime')}</p>
           </div>
         </div>
       </div>
 
-      {/* Grid layout: 2 columns on mobile, 3 columns on desktop. Last item centered on mobile. */}
+      {/* Feature cards */}
       <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 px-4 md:px-0">
         {featureList.map((feature, idx) => (
-          <div 
-            key={idx} 
+          <div
+            key={idx}
             className={`
               bg-[#0c0c0e] border border-zinc-800/50 p-4 md:p-10 rounded-2xl flex flex-col items-center text-center group hover:border-orange-500/30 transition-all duration-500 hover:translate-y-[-4px]
               ${idx === 2 ? 'col-span-2 mx-auto w-[calc(50%-8px)] md:col-span-1 md:w-full' : 'w-full'}
             `}
           >
-            {/* Icon container */}
             <div className={`w-12 h-12 md:w-16 md:h-16 ${feature.bg} rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-8 shadow-inner border border-white/5`}>
               <i className={`fas ${feature.icon} ${feature.color} text-base md:text-2xl`}></i>
             </div>
-            
-            {/* Typography */}
             <h3 className="text-white text-[10px] md:text-xl font-black uppercase italic tracking-tighter mb-2 md:mb-4 leading-tight">
-              {feature.title}
+              {t(feature.titleKey)}
             </h3>
             <p className="text-zinc-500 text-[9px] md:text-sm font-medium leading-tight max-w-[120px] md:max-w-[200px]">
-              {feature.description}
+              {t(feature.descKey)}
             </p>
           </div>
         ))}

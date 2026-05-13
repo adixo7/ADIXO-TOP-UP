@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLanguage } from '../LanguageContext';
 
 const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="w-full bg-[#050507] border-t border-zinc-800/30 py-12 px-6 mt-auto">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
-        
+
         {/* Logo and Description */}
         <div className="flex flex-col gap-4 max-w-sm">
           <div className="flex items-center gap-3">
@@ -16,41 +19,26 @@ const Footer: React.FC = () => {
             </span>
           </div>
           <p className="text-zinc-500 text-sm leading-relaxed font-medium">
-            The fastest and most secure way to top up your favorite games. Instant delivery, 24/7 support.
+            {t('footer.desc')}
           </p>
         </div>
 
         {/* Links */}
         <div className="flex items-center gap-8 md:gap-12 text-zinc-400 font-bold uppercase tracking-widest text-[10px]">
-          <a 
-            href="https://adixo-topup.com/terms" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-white transition-colors"
-          >
-            Terms
+          <a href="https://adixo-topup.com/terms" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            {t('footer.terms')}
           </a>
-          <a 
-            href="https://adixo-topup.com/privacy" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-white transition-colors"
-          >
-            Privacy
+          <a href="https://adixo-topup.com/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            {t('footer.privacy')}
           </a>
-          <a 
-            href="https://t.me/AdiXO_TV" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="hover:text-white transition-colors"
-          >
-            Support
+          <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            {t('footer.support')}
           </a>
         </div>
 
         {/* Copyright */}
         <div className="text-zinc-600 text-[10px] font-bold uppercase tracking-widest md:text-right">
-          © 2024 ADIXO STORE. All rights reserved.
+          {t('footer.rights')}
         </div>
 
       </div>

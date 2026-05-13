@@ -677,20 +677,20 @@ const App: React.FC = () => {
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-robot text-orange-500 text-[8px] md:text-[10px]"></i>
-                          <p className="text-orange-500 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">Advanced AI Systems</p>
+                          <p className="text-orange-500 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">{t('home.advancedAI')}</p>
                         </div>
                         <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-0.5">
                           {proBot.unit}
                         </h3>
                         <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
-                          LEVEL UP YOUR GUILD WITH AI AUTOMATED GUILD BOTS
+                          {t('home.guildBotsDesc')}
                         </p>
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
-                      <span className="text-orange-500 font-black text-xs md:text-sm italic uppercase">SAFE</span>
+                      <span className="text-orange-500 font-black text-xs md:text-sm italic uppercase">{t('home.safe')}</span>
                       <div className="flex items-center gap-1.5 md:gap-2 bg-orange-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-orange-600 transition-all duration-300">
-                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">View All</span>
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-orange-500 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                       </div>
                     </div>
@@ -716,20 +716,20 @@ const App: React.FC = () => {
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-bolt text-blue-400 text-[8px] md:text-[10px]"></i>
-                          <p className="text-blue-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">Event Service</p>
+                          <p className="text-blue-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">{t('home.eventService')}</p>
                         </div>
                         <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-blue-400 transition-colors mb-0.5">
                           EVENT BYPASS
                         </h3>
                         <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
-                          UNLOCK EVENT REWARDS WITH FLEXIBLE VALIDITY PERIODS
+                          {t('home.eventDesc')}
                         </p>
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-blue-500/10 flex items-center justify-between">
-                      <span className="text-blue-400 font-black text-xs md:text-sm italic uppercase">ACTIVE</span>
+                      <span className="text-blue-400 font-black text-xs md:text-sm italic uppercase">{t('home.active')}</span>
                       <div className="flex items-center gap-1.5 md:gap-2 bg-blue-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-blue-600 transition-all duration-300">
-                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">View All</span>
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-blue-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                       </div>
                     </div>
@@ -755,20 +755,20 @@ const App: React.FC = () => {
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-terminal text-emerald-400 text-[8px] md:text-[10px]"></i>
-                          <p className="text-emerald-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">Panel Service</p>
+                          <p className="text-emerald-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">{t('home.panelService')}</p>
                         </div>
                         <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-emerald-400 transition-colors mb-0.5">
                           FF PANEL
                         </h3>
                         <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
-                          PREMIUM FF PANEL TOOLS & APK MODS
+                          {t('home.panelDesc')}
                         </p>
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-emerald-500/10 flex items-center justify-between">
-                      <span className="text-emerald-400 font-black text-xs md:text-sm italic uppercase">PROTECTED</span>
+                      <span className="text-emerald-400 font-black text-xs md:text-sm italic uppercase">{t('home.protected')}</span>
                       <div className="flex items-center gap-1.5 md:gap-2 bg-emerald-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-emerald-600 transition-all duration-300">
-                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">View All</span>
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-emerald-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                       </div>
                     </div>
@@ -796,7 +796,7 @@ const App: React.FC = () => {
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-chart-line text-violet-400 text-[8px] md:text-[10px]"></i>
-                          <p className="text-violet-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">Rank Boost</p>
+                          <p className="text-violet-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">{t('home.rankBoost')}</p>
                         </div>
                         <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-violet-400 transition-colors mb-0.5">
                           LEVEL UP
@@ -807,7 +807,7 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-violet-500/10 flex items-center justify-between">
-                      <span className="text-violet-400 font-black text-xs md:text-sm italic uppercase">PREMIUM</span>
+                      <span className="text-violet-400 font-black text-xs md:text-sm italic uppercase">{t('home.premium')}</span>
                       <div className="flex items-center gap-1.5 md:gap-2 bg-violet-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-violet-600 transition-all duration-300">
                         <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-violet-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
