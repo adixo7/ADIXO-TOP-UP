@@ -13,6 +13,8 @@ import DisclaimerPopup from './components/DisclaimerPopup';
 import CouponRedeem from './components/CouponRedeem';
 import MaintenancePopup from './components/MaintenancePopup';
 import Confetti from './components/Confetti';
+import LanguagePopup from './components/LanguagePopup';
+import { useLanguage } from './LanguageContext';
 
 const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -111,6 +113,7 @@ const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
 };
 
 const App: React.FC = () => {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('home');
   const [user, setUser] = useState<User | null>(null);
   const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
@@ -154,6 +157,7 @@ const App: React.FC = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [stockOutToast, setStockOutToast] = useState<string | null>(null);
   const [showOnboarding, setShowOnboarding] = useState(() => !localStorage.getItem(ONBOARDING_KEY));
+  const [showLangPopup, setShowLangPopup] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -197,6 +201,12 @@ const App: React.FC = () => {
     const disclaimerShown = sessionStorage.getItem('adixo_disclaimer_shown');
     if (!disclaimerShown) {
       setShowDisclaimer(true);
+    }
+
+    // Show language popup on first-ever visit (no stored language preference)
+    const langShown = sessionStorage.getItem('adixo_lang_shown');
+    if (!langShown) {
+      setShowLangPopup(true);
     }
   }, []);
 
@@ -529,9 +539,11 @@ const App: React.FC = () => {
       onOpenAuth={(mode) => setAuthMode(mode || 'login')}
       searchTerm={searchTerm}
       onSearchChange={setSearchTerm}
+      onOpenLangPopup={() => setShowLangPopup(true)}
     >
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
+      {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
       {activeTab === 'home' && (
@@ -619,7 +631,7 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-4 md:mb-6">
               <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
                 <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
-                TOP-UP
+                {t('home.topup')}
               </h2>
             </div>
             {filteredGames.length > 0 ? (
@@ -631,7 +643,7 @@ const App: React.FC = () => {
             ) : (
               <div className="text-center py-12 md:py-16 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-2xl md:rounded-3xl">
                 <i className="fas fa-search-minus text-zinc-700 text-2xl md:text-3xl mb-3 md:mb-4"></i>
-                <p className="text-zinc-500 font-bold uppercase tracking-widest text-[8px] md:text-[10px]">No matches found.</p>
+                <p className="text-zinc-500 font-bold uppercase tracking-widest text-[8px] md:text-[10px]">{t('home.noMatches')}</p>
               </div>
             )}
           </section>
@@ -640,7 +652,7 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-4 md:mb-6">
               <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
                 <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
-                TOOLS
+                {t('home.tools')}
               </h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -790,14 +802,14 @@ const App: React.FC = () => {
                           LEVEL UP
                         </h3>
                         <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
-                          BOOST YOUR CHARACTER LEVEL INSTANTLY
+                          {t('home.levelUpDesc')}
                         </p>
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-violet-500/10 flex items-center justify-between">
                       <span className="text-violet-400 font-black text-xs md:text-sm italic uppercase">PREMIUM</span>
                       <div className="flex items-center gap-1.5 md:gap-2 bg-violet-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-violet-600 transition-all duration-300">
-                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">View All</span>
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-violet-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                       </div>
                     </div>
@@ -811,7 +823,7 @@ const App: React.FC = () => {
             <div className="flex items-center justify-between mb-4 md:mb-6">
               <h2 className="text-lg md:text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-2 md:gap-3">
                 <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
-                TOP PC GAMES
+                {t('home.pcGames')}
               </h2>
               <button 
                 onClick={() => {
@@ -820,7 +832,7 @@ const App: React.FC = () => {
                 }}
                 className="text-orange-500 text-[8px] font-black uppercase tracking-widest hover:underline flex items-center gap-1.5 md:gap-2"
               >
-                View All <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
+                {t('home.viewAll')} <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
               </button>
             </div>
             <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
@@ -891,7 +903,7 @@ const App: React.FC = () => {
                 }}
                 className="mb-8 text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors"
               >
-                <i className="fas fa-arrow-left"></i> Back
+                <i className="fas fa-arrow-left"></i> {t('games.back')}
               </button>
               
               <div className="grid lg:grid-cols-3 gap-12">
@@ -917,7 +929,7 @@ const App: React.FC = () => {
 
                   <div className="space-y-4 px-2">
                     <h3 className="text-xl font-bold text-white">
-                      {selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'Email / WhatsApp Number' : selectedGame.id === 'ai-bots' ? 'GUILD ID' : 'Player ID / Username'}
+                      {selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
                     </h3>
                     <div className="relative group">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
@@ -927,7 +939,7 @@ const App: React.FC = () => {
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder={selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'Enter Email or WhatsApp Number' : selectedGame.id === 'ai-bots' ? 'ENTER GUILD ID' : selectedGame.idPlaceholder}
+                        placeholder={selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.enterEmail') : selectedGame.id === 'ai-bots' ? t('game.enterGuildId') : selectedGame.idPlaceholder}
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
@@ -936,9 +948,7 @@ const App: React.FC = () => {
 
                     {(selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel') && (
                       <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">
-                        {selectedGame.id === 'ff-panel'
-                          ? '* Note: Your license key will be sent to this Email or WhatsApp number after payment.'
-                          : '* Note: We will send your purchased game\'s account ID and password to this Email or WhatsApp number.'}
+                        {selectedGame.id === 'ff-panel' ? t('game.panelNote') : t('game.pcNote')}
                       </p>
                     )}
                   </div>
@@ -953,8 +963,8 @@ const App: React.FC = () => {
                         <i className="fas fa-arrow-up text-violet-400 text-xs"></i>
                       </div>
                       <div>
-                        <h3 className="text-sm font-black text-white uppercase tracking-widest">Level Up Service</h3>
-                        <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Select your target level range</p>
+                        <h3 className="text-sm font-black text-white uppercase tracking-widest">{t('levelup.header')}</h3>
+                        <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">{t('levelup.subtitle')}</p>
                       </div>
                     </div>
 
@@ -1626,7 +1636,7 @@ const App: React.FC = () => {
                           <div className="bg-black/40 rounded-xl p-3 mb-3 border border-zinc-800/50">
                             <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-1">Package</p>
+                                <p className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500 mb-1">{t('product.package')}</p>
                                 <p className="text-white font-black text-base uppercase italic leading-tight">
                                   {selectedPackage.amount} {selectedPackage.unit}
                                 </p>
@@ -1635,7 +1645,7 @@ const App: React.FC = () => {
                                 )}
                               </div>
                               <div className="text-right shrink-0">
-                                <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Total</p>
+                                <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">{t('product.total')}</p>
                                 <p className="text-2xl font-black text-orange-400 italic leading-none">
                                   {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price.toLocaleString()}
                                 </p>
@@ -1649,7 +1659,7 @@ const App: React.FC = () => {
                             <div className="flex items-center gap-2 bg-zinc-900/60 rounded-xl px-3 py-2 mb-3 border border-zinc-800/40">
                               <i className="fas fa-user text-orange-400 text-[10px] shrink-0"></i>
                               <div className="flex-1 min-w-0">
-                                <span className="text-[7px] font-black uppercase tracking-widest text-zinc-600 block">Player ID</span>
+                                <span className="text-[7px] font-black uppercase tracking-widest text-zinc-600 block">{t('product.playerId')}</span>
                                 <span className="text-zinc-300 font-mono text-[10px] truncate block">{playerId}</span>
                               </div>
                             </div>
@@ -1659,25 +1669,25 @@ const App: React.FC = () => {
                           <div className="grid grid-cols-3 gap-2 pt-3 border-t border-zinc-800/50">
                             <div className="flex flex-col items-center gap-1 text-center">
                               <i className="fas fa-bolt text-orange-400 text-[10px]"></i>
-                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Instant</span>
-                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Delivery</span>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">{t('product.instant')}</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">{t('product.delivery')}</span>
                             </div>
                             <div className="flex flex-col items-center gap-1 text-center border-x border-zinc-800/50">
                               <i className="fas fa-shield-alt text-orange-400 text-[10px]"></i>
-                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">100%</span>
-                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Safe</span>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">{t('product.safe')}</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">{t('product.safeLabel')}</span>
                             </div>
                             <div className="flex flex-col items-center gap-1 text-center">
                               <i className="fas fa-headset text-orange-400 text-[10px]"></i>
-                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">24/7</span>
-                              <span className="text-[7px] font-bold text-zinc-600 uppercase">Support</span>
+                              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">{t('product.support')}</span>
+                              <span className="text-[7px] font-bold text-zinc-600 uppercase">{t('product.supportLabel')}</span>
                             </div>
                           </div>
                         </div>
                       </div>
 
                     <div className="bg-[#0b0b0d] border border-zinc-800/60 p-4 rounded-[1.5rem] shadow-sm">
-                      <h3 className="text-xs font-bold text-white mb-4 uppercase tracking-tight">Payment Method</h3>
+                      <h3 className="text-xs font-bold text-white mb-4 uppercase tracking-tight">{t('game.paymentMethod')}</h3>
                       <div className="grid grid-cols-2 gap-3">
                         {PAYMENT_METHODS.map(method => (
                           <button 
@@ -1696,10 +1706,10 @@ const App: React.FC = () => {
                             <div className="flex flex-col">
                               <span className="font-black uppercase italic tracking-tighter text-[10px] text-white truncate">{method.name}</span>
                               {method.id === 'bkash' && (
-                                <span className="text-red-500 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">DISABLED</span>
+                                <span className="text-red-500 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">{t('game.disabled')}</span>
                               )}
                               {(method.id === 'nagad' || method.id === 'rocket') && (
-                                <span className="text-orange-400 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">SUPPORT</span>
+                                <span className="text-orange-400 font-black uppercase text-[7px] tracking-widest leading-none mt-0.5">{t('game.support')}</span>
                               )}
                             </div>
                           </button>
@@ -1711,7 +1721,7 @@ const App: React.FC = () => {
                           onClick={handleConfirmOrder}
                           className="w-full py-3.5 rounded-xl font-black uppercase italic tracking-widest transition-all bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95 text-[10px]"
                         >
-                          Confirm & Pay {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price}
+                          {t('game.confirmPay')} {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price}
                         </button>
                       </div>
                     </div>
@@ -1737,7 +1747,7 @@ const App: React.FC = () => {
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-20 px-4">
           <h2 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
             <span className="w-1 h-6 bg-orange-600 rounded-full"></span>
-            ORDER HISTORY
+            {t('history.title')}
           </h2>
           {user && transactions.length > 0 ? (
             <div className="space-y-4">
@@ -1755,18 +1765,18 @@ const App: React.FC = () => {
                     <div className="text-right shrink-0">
                       <p className="text-2xl font-black text-white italic tracking-tighter leading-none mb-2">৳{trx.price}</p>
                       <div className={`inline-flex px-3 py-1 rounded-lg border text-[8px] font-black uppercase tracking-widest ${trx.status === 'processing' ? 'text-amber-500 border-amber-500/20 bg-amber-500/5' : 'text-green-500 border-green-500/20 bg-green-500/5'}`}>
-                        {trx.status.toUpperCase()}
+                        {trx.status === 'processing' ? t('history.processing') : t('history.completed')}
                       </div>
                     </div>
                   </div>
                   
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-black/40 px-4 py-2.5 rounded-xl border border-zinc-800/30 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
-                      <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest shrink-0">ORDER ID</span>
+                      <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest shrink-0">{t('history.orderId')}</span>
                       <span className="text-zinc-400 font-mono text-[10px] truncate">{trx.id}</span>
                     </div>
                     <div className="bg-black/40 px-4 py-2.5 rounded-xl border border-zinc-800/30 flex flex-col md:flex-row md:items-center md:justify-between gap-1">
-                      <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest shrink-0">PLAYER ID</span>
+                      <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest shrink-0">{t('history.playerId')}</span>
                       <span className="text-orange-400/80 font-mono text-[10px] truncate">{trx.playerId}</span>
                     </div>
                   </div>
@@ -1776,7 +1786,7 @@ const App: React.FC = () => {
           ) : (
             <div className="text-center py-40 bg-zinc-900/20 border border-dashed border-zinc-800 rounded-[3rem]">
               <i className="fas fa-history text-zinc-800 text-6xl mb-8 opacity-20"></i>
-              <p className="text-zinc-600 text-sm font-black uppercase tracking-[0.4em]">No orders found.</p>
+              <p className="text-zinc-600 text-sm font-black uppercase tracking-[0.4em]">{t('history.noOrders')}</p>
             </div>
           )}
         </div>
@@ -1793,13 +1803,13 @@ const App: React.FC = () => {
               onClick={handleLogout}
               className="w-fit px-12 py-4 bg-transparent border border-red-500/40 text-red-500 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] hover:bg-red-500/10 transition-all active:scale-95 mb-12 shadow-lg shadow-red-500/5"
             >
-              LOG OUT
+              {t('profile.logout')}
             </button>
 
             <div className="w-full max-w-2xl space-y-10">
               <div className="space-y-6">
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                  <span className="w-1 h-5 bg-orange-600 rounded-full"></span> ACCOUNT DATA
+                  <span className="w-1 h-5 bg-orange-600 rounded-full"></span> {t('profile.accountData')}
                 </h3>
                 
                 <div className="space-y-4">
@@ -1816,7 +1826,7 @@ const App: React.FC = () => {
 
               <div className="space-y-6">
                 <h3 className="text-xl font-black text-white uppercase italic tracking-tighter flex items-center gap-3">
-                  <span className="w-1 h-5 bg-amber-500 rounded-full"></span> SECURITY PROTOCOLS
+                  <span className="w-1 h-5 bg-amber-500 rounded-full"></span> {t('profile.security')}
                 </h3>
                 
                 <div className="space-y-4">

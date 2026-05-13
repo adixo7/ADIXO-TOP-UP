@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { User } from '../types';
 import Footer from './Footer';
+import { useLanguage } from '../LanguageContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
   onOpenAuth: (mode?: 'login' | 'register') => void;
   searchTerm: string;
   onSearchChange: (value: string) => void;
+  onOpenLangPopup: () => void;
 }
 
 const Layout: React.FC<LayoutProps> = ({ 
@@ -21,12 +23,14 @@ const Layout: React.FC<LayoutProps> = ({
   onLogout, 
   onOpenAuth,
   searchTerm,
-  onSearchChange
+  onSearchChange,
+  onOpenLangPopup,
 }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const { t, lang } = useLanguage();
 
   // Close dropdown and search when clicking outside
   useEffect(() => {
@@ -35,7 +39,6 @@ const Layout: React.FC<LayoutProps> = ({
         setIsProfileOpen(false);
       }
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        // Only close if search term is empty
         if (!searchTerm) setIsSearchOpen(false);
       }
     };
@@ -51,6 +54,11 @@ const Layout: React.FC<LayoutProps> = ({
   const handleLogoutAction = () => {
     setIsProfileOpen(false);
     onLogout();
+  };
+
+  const handleChangeLang = () => {
+    setIsProfileOpen(false);
+    onOpenLangPopup();
   };
 
   return (
@@ -84,7 +92,7 @@ const Layout: React.FC<LayoutProps> = ({
                   <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></span>
                 </span>
               </div>
-              <span className="text-green-500 text-[8px] md:text-[9px] font-black uppercase tracking-[0.15em] leading-none gaming-font">Live</span>
+              <span className="text-green-500 text-[8px] md:text-[9px] font-black uppercase tracking-[0.15em] leading-none gaming-font">{t('nav.liveIndicator')}</span>
             </div>
           </div>
         </div>
@@ -94,13 +102,13 @@ const Layout: React.FC<LayoutProps> = ({
             onClick={() => onTabChange('home')}
             className={`hover:text-white transition-all py-1 ${activeTab === 'home' ? 'text-white border-b-2 border-orange-500' : ''}`}
           >
-            Home
+            {t('nav.home')}
           </button>
           <button 
             onClick={() => onTabChange('games')}
             className={`hover:text-white transition-all py-1 ${activeTab === 'games' ? 'text-white border-b-2 border-orange-500' : ''}`}
           >
-            Games
+            {t('nav.games')}
           </button>
           <a 
             href="https://t.me/AdiXO_TV"
@@ -108,7 +116,7 @@ const Layout: React.FC<LayoutProps> = ({
             rel="noopener noreferrer"
             className="hover:text-white transition-all py-1 flex items-center gap-2"
           >
-            Support
+            {t('nav.support')}
             <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
           </a>
         </nav>
@@ -120,7 +128,7 @@ const Layout: React.FC<LayoutProps> = ({
                 <input 
                   autoFocus
                   type="text"
-                  placeholder="Search..."
+                  placeholder={t('common.search')}
                   value={searchTerm}
                   onChange={(e) => onSearchChange(e.target.value)}
                   className="bg-transparent text-white px-3 py-1.5 text-[10px] md:text-xs font-bold focus:outline-none w-24 md:w-48"
@@ -150,7 +158,7 @@ const Layout: React.FC<LayoutProps> = ({
               >
                 <div className="hidden lg:block text-right">
                   <p className="text-white text-xs font-black uppercase italic tracking-tighter truncate max-w-[120px]">{user.name}</p>
-                  <p className="text-[9px] text-orange-500 font-bold uppercase tracking-widest">Elite Agent</p>
+                  <p className="text-[9px] text-orange-500 font-bold uppercase tracking-widest">{t('nav.eliteAgent')}</p>
                 </div>
                 <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full border-2 overflow-hidden shadow-lg transition-all ${isProfileOpen ? 'border-white ring-4 ring-orange-500/30' : 'border-orange-500 shadow-orange-500/20'}`}>
                   <img src={user.avatar} alt={user.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
@@ -160,7 +168,7 @@ const Layout: React.FC<LayoutProps> = ({
               {isProfileOpen && (
                 <div className="absolute right-0 mt-4 w-64 md:w-72 bg-black rounded-2xl border border-zinc-800/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-[100]">
                   <div className="p-4 md:p-5 border-b border-zinc-800/50 bg-zinc-900/40">
-                    <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest mb-1">Authenticated via Grid</p>
+                    <p className="text-[10px] text-zinc-500 font-black uppercase tracking-widest mb-1">{t('nav.authenticatedVia')}</p>
                     <p className="text-white font-bold text-sm truncate">{user.email}</p>
                   </div>
                   <div className="p-2">
@@ -169,14 +177,24 @@ const Layout: React.FC<LayoutProps> = ({
                       className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
                     >
                       <i className="fas fa-user-shield text-orange-500 group-hover:scale-110 transition-transform w-5 text-center"></i>
-                      <span className="text-xs font-bold uppercase tracking-wider">PROFILE</span>
+                      <span className="text-xs font-bold uppercase tracking-wider">{t('nav.profile')}</span>
                     </button>
                     <button 
                       onClick={() => handleMenuAction('history')}
                       className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
                     >
                       <i className="fas fa-history text-orange-500 group-hover:rotate-[-15deg] transition-transform w-5 text-center"></i>
-                      <span className="text-xs font-bold uppercase tracking-wider">Order History</span>
+                      <span className="text-xs font-bold uppercase tracking-wider">{t('nav.orderHistory')}</span>
+                    </button>
+                    <button
+                      onClick={handleChangeLang}
+                      className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-xl transition-all group"
+                    >
+                      <i className="fas fa-globe text-orange-500 group-hover:scale-110 transition-transform w-5 text-center"></i>
+                      <span className="text-xs font-bold uppercase tracking-wider">{t('lang.change')}</span>
+                      <span className="ml-auto text-[9px] font-black uppercase tracking-widest text-zinc-600 border border-zinc-800 px-1.5 py-0.5 rounded">
+                        {lang === 'en' ? 'EN' : 'বাং'}
+                      </span>
                     </button>
                   </div>
                   <div className="p-2 bg-zinc-950 border-t border-zinc-800/50">
@@ -187,19 +205,28 @@ const Layout: React.FC<LayoutProps> = ({
                       <div className="w-5 flex justify-center">
                         <i className="fas fa-power-off group-hover:rotate-90 transition-transform"></i>
                       </div>
-                      <span className="text-xs font-black uppercase tracking-widest">LOG OUT</span>
+                      <span className="text-xs font-black uppercase tracking-widest">{t('nav.logout')}</span>
                     </button>
                   </div>
                 </div>
               )}
             </div>
           ) : (
-            <button 
-              onClick={() => onOpenAuth('login')}
-              className="bg-zinc-800 border border-zinc-700 text-white px-4 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-zinc-700 transition-all active:scale-95 shadow-lg shadow-black/20"
-            >
-              Login
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={onOpenLangPopup}
+                className="p-2 md:p-2.5 text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-lg md:rounded-xl bg-zinc-900/50"
+                title={t('lang.change')}
+              >
+                <i className="fas fa-globe text-sm md:text-base"></i>
+              </button>
+              <button 
+                onClick={() => onOpenAuth('login')}
+                className="bg-zinc-800 border border-zinc-700 text-white px-4 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-zinc-700 transition-all active:scale-95 shadow-lg shadow-black/20"
+              >
+                {t('nav.login')}
+              </button>
+            </div>
           )}
         </div>
       </header>
@@ -218,19 +245,19 @@ const Layout: React.FC<LayoutProps> = ({
         <footer className="md:hidden sticky bottom-0 z-50 glass-card border-t border-zinc-800/50 px-6 py-3 flex justify-around backdrop-blur-md bg-black/40">
           <button onClick={() => onTabChange('home')} className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-orange-500' : 'text-zinc-500'}`}>
             <i className="fas fa-home"></i>
-            <span className="text-[10px] font-black uppercase tracking-tighter">Home</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter">{t('nav.home')}</span>
           </button>
           <button onClick={() => onTabChange('games')} className={`flex flex-col items-center gap-1 ${activeTab === 'games' ? 'text-orange-500' : 'text-zinc-500'}`}>
             <i className="fas fa-gamepad"></i>
-            <span className="text-[10px] font-black uppercase tracking-tighter">Games</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter">{t('nav.games')}</span>
           </button>
           <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-1 text-zinc-500">
             <i className="fas fa-headset"></i>
-            <span className="text-[10px] font-black uppercase tracking-tighter">Support</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter">{t('nav.support')}</span>
           </a>
           <button onClick={user ? () => setIsProfileOpen(true) : () => onOpenAuth('login')} className={`flex flex-col items-center gap-1 ${user ? 'text-orange-500' : 'text-zinc-500'}`}>
             <i className={user ? 'fas fa-user' : 'fas fa-sign-in-alt'}></i>
-            <span className="text-[10px] font-black uppercase tracking-tighter">{user ? 'Account' : 'Login'}</span>
+            <span className="text-[10px] font-black uppercase tracking-tighter">{user ? t('nav.account') : t('nav.login')}</span>
           </button>
         </footer>
       </div>
