@@ -7,7 +7,6 @@ import GameCard from './components/GameCard';
 import Auth from './components/Auth';
 import PaymentGateway from './components/PaymentGateway';
 import GuideBot from './components/GuideBot';
-import OnboardingTour, { LS_KEY as ONBOARDING_KEY } from './components/OnboardingTour';
 import Features from './components/Features';
 import DisclaimerPopup from './components/DisclaimerPopup';
 import CouponRedeem from './components/CouponRedeem';
@@ -156,7 +155,6 @@ const App: React.FC = () => {
   const [isPsdis7Applied, setIsPsdis7Applied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [stockOutToast, setStockOutToast] = useState<string | null>(null);
-  const [showOnboarding, setShowOnboarding] = useState(false);
   const [showLangPopup, setShowLangPopup] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
@@ -2021,7 +2019,6 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {showOnboarding && <OnboardingTour onDone={() => setShowOnboarding(false)} />}
 
       <GuideBot />
     </Layout>
