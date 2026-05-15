@@ -49,22 +49,18 @@ function formatBDTime(isoString: string): string {
   const BD_OFFSET_MS = 6 * 60 * 60 * 1000; // UTC+6
   const now = new Date();
   const notif = new Date(isoString);
+  const diffMs = now.getTime() - notif.getTime();
 
-  const nowBD = new Date(now.getTime() + BD_OFFSET_MS);
-  const notifBD = new Date(notif.getTime() + BD_OFFSET_MS);
-
-  const nowDay = nowBD.toISOString().slice(0, 10);
-  const notifDay = notifBD.toISOString().slice(0, 10);
-
-  if (nowDay === notifDay) {
+  if (diffMs < 24 * 60 * 60 * 1000) {
+    // Within 24 hours — show BD time as H:MM
+    const notifBD = new Date(notif.getTime() + BD_OFFSET_MS);
     const h = notifBD.getUTCHours();
-    const m = notifBD.getUTCMinutes();
-    const ampm = h >= 12 ? 'PM' : 'AM';
-    const h12 = h % 12 || 12;
-    const mm = m.toString().padStart(2, '0');
-    return `${h12}:${mm} ${ampm}`;
+    const m = notifBD.getUTCMinutes().toString().padStart(2, '0');
+    return `${h}:${m}`;
   }
 
+  // Older — show "13 May" in BD date
+  const notifBD = new Date(notif.getTime() + BD_OFFSET_MS);
   const day = notifBD.getUTCDate();
   const month = notifBD.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
   return `${day} ${month}`;
