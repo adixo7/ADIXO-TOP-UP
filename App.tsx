@@ -156,7 +156,7 @@ const App: React.FC = () => {
   const [isPsdis7Applied, setIsPsdis7Applied] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [stockOutToast, setStockOutToast] = useState<string | null>(null);
-  const [showOnboarding, setShowOnboarding] = useState(() => !localStorage.getItem(ONBOARDING_KEY));
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [showLangPopup, setShowLangPopup] = useState(false);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
@@ -197,11 +197,6 @@ const App: React.FC = () => {
       setUser(JSON.parse(savedUser));
     }
 
-    // Show disclaimer if not shown in current session
-    const disclaimerShown = sessionStorage.getItem('adixo_disclaimer_shown');
-    if (!disclaimerShown) {
-      setShowDisclaimer(true);
-    }
 
   }, []);
 
