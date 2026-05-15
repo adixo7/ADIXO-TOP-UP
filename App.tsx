@@ -538,7 +538,7 @@ const App: React.FC = () => {
     >
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
-      {showBonusOffer && <BonusOfferPopup onClose={() => setShowBonusOffer(false)} />}
+      {showBonusOffer && <BonusOfferPopup onClose={() => setShowBonusOffer(false)} onNavigate={(gameId) => { const game = GAMES.find(g => g.id === gameId); if (game) { setSelectedGame(game); setActiveTab('games'); } setShowBonusOffer(false); }} />}
       {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
