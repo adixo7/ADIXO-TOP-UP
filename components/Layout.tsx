@@ -23,7 +23,7 @@ const NOTIFICATIONS = [
     color: '#f97316',
     title: '100% Bonus Offer 🎁',
     body: 'Buy any eligible package and get double the product! Contact @AdiXO_TV on Telegram to claim.',
-    time: 'Today',
+    ts: '2026-05-15T08:00:00Z',
   },
   {
     id: 'notif-stock-1',
@@ -32,7 +32,7 @@ const NOTIFICATIONS = [
     color: '#ef4444',
     title: 'Stock Update',
     body: 'Basic Mystery Box & Basic/Hyper Event Bypass are currently out of stock. Epic & Super boxes available.',
-    time: 'Today',
+    ts: '2026-05-15T06:30:00Z',
   },
   {
     id: 'notif-support-1',
@@ -41,9 +41,34 @@ const NOTIFICATIONS = [
     color: '#38bdf8',
     title: 'Support Available 24/7',
     body: 'Reach us anytime via @adixoglory (group) or @AdiXO_TV (direct support) on Telegram.',
-    time: 'Always',
+    ts: '2026-05-13T10:00:00Z',
   },
 ];
+
+function formatBDTime(isoString: string): string {
+  const BD_OFFSET_MS = 6 * 60 * 60 * 1000; // UTC+6
+  const now = new Date();
+  const notif = new Date(isoString);
+
+  const nowBD = new Date(now.getTime() + BD_OFFSET_MS);
+  const notifBD = new Date(notif.getTime() + BD_OFFSET_MS);
+
+  const nowDay = nowBD.toISOString().slice(0, 10);
+  const notifDay = notifBD.toISOString().slice(0, 10);
+
+  if (nowDay === notifDay) {
+    const h = notifBD.getUTCHours();
+    const m = notifBD.getUTCMinutes();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = h % 12 || 12;
+    const mm = m.toString().padStart(2, '0');
+    return `${h12}:${mm} ${ampm}`;
+  }
+
+  const day = notifBD.getUTCDate();
+  const month = notifBD.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+  return `${day} ${month}`;
+}
 
 const STORAGE_KEY = 'adixo_read_notifs';
 
@@ -158,7 +183,7 @@ const Layout: React.FC<LayoutProps> = ({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-0.5">
                     <p className="text-white font-black text-[11px] truncate">{n.title}</p>
-                    <span className="text-[8px] text-zinc-600 font-bold flex-shrink-0">{n.time}</span>
+                    <span className="text-[8px] text-zinc-600 font-bold flex-shrink-0">{formatBDTime(n.ts)}</span>
                   </div>
                   <p className="text-zinc-400 text-[10px] leading-relaxed">{n.body}</p>
                 </div>
