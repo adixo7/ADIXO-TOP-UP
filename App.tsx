@@ -195,6 +195,10 @@ const App: React.FC = () => {
       setUser(JSON.parse(savedUser));
     }
 
+    const disclaimerShown = sessionStorage.getItem('adixo_disclaimer_shown');
+    if (!disclaimerShown) {
+      setShowDisclaimer(true);
+    }
 
   }, []);
 
