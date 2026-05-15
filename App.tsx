@@ -9,6 +9,7 @@ import PaymentGateway from './components/PaymentGateway';
 import GuideBot from './components/GuideBot';
 import Features from './components/Features';
 import DisclaimerPopup from './components/DisclaimerPopup';
+import BonusOfferPopup from './components/BonusOfferPopup';
 import CouponRedeem from './components/CouponRedeem';
 import MaintenancePopup from './components/MaintenancePopup';
 import Confetti from './components/Confetti';
@@ -123,6 +124,7 @@ const App: React.FC = () => {
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
   const [isGatewayOpen, setIsGatewayOpen] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
+  const [showBonusOffer, setShowBonusOffer] = useState(false);
   const [playerId, setPlayerId] = useState('');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -205,6 +207,7 @@ const App: React.FC = () => {
   const handleCloseDisclaimer = () => {
     setShowDisclaimer(false);
     sessionStorage.setItem('adixo_disclaimer_shown', 'true');
+    setShowBonusOffer(true);
   };
 
   // Transaction Management (Persistence Logic)
@@ -535,6 +538,7 @@ const App: React.FC = () => {
     >
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
+      {showBonusOffer && <BonusOfferPopup onClose={() => setShowBonusOffer(false)} />}
       {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
