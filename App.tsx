@@ -1412,7 +1412,7 @@ const App: React.FC = () => {
                                 }
                               }}
                               className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-2xl p-5 transition-all duration-300 text-left overflow-hidden ${
-                                isStockOut ? 'cursor-not-allowed' : isSelected ? `${theme.glow} scale-[1.02]` : `hover:scale-[1.01] hover:${theme.glow}`
+                                isStockOut ? 'cursor-not-allowed opacity-60' : isSelected ? `${theme.glow} scale-[1.02]` : `hover:scale-[1.01] hover:${theme.glow}`
                               }`}
                             >
                               {/* Top shimmer line */}
