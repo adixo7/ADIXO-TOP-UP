@@ -1185,6 +1185,7 @@ const App: React.FC = () => {
                               const isMystery = category === 'MYSTERY BOX';
                               const isGuildLevelUp = category === 'GUILD LEVEL UP';
                               const isBonus = !!pkg.isBonus;
+                              const isMysteryBasicStockOut = pkg.id === 'mystery-basic';
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
                                                    pkg.id === 'mystery-super' ? { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', icon: 'text-purple-400', iconBg: 'border-purple-500/50', glow: 'shadow-[0_0_20px_rgba(168,85,247,0.15)]' } :
@@ -1195,12 +1196,26 @@ const App: React.FC = () => {
                               return (
                                 <div 
                                   key={pkg.id} 
-                                  className={`relative group cursor-pointer rounded-xl overflow-hidden border transition-all duration-500 ${
+                                  className={`relative group rounded-xl overflow-hidden border transition-all duration-500 ${
+                                    isMysteryBasicStockOut ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
+                                  } ${
                                     isBonus ? 'bg-gradient-to-br from-amber-950/40 via-zinc-900/80 to-zinc-900' : 'bg-zinc-900/40'
-                                  } ${mysteryTheme.border} ${mysteryTheme.hover} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''} ${isBonus ? mysteryTheme.glow : ''}`}
-                                  onClick={() => setSelectedPackage(pkg)}
+                                  } ${mysteryTheme.border} ${!isMysteryBasicStockOut ? mysteryTheme.hover : ''} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''} ${isBonus ? mysteryTheme.glow : ''}`}
+                                  onClick={() => {
+                                    if (isMysteryBasicStockOut) {
+                                      setStockOutToast('BASIC MYSTERY');
+                                      setTimeout(() => setStockOutToast(null), 6000);
+                                    } else {
+                                      setSelectedPackage(pkg);
+                                    }
+                                  }}
                                 >
-                                  {pkg.isPopular && (
+                                  {isMysteryBasicStockOut && (
+                                    <div className="absolute top-0 left-0 bg-red-600 text-white text-[7px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10 flex items-center gap-1">
+                                      <i className="fas fa-ban text-[6px]"></i> {t('product.stockOut')}
+                                    </div>
+                                  )}
+                                  {pkg.isPopular && !isMysteryBasicStockOut && (
                                     <div className="absolute top-0 right-0 bg-orange-500 text-black text-[7px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-widest z-10">
                                       {t('product.best')}
                                     </div>
@@ -1300,13 +1315,15 @@ const App: React.FC = () => {
                                     </div>
                                     
                                     <div className={`w-full py-1.5 rounded-lg font-black uppercase tracking-widest text-[7px] transition-all duration-300 ${
-                                      selectedPackage?.id === pkg.id
+                                      isMysteryBasicStockOut
+                                        ? 'bg-red-950/50 text-red-500 cursor-not-allowed'
+                                        : selectedPackage?.id === pkg.id
                                         ? 'bg-orange-500 text-black shadow-lg shadow-orange-500/40'
                                         : isBonus
                                         ? 'bg-amber-900/40 text-amber-400 group-hover:bg-amber-500/20 group-hover:text-amber-300'
                                         : 'bg-zinc-800/50 text-zinc-400 group-hover:bg-zinc-800 group-hover:text-white'
                                     }`}>
-                                      {selectedPackage?.id === pkg.id ? 'READY TO ORDER' : isBonus ? 'CLAIM GIFT' : 'SELECT BOX'}
+                                      {isMysteryBasicStockOut ? <><i className="fas fa-ban text-[6px] mr-1"></i>STOCK OUT</> : selectedPackage?.id === pkg.id ? 'READY TO ORDER' : isBonus ? 'CLAIM GIFT' : 'SELECT BOX'}
                                     </div>
                                   </div>
 
