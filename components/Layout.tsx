@@ -17,6 +17,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-glory-issue-1',
+    type: 'notice',
+    icon: 'fa-triangle-exclamation',
+    color: '#facc15',
+    title: 'LOW GLORY ISSUE ⚠️',
+    body: 'Currently our server is under maintenance. For which you might experience low Glory up to 20%. Our team is working on the issue so be patient.',
+    ts: '2026-05-15T12:00:00Z',
+  },
+  {
     id: 'notif-bonus-1',
     type: 'offer',
     icon: 'fa-gift',
