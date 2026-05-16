@@ -32,7 +32,7 @@ const NOTIFICATIONS = [
     color: '#f97316',
     title: '100% Bonus Offer 🎁',
     body: 'Buy any eligible package and get double the product! Contact @AdiXO_TV on Telegram to claim.',
-    ts: '2026-05-16T05:00:00Z',
+    ts: '2026-05-15T06:00:00Z',
   },
   {
     id: 'notif-stock-1',
@@ -41,7 +41,7 @@ const NOTIFICATIONS = [
     color: '#ef4444',
     title: 'Stock Update',
     body: 'Basic Mystery Box & Basic/Hyper Event Bypass are currently out of stock. Epic & Super boxes available.',
-    ts: '2026-05-16T03:00:00Z',
+    ts: '2026-05-15T04:00:00Z',
   },
   {
     id: 'notif-support-1',
@@ -50,7 +50,7 @@ const NOTIFICATIONS = [
     color: '#38bdf8',
     title: 'Support Available 24/7',
     body: 'Reach us anytime via @adixoglory (group) or @AdiXO_TV (direct support) on Telegram.',
-    ts: '2026-05-14T10:00:00Z',
+    ts: '2026-05-10T10:00:00Z',
   },
 ];
 
