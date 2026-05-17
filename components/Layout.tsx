@@ -138,63 +138,130 @@ const Layout: React.FC<LayoutProps> = ({
 
   const BellButton = (
     <div className="relative" ref={bellRef}>
+      {/* Bell trigger */}
       <button
         onClick={handleBellOpen}
-        className="relative p-2 md:p-2.5 text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-lg md:rounded-xl bg-zinc-900/50"
+        className="relative p-2 md:p-2.5 transition-all border rounded-lg md:rounded-xl bg-zinc-900/60 hover:bg-zinc-800/80"
+        style={{
+          borderColor: isBellOpen ? 'rgba(249,115,22,0.5)' : 'rgba(63,63,70,0.8)',
+          boxShadow: isBellOpen ? '0 0 14px rgba(249,115,22,0.2)' : 'none',
+        }}
         title="Notifications"
       >
-        <i className={`fas fa-bell text-sm md:text-base ${hasUnread ? 'text-orange-400' : ''}`}></i>
+        <i className={`fas fa-bell text-sm md:text-base transition-colors ${isBellOpen || hasUnread ? 'text-orange-400' : 'text-zinc-400'}`}
+          style={{ filter: hasUnread ? 'drop-shadow(0 0 4px rgba(249,115,22,0.7))' : 'none' }}
+        ></i>
         {hasUnread && (
-          <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-zinc-900 shadow-[0_0_6px_rgba(239,68,68,0.8)]" />
+          <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-500 rounded-full border border-black"
+            style={{ boxShadow: '0 0 8px rgba(239,68,68,0.9)' }} />
         )}
       </button>
 
       {isBellOpen && (
-        <div className="absolute right-0 mt-3 w-72 md:w-80 rounded-2xl border border-zinc-800/80 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-[100]"
-          style={{ background: '#0a0a0a' }}>
+        <div
+          className="absolute right-0 mt-3 w-80 md:w-96 rounded-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-[100]"
+          style={{
+            background: 'linear-gradient(160deg, #0f0f0f 0%, #0a0a0a 100%)',
+            border: '1px solid rgba(249,115,22,0.2)',
+            boxShadow: '0 25px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.05)',
+          }}
+        >
+          {/* Glow accent top */}
+          <div className="absolute top-0 left-0 right-0 h-px"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.6), transparent)' }} />
+
           {/* Header */}
-          <div className="px-4 py-3 border-b border-zinc-800/60 flex items-center justify-between"
-            style={{ background: 'rgba(249,115,22,0.05)' }}>
-            <div className="flex items-center gap-2">
-              <i className="fas fa-bell text-orange-400 text-sm"></i>
-              <span className="text-white font-black text-xs uppercase tracking-widest">Notifications</span>
+          <div className="px-5 py-4 flex items-center justify-between"
+            style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.08) 0%, rgba(0,0,0,0) 60%)' }}>
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center"
+                style={{ background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.3)' }}>
+                <i className="fas fa-bell text-orange-400 text-[11px]"
+                  style={{ filter: 'drop-shadow(0 0 4px rgba(249,115,22,0.8))' }}></i>
+              </div>
+              <div>
+                <p className="text-white font-black text-xs uppercase tracking-widest leading-none">Notifications</p>
+                <p className="text-orange-500/70 text-[8px] font-bold uppercase tracking-widest mt-0.5">ADIXO STORE</p>
+              </div>
             </div>
-            <span className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest">
-              {NOTIFICATIONS.length} notices
-            </span>
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"
+                style={{ boxShadow: '0 0 5px rgba(74,222,128,0.8)' }}></span>
+              <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">{NOTIFICATIONS.length} active</span>
+            </div>
           </div>
 
-          {/* Notifications list */}
-          <div className="divide-y divide-zinc-800/40 max-h-72 overflow-y-auto">
-            {NOTIFICATIONS.map(n => (
-              <div key={n.id} className="px-4 py-3 flex gap-3 hover:bg-zinc-900/50 transition-colors">
-                <div className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
-                  style={{ background: `${n.color}18`, border: `1px solid ${n.color}30` }}>
-                  <i className={`fas ${n.icon} text-[11px]`} style={{ color: n.color }}></i>
+          {/* Divider */}
+          <div className="mx-4 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.2), transparent)' }} />
+
+          {/* Notifications list — overscroll-contain stops page scroll leaking */}
+          <div className="overflow-y-auto max-h-64 overscroll-contain" style={{ scrollbarWidth: 'none' }}>
+            {NOTIFICATIONS.map((n, i) => (
+              <div key={n.id}
+                className="mx-3 my-2 rounded-xl px-3 py-3 flex gap-3 transition-all cursor-default group"
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.04)',
+                }
+                }
+                onMouseEnter={e => (e.currentTarget.style.background = `${n.color}0a`)}
+                onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
+              >
+                {/* Icon */}
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: `${n.color}15`,
+                    border: `1px solid ${n.color}35`,
+                    boxShadow: `0 0 12px ${n.color}15`,
+                  }}>
+                  <i className={`fas ${n.icon} text-sm`}
+                    style={{ color: n.color, filter: `drop-shadow(0 0 4px ${n.color}80)` }}></i>
                 </div>
+
+                {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2 mb-0.5">
-                    <p className="text-white font-black text-[11px] truncate">{n.title}</p>
-                    <span className="text-[8px] text-zinc-600 font-bold flex-shrink-0">{formatBDTime(n.ts)}</span>
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <p className="text-white font-black text-[11px] leading-tight">{n.title}</p>
+                    <span className="text-[8px] font-bold flex-shrink-0 px-1.5 py-0.5 rounded-md"
+                      style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(161,161,170,0.8)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      {formatBDTime(n.ts)}
+                    </span>
                   </div>
-                  <p className="text-zinc-400 text-[10px] leading-relaxed">{n.body}</p>
+                  <p className="text-zinc-500 text-[10px] leading-relaxed">{n.body}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-2.5 border-t border-zinc-800/60 flex items-center justify-between"
-            style={{ background: 'rgba(0,0,0,0.4)' }}>
+          <div className="mx-4 mt-1 mb-3 rounded-xl px-4 py-2.5 flex items-center justify-between"
+            style={{
+              background: 'rgba(255,255,255,0.02)',
+              border: '1px solid rgba(255,255,255,0.04)',
+            }}>
             <a href="https://t.me/adixoglory" target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-sky-400 hover:text-sky-300 transition-colors text-[9px] font-black uppercase tracking-widest">
-              <i className="fab fa-telegram text-xs"></i> @adixoglory
+              className="flex items-center gap-2 transition-opacity hover:opacity-80 group">
+              <div className="w-5 h-5 rounded-md flex items-center justify-center"
+                style={{ background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.25)' }}>
+                <i className="fab fa-telegram text-sky-400 text-[9px]"></i>
+              </div>
+              <span className="text-[9px] font-black text-sky-400 uppercase tracking-widest">@adixoglory</span>
             </a>
+            <div className="w-px h-4 bg-zinc-800"></div>
             <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-orange-400 hover:text-orange-300 transition-colors text-[9px] font-black uppercase tracking-widest">
-              <i className="fas fa-headset text-xs"></i> @AdiXO_TV
+              className="flex items-center gap-2 transition-opacity hover:opacity-80 group">
+              <div className="w-5 h-5 rounded-md flex items-center justify-center"
+                style={{ background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.25)' }}>
+                <i className="fas fa-headset text-orange-400 text-[9px]"></i>
+              </div>
+              <span className="text-[9px] font-black text-orange-400 uppercase tracking-widest">@AdiXO_TV</span>
             </a>
           </div>
+
+          {/* Bottom glow accent */}
+          <div className="absolute bottom-0 left-0 right-0 h-px"
+            style={{ background: 'linear-gradient(90deg, transparent, rgba(249,115,22,0.3), transparent)' }} />
         </div>
       )}
     </div>
