@@ -31,7 +31,7 @@ const NOTIFICATIONS = [
     icon: 'fa-gift',
     color: '#f97316',
     title: '100% Bonus Offer 🎁',
-    body: 'Buy any eligible package and get double the product! Contact @AdiXO_TV on Telegram to claim.',
+    body: 'Buy any eligible package and get double the product! Offer valid: 15 May – 20 May. Contact @AdiXO_TV on Telegram to claim.',
     ts: '2026-05-15T06:00:00Z',
   },
   {
