@@ -1119,14 +1119,19 @@ const App: React.FC = () => {
                             {/* Price */}
                             <div className="flex items-center gap-3 flex-shrink-0">
                               <div className="text-right">
+                                {/* Discount badge + original price */}
                                 <div className="flex items-center gap-1.5 justify-end mb-0.5">
-                                  <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md"
+                                  <span className="text-[8px] font-black px-1.5 py-0.5 rounded-md"
                                     style={{ background: 'rgba(34,197,94,0.15)', color: '#4ade80', border: '1px solid rgba(34,197,94,0.3)' }}>
                                     -{t.discount}%
                                   </span>
+                                  <span className="text-[10px] text-zinc-600 line-through font-bold">
+                                    ৳{pkg.price.toLocaleString()}
+                                  </span>
                                 </div>
+                                {/* Discounted price */}
                                 <span className="font-black text-lg leading-none" style={{ color: t.priceColor, textShadow: `0 0 14px ${t.blob1}` }}>
-                                  ৳{pkg.price.toLocaleString()}
+                                  ৳{Math.round(pkg.price * (1 - t.discount / 100)).toLocaleString()}
                                 </span>
                               </div>
                               {/* Selector circle */}
