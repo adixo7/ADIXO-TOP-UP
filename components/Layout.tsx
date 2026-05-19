@@ -17,6 +17,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-levelup-sale-1',
+    type: 'offer',
+    icon: 'fa-arrow-up',
+    color: '#a855f7',
+    title: 'Level Up — Upto 50% OFF! 🔥',
+    body: 'All Level Up packages are now discounted! Starter 15% off up to Supreme 50% off. Limited time deal.',
+    ts: '2026-05-19T06:00:00Z',
+  },
+  {
     id: 'notif-glory-issue-1',
     type: 'notice',
     icon: 'fa-triangle-exclamation',
