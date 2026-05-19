@@ -968,7 +968,7 @@ const App: React.FC = () => {
                       const isSelected = selectedPackage?.id === pkg.id;
                       const tiers = [
                         {
-                          label: 'STARTER', icon: 'fa-seedling',
+                          label: 'STARTER', icon: 'fa-seedling', discount: 15,
                           labelColor: '#7dd3fc', priceColor: '#7dd3fc',
                           border: isSelected ? 'rgba(56,189,248,0.7)' : 'rgba(56,189,248,0.2)',
                           bg: 'linear-gradient(120deg,rgba(12,20,40,0.95) 0%,rgba(7,30,55,0.9) 100%)',
@@ -978,7 +978,7 @@ const App: React.FC = () => {
                           stars: false, pulse: false,
                         },
                         {
-                          label: 'BRONZE', icon: 'fa-medal',
+                          label: 'BRONZE', icon: 'fa-medal', discount: 20,
                           labelColor: '#fb923c', priceColor: '#fdba74',
                           border: isSelected ? 'rgba(251,146,60,0.8)' : 'rgba(251,146,60,0.25)',
                           bg: 'linear-gradient(120deg,rgba(25,12,5,0.97) 0%,rgba(40,18,6,0.93) 100%)',
@@ -988,7 +988,7 @@ const App: React.FC = () => {
                           stars: false, pulse: false,
                         },
                         {
-                          label: 'SILVER', icon: 'fa-shield-alt',
+                          label: 'SILVER', icon: 'fa-shield-alt', discount: 25,
                           labelColor: '#e2e8f0', priceColor: '#f1f5f9',
                           border: isSelected ? 'rgba(226,232,240,0.7)' : 'rgba(226,232,240,0.2)',
                           bg: 'linear-gradient(120deg,rgba(15,20,28,0.97) 0%,rgba(22,28,40,0.93) 100%)',
@@ -998,7 +998,7 @@ const App: React.FC = () => {
                           stars: false, pulse: false,
                         },
                         {
-                          label: 'GOLD', icon: 'fa-crown',
+                          label: 'GOLD', icon: 'fa-crown', discount: 28,
                           labelColor: '#fbbf24', priceColor: '#fde68a',
                           border: isSelected ? 'rgba(251,191,36,0.85)' : 'rgba(251,191,36,0.3)',
                           bg: 'linear-gradient(120deg,rgba(24,16,0,0.97) 0%,rgba(40,25,0,0.93) 100%)',
@@ -1008,7 +1008,7 @@ const App: React.FC = () => {
                           stars: false, pulse: false,
                         },
                         {
-                          label: 'PLATINUM', icon: 'fa-gem',
+                          label: 'PLATINUM', icon: 'fa-gem', discount: 30,
                           labelColor: '#22d3ee', priceColor: '#67e8f9',
                           border: isSelected ? 'rgba(34,211,238,0.8)' : 'rgba(34,211,238,0.3)',
                           bg: 'linear-gradient(120deg,rgba(0,18,28,0.97) 0%,rgba(0,30,45,0.95) 100%)',
@@ -1018,7 +1018,7 @@ const App: React.FC = () => {
                           stars: true, pulse: false,
                         },
                         {
-                          label: 'DIAMOND', icon: 'fa-star',
+                          label: 'DIAMOND', icon: 'fa-star', discount: 35,
                           labelColor: '#a78bfa', priceColor: '#c4b5fd',
                           border: isSelected ? 'rgba(167,139,250,0.9)' : 'rgba(167,139,250,0.35)',
                           bg: 'linear-gradient(120deg,rgba(10,5,30,0.98) 0%,rgba(20,8,50,0.96) 100%)',
@@ -1028,7 +1028,7 @@ const App: React.FC = () => {
                           stars: true, pulse: false,
                         },
                         {
-                          label: 'LEGEND', icon: 'fa-fire',
+                          label: 'LEGEND', icon: 'fa-fire', discount: 40,
                           labelColor: '#f87171', priceColor: '#fca5a5',
                           border: isSelected ? 'rgba(248,113,113,0.95)' : 'rgba(248,113,113,0.4)',
                           bg: 'linear-gradient(120deg,rgba(25,5,5,0.98) 0%,rgba(45,5,5,0.97) 100%)',
@@ -1038,7 +1038,7 @@ const App: React.FC = () => {
                           stars: true, pulse: false,
                         },
                         {
-                          label: 'SUPREME', icon: 'fa-infinity',
+                          label: 'SUPREME', icon: 'fa-infinity', discount: 50,
                           labelColor: '#fde047', priceColor: '#fef08a',
                           border: isSelected ? 'rgba(253,224,71,1)' : 'rgba(253,224,71,0.45)',
                           bg: 'linear-gradient(120deg,rgba(20,15,0,0.99) 0%,rgba(35,25,0,0.98) 100%)',
@@ -1119,6 +1119,12 @@ const App: React.FC = () => {
                             {/* Price */}
                             <div className="flex items-center gap-3 flex-shrink-0">
                               <div className="text-right">
+                                <div className="flex items-center gap-1.5 justify-end mb-0.5">
+                                  <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded-md"
+                                    style={{ background: 'rgba(34,197,94,0.15)', color: '#4ade80', border: '1px solid rgba(34,197,94,0.3)' }}>
+                                    -{t.discount}%
+                                  </span>
+                                </div>
                                 <span className="font-black text-lg leading-none" style={{ color: t.priceColor, textShadow: `0 0 14px ${t.blob1}` }}>
                                   ৳{pkg.price.toLocaleString()}
                                 </span>
