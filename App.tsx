@@ -783,6 +783,12 @@ const App: React.FC = () => {
                     <div className="aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
                       <img src="/level-up-bg.png" alt="Level Up" className="absolute inset-0 w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/30"></div>
+                      {/* UPTO 50% OFF tag */}
+                      <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-lg font-black text-[8px] md:text-[9px] uppercase tracking-widest"
+                        style={{ background: 'linear-gradient(90deg,#7c3aed,#a855f7)', boxShadow: '0 0 12px rgba(168,85,247,0.6)', color: '#fff' }}>
+                        <i className="fas fa-bolt text-yellow-300 text-[7px]"></i>
+                        UPTO 50% OFF
+                      </div>
                       <div className="absolute top-3 right-3 flex gap-0.5 opacity-40 group-hover:opacity-70 transition-opacity">
                         {[1,2,3,4,5].map(i => (
                           <div key={i} className="w-0.5 bg-violet-400 rounded-full transition-all duration-300" style={{ height: `${8 + i * 4}px` }}></div>
