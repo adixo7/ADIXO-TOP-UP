@@ -783,11 +783,22 @@ const App: React.FC = () => {
                     <div className="aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
                       <img src="/level-up-bg.png" alt="Level Up" className="absolute inset-0 w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/30"></div>
-                      {/* UPTO 50% OFF tag */}
-                      <div className="absolute top-2 left-2 z-10 flex items-center gap-1 px-2 py-1 rounded-lg font-black text-[8px] md:text-[9px] uppercase tracking-widest"
-                        style={{ background: 'linear-gradient(90deg,#7c3aed,#a855f7)', boxShadow: '0 0 12px rgba(168,85,247,0.6)', color: '#fff' }}>
-                        <i className="fas fa-bolt text-yellow-300 text-[7px]"></i>
-                        UPTO 50% OFF
+                      {/* UPTO 50% OFF badge */}
+                      <div className="absolute top-2 right-2 z-10 flex flex-col items-center justify-center rounded-xl px-2 py-1.5 md:px-2.5 md:py-2"
+                        style={{
+                          background: 'linear-gradient(135deg,#dc2626 0%,#ea580c 100%)',
+                          boxShadow: '0 0 16px rgba(220,38,38,0.7), inset 0 1px 0 rgba(255,255,255,0.2)',
+                          border: '1px solid rgba(255,255,255,0.15)',
+                        }}>
+                        <span className="text-yellow-300 font-black text-[10px] md:text-xs leading-none tracking-widest uppercase" style={{ textShadow: '0 0 8px rgba(253,224,71,0.8)' }}>
+                          UPTO
+                        </span>
+                        <span className="text-white font-black text-sm md:text-base leading-none" style={{ textShadow: '0 0 10px rgba(255,255,255,0.5)' }}>
+                          50%
+                        </span>
+                        <span className="text-yellow-300 font-black text-[9px] md:text-[10px] leading-none tracking-widest uppercase" style={{ textShadow: '0 0 8px rgba(253,224,71,0.8)' }}>
+                          OFF
+                        </span>
                       </div>
                       <div className="absolute top-3 right-3 flex gap-0.5 opacity-40 group-hover:opacity-70 transition-opacity">
                         {[1,2,3,4,5].map(i => (
