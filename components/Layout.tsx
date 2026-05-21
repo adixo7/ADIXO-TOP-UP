@@ -177,7 +177,7 @@ const Layout: React.FC<LayoutProps> = ({
 
       {isBellOpen && (
         <div
-          className="absolute right-0 mt-3 w-80 md:w-96 rounded-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-[100]"
+          className="absolute right-0 mt-3 w-[calc(100vw-1.5rem)] sm:w-80 md:w-96 rounded-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-[100]"
           style={{
             background: 'linear-gradient(160deg, #0f0f0f 0%, #0a0a0a 100%)',
             border: '1px solid rgba(249,115,22,0.2)',
