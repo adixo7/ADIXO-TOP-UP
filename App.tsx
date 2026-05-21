@@ -207,7 +207,6 @@ const App: React.FC = () => {
   const handleCloseDisclaimer = () => {
     setShowDisclaimer(false);
     sessionStorage.setItem('adixo_disclaimer_shown', 'true');
-    setShowBonusOffer(true);
   };
 
   // Transaction Management (Persistence Logic)
