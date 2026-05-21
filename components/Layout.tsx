@@ -17,15 +17,6 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
-    id: 'notif-levelup-sale-1',
-    type: 'offer',
-    icon: 'fa-arrow-up',
-    color: '#a855f7',
-    title: 'Level Up — Upto 50% OFF! 🔥',
-    body: 'All Level Up packages are now discounted! Starter 15% off up to Supreme 50% off. Limited time deal.',
-    ts: '2026-05-19T06:00:00Z',
-  },
-  {
     id: 'notif-bonus-ended-1',
     type: 'notice',
     icon: 'fa-gift',
@@ -35,13 +26,13 @@ const NOTIFICATIONS = [
     ts: '2026-05-20T23:59:00Z',
   },
   {
-    id: 'notif-bonus-1',
+    id: 'notif-levelup-sale-1',
     type: 'offer',
-    icon: 'fa-gift',
-    color: '#f97316',
-    title: '100% Bonus Offer 🎁',
-    body: 'Buy any eligible package and get double the product! Offer valid: 15 May – 20 May. Contact @AdiXO_TV on Telegram to claim.',
-    ts: '2026-05-15T06:00:00Z',
+    icon: 'fa-arrow-up',
+    color: '#a855f7',
+    title: 'Level Up — Upto 50% OFF! 🔥',
+    body: 'All Level Up packages are now discounted! Starter 15% off up to Supreme 50% off. Limited time deal.',
+    ts: '2026-05-19T06:00:00Z',
   },
   {
     id: 'notif-glory-issue-1',
@@ -51,6 +42,15 @@ const NOTIFICATIONS = [
     title: 'LOW GLORY ISSUE ⚠️',
     body: 'Currently our server is under maintenance. For which you might experience low Glory up to 20%. Our team is working on the issue so be patient.',
     ts: '2026-05-16T09:00:00Z',
+  },
+  {
+    id: 'notif-bonus-1',
+    type: 'offer',
+    icon: 'fa-gift',
+    color: '#f97316',
+    title: '100% Bonus Offer 🎁',
+    body: 'Buy any eligible package and get double the product! Offer valid: 15 May – 20 May. Contact @AdiXO_TV on Telegram to claim.',
+    ts: '2026-05-15T06:00:00Z',
   },
   {
     id: 'notif-stock-1',
