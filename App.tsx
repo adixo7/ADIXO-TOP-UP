@@ -1586,18 +1586,18 @@ const App: React.FC = () => {
                       {/* Server dropdown — FF LIKES */}
                       {selectedGame.id === 'ff-likes' && (() => {
                         const servers = [
-                          { name: 'India', flag: '🇮🇳' },
-                          { name: 'Indonesia', flag: '🇮🇩' },
-                          { name: 'Vietnam', flag: '🇻🇳' },
-                          { name: 'Thailand', flag: '🇹🇭' },
-                          { name: 'Bangladesh', flag: '🇧🇩' },
-                          { name: 'Pakistan', flag: '🇵🇰' },
-                          { name: 'Taiwan', flag: '🇹🇼' },
-                          { name: 'Europe', flag: '🇪🇺' },
-                          { name: 'Russia', flag: '🇷🇺' },
-                          { name: 'North America', flag: '🇺🇸' },
-                          { name: 'South America', flag: '🌎' },
-                          { name: 'Middle East', flag: '🌍' },
+                          { name: 'India' },
+                          { name: 'Indonesia' },
+                          { name: 'Vietnam' },
+                          { name: 'Thailand' },
+                          { name: 'Bangladesh' },
+                          { name: 'Pakistan' },
+                          { name: 'Taiwan' },
+                          { name: 'Europe' },
+                          { name: 'Russia' },
+                          { name: 'North America' },
+                          { name: 'South America' },
+                          { name: 'Middle East' },
                         ];
                         const selected = servers.find(s => s.name === selectedServer);
                         return (
@@ -1615,7 +1615,7 @@ const App: React.FC = () => {
                                 <i className="fas fa-globe text-pink-400 text-[11px]"></i>
                                 {selected ? (
                                   <span className="text-[11px] font-black uppercase tracking-wide text-pink-300">
-                                    {selected.flag} {selected.name}
+                                    {selected.name}
                                   </span>
                                 ) : (
                                   <span className="text-[11px] font-black uppercase tracking-wide text-zinc-400">
@@ -1641,7 +1641,7 @@ const App: React.FC = () => {
                                           : 'hover:bg-zinc-800/60 text-zinc-300'
                                       } ${i !== 0 ? 'border-t border-zinc-800/60' : ''}`}
                                     >
-                                      <span className="text-base leading-none">{server.flag}</span>
+                                      <i className="fas fa-server text-pink-400/50 text-[9px] shrink-0"></i>
                                       <span className="text-[10px] font-black uppercase tracking-wide flex-1">{server.name}</span>
                                       {isSel && <i className="fas fa-check text-pink-400 text-[9px]"></i>}
                                     </button>
