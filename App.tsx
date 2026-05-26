@@ -120,6 +120,7 @@ const App: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [selectedServer, setSelectedServer] = useState<string | null>(null);
+  const [serverDropdownOpen, setServerDropdownOpen] = useState(false);
   const [ffPanelPopupPkg, setFfPanelPopupPkg] = useState<Package | null>(null);
   const [ffPanelTierIdx, setFfPanelTierIdx] = useState<number>(0);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
@@ -1575,6 +1576,76 @@ const App: React.FC = () => {
                           );
                         })}
                       </div>
+
+                      {/* Server dropdown — FF LIKES */}
+                      {selectedGame.id === 'ff-likes' && (() => {
+                        const servers = [
+                          { name: 'India', flag: '🇮🇳' },
+                          { name: 'Indonesia', flag: '🇮🇩' },
+                          { name: 'Vietnam', flag: '🇻🇳' },
+                          { name: 'Thailand', flag: '🇹🇭' },
+                          { name: 'Bangladesh', flag: '🇧🇩' },
+                          { name: 'Pakistan', flag: '🇵🇰' },
+                          { name: 'Taiwan', flag: '🇹🇼' },
+                          { name: 'Europe', flag: '🇪🇺' },
+                          { name: 'Russia', flag: '🇷🇺' },
+                          { name: 'North America', flag: '🇺🇸' },
+                          { name: 'South America', flag: '🌎' },
+                          { name: 'Middle East', flag: '🌍' },
+                        ];
+                        const selected = servers.find(s => s.name === selectedServer);
+                        return (
+                          <div className="mt-4">
+                            {/* Trigger bar */}
+                            <button
+                              onClick={() => setServerDropdownOpen(o => !o)}
+                              className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 ${
+                                selectedServer
+                                  ? 'border-pink-400 bg-pink-500/10'
+                                  : 'border-zinc-700 bg-zinc-900/60 hover:border-pink-500/40'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <i className="fas fa-globe text-pink-400 text-[11px]"></i>
+                                {selected ? (
+                                  <span className="text-[11px] font-black uppercase tracking-wide text-pink-300">
+                                    {selected.flag} {selected.name}
+                                  </span>
+                                ) : (
+                                  <span className="text-[11px] font-black uppercase tracking-wide text-zinc-400">
+                                    Select Server
+                                  </span>
+                                )}
+                              </div>
+                              <i className={`fas fa-chevron-down text-zinc-500 text-[10px] transition-transform duration-200 ${serverDropdownOpen ? 'rotate-180' : ''}`}></i>
+                            </button>
+
+                            {/* Dropdown list */}
+                            {serverDropdownOpen && (
+                              <div className="mt-1.5 border border-zinc-700 rounded-xl overflow-hidden bg-[#0d0d0f] shadow-xl animate-in fade-in slide-in-from-top-2 duration-150">
+                                {servers.map((server, i) => {
+                                  const isSel = selectedServer === server.name;
+                                  return (
+                                    <button
+                                      key={server.name}
+                                      onClick={() => { setSelectedServer(server.name); setServerDropdownOpen(false); }}
+                                      className={`w-full flex items-center gap-3 px-4 py-2.5 transition-all text-left ${
+                                        isSel
+                                          ? 'bg-pink-500/15 text-pink-300'
+                                          : 'hover:bg-zinc-800/60 text-zinc-300'
+                                      } ${i !== 0 ? 'border-t border-zinc-800/60' : ''}`}
+                                    >
+                                      <span className="text-base leading-none">{server.flag}</span>
+                                      <span className="text-[10px] font-black uppercase tracking-wide flex-1">{server.name}</span>
+                                      {isSel && <i className="fas fa-check text-pink-400 text-[9px]"></i>}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })()}
                     </div>
                   ) : selectedGame.id === 'event-bypass' ? (
                     <div className="space-y-4">
@@ -1889,54 +1960,6 @@ const App: React.FC = () => {
                         </div>
                       </div>
 
-                    {/* Server selector — FF LIKES only */}
-                    {selectedGame?.id === 'ff-likes' && (
-                      <div className="bg-[#0b0b0d] border border-pink-500/20 p-4 rounded-[1.5rem] shadow-sm">
-                        <h3 className="text-xs font-bold text-white mb-3 uppercase tracking-tight flex items-center gap-2">
-                          <i className="fas fa-globe text-pink-400 text-[10px]"></i>
-                          Select Your Server
-                        </h3>
-                        <div className="grid grid-cols-2 gap-2">
-                          {[
-                            { name: 'India', flag: '🇮🇳' },
-                            { name: 'Indonesia', flag: '🇮🇩' },
-                            { name: 'Vietnam', flag: '🇻🇳' },
-                            { name: 'Thailand', flag: '🇹🇭' },
-                            { name: 'Bangladesh', flag: '🇧🇩' },
-                            { name: 'Pakistan', flag: '🇵🇰' },
-                            { name: 'Taiwan', flag: '🇹🇼' },
-                            { name: 'Europe', flag: '🇪🇺' },
-                            { name: 'Russia', flag: '🇷🇺' },
-                            { name: 'North America', flag: '🇺🇸' },
-                            { name: 'South America', flag: '🌎' },
-                            { name: 'Middle East', flag: '🌍' },
-                          ].map(server => {
-                            const isSelected = selectedServer === server.name;
-                            return (
-                              <button
-                                key={server.name}
-                                onClick={() => setSelectedServer(server.name)}
-                                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border transition-all text-left ${
-                                  isSelected
-                                    ? 'border-pink-400 bg-pink-500/10 shadow-[0_0_12px_rgba(236,72,153,0.2)]'
-                                    : 'border-zinc-800 bg-zinc-900/40 hover:border-pink-500/40 hover:bg-zinc-800/60'
-                                }`}
-                              >
-                                <span className="text-base leading-none">{server.flag}</span>
-                                <span className={`text-[10px] font-black uppercase tracking-wide truncate ${isSelected ? 'text-pink-300' : 'text-zinc-300'}`}>
-                                  {server.name}
-                                </span>
-                                {isSelected && (
-                                  <div className="ml-auto w-3 h-3 rounded-full bg-pink-400 flex items-center justify-center shrink-0">
-                                    <i className="fas fa-check text-white text-[5px]"></i>
-                                  </div>
-                                )}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
 
                     <div className="bg-[#0b0b0d] border border-zinc-800/60 p-4 rounded-[1.5rem] shadow-sm">
                       <h3 className="text-xs font-bold text-white mb-4 uppercase tracking-tight">{t('game.paymentMethod')}</h3>
