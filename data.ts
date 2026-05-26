@@ -266,6 +266,18 @@ export const GAMES: Game[] = [
     ]
   },
   {
+    id: 'ff-likes',
+    name: 'FF LIKES',
+    category: 'FF LIKES',
+    image: '/images/free-fire.webp',
+    banner: '/images/free-fire.webp',
+    idPlaceholder: 'Player ID / Account ID',
+    description: 'Boost your Free Fire profile likes with daily delivery packages.',
+    packages: [
+      { id: 'ff-likes-14d', amount: 3080, unit: 'Likes (14 Days)', price: 500, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 14 Days = 3080 Total Likes', isPopular: true }
+    ]
+  },
+  {
     id: 'pc-games',
     name: 'PC Games',
     category: 'PC Games',

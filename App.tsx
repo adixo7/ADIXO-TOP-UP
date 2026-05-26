@@ -631,7 +631,7 @@ const App: React.FC = () => {
             </div>
             {filteredGames.length > 0 ? (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
-                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'level-up').map(game => (
+                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'level-up' && g.id !== 'ff-likes').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
@@ -823,6 +823,50 @@ const App: React.FC = () => {
                       <div className="flex items-center gap-1.5 md:gap-2 bg-violet-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-violet-600 transition-all duration-300">
                         <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
                         <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-violet-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+              {/* FF Likes card */}
+              {(() => {
+                const flGame = GAMES.find(g => g.id === 'ff-likes');
+                if (!flGame) return null;
+                return (
+                  <div
+                    className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-pink-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(236,72,153,0.3)] relative"
+                    onClick={() => { setSelectedGame(flGame); setActiveTab('games'); }}
+                  >
+                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
+                      <img
+                        src="/images/free-fire.webp"
+                        alt="FF Likes"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-80"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/40 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-pink-900/30 to-transparent"></div>
+                      <div className="absolute top-2 right-2 z-10 flex items-center gap-1 bg-pink-600/80 backdrop-blur-sm px-2 py-1 rounded-lg border border-pink-400/30">
+                        <i className="fas fa-heart text-white text-[8px] md:text-[10px]"></i>
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">LIKES</span>
+                      </div>
+                      <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
+                        <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
+                          <i className="fas fa-heart text-pink-400 text-[8px] md:text-[10px]"></i>
+                          <p className="text-pink-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">PROFILE BOOST</p>
+                        </div>
+                        <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-pink-400 transition-colors mb-0.5">
+                          FF LIKES
+                        </h3>
+                        <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
+                          220 LIKES/DAY · DAILY DELIVERY
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-pink-500/10 flex items-center justify-between">
+                      <span className="text-pink-400 font-black text-xs md:text-sm italic uppercase">BOOST</span>
+                      <div className="flex items-center gap-1.5 md:gap-2 bg-pink-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-pink-600 transition-all duration-300">
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
+                        <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-pink-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
                       </div>
                     </div>
                   </div>
