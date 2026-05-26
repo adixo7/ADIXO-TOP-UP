@@ -176,11 +176,11 @@ const GuideBot: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} className="fixed bottom-24 md:bottom-6 right-6 z-[200] flex flex-col items-end">
+    <div ref={containerRef} className="fixed bottom-24 md:bottom-6 right-4 md:right-6 z-[200] flex flex-col items-end">
       {isOpen && (
         <div
-          className="w-[22rem] md:w-[26rem] bg-zinc-950 border border-zinc-800 rounded-3xl shadow-[0_0_80px_-12px_rgba(0,0,0,0.95)] flex flex-col mb-4 overflow-hidden"
-          style={{ height: '540px' }}
+          className="w-[19rem] md:w-[22rem] bg-zinc-950 border border-zinc-800 rounded-2xl shadow-[0_0_80px_-12px_rgba(0,0,0,0.95)] flex flex-col mb-3 overflow-hidden"
+          style={{ height: 'min(460px, calc(100dvh - 140px))' }}
         >
           {/* Header */}
           <div className="shrink-0 px-4 py-3 bg-gradient-to-r from-orange-600/20 via-zinc-900 to-zinc-900 border-b border-zinc-800 flex items-center justify-between">
