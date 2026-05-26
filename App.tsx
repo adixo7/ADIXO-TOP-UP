@@ -1586,18 +1586,18 @@ const App: React.FC = () => {
                       {/* Server dropdown — FF LIKES */}
                       {selectedGame.id === 'ff-likes' && (() => {
                         const servers = [
-                          { name: 'India' },
-                          { name: 'Indonesia' },
-                          { name: 'Vietnam' },
-                          { name: 'Thailand' },
-                          { name: 'Bangladesh' },
-                          { name: 'Pakistan' },
-                          { name: 'Taiwan' },
-                          { name: 'Europe' },
-                          { name: 'Russia' },
-                          { name: 'North America' },
-                          { name: 'South America' },
-                          { name: 'Middle East' },
+                          { name: 'India',         code: 'in' },
+                          { name: 'Indonesia',     code: 'id' },
+                          { name: 'Vietnam',       code: 'vn' },
+                          { name: 'Thailand',      code: 'th' },
+                          { name: 'Bangladesh',    code: 'bd' },
+                          { name: 'Pakistan',      code: 'pk' },
+                          { name: 'Taiwan',        code: 'tw' },
+                          { name: 'Europe',        code: 'eu' },
+                          { name: 'Russia',        code: 'ru' },
+                          { name: 'North America', code: 'us' },
+                          { name: 'South America', code: 'br' },
+                          { name: 'Middle East',   code: 'sa' },
                         ];
                         const selected = servers.find(s => s.name === selectedServer);
                         return (
@@ -1614,7 +1614,8 @@ const App: React.FC = () => {
                               <div className="flex items-center gap-2.5">
                                 <i className="fas fa-globe text-pink-400 text-[11px]"></i>
                                 {selected ? (
-                                  <span className="text-[11px] font-black uppercase tracking-wide text-pink-300">
+                                  <span className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wide text-pink-300">
+                                    <img src={`https://flagcdn.com/20x15/${selected.code}.png`} alt={selected.name} className="w-5 h-auto rounded-sm" />
                                     {selected.name}
                                   </span>
                                 ) : (
@@ -1641,7 +1642,7 @@ const App: React.FC = () => {
                                           : 'hover:bg-zinc-800/60 text-zinc-300'
                                       } ${i !== 0 ? 'border-t border-zinc-800/60' : ''}`}
                                     >
-                                      <i className="fas fa-server text-pink-400/50 text-[9px] shrink-0"></i>
+                                      <img src={`https://flagcdn.com/20x15/${server.code}.png`} alt={server.name} className="w-5 h-auto rounded-sm shrink-0" />
                                       <span className="text-[10px] font-black uppercase tracking-wide flex-1">{server.name}</span>
                                       {isSel && <i className="fas fa-check text-pink-400 text-[9px]"></i>}
                                     </button>
