@@ -17,6 +17,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-ff-likes-1',
+    type: 'offer',
+    icon: 'fa-heart',
+    color: '#ec4899',
+    title: 'FF LIKES Packages Added! 💗',
+    body: 'Boost your Free Fire profile with 220 likes/day. Choose 14-day (৳210) or 28-day (৳370) packages. Available now in the Tools section.',
+    ts: '2026-05-26T10:00:00Z',
+  },
+  {
     id: 'notif-bonus-ended-1',
     type: 'notice',
     icon: 'fa-gift',
