@@ -1458,87 +1458,53 @@ const App: React.FC = () => {
                       })}
                     </div>
                   ) : selectedGame.id === 'ff-likes' ? (
-                    <div className="space-y-4">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-2 gap-3">
                         {selectedGame.packages.map(pkg => {
                           const isSelected = selectedPackage?.id === pkg.id;
                           return (
                             <button
                               key={pkg.id}
                               onClick={() => setSelectedPackage(pkg)}
-                              className={`group relative bg-gradient-to-br from-pink-950/70 to-zinc-900 border rounded-2xl p-5 transition-all duration-300 text-left overflow-hidden ${
+                              className={`group relative bg-gradient-to-br from-pink-950/70 to-zinc-900 border rounded-xl p-3 transition-all duration-300 text-left overflow-hidden ${
                                 isSelected
-                                  ? 'border-pink-400 shadow-[0_0_32px_rgba(236,72,153,0.45)] scale-[1.02]'
-                                  : 'border-pink-500/40 hover:scale-[1.01] hover:shadow-[0_0_24px_rgba(236,72,153,0.3)]'
+                                  ? 'border-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.4)] scale-[1.02]'
+                                  : 'border-pink-500/40 hover:scale-[1.01] hover:shadow-[0_0_16px_rgba(236,72,153,0.25)]'
                               }`}
                             >
-                              {/* Top shimmer line */}
-                              <span className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-pink-600/70 via-pink-400/80 to-pink-600/70 rounded-t-2xl"></span>
-
-                              {/* Shimmer overlay */}
-                              <span className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden">
-                                <span className="absolute inset-0 animate-pulse bg-gradient-to-br from-pink-400/5 via-transparent to-pink-400/5"></span>
-                              </span>
-
-                              {/* Corner glow */}
-                              <span className="absolute -top-6 -right-6 w-24 h-24 bg-pink-500/20 rounded-full blur-2xl pointer-events-none"></span>
-
-                              {/* HOT badge */}
+                              <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-pink-600/70 via-pink-400/80 to-pink-600/70 rounded-t-xl"></span>
+                              <span className="absolute -top-4 -right-4 w-16 h-16 bg-pink-500/20 rounded-full blur-xl pointer-events-none"></span>
                               {pkg.isPopular && (
-                                <div className="absolute top-3 right-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[7px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-widest z-10 flex items-center gap-1">
-                                  <i className="fas fa-fire text-[6px]"></i> HOT
+                                <div className="absolute top-2 right-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10 flex items-center gap-0.5">
+                                  <i className="fas fa-fire text-[5px]"></i> HOT
                                 </div>
                               )}
-
-                              {isSelected && (
-                                <div className="absolute inset-0 rounded-2xl pointer-events-none bg-pink-500/8"></div>
-                              )}
-
-                              <div className="flex flex-col gap-3 relative z-10">
-                                {/* Icon + label */}
-                                <div className="flex items-center gap-2">
-                                  <div className="w-10 h-10 rounded-xl flex items-center justify-center border bg-pink-900/50 border-pink-500/50 shrink-0">
-                                    <i className="fas fa-heart text-pink-400 text-base"></i>
-                                  </div>
-                                  <p className="text-xs font-black uppercase tracking-widest text-pink-400">LIKES BOOST</p>
-                                </div>
-
-                                {/* Duration big */}
-                                <div>
-                                  <p className="text-4xl font-black text-pink-400 leading-none">14</p>
-                                  <p className="text-[10px] font-bold text-zinc-400 mt-0.5 uppercase tracking-wider">DAYS PACKAGE</p>
-                                </div>
-
-                                {/* Divider */}
-                                <div className="h-px bg-white/10 w-full"></div>
-
-                                {/* Details */}
-                                <div className="space-y-1.5">
-                                  <div className="flex items-center gap-2">
+                              <div className="flex flex-col gap-2 relative z-10">
+                                <div className="flex items-center gap-1.5">
+                                  <div className="w-6 h-6 rounded-lg flex items-center justify-center border bg-pink-900/50 border-pink-500/50 shrink-0">
                                     <i className="fas fa-heart text-pink-400 text-[9px]"></i>
-                                    <p className="text-[10px] font-black text-white uppercase tracking-wide">220 <span className="text-zinc-400 font-bold">Likes / Day</span></p>
                                   </div>
-                                  <div className="flex items-center gap-2">
-                                    <i className="fas fa-calendar-alt text-pink-400 text-[9px]"></i>
-                                    <p className="text-[10px] font-black text-white uppercase tracking-wide">14 <span className="text-zinc-400 font-bold">Days Duration</span></p>
+                                  <p className="text-[9px] font-black uppercase tracking-widest text-pink-400">LIKES BOOST</p>
+                                </div>
+                                <div className="flex items-baseline gap-1">
+                                  <p className="text-2xl font-black text-pink-400 leading-none">14</p>
+                                  <p className="text-[8px] font-bold text-zinc-400 uppercase tracking-wide">DAYS</p>
+                                </div>
+                                <div className="h-px bg-white/10 w-full"></div>
+                                <div className="space-y-0.5">
+                                  <div className="flex items-center gap-1.5">
+                                    <i className="fas fa-heart text-pink-400 text-[7px]"></i>
+                                    <p className="text-[8px] font-black text-white">220 <span className="text-zinc-400 font-semibold">Likes/Day</span></p>
                                   </div>
-                                  <div className="flex items-center gap-2">
-                                    <i className="fas fa-star text-pink-400 text-[9px]"></i>
-                                    <p className="text-[10px] font-black text-pink-300 uppercase tracking-wide">3,080 <span className="text-zinc-400 font-bold">Total Likes</span></p>
+                                  <div className="flex items-center gap-1.5">
+                                    <i className="fas fa-star text-pink-400 text-[7px]"></i>
+                                    <p className="text-[8px] font-black text-pink-300">3,080 <span className="text-zinc-400 font-semibold">Total</span></p>
                                   </div>
                                 </div>
-
-                                {/* Divider */}
-                                <div className="h-px bg-white/10 w-full"></div>
-
-                                {/* Price row */}
-                                <div className="flex items-center justify-between pt-1">
-                                  <div>
-                                    <p className="text-white font-black text-lg leading-none">৳{pkg.price}</p>
-                                    <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">BDT</p>
-                                  </div>
-                                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? 'border-pink-400 bg-pink-400' : 'border-zinc-600 group-hover:border-pink-400/50'}`}>
-                                    {isSelected && <i className="fas fa-check text-white text-[8px]"></i>}
+                                <div className="flex items-center justify-between">
+                                  <p className="text-white font-black text-sm leading-none">৳{pkg.price}</p>
+                                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? 'border-pink-400 bg-pink-400' : 'border-zinc-600 group-hover:border-pink-400/50'}`}>
+                                    {isSelected && <i className="fas fa-check text-white text-[6px]"></i>}
                                   </div>
                                 </div>
                               </div>
