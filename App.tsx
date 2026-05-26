@@ -1460,37 +1460,82 @@ const App: React.FC = () => {
                   ) : selectedGame.id === 'ff-likes' ? (
                     <div className="space-y-3">
                       <div className="flex flex-col gap-3">
-                        {selectedGame.packages.map(pkg => {
+                        {selectedGame.packages.map((pkg, idx) => {
                           const isSelected = selectedPackage?.id === pkg.id;
                           const daysMatch = pkg.unit.match(/\((\d+) Days\)/);
                           const days = daysMatch ? daysMatch[1] : '?';
                           const totalLikes = pkg.amount.toLocaleString();
+                          type LikesTheme = { bg: string; border: string; borderSel: string; glow: string; glowSel: string; shimmer: string; topLine: string; glowBlob: string; accent: string; iconBg: string; iconBorder: string; badge: string; tierLabel: string; checkSel: string };
+                          const themes: LikesTheme[] = [
+                            {
+                              bg: 'from-blue-950/70 to-zinc-900',
+                              border: 'border-blue-500/40',
+                              borderSel: 'border-blue-400',
+                              glow: 'hover:shadow-[0_0_16px_rgba(59,130,246,0.25)]',
+                              glowSel: 'shadow-[0_0_20px_rgba(59,130,246,0.4)]',
+                              shimmer: 'from-blue-400/5 via-transparent to-blue-400/5',
+                              topLine: 'from-blue-600/70 via-blue-400/80 to-blue-600/70',
+                              glowBlob: 'bg-blue-500/15',
+                              accent: 'text-blue-400',
+                              iconBg: 'bg-blue-900/50',
+                              iconBorder: 'border-blue-500/50',
+                              badge: 'from-blue-500 to-cyan-500',
+                              tierLabel: 'STARTER',
+                              checkSel: 'border-blue-400 bg-blue-400',
+                            },
+                            {
+                              bg: 'from-violet-950/80 to-zinc-900',
+                              border: 'border-violet-400/50',
+                              borderSel: 'border-violet-300',
+                              glow: 'hover:shadow-[0_0_20px_rgba(139,92,246,0.35)]',
+                              glowSel: 'shadow-[0_0_28px_rgba(139,92,246,0.55)]',
+                              shimmer: 'from-violet-400/8 via-transparent to-fuchsia-400/8',
+                              topLine: 'from-violet-500 via-fuchsia-400/80 to-violet-500',
+                              glowBlob: 'bg-violet-500/20',
+                              accent: 'text-violet-300',
+                              iconBg: 'bg-violet-900/60',
+                              iconBorder: 'border-violet-400/60',
+                              badge: 'from-violet-500 to-fuchsia-500',
+                              tierLabel: 'PREMIUM',
+                              checkSel: 'border-violet-400 bg-violet-400',
+                            },
+                          ];
+                          const theme = themes[idx] || themes[0];
                           return (
                             <button
                               key={pkg.id}
                               onClick={() => setSelectedPackage(pkg)}
-                              className={`group relative bg-gradient-to-br from-pink-950/70 to-zinc-900 border rounded-xl px-4 py-3 transition-all duration-300 text-left overflow-hidden ${
+                              className={`group relative bg-gradient-to-br ${theme.bg} border rounded-xl px-4 py-3 transition-all duration-300 text-left overflow-hidden ${
                                 isSelected
-                                  ? 'border-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.4)] scale-[1.01]'
-                                  : 'border-pink-500/40 hover:scale-[1.005] hover:shadow-[0_0_16px_rgba(236,72,153,0.25)]'
+                                  ? `${theme.borderSel} ${theme.glowSel} scale-[1.01]`
+                                  : `${theme.border} hover:scale-[1.005] ${theme.glow}`
                               }`}
                             >
-                              <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-pink-600/70 via-pink-400/80 to-pink-600/70 rounded-t-xl"></span>
-                              <span className="absolute -top-4 -right-4 w-16 h-16 bg-pink-500/15 rounded-full blur-xl pointer-events-none"></span>
+                              <span className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${theme.topLine} rounded-t-xl`}></span>
+                              <span className={`absolute -top-4 -right-4 w-16 h-16 ${theme.glowBlob} rounded-full blur-xl pointer-events-none`}></span>
+                              <span className="pointer-events-none absolute inset-0 rounded-xl overflow-hidden">
+                                <span className={`absolute inset-0 animate-pulse bg-gradient-to-br ${theme.shimmer}`}></span>
+                              </span>
 
+                              {/* Tier badge (top-left) */}
+                              <div className={`absolute top-2 left-2 bg-gradient-to-r ${theme.badge} text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10`}>
+                                {theme.tierLabel}
+                              </div>
+
+                              {/* HOT badge (top-right) */}
                               {pkg.isPopular && (
-                                <div className="absolute top-2 right-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10 flex items-center gap-0.5">
+                                <div className="absolute top-2 right-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10 flex items-center gap-0.5">
                                   <i className="fas fa-fire text-[5px]"></i> HOT
                                 </div>
                               )}
 
-                              <div className="flex items-center gap-4 relative z-10">
+                              <div className="flex items-center gap-4 relative z-10 mt-4">
                                 {/* Left: duration */}
                                 <div className="flex flex-col items-center justify-center shrink-0 w-16">
-                                  <div className="w-7 h-7 rounded-lg flex items-center justify-center border bg-pink-900/50 border-pink-500/50 mb-1.5">
-                                    <i className="fas fa-heart text-pink-400 text-[10px]"></i>
+                                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center border ${theme.iconBg} ${theme.iconBorder} mb-1.5`}>
+                                    <i className={`fas fa-heart ${theme.accent} text-[10px]`}></i>
                                   </div>
-                                  <p className="text-3xl font-black text-pink-400 leading-none">{days}</p>
+                                  <p className={`text-3xl font-black ${theme.accent} leading-none`}>{days}</p>
                                   <p className="text-[7px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">DAYS</p>
                                 </div>
 
@@ -1499,25 +1544,25 @@ const App: React.FC = () => {
 
                                 {/* Right: details */}
                                 <div className="flex-1 flex flex-col gap-1 min-w-0">
-                                  <p className="text-[8px] font-black uppercase tracking-widest text-pink-400 mb-0.5">LIKES BOOST</p>
+                                  <p className={`text-[8px] font-black uppercase tracking-widest ${theme.accent} mb-0.5`}>LIKES BOOST</p>
                                   <div className="flex items-center gap-1.5">
-                                    <i className="fas fa-heart text-pink-400 text-[7px]"></i>
+                                    <i className={`fas fa-heart ${theme.accent} text-[7px]`}></i>
                                     <p className="text-[9px] font-black text-white">220 <span className="text-zinc-400 font-semibold">Likes / Day</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
-                                    <i className="fas fa-calendar-alt text-pink-400 text-[7px]"></i>
+                                    <i className={`fas fa-calendar-alt ${theme.accent} text-[7px]`}></i>
                                     <p className="text-[9px] font-black text-white">{days} <span className="text-zinc-400 font-semibold">Days</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
-                                    <i className="fas fa-star text-pink-400 text-[7px]"></i>
-                                    <p className="text-[9px] font-black text-pink-300">{totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
+                                    <i className={`fas fa-star ${theme.accent} text-[7px]`}></i>
+                                    <p className={`text-[9px] font-black ${theme.accent}`}>{totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
                                   </div>
                                 </div>
 
                                 {/* Price + selector */}
                                 <div className="flex flex-col items-end gap-2 shrink-0">
                                   <p className="text-white font-black text-base leading-none">৳{pkg.price}</p>
-                                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? 'border-pink-400 bg-pink-400' : 'border-zinc-600 group-hover:border-pink-400/50'}`}>
+                                  <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? theme.checkSel : `border-zinc-600 group-hover:${theme.iconBorder}`}`}>
                                     {isSelected && <i className="fas fa-check text-white text-[6px]"></i>}
                                   </div>
                                 </div>
