@@ -274,7 +274,8 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Player ID / Account ID',
     description: 'Boost your Free Fire profile likes with daily delivery packages.',
     packages: [
-      { id: 'ff-likes-14d', amount: 3080, unit: 'Likes (14 Days)', price: 500, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 14 Days = 3080 Total Likes', isPopular: true }
+      { id: 'ff-likes-14d', amount: 3080, unit: 'Likes (14 Days)', price: 210, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 14 Days = 3080 Total Likes', isPopular: true },
+      { id: 'ff-likes-28d', amount: 6160, unit: 'Likes (28 Days)', price: 370, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 28 Days = 6160 Total Likes' }
     ]
   },
   {

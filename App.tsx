@@ -1462,6 +1462,9 @@ const App: React.FC = () => {
                       <div className="flex flex-col gap-3">
                         {selectedGame.packages.map(pkg => {
                           const isSelected = selectedPackage?.id === pkg.id;
+                          const daysMatch = pkg.unit.match(/\((\d+) Days\)/);
+                          const days = daysMatch ? daysMatch[1] : '?';
+                          const totalLikes = pkg.amount.toLocaleString();
                           return (
                             <button
                               key={pkg.id}
@@ -1475,21 +1478,19 @@ const App: React.FC = () => {
                               <span className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-pink-600/70 via-pink-400/80 to-pink-600/70 rounded-t-xl"></span>
                               <span className="absolute -top-4 -right-4 w-16 h-16 bg-pink-500/15 rounded-full blur-xl pointer-events-none"></span>
 
-                              {/* HOT badge */}
                               {pkg.isPopular && (
                                 <div className="absolute top-2 right-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[6px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-widest z-10 flex items-center gap-0.5">
                                   <i className="fas fa-fire text-[5px]"></i> HOT
                                 </div>
                               )}
 
-                              {/* Landscape layout: left = duration, divider, right = details */}
                               <div className="flex items-center gap-4 relative z-10">
-                                {/* Left: duration block */}
+                                {/* Left: duration */}
                                 <div className="flex flex-col items-center justify-center shrink-0 w-16">
                                   <div className="w-7 h-7 rounded-lg flex items-center justify-center border bg-pink-900/50 border-pink-500/50 mb-1.5">
                                     <i className="fas fa-heart text-pink-400 text-[10px]"></i>
                                   </div>
-                                  <p className="text-3xl font-black text-pink-400 leading-none">14</p>
+                                  <p className="text-3xl font-black text-pink-400 leading-none">{days}</p>
                                   <p className="text-[7px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">DAYS</p>
                                 </div>
 
@@ -1505,11 +1506,11 @@ const App: React.FC = () => {
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className="fas fa-calendar-alt text-pink-400 text-[7px]"></i>
-                                    <p className="text-[9px] font-black text-white">14 <span className="text-zinc-400 font-semibold">Days</span></p>
+                                    <p className="text-[9px] font-black text-white">{days} <span className="text-zinc-400 font-semibold">Days</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className="fas fa-star text-pink-400 text-[7px]"></i>
-                                    <p className="text-[9px] font-black text-pink-300">3,080 <span className="text-zinc-400 font-semibold">Total Likes</span></p>
+                                    <p className="text-[9px] font-black text-pink-300">{totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
                                   </div>
                                 </div>
 
