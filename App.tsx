@@ -1558,7 +1558,7 @@ const App: React.FC = () => {
                                   <p className={`text-[8px] font-black uppercase tracking-widest ${theme.accent} mb-0.5`}>LIKES BOOST</p>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-heart ${theme.accent} text-[7px]`}></i>
-                                    <p className="text-[9px] font-black text-white">220 <span className="text-zinc-400 font-semibold">Likes / Day</span></p>
+                                    <p className="text-[9px] font-black text-white">Upto 220 <span className="text-zinc-400 font-semibold">Likes / Day</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-calendar-alt ${theme.accent} text-[7px]`}></i>
@@ -1566,7 +1566,7 @@ const App: React.FC = () => {
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-star ${theme.accent} text-[7px]`}></i>
-                                    <p className={`text-[9px] font-black ${theme.accent}`}>{totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
+                                    <p className={`text-[9px] font-black ${theme.accent}`}>Upto {totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
                                   </div>
                                 </div>
 
