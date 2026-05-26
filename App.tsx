@@ -160,6 +160,7 @@ const App: React.FC = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [stockOutToast, setStockOutToast] = useState<string | null>(null);
   const [showLangPopup, setShowLangPopup] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -349,17 +350,22 @@ const App: React.FC = () => {
       return;
     }
     if (!selectedPackage) {
-      alert("Please select a package first!");
+      setOrderError("Please select a package first.");
       return;
     }
     if (!playerId.trim()) {
-      alert(selectedGame?.id === 'pc-games' ? "Please enter your Email or Whatsapp Number!" : "Please enter your Player ID!");
+      setOrderError(selectedGame?.id === 'pc-games' ? "Please enter your Email or WhatsApp number." : "Please enter your Player ID.");
+      return;
+    }
+    if (selectedGame?.id === 'ff-likes' && !selectedServer) {
+      setOrderError("Please select your server.");
       return;
     }
     if (!selectedPayment) {
-      alert("Please select a payment method!");
+      setOrderError("Please select a payment method.");
       return;
     }
+    setOrderError(null);
     setIsGatewayOpen(true);
   };
 
@@ -1991,13 +1997,63 @@ const App: React.FC = () => {
                         ))}
                       </div>
 
-                      <div className="mt-6 pt-4 border-t border-zinc-800/50">
-                        <button 
-                          onClick={handleConfirmOrder}
-                          className="w-full py-3.5 rounded-xl font-black uppercase italic tracking-widest transition-all bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95 text-[10px]"
-                        >
-                          {t('game.confirmPay')} {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price}
-                        </button>
+                      <div className="mt-6 pt-4 border-t border-zinc-800/50 space-y-3">
+                        {/* Required fields checklist */}
+                        {(() => {
+                          const isFFLikes = selectedGame?.id === 'ff-likes';
+                          const checks = [
+                            { label: selectedGame?.id === 'pc-games' ? 'Email / WhatsApp entered' : 'Player ID entered', done: !!playerId.trim() },
+                            ...(isFFLikes ? [{ label: 'Server selected', done: !!selectedServer }] : []),
+                            { label: 'Payment method selected', done: !!selectedPayment },
+                          ];
+                          const allDone = checks.every(c => c.done);
+                          if (allDone) return null;
+                          return (
+                            <div className="bg-zinc-900/60 border border-zinc-800/60 rounded-xl px-3 py-2.5 space-y-1.5">
+                              {checks.map((c, i) => (
+                                <div key={i} className="flex items-center gap-2">
+                                  <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center shrink-0 ${c.done ? 'bg-emerald-500' : 'bg-zinc-700'}`}>
+                                    {c.done
+                                      ? <i className="fas fa-check text-white text-[6px]"></i>
+                                      : <i className="fas fa-times text-zinc-500 text-[6px]"></i>
+                                    }
+                                  </div>
+                                  <span className={`text-[9px] font-bold uppercase tracking-wide ${c.done ? 'text-emerald-400' : 'text-zinc-500'}`}>{c.label}</span>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        })()}
+
+                        {/* Inline error message */}
+                        {orderError && (
+                          <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-xl px-3 py-2">
+                            <i className="fas fa-exclamation-circle text-red-400 text-[10px] shrink-0"></i>
+                            <span className="text-[9px] font-bold text-red-400 uppercase tracking-wide">{orderError}</span>
+                          </div>
+                        )}
+
+                        {/* Confirm button — disabled until all fields are filled */}
+                        {(() => {
+                          const isFFLikes = selectedGame?.id === 'ff-likes';
+                          const canProceed = !!playerId.trim() && !!selectedPayment && (!isFFLikes || !!selectedServer);
+                          return (
+                            <button
+                              onClick={handleConfirmOrder}
+                              disabled={!canProceed}
+                              className={`w-full py-3.5 rounded-xl font-black uppercase italic tracking-widest transition-all text-[10px] ${
+                                canProceed
+                                  ? 'bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95 cursor-pointer'
+                                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                              }`}
+                            >
+                              {canProceed
+                                ? `${t('game.confirmPay')} ${selectedPackage.currency === 'USD' ? '$' : '৳'}${selectedPackage.price}`
+                                : 'Fill All Required Fields'
+                              }
+                            </button>
+                          );
+                        })()}
                       </div>
                     </div>
                     </div>
