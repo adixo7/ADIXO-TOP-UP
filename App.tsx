@@ -161,6 +161,9 @@ const App: React.FC = () => {
   const [stockOutToast, setStockOutToast] = useState<string | null>(null);
   const [showLangPopup, setShowLangPopup] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
+  const [showFFLikesNotif, setShowFFLikesNotif] = useState(() => {
+    try { return localStorage.getItem('ffLikesNotifDismissed') !== 'true'; } catch { return true; }
+  });
 
   const timerRefs = useRef<{ [key: string]: any }>({});
 
@@ -2345,6 +2348,59 @@ const App: React.FC = () => {
         </div>
       )}
 
+
+      {/* FF LIKES new feature notification */}
+      {showFFLikesNotif && (
+        <div className="fixed bottom-6 right-4 z-[998] w-[280px] animate-in slide-in-from-bottom-4 fade-in duration-500">
+          <div className="bg-[#0c0c0e] border border-pink-500/40 rounded-2xl shadow-2xl shadow-pink-900/30 overflow-hidden">
+            <div className="bg-gradient-to-r from-pink-600/20 to-pink-900/10 px-4 py-3 flex items-center gap-3 border-b border-pink-500/20">
+              <div className="w-8 h-8 rounded-full bg-pink-600/20 border border-pink-500/40 flex items-center justify-center shrink-0">
+                <i className="fas fa-heart text-pink-400 text-xs"></i>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[8px] font-black uppercase tracking-[0.2em] text-pink-400">New Feature</p>
+                <p className="text-white text-[10px] font-black uppercase italic tracking-tight leading-tight">FF LIKES Packages Added!</p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowFFLikesNotif(false);
+                  try { localStorage.setItem('ffLikesNotifDismissed', 'true'); } catch {}
+                }}
+                className="text-zinc-600 hover:text-zinc-300 transition-colors shrink-0 w-5 h-5 flex items-center justify-center"
+              >
+                <i className="fas fa-times text-[10px]"></i>
+              </button>
+            </div>
+            <div className="px-4 py-3">
+              <p className="text-zinc-400 text-[9px] leading-relaxed mb-3">
+                Boost your Free Fire profile with <span className="text-pink-400 font-bold">220 likes/day</span>. Choose 14-day or 28-day packages.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    const flGame = GAMES.find(g => g.id === 'ff-likes');
+                    if (flGame) { setSelectedGame(flGame); setActiveTab('games'); }
+                    setShowFFLikesNotif(false);
+                    try { localStorage.setItem('ffLikesNotifDismissed', 'true'); } catch {}
+                  }}
+                  className="flex-1 bg-pink-600 hover:bg-pink-700 text-white text-[8px] font-black uppercase tracking-widest py-2 rounded-lg transition-colors active:scale-95"
+                >
+                  View Now
+                </button>
+                <button
+                  onClick={() => {
+                    setShowFFLikesNotif(false);
+                    try { localStorage.setItem('ffLikesNotifDismissed', 'true'); } catch {}
+                  }}
+                  className="px-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-400 text-[8px] font-black uppercase tracking-widest py-2 rounded-lg transition-colors"
+                >
+                  Later
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <GuideBot />
     </Layout>
