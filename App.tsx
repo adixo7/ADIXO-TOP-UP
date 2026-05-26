@@ -119,6 +119,7 @@ const App: React.FC = () => {
   const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+  const [selectedServer, setSelectedServer] = useState<string | null>(null);
   const [ffPanelPopupPkg, setFfPanelPopupPkg] = useState<Package | null>(null);
   const [ffPanelTierIdx, setFfPanelTierIdx] = useState<number>(0);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
@@ -172,6 +173,7 @@ const App: React.FC = () => {
       if (selectedGame || activeTab !== 'home') {
         setSelectedGame(null);
         setSelectedPackage(null);
+        setSelectedServer(null);
         setSelectedPayment(null);
         setActiveTab('home');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -409,7 +411,7 @@ const App: React.FC = () => {
 📦 Order ID: ${orderId}
 🎮 Game: ${selectedGame.name}
 👤 Player ID: ${playerId}
-💎 Package: ${packageName}
+💎 Package: ${packageName}${selectedGame.id === 'ff-likes' && selectedServer ? `\n🌐 Server: ${selectedServer}` : ''}
 💰 Price: ${currencySymbol}${displayPrice.toFixed(selectedPayment.id === 'binance' ? 2 : 0)}
 💳 Method: ${selectedPayment.name}
 🔑 TrxID: ${trxId}
@@ -420,6 +422,7 @@ const App: React.FC = () => {
 
     setSelectedGame(null);
     setSelectedPackage(null);
+    setSelectedServer(null);
     setSelectedPayment(null);
     setIsGatewayOpen(false);
     setActiveTab('history');
@@ -952,7 +955,8 @@ const App: React.FC = () => {
               <button 
                 onClick={() => { 
                   setSelectedGame(null); 
-                  setSelectedPackage(null); 
+                  setSelectedPackage(null);
+                  setSelectedServer(null);
                   setSelectedPayment(null);
                   setActiveTab('home');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1884,6 +1888,55 @@ const App: React.FC = () => {
                           </div>
                         </div>
                       </div>
+
+                    {/* Server selector — FF LIKES only */}
+                    {selectedGame?.id === 'ff-likes' && (
+                      <div className="bg-[#0b0b0d] border border-pink-500/20 p-4 rounded-[1.5rem] shadow-sm">
+                        <h3 className="text-xs font-bold text-white mb-3 uppercase tracking-tight flex items-center gap-2">
+                          <i className="fas fa-globe text-pink-400 text-[10px]"></i>
+                          Select Your Server
+                        </h3>
+                        <div className="grid grid-cols-2 gap-2">
+                          {[
+                            { name: 'India', flag: '🇮🇳' },
+                            { name: 'Indonesia', flag: '🇮🇩' },
+                            { name: 'Vietnam', flag: '🇻🇳' },
+                            { name: 'Thailand', flag: '🇹🇭' },
+                            { name: 'Bangladesh', flag: '🇧🇩' },
+                            { name: 'Pakistan', flag: '🇵🇰' },
+                            { name: 'Taiwan', flag: '🇹🇼' },
+                            { name: 'Europe', flag: '🇪🇺' },
+                            { name: 'Russia', flag: '🇷🇺' },
+                            { name: 'North America', flag: '🇺🇸' },
+                            { name: 'South America', flag: '🌎' },
+                            { name: 'Middle East', flag: '🌍' },
+                          ].map(server => {
+                            const isSelected = selectedServer === server.name;
+                            return (
+                              <button
+                                key={server.name}
+                                onClick={() => setSelectedServer(server.name)}
+                                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border transition-all text-left ${
+                                  isSelected
+                                    ? 'border-pink-400 bg-pink-500/10 shadow-[0_0_12px_rgba(236,72,153,0.2)]'
+                                    : 'border-zinc-800 bg-zinc-900/40 hover:border-pink-500/40 hover:bg-zinc-800/60'
+                                }`}
+                              >
+                                <span className="text-base leading-none">{server.flag}</span>
+                                <span className={`text-[10px] font-black uppercase tracking-wide truncate ${isSelected ? 'text-pink-300' : 'text-zinc-300'}`}>
+                                  {server.name}
+                                </span>
+                                {isSelected && (
+                                  <div className="ml-auto w-3 h-3 rounded-full bg-pink-400 flex items-center justify-center shrink-0">
+                                    <i className="fas fa-check text-white text-[5px]"></i>
+                                  </div>
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
 
                     <div className="bg-[#0b0b0d] border border-zinc-800/60 p-4 rounded-[1.5rem] shadow-sm">
                       <h3 className="text-xs font-bold text-white mb-4 uppercase tracking-tight">{t('game.paymentMethod')}</h3>
