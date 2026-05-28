@@ -1252,9 +1252,10 @@ const App: React.FC = () => {
                               : 'bg-zinc-900/60 border-zinc-800/60 hover:border-emerald-500/50 hover:bg-zinc-900'
                           }`}
                         >
-                          <div className="flex items-center gap-3">
-                            <i className={`fas fa-terminal text-[10px] ${selectedPackage?.id === pkg.id ? 'text-orange-500' : 'text-emerald-500/60 group-hover:text-emerald-400'}`}></i>
+                          <div className="flex items-center gap-3 flex-1 min-w-0">
+                            <i className={`fas fa-terminal text-[10px] flex-shrink-0 ${selectedPackage?.id === pkg.id ? 'text-orange-500' : 'text-emerald-500/60 group-hover:text-emerald-400'}`}></i>
                             <span className={`text-[11px] font-black uppercase tracking-wide ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-300 group-hover:text-white'}`}>{pkg.unit}</span>
+                            <span className="flex-shrink-0 px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.28), rgba(251,191,36,0.22))', border: '1px solid rgba(251,191,36,0.55)', color: '#fbbf24', boxShadow: '0 0 10px rgba(249,115,22,0.4)', textShadow: '0 0 8px rgba(251,191,36,0.8)', animation: 'pulse 2s ease-in-out infinite' }}>🎁 100% BONUS</span>
                           </div>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500' : 'border-zinc-700 group-hover:border-emerald-500'}`}>
                             {selectedPackage?.id === pkg.id && <i className="fas fa-check text-black text-[6px]"></i>}
@@ -1348,8 +1349,8 @@ const App: React.FC = () => {
                                     </div>
                                     
                                     {isEidBonus && (
-                                      <div className="flex items-center justify-center gap-1 mb-2 px-2 py-0.5 rounded-full" style={{ background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.3)' }}>
-                                        <span style={{ fontSize: '8px', color: '#c084fc', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em' }}>🌙 EID BONUS</span>
+                                      <div className="flex items-center justify-center gap-1.5 mb-2 px-3 py-1 rounded-full" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.28), rgba(251,191,36,0.22))', border: '1px solid rgba(251,191,36,0.55)', boxShadow: '0 0 14px rgba(249,115,22,0.45), 0 0 24px rgba(251,191,36,0.12)', animation: 'pulse 2s ease-in-out infinite' }}>
+                                        <span style={{ fontSize: '8px', color: '#fbbf24', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.18em', textShadow: '0 0 10px rgba(251,191,36,0.9)' }}>🎁 100% BONUS</span>
                                       </div>
                                     )}
 
@@ -1760,6 +1761,13 @@ const App: React.FC = () => {
                                   <i className={`fas fa-unlock text-[9px] ${theme.accent}`}></i>
                                   <p className={`text-[9px] font-black uppercase tracking-[0.15em] ${theme.accent}`}>{theme.chance} {t('product.unlockChance')}</p>
                                 </div>
+
+                                {/* 100% BONUS tag */}
+                                {!isStockOut && (
+                                  <div className="flex items-center justify-center gap-1.5 px-3 py-1 rounded-full" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.28), rgba(251,191,36,0.22))', border: '1px solid rgba(251,191,36,0.55)', boxShadow: '0 0 14px rgba(249,115,22,0.45), 0 0 24px rgba(251,191,36,0.12)', animation: 'pulse 2s ease-in-out infinite' }}>
+                                    <span style={{ fontSize: '8px', color: '#fbbf24', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.18em', textShadow: '0 0 10px rgba(251,191,36,0.9)' }}>🎁 100% BONUS</span>
+                                  </div>
+                                )}
 
                                 {/* Price */}
                                 <div className="flex items-center justify-between pt-1">
