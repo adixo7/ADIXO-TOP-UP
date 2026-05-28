@@ -17,15 +17,6 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
-    id: 'notif-ff-likes-1',
-    type: 'offer',
-    icon: 'fa-heart',
-    color: '#ec4899',
-    title: 'FF LIKES Packages Added! 💗',
-    body: 'Boost your Free Fire profile with 220 likes/day. Choose 14-day (৳210) or 28-day (৳370) packages. Available now in the Tools section.',
-    ts: '2026-05-26T10:00:00Z',
-  },
-  {
     id: 'notif-eid-bonus-1',
     type: 'offer',
     icon: 'fa-gift',
@@ -33,6 +24,15 @@ const NOTIFICATIONS = [
     title: '🌙 Eid ul Adha 100% Bonus Offer!',
     body: 'Celebrating Eid ul Adha! Buy any eligible package and get double the product — 100% BONUS. Contact @AdiXO_TV on Telegram to claim your Eid gift!',
     ts: '2026-05-28T06:00:00Z',
+  },
+  {
+    id: 'notif-ff-likes-1',
+    type: 'offer',
+    icon: 'fa-heart',
+    color: '#ec4899',
+    title: 'FF LIKES Packages Added! 💗',
+    body: 'Boost your Free Fire profile with 220 likes/day. Choose 14-day (৳210) or 28-day (৳370) packages. Available now in the Tools section.',
+    ts: '2026-05-26T10:00:00Z',
   },
   {
     id: 'notif-bonus-ended-1',
