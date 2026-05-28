@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface BonusOfferPopupProps {
   onClose: () => void;
@@ -24,16 +24,32 @@ const rightLights  = Array.from({ length: 10 }, (_, i) => i);
 
 const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }) => {
   const popupRef = useRef<HTMLDivElement>(null);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => onClose(), 220);
+  };
+
+  const handleNavigate = (gameId: string) => {
+    setIsClosing(true);
+    setTimeout(() => onNavigate(gameId), 220);
+  };
 
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') handleClose(); };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [onClose]);
+  }, []);
 
   return (
-    <div className="fixed inset-0 z-[400] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in duration-300">
+    <div
+      className="fixed inset-0 z-[400] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+      style={{ animation: isClosing ? 'popupFadeOut 0.22s ease forwards' : 'popupFadeIn 0.3s ease forwards' }}
+    >
       <style>{`
+        @keyframes popupFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popupFadeOut { from { opacity: 1; } to { opacity: 0; } }
         @keyframes twinkle {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.3; transform: scale(0.6); }
@@ -92,7 +108,7 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
           <div className="absolute -top-10 -left-10 w-36 h-36 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.18), transparent)', filter: 'blur(20px)' }} />
           <div className="absolute -bottom-10 -right-10 w-36 h-36 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.15), transparent)', filter: 'blur(20px)' }} />
 
-          <button onClick={onClose} className="absolute top-2.5 right-2.5 z-20 w-6 h-6 flex items-center justify-center rounded-md transition-colors" style={{ color: 'rgba(255,255,255,0.25)' }} onMouseEnter={e => (e.currentTarget.style.color = 'white')} onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.25)')}>
+          <button onClick={handleClose} className="absolute top-2.5 right-2.5 z-20 w-6 h-6 flex items-center justify-center rounded-md transition-colors" style={{ color: 'rgba(255,255,255,0.25)' }} onMouseEnter={e => (e.currentTarget.style.color = 'white')} onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.25)')}>
             <i className="fas fa-times text-xs"></i>
           </button>
 
@@ -136,7 +152,7 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
                 {packages.map((pkg, i) => (
                   <button
                     key={i}
-                    onClick={() => onNavigate(pkg.gameId)}
+                    onClick={() => handleNavigate(pkg.gameId)}
                     className="pkg-row flex items-center gap-2 px-3 py-2 text-left transition-all duration-200 w-full"
                     style={{
                       borderBottom: i < 4 ? '1px solid rgba(255,255,255,0.04)' : 'none',
@@ -175,7 +191,7 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
             </div>
 
             {/* CTA */}
-            <button onClick={onClose} className="w-full py-2.5 rounded-xl font-black uppercase tracking-[0.1em] text-black transition-all active:scale-95" style={{ fontSize: '10px', background: 'linear-gradient(135deg, #f43f5e, #f97316, #facc15)', boxShadow: '0 4px 24px rgba(249,115,22,0.4)' }}>
+            <button onClick={handleClose} className="w-full py-2.5 rounded-xl font-black uppercase tracking-[0.1em] text-black transition-all active:scale-95" style={{ fontSize: '10px', background: 'linear-gradient(135deg, #f43f5e, #f97316, #facc15)', boxShadow: '0 4px 24px rgba(249,115,22,0.4)' }}>
               🎉 CLAIM MY BONUS
             </button>
 

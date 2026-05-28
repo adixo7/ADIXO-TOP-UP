@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface ServerIssuePopupProps {
   onAgree: () => void;
@@ -6,14 +6,28 @@ interface ServerIssuePopupProps {
 }
 
 const ServerIssuePopup: React.FC<ServerIssuePopupProps> = ({ onAgree, onAvoid }) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = (callback: () => void) => {
+    setIsClosing(true);
+    setTimeout(() => callback(), 220);
+  };
+
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onAvoid(); };
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') handleClose(onAvoid); };
     document.addEventListener('keydown', handleKey);
     return () => document.removeEventListener('keydown', handleKey);
-  }, [onAvoid]);
+  }, []);
 
   return (
-    <div className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
+    <div
+      className="fixed inset-0 z-[500] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+      style={{ animation: isClosing ? 'siFadeOut 0.22s ease forwards' : 'siFadeIn 0.3s ease forwards' }}
+    >
+      <style>{`
+        @keyframes siFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes siFadeOut { from { opacity: 1; } to { opacity: 0; } }
+      `}</style>
       <div
         className="relative max-w-[320px] w-full rounded-2xl overflow-hidden"
         style={{
@@ -76,7 +90,7 @@ const ServerIssuePopup: React.FC<ServerIssuePopupProps> = ({ onAgree, onAvoid })
           {/* Action buttons */}
           <div className="grid grid-cols-2 gap-2">
             <button
-              onClick={onAvoid}
+              onClick={() => handleClose(onAvoid)}
               className="py-2.5 rounded-xl font-black uppercase tracking-[0.08em] transition-all active:scale-95 hover:opacity-90"
               style={{
                 fontSize: '9px',
@@ -89,7 +103,7 @@ const ServerIssuePopup: React.FC<ServerIssuePopupProps> = ({ onAgree, onAvoid })
               Avoid for Now
             </button>
             <button
-              onClick={onAgree}
+              onClick={() => handleClose(onAgree)}
               className="py-2.5 rounded-xl font-black uppercase tracking-[0.08em] text-black transition-all active:scale-95"
               style={{
                 fontSize: '9px',

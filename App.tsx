@@ -213,10 +213,8 @@ const App: React.FC = () => {
     setShowBonusOffer(false);
     const serverIssueShown = sessionStorage.getItem('adixo_server_issue_shown');
     if (!serverIssueShown) {
-      setTimeout(() => {
-        setShowServerIssue(true);
-        sessionStorage.setItem('adixo_server_issue_shown', 'true');
-      }, 300);
+      setShowServerIssue(true);
+      sessionStorage.setItem('adixo_server_issue_shown', 'true');
     }
   };
 
