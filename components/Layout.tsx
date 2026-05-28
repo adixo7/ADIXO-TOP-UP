@@ -26,13 +26,13 @@ const NOTIFICATIONS = [
     ts: '2026-05-26T10:00:00Z',
   },
   {
-    id: 'notif-bonus-ended-1',
-    type: 'notice',
+    id: 'notif-eid-bonus-1',
+    type: 'offer',
     icon: 'fa-gift',
     color: '#a855f7',
-    title: '100% Bonus Offer Ended 🎁',
-    body: 'The 100% Bonus Offer has now ended as of 20 May 2026. Thank you to everyone who participated! Stay tuned for future promotions via @adixoglory.',
-    ts: '2026-05-20T23:59:00Z',
+    title: '🌙 Eid ul Adha 100% Bonus Offer!',
+    body: 'Celebrating Eid ul Adha! Buy any eligible package and get double the product — 100% BONUS. Contact @AdiXO_TV on Telegram to claim your Eid gift!',
+    ts: '2026-05-28T06:00:00Z',
   },
   {
     id: 'notif-levelup-sale-1',

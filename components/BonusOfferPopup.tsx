@@ -100,7 +100,7 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
             {/* Badge */}
             <div className="flex justify-center mb-3">
               <span className="inline-flex items-center gap-1 text-[8px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.2), rgba(249,115,22,0.15))', border: '1px solid rgba(168,85,247,0.35)', color: '#c084fc' }}>
-                <i className="fas fa-star text-[6px]"></i> EXCLUSIVE BONUS OFFER
+                <i className="fas fa-star text-[6px]"></i> EID UL ADHA SPECIAL OFFER
               </span>
             </div>
 
@@ -109,7 +109,7 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
               <div className="relative w-14 h-14">
                 <div className="absolute inset-0 rounded-xl animate-pulse" style={{ background: 'linear-gradient(135deg, rgba(168,85,247,0.35), rgba(249,115,22,0.25))', filter: 'blur(10px)' }} />
                 <div className="relative w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #3b0764, #7c2d12)', border: '1px solid rgba(168,85,247,0.45)' }}>
-                  <span className="text-2xl">🎁</span>
+                  <span className="text-2xl">🌙</span>
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
                 BUY 1 GET 2×
               </h2>
               <p className="font-bold" style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)' }}>
-                Tap a package below to shop now
+                Eid Mubarak! Tap a package below to claim
               </p>
             </div>
 

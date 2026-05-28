@@ -206,6 +206,14 @@ const App: React.FC = () => {
       setShowDisclaimer(true);
     }
 
+    const bonusShown = sessionStorage.getItem('adixo_bonus_offer_shown');
+    if (!bonusShown) {
+      setTimeout(() => {
+        setShowBonusOffer(true);
+        sessionStorage.setItem('adixo_bonus_offer_shown', 'true');
+      }, 1500);
+    }
+
   }, []);
 
   const handleCloseDisclaimer = () => {
