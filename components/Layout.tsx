@@ -22,7 +22,7 @@ const NOTIFICATIONS = [
     icon: 'fa-gift',
     color: '#a855f7',
     title: '🌙 Eid ul Adha 100% Bonus Offer!',
-    body: 'Celebrating Eid ul Adha! Buy any eligible package and get double the product — 100% BONUS. Contact @AdiXO_TV on Telegram to claim your Eid gift!',
+    body: 'Celebrating Eid ul Adha! Buy any eligible package and get double the product — 100% BONUS. ⚠ Eligibility: Only for customers whose total purchase amounts to $10 or more. Contact @AdiXO_TV on Telegram to claim your Eid gift!',
     ts: '2026-05-28T06:00:00Z',
   },
   {

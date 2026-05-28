@@ -172,6 +172,18 @@ const BonusOfferPopup: React.FC<BonusOfferPopupProps> = ({ onClose, onNavigate }
               </div>
             </div>
 
+            {/* Eligibility notice */}
+            <div className="mb-4 rounded-xl px-3 py-2.5 flex items-start gap-2.5" style={{ background: 'rgba(251,191,36,0.06)', border: '1px solid rgba(251,191,36,0.22)' }}>
+              <div className="shrink-0 mt-0.5 w-4 h-4 rounded-md flex items-center justify-center" style={{ background: 'rgba(251,191,36,0.15)', border: '1px solid rgba(251,191,36,0.35)' }}>
+                <i className="fas fa-circle-exclamation" style={{ fontSize: '7px', color: '#fbbf24' }}></i>
+              </div>
+              <p style={{ fontSize: '8.5px', color: 'rgba(255,255,255,0.55)', lineHeight: '1.5' }}>
+                <span className="font-black uppercase tracking-wide" style={{ color: '#fbbf24' }}>Eligibility:</span>{' '}
+                This offer is only applicable for customers whose total purchase amounts to{' '}
+                <span className="font-black" style={{ color: '#fbbf24' }}>$10 or more</span>.
+              </p>
+            </div>
+
             {/* Support */}
             <div className="grid grid-cols-2 gap-2 mb-4">
               <a href="https://t.me/adixoglory" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl transition-opacity hover:opacity-80" style={{ background: 'rgba(14,165,233,0.07)', border: '1px solid rgba(14,165,233,0.22)' }}>
