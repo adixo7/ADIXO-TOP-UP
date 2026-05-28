@@ -8,8 +8,8 @@ import Auth from './components/Auth';
 import PaymentGateway from './components/PaymentGateway';
 import GuideBot from './components/GuideBot';
 import Features from './components/Features';
-import DisclaimerPopup from './components/DisclaimerPopup';
 import BonusOfferPopup from './components/BonusOfferPopup';
+import ServerIssuePopup from './components/ServerIssuePopup';
 import CouponRedeem from './components/CouponRedeem';
 import MaintenancePopup from './components/MaintenancePopup';
 import Confetti from './components/Confetti';
@@ -125,8 +125,8 @@ const App: React.FC = () => {
   const [ffPanelTierIdx, setFfPanelTierIdx] = useState<number>(0);
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
   const [isGatewayOpen, setIsGatewayOpen] = useState(false);
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [showBonusOffer, setShowBonusOffer] = useState(false);
+  const [showServerIssue, setShowServerIssue] = useState(false);
   const [playerId, setPlayerId] = useState('');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -194,31 +194,30 @@ const App: React.FC = () => {
     }
   }, [selectedGame, activeTab]);
 
-  // Auth & Disclaimer Initialization
+  // Auth & Popup Initialization
   useEffect(() => {
     const savedUser = localStorage.getItem('adixo_user');
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
 
-    const disclaimerShown = sessionStorage.getItem('adixo_disclaimer_shown');
-    if (!disclaimerShown) {
-      setShowDisclaimer(true);
-    }
-
     const bonusShown = sessionStorage.getItem('adixo_bonus_offer_shown');
     if (!bonusShown) {
-      setTimeout(() => {
-        setShowBonusOffer(true);
-        sessionStorage.setItem('adixo_bonus_offer_shown', 'true');
-      }, 1500);
+      setShowBonusOffer(true);
+      sessionStorage.setItem('adixo_bonus_offer_shown', 'true');
     }
 
   }, []);
 
-  const handleCloseDisclaimer = () => {
-    setShowDisclaimer(false);
-    sessionStorage.setItem('adixo_disclaimer_shown', 'true');
+  const handleCloseBonusOffer = () => {
+    setShowBonusOffer(false);
+    const serverIssueShown = sessionStorage.getItem('adixo_server_issue_shown');
+    if (!serverIssueShown) {
+      setTimeout(() => {
+        setShowServerIssue(true);
+        sessionStorage.setItem('adixo_server_issue_shown', 'true');
+      }, 300);
+    }
   };
 
   // Transaction Management (Persistence Logic)
@@ -554,8 +553,8 @@ const App: React.FC = () => {
       onOpenLangPopup={() => setShowLangPopup(true)}
     >
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
-      {showDisclaimer && <DisclaimerPopup onClose={handleCloseDisclaimer} />}
-      {showBonusOffer && <BonusOfferPopup onClose={() => setShowBonusOffer(false)} onNavigate={(gameId) => { const game = GAMES.find(g => g.id === gameId); if (game) { setSelectedGame(game); setActiveTab('games'); } setShowBonusOffer(false); }} />}
+      {showBonusOffer && <BonusOfferPopup onClose={handleCloseBonusOffer} onNavigate={(gameId) => { const game = GAMES.find(g => g.id === gameId); if (game) { setSelectedGame(game); setActiveTab('games'); } handleCloseBonusOffer(); }} />}
+      {showServerIssue && <ServerIssuePopup onAgree={() => setShowServerIssue(false)} onAvoid={() => setShowServerIssue(false)} />}
       {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
