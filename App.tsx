@@ -1276,6 +1276,7 @@ const App: React.FC = () => {
                               const isMystery = category === 'MYSTERY BOX';
                               const isGuildLevelUp = category === 'GUILD LEVEL UP';
                               const isBonus = !!pkg.isBonus;
+                              const isEidBonus = ['MYSTERY BOX', 'GUILD LEVEL UP', 'GLORY PACKAGE', 'HIRE BOTS', 'EVENT BYPASS', 'FF PANEL'].includes(category);
                               const isMysteryBasicStockOut = pkg.id === 'mystery-basic';
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
@@ -1346,6 +1347,12 @@ const App: React.FC = () => {
                                       </span>}
                                     </div>
                                     
+                                    {isEidBonus && (
+                                      <div className="flex items-center justify-center gap-1 mb-2 px-2 py-0.5 rounded-full" style={{ background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.3)' }}>
+                                        <span style={{ fontSize: '8px', color: '#c084fc', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.15em' }}>🌙 EID BONUS</span>
+                                      </div>
+                                    )}
+
                                     <div className="space-y-1 w-full mb-2">
                                       {category === 'FF PANEL' ? (
                                         <>
