@@ -17,6 +17,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-glory-server-issue-1',
+    type: 'notice',
+    icon: 'fa-triangle-exclamation',
+    color: '#ef4444',
+    title: '⚠ Server Issue — Guild Glory Bot',
+    body: 'Due to ongoing server issues, the Guild Glory Bot target may drop up to 30% from the expected value. If you agree with this condition, you may proceed to place your order. Otherwise, please avoid ordering until the issue is resolved. We are working to fix this as soon as possible — thank you for your patience.',
+    ts: '2026-05-28T09:00:00Z',
+  },
+  {
     id: 'notif-eid-bonus-1',
     type: 'offer',
     icon: 'fa-gift',
