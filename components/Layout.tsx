@@ -17,6 +17,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-eid-bonus-ended-2',
+    type: 'notice',
+    icon: 'fa-gift',
+    color: '#a855f7',
+    title: '🌙 Eid ul Adha Bonus Offer Ended',
+    body: 'The Eid ul Adha 100% Bonus Offer has now ended. Thank you to everyone who participated! Stay tuned for future promotions via @adixoglory.',
+    ts: '2026-05-29T00:00:00Z',
+  },
+  {
     id: 'notif-glory-server-issue-1',
     type: 'notice',
     icon: 'fa-triangle-exclamation',
@@ -24,15 +33,6 @@ const NOTIFICATIONS = [
     title: '⚠ Server Issue — Guild Glory Bot',
     body: 'Due to ongoing server issues, the Guild Glory Bot target may drop up to 30% from the expected value. If you agree with this condition, you may proceed to place your order. Otherwise, please avoid ordering until the issue is resolved. We are working to fix this as soon as possible — thank you for your patience.',
     ts: '2026-05-28T09:00:00Z',
-  },
-  {
-    id: 'notif-eid-bonus-1',
-    type: 'offer',
-    icon: 'fa-gift',
-    color: '#a855f7',
-    title: '🌙 Eid ul Adha 100% Bonus Offer!',
-    body: 'Celebrating Eid ul Adha! Buy any eligible package and get double the product — 100% BONUS. ⚠ Eligibility: Only for customers whose total purchase amounts to $10 or more. Contact @AdiXO_TV on Telegram to claim your Eid gift!',
-    ts: '2026-05-28T06:00:00Z',
   },
   {
     id: 'notif-ff-likes-1',

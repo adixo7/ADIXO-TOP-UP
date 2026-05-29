@@ -9,6 +9,7 @@ import PaymentGateway from './components/PaymentGateway';
 import GuideBot from './components/GuideBot';
 import Features from './components/Features';
 import BonusOfferPopup from './components/BonusOfferPopup';
+import DisclaimerPopup from './components/DisclaimerPopup';
 import ServerIssuePopup from './components/ServerIssuePopup';
 import CouponRedeem from './components/CouponRedeem';
 import MaintenancePopup from './components/MaintenancePopup';
@@ -126,6 +127,7 @@ const App: React.FC = () => {
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(null);
   const [isGatewayOpen, setIsGatewayOpen] = useState(false);
   const [showBonusOffer, setShowBonusOffer] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [showServerIssue, setShowServerIssue] = useState(false);
   const [playerId, setPlayerId] = useState('');
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -143,10 +145,6 @@ const App: React.FC = () => {
       return;
     }
     setSelectedPayment(method);
-  };
-
-  const handleDisclaimerClose = () => {
-    setShowDisclaimer(false);
   };
 
   const [oldPassword, setOldPassword] = useState('');
@@ -201,16 +199,20 @@ const App: React.FC = () => {
       setUser(JSON.parse(savedUser));
     }
 
-    const bonusShown = sessionStorage.getItem('adixo_bonus_offer_shown');
-    if (!bonusShown) {
-      setShowBonusOffer(true);
-      sessionStorage.setItem('adixo_bonus_offer_shown', 'true');
+    const disclaimerShown = sessionStorage.getItem('adixo_disclaimer_shown');
+    if (!disclaimerShown) {
+      setShowDisclaimer(true);
+      sessionStorage.setItem('adixo_disclaimer_shown', 'true');
     }
 
   }, []);
 
   const handleCloseBonusOffer = () => {
     setShowBonusOffer(false);
+  };
+
+  const handleDisclaimerClose = () => {
+    setShowDisclaimer(false);
     const serverIssueShown = sessionStorage.getItem('adixo_server_issue_shown');
     if (!serverIssueShown) {
       setShowServerIssue(true);
@@ -551,7 +553,7 @@ const App: React.FC = () => {
       onOpenLangPopup={() => setShowLangPopup(true)}
     >
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
-      {showBonusOffer && <BonusOfferPopup onClose={handleCloseBonusOffer} onNavigate={(gameId) => { const game = GAMES.find(g => g.id === gameId); if (game) { setSelectedGame(game); setActiveTab('games'); } handleCloseBonusOffer(); }} />}
+      {showDisclaimer && <DisclaimerPopup onClose={handleDisclaimerClose} />}
       {showServerIssue && <ServerIssuePopup onAgree={() => setShowServerIssue(false)} onAvoid={() => setShowServerIssue(false)} />}
       {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
@@ -1253,7 +1255,6 @@ const App: React.FC = () => {
                             <i className={`fas fa-terminal text-[10px] flex-shrink-0 ${selectedPackage?.id === pkg.id ? 'text-orange-500' : 'text-emerald-500/60 group-hover:text-emerald-400'}`}></i>
                             <span className={`text-[11px] font-black uppercase tracking-wide ${selectedPackage?.id === pkg.id ? 'text-white' : 'text-zinc-300 group-hover:text-white'}`}>{pkg.unit}</span>
                           </div>
-                          <span className="flex-shrink-0 px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest mr-2" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.28), rgba(251,191,36,0.22))', border: '1px solid rgba(251,191,36,0.55)', color: '#fbbf24', boxShadow: '0 0 10px rgba(249,115,22,0.4)', textShadow: '0 0 8px rgba(251,191,36,0.8)', animation: 'pulse 2s ease-in-out infinite' }}>🎁 100% BONUS</span>
                           <div className={`w-4 h-4 rounded-full border flex items-center justify-center flex-shrink-0 transition-all ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500' : 'border-zinc-700 group-hover:border-emerald-500'}`}>
                             {selectedPackage?.id === pkg.id && <i className="fas fa-check text-black text-[6px]"></i>}
                           </div>
@@ -1274,7 +1275,6 @@ const App: React.FC = () => {
                               const isMystery = category === 'MYSTERY BOX';
                               const isGuildLevelUp = category === 'GUILD LEVEL UP';
                               const isBonus = !!pkg.isBonus;
-                              const isEidBonus = ['MYSTERY BOX', 'GUILD LEVEL UP', 'GLORY PACKAGE', 'HIRE BOTS', 'EVENT BYPASS', 'FF PANEL'].includes(category);
                               const isMysteryBasicStockOut = pkg.id === 'mystery-basic';
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
@@ -1345,11 +1345,6 @@ const App: React.FC = () => {
                                       </span>}
                                     </div>
                                     
-                                    {isEidBonus && (
-                                      <div className="flex items-center justify-center gap-1.5 mb-2 px-3 py-1 rounded-full" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.28), rgba(251,191,36,0.22))', border: '1px solid rgba(251,191,36,0.55)', boxShadow: '0 0 14px rgba(249,115,22,0.45), 0 0 24px rgba(251,191,36,0.12)', animation: 'pulse 2s ease-in-out infinite' }}>
-                                        <span style={{ fontSize: '8px', color: '#fbbf24', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.18em', textShadow: '0 0 10px rgba(251,191,36,0.9)' }}>🎁 100% BONUS</span>
-                                      </div>
-                                    )}
 
                                     <div className="space-y-1 w-full mb-2">
                                       {category === 'FF PANEL' ? (
@@ -1765,9 +1760,6 @@ const App: React.FC = () => {
                                     <p className="text-white font-black text-lg leading-none">৳{pkg.price}</p>
                                     <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">{t('product.bdt')}</p>
                                   </div>
-                                  {!isStockOut && (
-                                    <span className="flex-shrink-0 px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.28), rgba(251,191,36,0.22))', border: '1px solid rgba(251,191,36,0.55)', color: '#fbbf24', boxShadow: '0 0 10px rgba(249,115,22,0.4)', textShadow: '0 0 8px rgba(251,191,36,0.8)', animation: 'pulse 2s ease-in-out infinite' }}>🎁 100% BONUS</span>
-                                  )}
                                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${isSelected ? 'border-white bg-white' : 'border-zinc-600 group-hover:border-white/50'}`}>
                                     {isSelected && <i className="fas fa-check text-black text-[7px]"></i>}
                                   </div>
