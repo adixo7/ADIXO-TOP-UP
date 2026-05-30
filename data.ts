@@ -39,7 +39,7 @@ export const GAMES: Game[] = [
     description: 'Survive to the end in the fast-paced mobile battle royale.',
     packages: [
       { id: 'ff-weekly-mem', amount: 1, unit: 'Weekly Membership', price: 160, currency: 'BDT', category: 'MEMBERSHIP' },
-      { id: 'ff-monthly-mem', amount: 1, unit: 'Monthly Membership', price: 795, currency: 'BDT', category: 'MEMBERSHIP' },
+      { id: 'ff-monthly-mem', amount: 1, unit: 'Monthly Membership', price: 785, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'ff-weekly-lite', amount: 1, unit: 'Weekly Lite', price: 45, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'ff-4x-weekly-lite', amount: 4, unit: 'X Weekly Lite', price: 180, currency: 'BDT', category: 'MEMBERSHIP' },
       { id: 'ff-evo-3', amount: 3, unit: 'Evo Days', price: 75, currency: 'BDT', category: 'MEMBERSHIP' },
