@@ -272,22 +272,42 @@ const App: React.FC = () => {
     };
   }, [user?.id]); // Use user.id as dependency for more stable effect
 
-  const handleCompleteItem = (trxId: string) => {
+  const handleUpdateOrderStatus = (trxId: string, status: 'completed' | 'failed') => {
     setTransactions(prev => {
-      const updated = prev.map(t => t.id === trxId ? { ...t, status: 'completed' as const } : t);
-      
-      // Get current user from state to construct key
+      const updated = prev.map(t => t.id === trxId ? { ...t, status } : t);
       setUser(currentUser => {
         if (currentUser) {
-          const storageKey = `adixo_transactions_${currentUser.id}`;
-          localStorage.setItem(storageKey, JSON.stringify(updated));
+          localStorage.setItem(`adixo_transactions_${currentUser.id}`, JSON.stringify(updated));
         }
         return currentUser;
       });
-      
       return updated;
     });
   };
+
+  const handleCompleteItem = (trxId: string) => handleUpdateOrderStatus(trxId, 'completed');
+
+  // Poll backend every 8s for status changes on processing orders
+  useEffect(() => {
+    if (!user || transactions.length === 0) return;
+    const processing = transactions.filter(t => t.status === 'processing');
+    if (processing.length === 0) return;
+
+    const interval = setInterval(async () => {
+      for (const trx of processing) {
+        try {
+          const res = await fetch(`/api/order/${trx.id}`);
+          const data = await res.json();
+          if (data.status === 'completed' || data.status === 'failed') {
+            handleUpdateOrderStatus(trx.id, data.status);
+          }
+        } catch {}
+      }
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, [user?.id, transactions.map(t => `${t.id}:${t.status}`).join(',')]);
+
 
   const handleLogin = (newUser: User) => {
     setUser(newUser);
@@ -419,20 +439,24 @@ const App: React.FC = () => {
       handleCompleteItem(orderId);
     }, FIVE_MINUTES);
 
-    const packageName = `${selectedPackage.amount} ${selectedPackage.unit}`;
-    const messageTemplate = `✨ NEW TOP-UP ORDER ✨
---------------------------
-📦 Order ID: ${orderId}
-🎮 Game: ${selectedGame.name}
-👤 Player ID: ${playerId}
-💎 Package: ${packageName}${selectedGame.id === 'ff-likes' && selectedServer ? `\n🌐 Server: ${selectedServer}` : ''}
-💰 Price: ${currencySymbol}${displayPrice.toFixed(selectedPayment.id === 'binance' ? 2 : 0)}
-💳 Method: ${selectedPayment.name}
-🔑 TrxID: ${trxId}
-⏰ Time: ${orderTime}
---------------------------`;
+    const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
-    const telegramUrl = `https://t.me/AdiXO_TV?text=${encodeURIComponent(messageTemplate)}`;
+    // Send order to backend → bot notifies you on Telegram
+    fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: orderId,
+        gameName: selectedGame.name,
+        playerId,
+        packageName,
+        price: displayPrice,
+        currency: displayCurrency,
+        paymentMethod: selectedPayment.name,
+        trxId,
+        date: orderTime,
+      }),
+    }).catch(() => {});
 
     setSelectedGame(null);
     setSelectedPackage(null);
@@ -440,8 +464,6 @@ const App: React.FC = () => {
     setSelectedPayment(null);
     setIsGatewayOpen(false);
     setActiveTab('history');
-    
-    window.open(telegramUrl, '_blank');
   };
 
   const filteredGames = GAMES.filter(game => 
