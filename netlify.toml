@@ -1,6 +1,27 @@
 [build]
   publish = "dist"
   command = "npm run build"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/order/:id"
+  to = "/.netlify/functions/order-status?id=:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/order"
+  to = "/.netlify/functions/order"
+  status = 200
+
+[[redirects]]
+  from = "/api/telegram-webhook"
+  to = "/.netlify/functions/telegram-webhook"
+  status = 200
+
+[[redirects]]
+  from = "/api/setup-webhook"
+  to = "/.netlify/functions/setup-webhook"
+  status = 200
 
 [[redirects]]
   from = "/*"
