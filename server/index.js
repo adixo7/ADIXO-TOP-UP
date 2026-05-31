@@ -134,8 +134,17 @@ async function poll() {
   setImmediate(poll);
 }
 
-const PORT = 3001;
-app.listen(PORT, () => {
+// In production, serve the built Vite frontend
+const distDir = join(__dirname, '..', 'dist');
+if (existsSync(distDir)) {
+  app.use(express.static(distDir));
+  app.get('*', (req, res) => {
+    res.sendFile(join(distDir, 'index.html'));
+  });
+}
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ ADIXO backend running on port ${PORT}`);
   if (BOT_TOKEN && CHAT_ID) {
     console.log('🤖 Telegram bot polling started');
