@@ -3,28 +3,22 @@ import { getStore } from '@netlify/blobs';
 export const handler = async (event) => {
   const results = {};
 
-  // Test 1: Can we write?
   try {
-    const store = getStore('adixo-orders');
+    const store = getStore({
+      name: 'adixo-orders',
+      siteID: process.env.SITE_ID,
+      token: process.env.NETLIFY_TOKEN,
+    });
     await store.setJSON('test_key', { status: 'test', ts: Date.now() });
     results.write = 'OK';
-  } catch (err) {
-    results.write = `FAILED: ${err.message}`;
-  }
-
-  // Test 2: Can we read back?
-  try {
-    const store = getStore('adixo-orders');
     const val = await store.get('test_key', { type: 'json' });
-    results.read = val ? `OK: ${JSON.stringify(val)}` : 'NULL (key not found)';
+    results.read = val ? `OK: ${JSON.stringify(val)}` : 'NULL';
   } catch (err) {
-    results.read = `FAILED: ${err.message}`;
+    results.error = err.message;
   }
 
-  // Test 3: Env vars present?
-  results.hasContext = !!process.env.NETLIFY_BLOBS_CONTEXT;
   results.hasSiteID = !!process.env.SITE_ID;
-  results.nodeEnv = process.env.NODE_ENV;
+  results.hasToken = !!process.env.NETLIFY_TOKEN;
 
   return {
     statusCode: 200,

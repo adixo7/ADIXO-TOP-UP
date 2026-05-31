@@ -14,6 +14,14 @@ async function tgRequest(token, method, body) {
   }
 }
 
+function getOrderStore() {
+  return getStore({
+    name: 'adixo-orders',
+    siteID: process.env.SITE_ID,
+    token: process.env.NETLIFY_TOKEN,
+  });
+}
+
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
@@ -30,11 +38,10 @@ export const handler = async (event) => {
         const newStatus = action === 'complete' ? 'completed' : 'failed';
         const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
-        // Always save the status — no dependency on reading the order first
         try {
-          const store = getStore('adixo-orders');
+          const store = getOrderStore();
           await store.setJSON(`status_${orderId}`, { status: newStatus });
-          console.log(`Saved status ${newStatus} for order ${orderId}`);
+          console.log(`Status saved: ${orderId} → ${newStatus}`);
         } catch (err) {
           console.warn('Blobs status update failed:', err.message);
         }
@@ -55,7 +62,7 @@ export const handler = async (event) => {
         let infoText = `👤 <b>USER INFO</b>\n━━━━━━━━━━━━━━━━━━\n`;
 
         try {
-          const store = getStore('adixo-orders');
+          const store = getOrderStore();
           const u = await store.get(`userinfo_${orderId}`, { type: 'json' });
           if (u && u.email) {
             infoText +=
@@ -70,7 +77,7 @@ export const handler = async (event) => {
             infoText += 'No user info available for this order.';
           }
         } catch (err) {
-          infoText += 'Error fetching user info.';
+          infoText += `Error fetching user info: ${err.message}`;
         }
 
         await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
