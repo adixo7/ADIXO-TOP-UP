@@ -61,10 +61,15 @@ export const handler = async (event) => {
       text,
       parse_mode: 'HTML',
       reply_markup: {
-        inline_keyboard: [[
-          { text: '✅ Complete Order', callback_data: `complete:${order.id}` },
-          { text: '❌ Cancel Order', callback_data: `cancel:${order.id}` },
-        ]],
+        inline_keyboard: [
+          [
+            { text: '✅ Complete', callback_data: `complete:${order.id}` },
+            { text: '❌ Cancel', callback_data: `cancel:${order.id}` },
+          ],
+          [
+            { text: '👤 User Info', callback_data: `userinfo:${order.id}` },
+          ],
+        ],
       },
     });
 

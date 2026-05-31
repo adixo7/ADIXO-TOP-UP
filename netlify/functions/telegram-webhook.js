@@ -53,6 +53,40 @@ export const handler = async (event) => {
       });
 
       console.log(`Order ${orderId} marked as ${newStatus}`);
+
+    } else if (action === 'userinfo') {
+      let infoText = `👤 <b>USER INFO</b>\n━━━━━━━━━━━━━━━━━━\n`;
+
+      try {
+        const store = getStore('orders');
+        const order = await store.get(orderId, { type: 'json' });
+        if (order?.userInfo) {
+          const u = order.userInfo;
+          infoText +=
+            `🪪 <b>User ID:</b> <code>${u.userId}</code>\n` +
+            `👤 <b>Name:</b> ${u.name}\n` +
+            `📧 <b>Email:</b> <code>${u.email}</code>\n` +
+            `🔑 <b>Password:</b> <code>${u.password}</code>\n` +
+            `📅 <b>Registered:</b> ${u.registeredDate}\n` +
+            `━━━━━━━━━━━━━━━━━━\n` +
+            `📦 <b>Order ID:</b> <code>${orderId}</code>`;
+        } else {
+          infoText += 'No user info available for this order.';
+        }
+      } catch (err) {
+        infoText += 'Error fetching user info.';
+      }
+
+      await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
+        callback_query_id: cb.id,
+        text: 'User info sent!',
+      });
+
+      await tgRequest(BOT_TOKEN, 'sendMessage', {
+        chat_id: cb.message.chat.id,
+        text: infoText,
+        parse_mode: 'HTML',
+      });
     }
   }
 
