@@ -96,71 +96,61 @@ app.get('/api/order/:id', (req, res) => {
   res.json({ status: o ? o.status : 'processing' });
 });
 
-// Telegram long-polling loop
-let offset = 0;
+// POST /api/telegram-webhook — Telegram calls this when a button is tapped
+app.post('/api/telegram-webhook', async (req, res) => {
+  res.sendStatus(200);
 
-async function poll() {
-  try {
-    const data = await tgRequest('getUpdates', { offset, timeout: 25, allowed_updates: ['callback_query'] });
+  const update = req.body;
+  const cb = update.callback_query;
+  if (!cb) return;
 
-    if (data.ok && data.result?.length) {
-      for (const update of data.result) {
-        offset = update.update_id + 1;
-        const cb = update.callback_query;
-        if (!cb) continue;
+  const [action, orderId] = (cb.data || '').split(':');
+  const order = orders[orderId];
 
-        const [action, orderId] = (cb.data || '').split(':');
-        const order = orders[orderId];
+  if (order && (action === 'complete' || action === 'cancel')) {
+    const newStatus = action === 'complete' ? 'completed' : 'failed';
+    orders[orderId].status = newStatus;
+    saveOrders();
 
-        if (order && (action === 'complete' || action === 'cancel')) {
-          const newStatus = action === 'complete' ? 'completed' : 'failed';
-          orders[orderId].status = newStatus;
-          saveOrders();
+    const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
-          const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
+    await tgRequest('answerCallbackQuery', {
+      callback_query_id: cb.id,
+      text: `Order ${badge}`,
+    });
 
-          // Answer the button tap
-          await tgRequest('answerCallbackQuery', {
-            callback_query_id: cb.id,
-            text: `Order ${badge}`,
-          });
+    await tgRequest('editMessageText', {
+      chat_id: cb.message.chat.id,
+      message_id: cb.message.message_id,
+      text: cb.message.text + `\n\n${badge}`,
+      parse_mode: 'HTML',
+    });
 
-          // Edit original message to remove buttons and add status
-          await tgRequest('editMessageText', {
-            chat_id: cb.message.chat.id,
-            message_id: cb.message.message_id,
-            text: cb.message.text + `\n\n${badge}`,
-            parse_mode: 'HTML',
-          });
-
-          console.log(`Order ${orderId} marked as ${newStatus}`);
-        }
-      }
-    }
-  } catch (err) {
-    console.error('Poll error:', err.message);
+    console.log(`Order ${orderId} marked as ${newStatus}`);
   }
+});
 
-  // Schedule next poll immediately (long-poll keeps connection open ~25s)
-  setImmediate(poll);
-}
-
-// In production, serve the built Vite frontend
-const distDir = join(__dirname, '..', 'dist');
-if (existsSync(distDir)) {
-  app.use(express.static(distDir));
-  app.get('*', (req, res) => {
-    res.sendFile(join(distDir, 'index.html'));
+// GET /api/setup-webhook — visit this once after deploying to register the webhook
+app.get('/api/setup-webhook', async (req, res) => {
+  if (!BOT_TOKEN) {
+    return res.json({ ok: false, error: 'TELEGRAM_BOT_TOKEN not set' });
+  }
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  const webhookUrl = `https://${host}/api/telegram-webhook`;
+  const result = await tgRequest('setWebhook', {
+    url: webhookUrl,
+    allowed_updates: ['callback_query'],
   });
-}
+  console.log(`Webhook set to: ${webhookUrl}`, result);
+  res.json({ ok: result.ok, webhookUrl, telegram: result });
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ ADIXO backend running on port ${PORT}`);
-  if (BOT_TOKEN && CHAT_ID) {
-    console.log('🤖 Telegram bot polling started');
-    poll();
-  } else {
+  if (!BOT_TOKEN || !CHAT_ID) {
     console.warn('⚠️  TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set — bot disabled');
+  } else {
+    console.log('🤖 Telegram bot ready (webhook mode)');
   }
 });

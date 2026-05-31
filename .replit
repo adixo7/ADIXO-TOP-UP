@@ -87,7 +87,7 @@ localPort = 5013
 externalPort = 8099
 
 [deployment]
-deploymentTarget = "vm"
+deploymentTarget = "autoscale"
 build = ["npm", "run", "build"]
 publicDir = "dist"
 run = ["node", "server/index.js"]
