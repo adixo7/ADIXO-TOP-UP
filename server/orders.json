@@ -24,5 +24,18 @@
     "date": "May 31, 2026, 08:39:30 PM",
     "status": "processing",
     "telegramMsgId": null
+  },
+  "AX-RJW94H3": {
+    "id": "AX-RJW94H3",
+    "gameName": "AI BOTS",
+    "playerId": "4894984",
+    "packageName": "5 LEVEL 5",
+    "price": 4.365079365079365,
+    "currency": "USD",
+    "paymentMethod": "Binance",
+    "trxId": "688487987984",
+    "date": "May 31, 2026, 08:41:22 PM",
+    "status": "failed",
+    "telegramMsgId": 3
   }
 }
