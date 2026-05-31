@@ -296,7 +296,7 @@ const App: React.FC = () => {
     const interval = setInterval(async () => {
       for (const trx of processing) {
         try {
-          const res = await fetch(`/api/order/${trx.id}`);
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/order/${trx.id}`);
           const data = await res.json();
           if (data.status === 'completed' || data.status === 'failed') {
             handleUpdateOrderStatus(trx.id, data.status);
@@ -442,7 +442,7 @@ const App: React.FC = () => {
     const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
     // Send order to backend → bot notifies you on Telegram
-    fetch('/api/order', {
+    fetch(`${import.meta.env.VITE_API_BASE_URL || ''}/api/order`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

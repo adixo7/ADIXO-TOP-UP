@@ -87,7 +87,7 @@ localPort = 3001
 externalPort = 3001
 
 [deployment]
-deploymentTarget = "autoscale"
+deploymentTarget = "vm"
 build = ["npm", "run", "build"]
 publicDir = "dist"
 run = ["node", "server/index.js"]

@@ -1,10 +1,21 @@
 import express from 'express';
+import cors from 'cors';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
+
+app.use(cors({
+  origin: [
+    'https://adixotopup.netlify.app',
+    /\.replit\.dev$/,
+    /\.replit\.app$/,
+    'http://localhost:5000',
+  ],
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json());
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
