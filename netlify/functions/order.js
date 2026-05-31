@@ -14,6 +14,15 @@ async function tgRequest(token, method, body) {
   }
 }
 
+async function saveOrder(id, data) {
+  try {
+    const store = getStore('orders');
+    await store.setJSON(id, data);
+  } catch (err) {
+    console.warn('Blobs save failed (non-fatal):', err.message);
+  }
+}
+
 export const handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -30,57 +39,66 @@ export const handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
-  const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-  const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+  try {
+    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-  const order = JSON.parse(event.body);
-  const store = getStore('orders');
-  await store.setJSON(order.id, { ...order, status: 'processing' });
+    const order = JSON.parse(event.body);
 
-  if (BOT_TOKEN && CHAT_ID) {
-    const sym = order.currency === 'USD' ? '$' : '৳';
-    const priceStr = order.currency === 'USD'
-      ? Number(order.price).toFixed(2)
-      : Number(order.price).toFixed(0);
+    // Save to Blobs (non-fatal if it fails)
+    await saveOrder(order.id, { ...order, status: 'processing' });
 
-    const text =
-      `🔔 <b>NEW ORDER RECEIVED</b>\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `📦 <b>Order ID:</b> <code>${order.id}</code>\n` +
-      `🎮 <b>Game:</b> ${order.gameName}\n` +
-      `👤 <b>Player ID:</b> <code>${order.playerId}</code>\n` +
-      `💎 <b>Package:</b> ${order.packageName}\n` +
-      `💰 <b>Amount:</b> ${sym}${priceStr}\n` +
-      `💳 <b>Method:</b> ${order.paymentMethod}\n` +
-      `🔑 <b>TrxID:</b> <code>${order.trxId}</code>\n` +
-      `⏰ <b>Time:</b> ${order.date}\n` +
-      `━━━━━━━━━━━━━━━━━━`;
+    // Send Telegram notification
+    if (BOT_TOKEN && CHAT_ID) {
+      const sym = order.currency === 'USD' ? '$' : '৳';
+      const priceStr = order.currency === 'USD'
+        ? Number(order.price).toFixed(2)
+        : Number(order.price).toFixed(0);
 
-    const result = await tgRequest(BOT_TOKEN, 'sendMessage', {
-      chat_id: CHAT_ID,
-      text,
-      parse_mode: 'HTML',
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: '✅ Complete', callback_data: `complete:${order.id}` },
-            { text: '❌ Cancel', callback_data: `cancel:${order.id}` },
+      const text =
+        `🔔 <b>NEW ORDER RECEIVED</b>\n` +
+        `━━━━━━━━━━━━━━━━━━\n` +
+        `📦 <b>Order ID:</b> <code>${order.id}</code>\n` +
+        `🎮 <b>Game:</b> ${order.gameName}\n` +
+        `👤 <b>Player ID:</b> <code>${order.playerId}</code>\n` +
+        `💎 <b>Package:</b> ${order.packageName}\n` +
+        `💰 <b>Amount:</b> ${sym}${priceStr}\n` +
+        `💳 <b>Method:</b> ${order.paymentMethod}\n` +
+        `🔑 <b>TrxID:</b> <code>${order.trxId}</code>\n` +
+        `⏰ <b>Time:</b> ${order.date}\n` +
+        `━━━━━━━━━━━━━━━━━━`;
+
+      const result = await tgRequest(BOT_TOKEN, 'sendMessage', {
+        chat_id: CHAT_ID,
+        text,
+        parse_mode: 'HTML',
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '✅ Complete', callback_data: `complete:${order.id}` },
+              { text: '❌ Cancel', callback_data: `cancel:${order.id}` },
+            ],
+            [
+              { text: '👤 User Info', callback_data: `userinfo:${order.id}` },
+            ],
           ],
-          [
-            { text: '👤 User Info', callback_data: `userinfo:${order.id}` },
-          ],
-        ],
-      },
-    });
-
-    if (result.ok) {
-      await store.setJSON(order.id, {
-        ...order,
-        status: 'processing',
-        telegramMsgId: result.result.message_id,
+        },
       });
-    }
-  }
 
-  return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+      if (result.ok) {
+        await saveOrder(order.id, {
+          ...order,
+          status: 'processing',
+          telegramMsgId: result.result.message_id,
+        });
+      }
+    } else {
+      console.warn('TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set');
+    }
+
+    return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
+  } catch (err) {
+    console.error('Order handler error:', err.message);
+    return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: err.message }) };
+  }
 };
