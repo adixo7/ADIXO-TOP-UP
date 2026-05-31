@@ -15,9 +15,7 @@ async function tgRequest(token, method, body) {
 }
 
 export const handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method not allowed' };
-  }
+  if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
   const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
@@ -32,14 +30,13 @@ export const handler = async (event) => {
         const newStatus = action === 'complete' ? 'completed' : 'failed';
         const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
+        // Always save the status — no dependency on reading the order first
         try {
-          const store = getStore('orders');
-          const order = await store.get(orderId, { type: 'json' });
-          if (order) {
-            await store.setJSON(orderId, { ...order, status: newStatus });
-          }
+          const store = getStore('adixo-orders');
+          await store.setJSON(`status_${orderId}`, { status: newStatus });
+          console.log(`Saved status ${newStatus} for order ${orderId}`);
         } catch (err) {
-          console.warn('Blobs update failed (non-fatal):', err.message);
+          console.warn('Blobs status update failed:', err.message);
         }
 
         await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
@@ -54,16 +51,13 @@ export const handler = async (event) => {
           parse_mode: 'HTML',
         });
 
-        console.log(`Order ${orderId} marked as ${newStatus}`);
-
       } else if (action === 'userinfo') {
         let infoText = `👤 <b>USER INFO</b>\n━━━━━━━━━━━━━━━━━━\n`;
 
         try {
-          const store = getStore('orders');
-          const order = await store.get(orderId, { type: 'json' });
-          if (order?.userInfo) {
-            const u = order.userInfo;
+          const store = getStore('adixo-orders');
+          const u = await store.get(`userinfo_${orderId}`, { type: 'json' });
+          if (u && u.email) {
             infoText +=
               `🪪 <b>User ID:</b> <code>${u.userId}</code>\n` +
               `👤 <b>Name:</b> ${u.name}\n` +
@@ -76,7 +70,6 @@ export const handler = async (event) => {
             infoText += 'No user info available for this order.';
           }
         } catch (err) {
-          console.warn('Blobs read failed:', err.message);
           infoText += 'Error fetching user info.';
         }
 
@@ -93,7 +86,7 @@ export const handler = async (event) => {
       }
     }
   } catch (err) {
-    console.error('Webhook handler error:', err.message);
+    console.error('Webhook error:', err.message);
   }
 
   return { statusCode: 200, body: 'OK' };

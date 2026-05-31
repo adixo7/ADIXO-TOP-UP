@@ -14,15 +14,6 @@ async function tgRequest(token, method, body) {
   }
 }
 
-async function saveOrder(id, data) {
-  try {
-    const store = getStore('orders');
-    await store.setJSON(id, data);
-  } catch (err) {
-    console.warn('Blobs save failed (non-fatal):', err.message);
-  }
-}
-
 export const handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -31,24 +22,23 @@ export const handler = async (event) => {
     'Content-Type': 'application/json',
   };
 
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers, body: '' };
-  }
-
-  if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
-  }
+  if (event.httpMethod === 'OPTIONS') return { statusCode: 204, headers, body: '' };
+  if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
 
   try {
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-
     const order = JSON.parse(event.body);
 
-    // Save to Blobs (non-fatal if it fails)
-    await saveOrder(order.id, { ...order, status: 'processing' });
+    // Save status and user info separately so status updates are always findable
+    try {
+      const store = getStore('adixo-orders');
+      await store.setJSON(`status_${order.id}`, { status: 'processing' });
+      await store.setJSON(`userinfo_${order.id}`, order.userInfo || {});
+    } catch (err) {
+      console.warn('Blobs save error:', err.message);
+    }
 
-    // Send Telegram notification
     if (BOT_TOKEN && CHAT_ID) {
       const sym = order.currency === 'USD' ? '$' : '৳';
       const priceStr = order.currency === 'USD'
@@ -68,7 +58,7 @@ export const handler = async (event) => {
         `⏰ <b>Time:</b> ${order.date}\n` +
         `━━━━━━━━━━━━━━━━━━`;
 
-      const result = await tgRequest(BOT_TOKEN, 'sendMessage', {
+      await tgRequest(BOT_TOKEN, 'sendMessage', {
         chat_id: CHAT_ID,
         text,
         parse_mode: 'HTML',
@@ -84,21 +74,11 @@ export const handler = async (event) => {
           ],
         },
       });
-
-      if (result.ok) {
-        await saveOrder(order.id, {
-          ...order,
-          status: 'processing',
-          telegramMsgId: result.result.message_id,
-        });
-      }
-    } else {
-      console.warn('TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set');
     }
 
     return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
   } catch (err) {
-    console.error('Order handler error:', err.message);
+    console.error('Order error:', err.message);
     return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: err.message }) };
   }
 };
