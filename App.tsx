@@ -17,7 +17,6 @@ import Confetti from './components/Confetti';
 import LanguagePopup from './components/LanguagePopup';
 import { useLanguage } from './LanguageContext';
 
-const FIVE_MINUTES = 5 * 60 * 1000;
 
 const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
   'ff-brmod-android': [
@@ -160,7 +159,6 @@ const App: React.FC = () => {
   const [showLangPopup, setShowLangPopup] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
 
-  const timerRefs = useRef<{ [key: string]: any }>({});
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -239,13 +237,7 @@ const App: React.FC = () => {
       }
     }
 
-    const now = Date.now();
-    const updated = userTransactions.map(trx => {
-      if (trx.status === 'processing' && (now - trx.timestamp >= FIVE_MINUTES)) {
-        return { ...trx, status: 'completed' as const };
-      }
-      return trx;
-    });
+    const updated = userTransactions;
 
     setTransactions(updated);
     
@@ -254,22 +246,7 @@ const App: React.FC = () => {
       localStorage.setItem(storageKey, JSON.stringify(updated));
     }
 
-    // Initialize timers for processing items
-    updated.forEach(trx => {
-      if (trx.status === 'processing') {
-        const remaining = FIVE_MINUTES - (now - trx.timestamp);
-        if (remaining > 0) {
-          if (timerRefs.current[trx.id]) clearTimeout(timerRefs.current[trx.id] as any);
-          timerRefs.current[trx.id] = setTimeout(() => {
-            handleCompleteItem(trx.id);
-          }, remaining);
-        }
-      }
-    });
-
-    return () => {
-      Object.values(timerRefs.current).forEach(t => clearTimeout(t as any));
-    };
+    return () => {};
   }, [user?.id]); // Use user.id as dependency for more stable effect
 
   const handleUpdateOrderStatus = (trxId: string, status: 'completed' | 'failed') => {
@@ -285,7 +262,7 @@ const App: React.FC = () => {
     });
   };
 
-  const handleCompleteItem = (trxId: string) => handleUpdateOrderStatus(trxId, 'completed');
+
 
   // Poll backend every 8s for status changes on processing orders
   useEffect(() => {
@@ -318,8 +295,6 @@ const App: React.FC = () => {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('adixo_user');
-    Object.values(timerRefs.current).forEach(t => clearTimeout(t as any));
-    timerRefs.current = {};
     setTransactions([]);
     setActiveTab('home');
   };
@@ -435,10 +410,6 @@ const App: React.FC = () => {
       return updated;
     });
     
-    timerRefs.current[orderId] = setTimeout(() => {
-      handleCompleteItem(orderId);
-    }, FIVE_MINUTES);
-
     const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
     // Send order to backend → bot notifies you on Telegram
