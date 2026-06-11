@@ -412,33 +412,21 @@ const App: React.FC = () => {
     
     const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
-    // Send order to backend → bot notifies you on Telegram
-    const usersDb = JSON.parse(localStorage.getItem('adixo_db_users') || '{}');
-    const emailKey = user.email.toLowerCase().trim();
-    const userRecord = usersDb[emailKey];
+    // Open Telegram @AdiXO_TV with order details pre-typed
+    const tgMessage =
+      `🔔 NEW ORDER\n` +
+      `━━━━━━━━━━━━━━━━━━\n` +
+      `📦 Order ID: ${orderId}\n` +
+      `🎮 Game: ${selectedGame.name}\n` +
+      `👤 Player ID: ${playerId}\n` +
+      `💎 Package: ${packageName}\n` +
+      `💰 Amount: ${currencySymbol}${typeof displayPrice === 'number' ? (displayCurrency === 'USD' ? displayPrice.toFixed(2) : displayPrice.toFixed(0)) : displayPrice}\n` +
+      `💳 Method: ${selectedPayment.name}\n` +
+      `🔑 TrxID: ${trxId}\n` +
+      `⏰ Time: ${orderTime}\n` +
+      `━━━━━━━━━━━━━━━━━━`;
 
-    fetch(`/api/order`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: orderId,
-        gameName: selectedGame.name,
-        playerId,
-        packageName,
-        price: displayPrice,
-        currency: displayCurrency,
-        paymentMethod: selectedPayment.name,
-        trxId,
-        date: orderTime,
-        userInfo: {
-          name: user.name,
-          email: user.email,
-          password: userRecord?.password || 'N/A',
-          registeredDate: userRecord?.registeredDate || 'N/A',
-          userId: user.id,
-        },
-      }),
-    }).catch(() => {});
+    window.open(`https://t.me/AdiXO_TV?text=${encodeURIComponent(tgMessage)}`, '_blank');
 
     setSelectedGame(null);
     setSelectedPackage(null);
