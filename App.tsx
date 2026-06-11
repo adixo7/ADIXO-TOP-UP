@@ -371,7 +371,7 @@ const App: React.FC = () => {
     setIsGatewayOpen(true);
   };
 
-  const handlePaymentComplete = (trxId: string) => {
+  const handlePaymentComplete = async (trxId: string) => {
     if (!selectedGame || !selectedPackage || !selectedPayment || !user) return;
 
     const orderId = `AX-${Math.random().toString(36).substr(2, 7).toUpperCase()}`;
@@ -386,7 +386,8 @@ const App: React.FC = () => {
       ? (selectedPackage.currency === 'USD' ? selectedPackage.price : selectedPackage.price / exchangeRate)
       : (selectedPackage.currency === 'BDT' ? selectedPackage.price : selectedPackage.price * exchangeRate);
     const displayCurrency = selectedPayment.id === 'binance' ? 'USD' : 'BDT';
-    const currencySymbol = displayCurrency === 'USD' ? '$' : '৳';
+
+    const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
     const newTransaction: Transaction = {
       id: orderId,
@@ -409,24 +410,27 @@ const App: React.FC = () => {
       localStorage.setItem(storageKey, JSON.stringify(updated));
       return updated;
     });
-    
-    const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
-    // Open Telegram @AdiXO_TV with order details pre-typed
-    const tgMessage =
-      `🔔 NEW ORDER\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `📦 Order ID: ${orderId}\n` +
-      `🎮 Game: ${selectedGame.name}\n` +
-      `👤 Player ID: ${playerId}\n` +
-      `💎 Package: ${packageName}\n` +
-      `💰 Amount: ${currencySymbol}${typeof displayPrice === 'number' ? (displayCurrency === 'USD' ? displayPrice.toFixed(2) : displayPrice.toFixed(0)) : displayPrice}\n` +
-      `💳 Method: ${selectedPayment.name}\n` +
-      `🔑 TrxID: ${trxId}\n` +
-      `⏰ Time: ${orderTime}\n` +
-      `━━━━━━━━━━━━━━━━━━`;
-
-    window.open(`https://t.me/AdiXO_TV?text=${encodeURIComponent(tgMessage)}`, '_blank');
+    // Send order to backend — bot will notify via Telegram with Complete/Cancel buttons
+    try {
+      await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: orderId,
+          gameName: selectedGame.name,
+          playerId: playerId,
+          packageName: packageName,
+          price: displayPrice,
+          currency: displayCurrency,
+          paymentMethod: selectedPayment.name,
+          trxId: trxId,
+          date: orderTime,
+        }),
+      });
+    } catch {
+      console.error('Failed to notify Telegram bot — order saved locally.');
+    }
 
     setSelectedGame(null);
     setSelectedPackage(null);

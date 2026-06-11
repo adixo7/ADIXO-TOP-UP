@@ -135,7 +135,9 @@ app.get('/api/setup-webhook', async (req, res) => {
   if (!BOT_TOKEN) {
     return res.json({ ok: false, error: 'TELEGRAM_BOT_TOKEN not set' });
   }
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  // Use Replit's public domain; fall back to x-forwarded-host header
+  const replitDomain = process.env.REPLIT_DEV_DOMAIN || process.env.REPL_SLUG;
+  const host = replitDomain || req.headers['x-forwarded-host'] || req.headers.host;
   const webhookUrl = `https://${host}/api/telegram-webhook`;
   const result = await tgRequest('setWebhook', {
     url: webhookUrl,
