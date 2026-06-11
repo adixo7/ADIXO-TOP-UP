@@ -6,6 +6,7 @@ import { dirname, join } from 'path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
+const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.REPLIT_DEPLOYMENT;
 
 app.use(cors({
   origin: [
@@ -13,6 +14,7 @@ app.use(cors({
     /\.replit\.dev$/,
     /\.replit\.app$/,
     'http://localhost:5000',
+    'http://localhost:3001',
   ],
   methods: ['GET', 'POST'],
 }));
@@ -147,12 +149,40 @@ app.get('/api/setup-webhook', async (req, res) => {
   res.json({ ok: result.ok, webhookUrl, telegram: result });
 });
 
+// In production, serve the built frontend from dist/
+if (IS_PROD) {
+  const distPath = join(__dirname, '..', 'dist');
+  app.use(express.static(distPath));
+  app.get('*', (req, res) => {
+    res.sendFile(join(distPath, 'index.html'));
+  });
+}
+
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', async () => {
   console.log(`✅ ADIXO backend running on port ${PORT}`);
   if (!BOT_TOKEN || !CHAT_ID) {
     console.warn('⚠️  TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set — bot disabled');
   } else {
     console.log('🤖 Telegram bot ready');
+    // Auto-register webhook on startup — works in both dev and prod
+    const domain = process.env.REPLIT_DEV_DOMAIN
+      || (process.env.REPL_SLUG && process.env.REPL_OWNER
+          ? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.replit.app`
+          : null);
+    if (domain) {
+      const webhookUrl = `https://${domain}/api/telegram-webhook`;
+      const result = await tgRequest('setWebhook', {
+        url: webhookUrl,
+        allowed_updates: ['callback_query'],
+      });
+      if (result.ok) {
+        console.log(`✅ Telegram webhook registered: ${webhookUrl}`);
+      } else {
+        console.warn('⚠️  Webhook registration failed:', result.description);
+      }
+    } else {
+      console.warn('⚠️  Could not determine public domain — webhook not registered.');
+    }
   }
 });
