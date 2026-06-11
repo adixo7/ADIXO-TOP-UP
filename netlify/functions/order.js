@@ -1,5 +1,3 @@
-import { getStore } from '@netlify/blobs';
-
 async function tgRequest(token, method, body) {
   try {
     const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
@@ -14,8 +12,27 @@ async function tgRequest(token, method, body) {
   }
 }
 
-function getOrderStore() {
-  return getStore('adixo-orders');
+function getBlobsCtx() {
+  try {
+    const raw = process.env.NETLIFY_BLOBS_CONTEXT;
+    if (!raw) return null;
+    return JSON.parse(Buffer.from(raw, 'base64').toString());
+  } catch { return null; }
+}
+
+async function saveStatus(orderId, data) {
+  try {
+    const ctx = getBlobsCtx();
+    if (!ctx) return;
+    const { edgeURL, rawSiteID, token } = ctx;
+    await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/${orderId}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  } catch (err) {
+    console.warn('Status save failed (non-fatal):', err.message);
+  }
 }
 
 export const handler = async (event) => {
@@ -34,13 +51,8 @@ export const handler = async (event) => {
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     const order = JSON.parse(event.body);
 
-    try {
-      const store = getOrderStore();
-      await store.setJSON(`status_${order.id}`, { status: 'processing' });
-      await store.setJSON(`userinfo_${order.id}`, order.userInfo || {});
-    } catch (blobErr) {
-      console.warn('Blobs save error (non-fatal):', blobErr.message);
-    }
+    await saveStatus(`status_${order.id}`, { status: 'processing' });
+    await saveStatus(`userinfo_${order.id}`, order.userInfo || {});
 
     if (BOT_TOKEN && CHAT_ID) {
       const sym = order.currency === 'USD' ? '$' : '৳';

@@ -1,21 +1,39 @@
-import { getStore } from '@netlify/blobs';
+function getBlobsCtx() {
+  try {
+    const raw = process.env.NETLIFY_BLOBS_CONTEXT;
+    if (!raw) return null;
+    return JSON.parse(Buffer.from(raw, 'base64').toString());
+  } catch { return null; }
+}
 
 export const handler = async (event) => {
-  const results = {};
+  const results = {
+    hasTelegramToken: !!process.env.TELEGRAM_BOT_TOKEN,
+    hasTelegramChatId: !!process.env.TELEGRAM_CHAT_ID,
+    hasNetlifyBlobsContext: !!process.env.NETLIFY_BLOBS_CONTEXT,
+  };
 
-  results.hasTelegramToken = !!process.env.TELEGRAM_BOT_TOKEN;
-  results.hasTelegramChatId = !!process.env.TELEGRAM_CHAT_ID;
-  results.hasSiteID = !!process.env.SITE_ID;
-  results.hasNetlifyToken = !!process.env.NETLIFY_TOKEN;
+  const ctx = getBlobsCtx();
+  if (ctx) {
+    results.blobsCtxKeys = Object.keys(ctx);
+    try {
+      const { edgeURL, rawSiteID, token } = ctx;
+      const putRes = await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/test_key`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'test', ts: Date.now() }),
+      });
+      results.blobsWrite = putRes.ok ? 'OK' : `HTTP ${putRes.status}`;
 
-  try {
-    const store = getStore('adixo-orders');
-    await store.setJSON('test_key', { status: 'test', ts: Date.now() });
-    results.blobsWrite = 'OK';
-    const val = await store.get('test_key', { type: 'json' });
-    results.blobsRead = val ? `OK: ${JSON.stringify(val)}` : 'NULL';
-  } catch (err) {
-    results.blobsError = err.message;
+      const getRes = await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/test_key`, {
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      results.blobsRead = getRes.ok ? 'OK' : `HTTP ${getRes.status}`;
+    } catch (err) {
+      results.blobsError = err.message;
+    }
+  } else {
+    results.blobsError = 'NETLIFY_BLOBS_CONTEXT not available';
   }
 
   return {
