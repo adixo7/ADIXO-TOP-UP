@@ -3,22 +3,20 @@ import { getStore } from '@netlify/blobs';
 export const handler = async (event) => {
   const results = {};
 
-  try {
-    const store = getStore({
-      name: 'adixo-orders',
-      siteID: process.env.SITE_ID,
-      token: process.env.NETLIFY_TOKEN,
-    });
-    await store.setJSON('test_key', { status: 'test', ts: Date.now() });
-    results.write = 'OK';
-    const val = await store.get('test_key', { type: 'json' });
-    results.read = val ? `OK: ${JSON.stringify(val)}` : 'NULL';
-  } catch (err) {
-    results.error = err.message;
-  }
-
+  results.hasTelegramToken = !!process.env.TELEGRAM_BOT_TOKEN;
+  results.hasTelegramChatId = !!process.env.TELEGRAM_CHAT_ID;
   results.hasSiteID = !!process.env.SITE_ID;
-  results.hasToken = !!process.env.NETLIFY_TOKEN;
+  results.hasNetlifyToken = !!process.env.NETLIFY_TOKEN;
+
+  try {
+    const store = getStore('adixo-orders');
+    await store.setJSON('test_key', { status: 'test', ts: Date.now() });
+    results.blobsWrite = 'OK';
+    const val = await store.get('test_key', { type: 'json' });
+    results.blobsRead = val ? `OK: ${JSON.stringify(val)}` : 'NULL';
+  } catch (err) {
+    results.blobsError = err.message;
+  }
 
   return {
     statusCode: 200,
