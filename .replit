@@ -90,3 +90,8 @@ externalPort = 8099
 deploymentTarget = "autoscale"
 build = ["npm", "run", "build"]
 run = ["node", "server/index.js"]
+
+[userenv]
+
+[userenv.shared]
+NETLIFY_SITE_URL = "https://adixotopup.netlify.app"

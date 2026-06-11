@@ -1,34 +1,19 @@
-import { getStore } from '@netlify/blobs';
-
-function getOrderStore() {
-  return getStore({
-    name: 'adixo-orders',
-    siteID: process.env.NETLIFY_SITE_ID,
-    token: process.env.NETLIFY_ACCESS_TOKEN,
-  });
-}
-
 export const handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
   };
 
+  const BACKEND = process.env.REPLIT_BACKEND_URL;
+  if (!BACKEND) return { statusCode: 500, headers, body: JSON.stringify({ status: 'processing' }) };
+
   const id = event.queryStringParameters?.id || event.path.split('/').pop();
 
   try {
-    const store = getOrderStore();
-    const data = await store.get(`status_${id}`, { type: 'json' });
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ status: data?.status || 'processing' }),
-    };
+    const res = await fetch(`${BACKEND}/api/order/${id}`);
+    const data = await res.json();
+    return { statusCode: 200, headers, body: JSON.stringify(data) };
   } catch {
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ status: 'processing' }),
-    };
+    return { statusCode: 200, headers, body: JSON.stringify({ status: 'processing' }) };
   }
 };
