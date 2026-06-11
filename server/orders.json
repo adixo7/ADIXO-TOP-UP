@@ -177,5 +177,45 @@
     },
     "status": "failed",
     "telegramMsgId": 22
+  },
+  "AX-G9HCXQI": {
+    "id": "AX-G9HCXQI",
+    "gameName": "AI BOTS",
+    "playerId": "jhidhiuh",
+    "packageName": "5 LEVEL 5",
+    "price": 4.365079365079365,
+    "currency": "USD",
+    "paymentMethod": "Binance",
+    "trxId": "1111111111",
+    "date": "Jun 10, 2026, 07:40:42 PM",
+    "userInfo": {
+      "name": "admin1",
+      "email": "sadmansakibadib121@gmail.com",
+      "password": "dewdwe",
+      "registeredDate": "June 10, 2026",
+      "userId": "78282940"
+    },
+    "status": "failed",
+    "telegramMsgId": 23
+  },
+  "AX-DHJ6UGY": {
+    "id": "AX-DHJ6UGY",
+    "gameName": "AI BOTS",
+    "playerId": "jhidhiuh",
+    "packageName": "5 LEVEL 5",
+    "price": 4.365079365079365,
+    "currency": "USD",
+    "paymentMethod": "Binance",
+    "trxId": "WDWDWDWDW",
+    "date": "Jun 10, 2026, 07:41:10 PM",
+    "userInfo": {
+      "name": "admin1",
+      "email": "sadmansakibadib121@gmail.com",
+      "password": "dewdwe",
+      "registeredDate": "June 10, 2026",
+      "userId": "78282940"
+    },
+    "status": "completed",
+    "telegramMsgId": 24
   }
 }
