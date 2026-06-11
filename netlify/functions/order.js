@@ -14,6 +14,14 @@ async function tgRequest(token, method, body) {
   }
 }
 
+function getOrderStore() {
+  return getStore({
+    name: 'adixo-orders',
+    siteID: process.env.NETLIFY_SITE_ID,
+    token: process.env.NETLIFY_ACCESS_TOKEN,
+  });
+}
+
 export const handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -30,11 +38,8 @@ export const handler = async (event) => {
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     const order = JSON.parse(event.body);
 
-    const store = getStore('adixo-orders');
+    const store = getOrderStore();
     await store.setJSON(`status_${order.id}`, { status: 'processing' });
-    if (order.userInfo) {
-      await store.setJSON(`userinfo_${order.id}`, order.userInfo);
-    }
 
     if (BOT_TOKEN && CHAT_ID) {
       const sym = order.currency === 'USD' ? '$' : '৳';
@@ -60,12 +65,10 @@ export const handler = async (event) => {
         text,
         parse_mode: 'HTML',
         reply_markup: {
-          inline_keyboard: [
-            [
-              { text: '✅ Complete', callback_data: `complete:${order.id}` },
-              { text: '❌ Cancel', callback_data: `cancel:${order.id}` },
-            ],
-          ],
+          inline_keyboard: [[
+            { text: '✅ Complete', callback_data: `complete:${order.id}` },
+            { text: '❌ Cancel', callback_data: `cancel:${order.id}` },
+          ]],
         },
       });
     }
