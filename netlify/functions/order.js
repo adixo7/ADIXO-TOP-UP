@@ -1,3 +1,5 @@
+import { getStore } from '@netlify/blobs';
+
 async function tgRequest(token, method, body) {
   try {
     const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
@@ -9,29 +11,6 @@ async function tgRequest(token, method, body) {
   } catch (err) {
     console.error(`Telegram ${method} error:`, err.message);
     return { ok: false };
-  }
-}
-
-function getBlobsCtx() {
-  try {
-    const raw = process.env.NETLIFY_BLOBS_CONTEXT;
-    if (!raw) return null;
-    return JSON.parse(Buffer.from(raw, 'base64').toString());
-  } catch { return null; }
-}
-
-async function saveStatus(orderId, data) {
-  try {
-    const ctx = getBlobsCtx();
-    if (!ctx) return;
-    const { edgeURL, rawSiteID, token } = ctx;
-    await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/${orderId}`, {
-      method: 'PUT',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-  } catch (err) {
-    console.warn('Status save failed (non-fatal):', err.message);
   }
 }
 
@@ -51,8 +30,11 @@ export const handler = async (event) => {
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     const order = JSON.parse(event.body);
 
-    await saveStatus(`status_${order.id}`, { status: 'processing' });
-    await saveStatus(`userinfo_${order.id}`, order.userInfo || {});
+    const store = getStore('adixo-orders');
+    await store.setJSON(`status_${order.id}`, { status: 'processing' });
+    if (order.userInfo) {
+      await store.setJSON(`userinfo_${order.id}`, order.userInfo);
+    }
 
     if (BOT_TOKEN && CHAT_ID) {
       const sym = order.currency === 'USD' ? '$' : '৳';
@@ -82,9 +64,6 @@ export const handler = async (event) => {
             [
               { text: '✅ Complete', callback_data: `complete:${order.id}` },
               { text: '❌ Cancel', callback_data: `cancel:${order.id}` },
-            ],
-            [
-              { text: '👤 User Info', callback_data: `userinfo:${order.id}` },
             ],
           ],
         },

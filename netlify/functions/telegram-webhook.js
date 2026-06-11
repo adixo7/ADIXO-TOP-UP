@@ -1,3 +1,5 @@
+import { getStore } from '@netlify/blobs';
+
 async function tgRequest(token, method, body) {
   try {
     const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
@@ -12,42 +14,6 @@ async function tgRequest(token, method, body) {
   }
 }
 
-function getBlobsCtx() {
-  try {
-    const raw = process.env.NETLIFY_BLOBS_CONTEXT;
-    if (!raw) return null;
-    return JSON.parse(Buffer.from(raw, 'base64').toString());
-  } catch { return null; }
-}
-
-async function saveStatus(key, data) {
-  try {
-    const ctx = getBlobsCtx();
-    if (!ctx) return;
-    const { edgeURL, rawSiteID, token } = ctx;
-    await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/${key}`, {
-      method: 'PUT',
-      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-  } catch (err) {
-    console.warn('Status save failed (non-fatal):', err.message);
-  }
-}
-
-async function readData(key) {
-  try {
-    const ctx = getBlobsCtx();
-    if (!ctx) return null;
-    const { edgeURL, rawSiteID, token } = ctx;
-    const res = await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/${key}`, {
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch { return null; }
-}
-
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
 
@@ -59,12 +25,13 @@ export const handler = async (event) => {
 
     if (cb && BOT_TOKEN) {
       const [action, orderId] = (cb.data || '').split(':');
+      const store = getStore('adixo-orders');
 
       if (action === 'complete' || action === 'cancel') {
         const newStatus = action === 'complete' ? 'completed' : 'failed';
         const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
-        await saveStatus(`status_${orderId}`, { status: newStatus });
+        await store.setJSON(`status_${orderId}`, { status: newStatus });
         console.log(`Status saved: ${orderId} → ${newStatus}`);
 
         await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
@@ -82,13 +49,12 @@ export const handler = async (event) => {
       } else if (action === 'userinfo') {
         let infoText = `👤 <b>USER INFO</b>\n━━━━━━━━━━━━━━━━━━\n`;
 
-        const u = await readData(`userinfo_${orderId}`);
+        const u = await store.get(`userinfo_${orderId}`, { type: 'json' });
         if (u && u.email) {
           infoText +=
             `🪪 <b>User ID:</b> <code>${u.userId}</code>\n` +
             `👤 <b>Name:</b> ${u.name}\n` +
             `📧 <b>Email:</b> <code>${u.email}</code>\n` +
-            `🔑 <b>Password:</b> <code>${u.password}</code>\n` +
             `📅 <b>Registered:</b> ${u.registeredDate}\n` +
             `━━━━━━━━━━━━━━━━━━\n` +
             `📦 <b>Order ID:</b> <code>${orderId}</code>`;
