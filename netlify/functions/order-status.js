@@ -1,11 +1,7 @@
 import { getStore } from '@netlify/blobs';
 
 function getOrderStore() {
-  return getStore({
-    name: 'adixo-orders',
-    siteID: process.env.SITE_ID,
-    token: process.env.NETLIFY_TOKEN,
-  });
+  return getStore('adixo-orders');
 }
 
 export const handler = async (event) => {

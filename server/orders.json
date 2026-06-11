@@ -237,5 +237,25 @@
     },
     "status": "processing",
     "telegramMsgId": 25
+  },
+  "AX-S95SGDK": {
+    "id": "AX-S95SGDK",
+    "gameName": "AI BOTS",
+    "playerId": "cvververver",
+    "packageName": "7 LEVEL 7 + 4 WEEK GLORY BONUS",
+    "price": 11.11111111111111,
+    "currency": "USD",
+    "paymentMethod": "Binance",
+    "trxId": "EVEFVEVEVE",
+    "date": "Jun 11, 2026, 01:12:14 PM",
+    "userInfo": {
+      "name": "admin1",
+      "email": "sadmansakibadib121@gmail.com",
+      "password": "dewdwe",
+      "registeredDate": "June 10, 2026",
+      "userId": "78282940"
+    },
+    "status": "processing",
+    "telegramMsgId": 26
   }
 }

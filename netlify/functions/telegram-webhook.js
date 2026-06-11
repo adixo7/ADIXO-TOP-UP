@@ -15,11 +15,7 @@ async function tgRequest(token, method, body) {
 }
 
 function getOrderStore() {
-  return getStore({
-    name: 'adixo-orders',
-    siteID: process.env.SITE_ID,
-    token: process.env.NETLIFY_TOKEN,
-  });
+  return getStore('adixo-orders');
 }
 
 export const handler = async (event) => {
@@ -38,13 +34,9 @@ export const handler = async (event) => {
         const newStatus = action === 'complete' ? 'completed' : 'failed';
         const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
-        try {
-          const store = getOrderStore();
-          await store.setJSON(`status_${orderId}`, { status: newStatus });
-          console.log(`Status saved: ${orderId} → ${newStatus}`);
-        } catch (err) {
-          console.warn('Blobs status update failed:', err.message);
-        }
+        const store = getOrderStore();
+        await store.setJSON(`status_${orderId}`, { status: newStatus });
+        console.log(`Status saved: ${orderId} → ${newStatus}`);
 
         await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
           callback_query_id: cb.id,

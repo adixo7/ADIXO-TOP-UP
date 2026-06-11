@@ -15,11 +15,7 @@ async function tgRequest(token, method, body) {
 }
 
 function getOrderStore() {
-  return getStore({
-    name: 'adixo-orders',
-    siteID: process.env.SITE_ID,
-    token: process.env.NETLIFY_TOKEN,
-  });
+  return getStore('adixo-orders');
 }
 
 export const handler = async (event) => {
@@ -38,13 +34,9 @@ export const handler = async (event) => {
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     const order = JSON.parse(event.body);
 
-    try {
-      const store = getOrderStore();
-      await store.setJSON(`status_${order.id}`, { status: 'processing' });
-      await store.setJSON(`userinfo_${order.id}`, order.userInfo || {});
-    } catch (err) {
-      console.warn('Blobs save error:', err.message);
-    }
+    const store = getOrderStore();
+    await store.setJSON(`status_${order.id}`, { status: 'processing' });
+    await store.setJSON(`userinfo_${order.id}`, order.userInfo || {});
 
     if (BOT_TOKEN && CHAT_ID) {
       const sym = order.currency === 'USD' ? '$' : '৳';
