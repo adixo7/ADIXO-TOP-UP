@@ -34,9 +34,13 @@ export const handler = async (event) => {
         const newStatus = action === 'complete' ? 'completed' : 'failed';
         const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
-        const store = getOrderStore();
-        await store.setJSON(`status_${orderId}`, { status: newStatus });
-        console.log(`Status saved: ${orderId} → ${newStatus}`);
+        try {
+          const store = getOrderStore();
+          await store.setJSON(`status_${orderId}`, { status: newStatus });
+          console.log(`Status saved: ${orderId} → ${newStatus}`);
+        } catch (blobErr) {
+          console.warn('Blobs status update failed:', blobErr.message);
+        }
 
         await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
           callback_query_id: cb.id,

@@ -34,9 +34,13 @@ export const handler = async (event) => {
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     const order = JSON.parse(event.body);
 
-    const store = getOrderStore();
-    await store.setJSON(`status_${order.id}`, { status: 'processing' });
-    await store.setJSON(`userinfo_${order.id}`, order.userInfo || {});
+    try {
+      const store = getOrderStore();
+      await store.setJSON(`status_${order.id}`, { status: 'processing' });
+      await store.setJSON(`userinfo_${order.id}`, order.userInfo || {});
+    } catch (blobErr) {
+      console.warn('Blobs save error (non-fatal):', blobErr.message);
+    }
 
     if (BOT_TOKEN && CHAT_ID) {
       const sym = order.currency === 'USD' ? '$' : '৳';
