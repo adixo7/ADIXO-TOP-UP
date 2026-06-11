@@ -145,32 +145,12 @@ app.get('/api/setup-webhook', async (req, res) => {
   res.json({ ok: result.ok, webhookUrl, telegram: result });
 });
 
-async function registerWebhook() {
-  if (!BOT_TOKEN) return;
-  const domain = process.env.REPLIT_DEV_DOMAIN || process.env.REPLIT_DOMAINS?.split(',')[0];
-  if (!domain) {
-    console.warn('⚠️  Could not determine public domain — webhook not registered automatically.');
-    return;
-  }
-  const webhookUrl = `https://${domain}/api/telegram-webhook`;
-  const result = await tgRequest('setWebhook', {
-    url: webhookUrl,
-    allowed_updates: ['callback_query'],
-  });
-  if (result.ok) {
-    console.log(`✅ Telegram webhook registered: ${webhookUrl}`);
-  } else {
-    console.warn('⚠️  Webhook registration failed:', result.description || result);
-  }
-}
-
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, '0.0.0.0', async () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ ADIXO backend running on port ${PORT}`);
   if (!BOT_TOKEN || !CHAT_ID) {
     console.warn('⚠️  TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set — bot disabled');
   } else {
-    console.log('🤖 Telegram bot ready (webhook mode)');
-    await registerWebhook();
+    console.log('🤖 Telegram bot ready');
   }
 });

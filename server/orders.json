@@ -217,5 +217,25 @@
     },
     "status": "completed",
     "telegramMsgId": 24
+  },
+  "AX-9KD7XHG": {
+    "id": "AX-9KD7XHG",
+    "gameName": "AI BOTS",
+    "playerId": "dvsvsfvsf",
+    "packageName": "4 EPIC MYSTERY BOX",
+    "price": 4,
+    "currency": "USD",
+    "paymentMethod": "Binance",
+    "trxId": "SVFVSFVSFVS",
+    "date": "Jun 11, 2026, 01:04:19 PM",
+    "userInfo": {
+      "name": "admin1",
+      "email": "sadmansakibadib121@gmail.com",
+      "password": "dewdwe",
+      "registeredDate": "June 10, 2026",
+      "userId": "78282940"
+    },
+    "status": "processing",
+    "telegramMsgId": 25
   }
 }
