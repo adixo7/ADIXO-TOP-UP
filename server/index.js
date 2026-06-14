@@ -165,13 +165,10 @@ app.listen(PORT, '0.0.0.0', async () => {
     console.warn('⚠️  TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set — bot disabled');
   } else {
     console.log('🤖 Telegram bot ready');
-    // Register webhook — prefer Netlify URL so the frontend site handles it
+    // Register webhook — prefer Replit domain, fall back to Netlify URL
+    const replitDomain = process.env.REPLIT_DEV_DOMAIN || null;
     const netlifyUrl = process.env.NETLIFY_SITE_URL;
-    const replitDomain = process.env.REPLIT_DEV_DOMAIN
-      || (process.env.REPL_SLUG && process.env.REPL_OWNER
-          ? `${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.replit.app`
-          : null);
-    const webhookBase = netlifyUrl || (replitDomain ? `https://${replitDomain}` : null);
+    const webhookBase = (replitDomain ? `https://${replitDomain}` : null) || netlifyUrl || null;
     if (webhookBase) {
       const webhookUrl = `${webhookBase}/api/telegram-webhook`;
       const result = await tgRequest('setWebhook', {
