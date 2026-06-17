@@ -164,24 +164,6 @@ app.listen(PORT, '0.0.0.0', async () => {
   if (!BOT_TOKEN || !CHAT_ID) {
     console.warn('⚠️  TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set — bot disabled');
   } else {
-    console.log('🤖 Telegram bot ready');
-    // Register webhook — prefer Replit domain, fall back to Netlify URL
-    const replitDomain = process.env.REPLIT_DEV_DOMAIN || null;
-    const netlifyUrl = process.env.NETLIFY_SITE_URL;
-    const webhookBase = (replitDomain ? `https://${replitDomain}` : null) || netlifyUrl || null;
-    if (webhookBase) {
-      const webhookUrl = `${webhookBase}/api/telegram-webhook`;
-      const result = await tgRequest('setWebhook', {
-        url: webhookUrl,
-        allowed_updates: ['callback_query'],
-      });
-      if (result.ok) {
-        console.log(`✅ Telegram webhook registered: ${webhookUrl}`);
-      } else {
-        console.warn('⚠️  Webhook registration failed:', result.description);
-      }
-    } else {
-      console.warn('⚠️  Could not determine public domain — webhook not registered.');
-    }
+    console.log('🤖 Telegram bot ready (webhook managed by Netlify)');
   }
 });
