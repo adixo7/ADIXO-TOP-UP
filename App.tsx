@@ -411,6 +411,28 @@ const App: React.FC = () => {
       return updated;
     });
 
+    // Send order to backend → triggers Telegram notification
+    try {
+      await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: orderId,
+          gameId: selectedGame.id,
+          gameName: selectedGame.name,
+          playerId: playerId,
+          packageName,
+          price: displayPrice,
+          currency: displayCurrency,
+          paymentMethod: selectedPayment.name,
+          trxId,
+          date: orderTime,
+        }),
+      });
+    } catch (err) {
+      console.error('Order notification error:', err);
+    }
+
     setSelectedGame(null);
     setSelectedPackage(null);
     setSelectedServer(null);
