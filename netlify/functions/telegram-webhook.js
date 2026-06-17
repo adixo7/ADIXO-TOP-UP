@@ -1,5 +1,13 @@
 import { getStore } from '@netlify/blobs';
 
+function getOrderStore() {
+  return getStore({
+    name: 'orders',
+    siteID: process.env.SITE_ID,
+    token: process.env.NETLIFY_ACCESS_TOKEN,
+  });
+}
+
 async function tgRequest(token, method, body) {
   try {
     const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
@@ -31,7 +39,6 @@ export const handler = async (event) => {
   if (!cb) return { statusCode: 200, body: 'OK' };
 
   const [action, orderId] = (cb.data || '').split(':');
-
   if (!orderId || (action !== 'complete' && action !== 'cancel')) {
     return { statusCode: 200, body: 'OK' };
   }
@@ -39,13 +46,13 @@ export const handler = async (event) => {
   const newStatus = action === 'complete' ? 'completed' : 'failed';
   const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
 
-  // Answer the button tap immediately so Telegram doesn't show a loading spinner
+  // Answer button tap immediately
   await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
     callback_query_id: cb.id,
     text: `Order ${badge}`,
   });
 
-  // Edit the message to show the new status
+  // Edit the Telegram message
   await tgRequest(BOT_TOKEN, 'editMessageText', {
     chat_id: cb.message.chat.id,
     message_id: cb.message.message_id,
@@ -53,19 +60,14 @@ export const handler = async (event) => {
     parse_mode: 'HTML',
   });
 
-  console.log(`Order ${orderId} marked as ${newStatus}`);
-
-  // Update order status in Blobs (best-effort)
+  // Update order status in Blobs
   try {
-    const store = getStore({ name: 'orders', consistency: 'strong' });
+    const store = getOrderStore();
     const order = await store.get(orderId, { type: 'json' });
-    if (order) {
-      await store.setJSON(orderId, { ...order, status: newStatus });
-    } else {
-      await store.setJSON(orderId, { id: orderId, status: newStatus });
-    }
+    await store.setJSON(orderId, { ...(order || { id: orderId }), status: newStatus });
+    console.log(`Order ${orderId} → ${newStatus}`);
   } catch (err) {
-    console.warn('Blobs update failed (non-critical):', err.message);
+    console.error('Blobs update error:', err.message);
   }
 
   return { statusCode: 200, body: 'OK' };

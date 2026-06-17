@@ -7,6 +7,14 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+function getOrderStore() {
+  return getStore({
+    name: 'orders',
+    siteID: process.env.SITE_ID,
+    token: process.env.NETLIFY_ACCESS_TOKEN,
+  });
+}
+
 async function tgRequest(token, method, body) {
   const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
     method: 'POST',
@@ -24,7 +32,6 @@ export const handler = async (event) => {
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
   if (!BOT_TOKEN || !CHAT_ID) {
-    console.error('Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID');
     return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: 'Telegram secrets not set' }) };
   }
 
@@ -53,7 +60,6 @@ export const handler = async (event) => {
     `⏰ <b>Time:</b> ${order.date}\n` +
     `━━━━━━━━━━━━━━━━━━`;
 
-  // Send Telegram notification FIRST — this is the critical step
   let telegramMsgId = null;
   try {
     const result = await tgRequest(BOT_TOKEN, 'sendMessage', {
@@ -67,22 +73,17 @@ export const handler = async (event) => {
         ]],
       },
     });
-    if (result.ok) {
-      telegramMsgId = result.result.message_id;
-      console.log(`✅ Telegram notification sent for order ${order.id}`);
-    } else {
-      console.error('Telegram sendMessage failed:', result);
-    }
+    if (result.ok) telegramMsgId = result.result.message_id;
   } catch (err) {
     console.error('Telegram send error:', err.message);
   }
 
-  // Store order in Blobs for status tracking (best-effort)
   try {
-    const store = getStore({ name: 'orders', consistency: 'strong' });
+    const store = getOrderStore();
     await store.setJSON(order.id, { ...order, status: 'processing', telegramMsgId });
+    console.log(`Order ${order.id} stored in Blobs`);
   } catch (err) {
-    console.warn('Blobs storage failed (non-critical):', err.message);
+    console.error('Blobs store error:', err.message);
   }
 
   return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
