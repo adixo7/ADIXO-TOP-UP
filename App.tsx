@@ -411,23 +411,6 @@ const App: React.FC = () => {
       return updated;
     });
 
-    // Open Telegram DM to @AdiXO_TV with order details pre-filled
-    const sym = displayCurrency === 'USD' ? '$' : '৳';
-    const priceStr = displayCurrency === 'USD' ? displayPrice.toFixed(2) : displayPrice.toFixed(0);
-    const tgMessage =
-      `🔔 NEW ORDER — ADIXO\n` +
-      `━━━━━━━━━━━━━━━━━━\n` +
-      `📦 Order ID: ${orderId}\n` +
-      `🎮 Game: ${selectedGame.name}\n` +
-      `👤 Player ID: ${playerId}\n` +
-      `💎 Package: ${packageName}\n` +
-      `💰 Amount: ${sym}${priceStr}\n` +
-      `💳 Method: ${selectedPayment.name}\n` +
-      `🔑 TrxID: ${trxId}\n` +
-      `⏰ Time: ${orderTime}\n` +
-      `━━━━━━━━━━━━━━━━━━`;
-    window.open(`https://t.me/AdiXO_TV?text=${encodeURIComponent(tgMessage)}`, '_blank');
-
     setSelectedGame(null);
     setSelectedPackage(null);
     setSelectedServer(null);
