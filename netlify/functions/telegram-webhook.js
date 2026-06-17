@@ -57,7 +57,7 @@ export const handler = async (event) => {
 
   // Update order status in Blobs (best-effort)
   try {
-    const store = getStore('orders');
+    const store = getStore({ name: 'orders', consistency: 'strong' });
     const order = await store.get(orderId, { type: 'json' });
     if (order) {
       await store.setJSON(orderId, { ...order, status: newStatus });

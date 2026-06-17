@@ -79,7 +79,7 @@ export const handler = async (event) => {
 
   // Store order in Blobs for status tracking (best-effort)
   try {
-    const store = getStore('orders');
+    const store = getStore({ name: 'orders', consistency: 'strong' });
     await store.setJSON(order.id, { ...order, status: 'processing', telegramMsgId });
   } catch (err) {
     console.warn('Blobs storage failed (non-critical):', err.message);
