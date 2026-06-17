@@ -1,39 +1,31 @@
-function getBlobsCtx() {
-  try {
-    const raw = process.env.NETLIFY_BLOBS_CONTEXT;
-    if (!raw) return null;
-    return JSON.parse(Buffer.from(raw, 'base64').toString());
-  } catch { return null; }
-}
+import { getStore } from '@netlify/blobs';
 
 export const handler = async (event) => {
   const results = {
     hasTelegramToken: !!process.env.TELEGRAM_BOT_TOKEN,
     hasTelegramChatId: !!process.env.TELEGRAM_CHAT_ID,
+    hasNetlifyAccessToken: !!process.env.NETLIFY_ACCESS_TOKEN,
+    hasSiteId: !!process.env.SITE_ID,
+    siteId: process.env.SITE_ID || 'NOT SET',
     hasNetlifyBlobsContext: !!process.env.NETLIFY_BLOBS_CONTEXT,
   };
 
-  const ctx = getBlobsCtx();
-  if (ctx) {
-    results.blobsCtxKeys = Object.keys(ctx);
+  // Test Blobs with explicit credentials
+  if (process.env.NETLIFY_ACCESS_TOKEN && process.env.SITE_ID) {
     try {
-      const { edgeURL, rawSiteID, token } = ctx;
-      const putRes = await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/test_key`, {
-        method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'test', ts: Date.now() }),
+      const store = getStore({
+        name: 'orders',
+        siteID: process.env.SITE_ID,
+        token: process.env.NETLIFY_ACCESS_TOKEN,
       });
-      results.blobsWrite = putRes.ok ? 'OK' : `HTTP ${putRes.status}`;
-
-      const getRes = await fetch(`${edgeURL}/${rawSiteID}/adixo-orders/test_key`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      results.blobsRead = getRes.ok ? 'OK' : `HTTP ${getRes.status}`;
+      await store.setJSON('__test__', { ok: true, ts: Date.now() });
+      const val = await store.get('__test__', { type: 'json' });
+      results.blobsTest = val?.ok === true ? '✅ WORKING' : '❌ Read failed';
     } catch (err) {
-      results.blobsError = err.message;
+      results.blobsTest = `❌ ERROR: ${err.message}`;
     }
   } else {
-    results.blobsError = 'NETLIFY_BLOBS_CONTEXT not available';
+    results.blobsTest = '⚠️ Skipped — NETLIFY_ACCESS_TOKEN or SITE_ID missing';
   }
 
   return {
