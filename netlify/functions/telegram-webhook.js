@@ -32,30 +32,40 @@ export const handler = async (event) => {
 
   const [action, orderId] = (cb.data || '').split(':');
 
-  if (orderId && (action === 'complete' || action === 'cancel')) {
+  if (!orderId || (action !== 'complete' && action !== 'cancel')) {
+    return { statusCode: 200, body: 'OK' };
+  }
+
+  const newStatus = action === 'complete' ? 'completed' : 'failed';
+  const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
+
+  // Answer the button tap immediately so Telegram doesn't show a loading spinner
+  await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
+    callback_query_id: cb.id,
+    text: `Order ${badge}`,
+  });
+
+  // Edit the message to show the new status
+  await tgRequest(BOT_TOKEN, 'editMessageText', {
+    chat_id: cb.message.chat.id,
+    message_id: cb.message.message_id,
+    text: cb.message.text + `\n\n${badge}`,
+    parse_mode: 'HTML',
+  });
+
+  console.log(`Order ${orderId} marked as ${newStatus}`);
+
+  // Update order status in Blobs (best-effort)
+  try {
     const store = getStore('orders');
     const order = await store.get(orderId, { type: 'json' });
-
     if (order) {
-      const newStatus = action === 'complete' ? 'completed' : 'failed';
       await store.setJSON(orderId, { ...order, status: newStatus });
-
-      const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
-
-      await tgRequest(BOT_TOKEN, 'answerCallbackQuery', {
-        callback_query_id: cb.id,
-        text: `Order ${badge}`,
-      });
-
-      await tgRequest(BOT_TOKEN, 'editMessageText', {
-        chat_id: cb.message.chat.id,
-        message_id: cb.message.message_id,
-        text: cb.message.text + `\n\n${badge}`,
-        parse_mode: 'HTML',
-      });
-
-      console.log(`Order ${orderId} marked as ${newStatus}`);
+    } else {
+      await store.setJSON(orderId, { id: orderId, status: newStatus });
     }
+  } catch (err) {
+    console.warn('Blobs update failed (non-critical):', err.message);
   }
 
   return { statusCode: 200, body: 'OK' };
