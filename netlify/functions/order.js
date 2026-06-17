@@ -8,17 +8,12 @@ const headers = {
 };
 
 async function tgRequest(token, method, body) {
-  try {
-    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    return res.json();
-  } catch (err) {
-    console.error(`Telegram ${method} error:`, err.message);
-    return { ok: false };
-  }
+  const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  return res.json();
 }
 
 export const handler = async (event) => {
@@ -29,6 +24,7 @@ export const handler = async (event) => {
   const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
   if (!BOT_TOKEN || !CHAT_ID) {
+    console.error('Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID');
     return { statusCode: 500, headers, body: JSON.stringify({ ok: false, error: 'Telegram secrets not set' }) };
   }
 
@@ -38,9 +34,6 @@ export const handler = async (event) => {
   } catch {
     return { statusCode: 400, headers, body: JSON.stringify({ ok: false, error: 'Invalid JSON' }) };
   }
-
-  const store = getStore('orders');
-  await store.setJSON(order.id, { ...order, status: 'processing', telegramMsgId: null });
 
   const sym = order.currency === 'USD' ? '$' : '৳';
   const priceStr = order.currency === 'USD'
@@ -60,20 +53,36 @@ export const handler = async (event) => {
     `⏰ <b>Time:</b> ${order.date}\n` +
     `━━━━━━━━━━━━━━━━━━`;
 
-  const result = await tgRequest(BOT_TOKEN, 'sendMessage', {
-    chat_id: CHAT_ID,
-    text,
-    parse_mode: 'HTML',
-    reply_markup: {
-      inline_keyboard: [[
-        { text: '✅ Complete Order', callback_data: `complete:${order.id}` },
-        { text: '❌ Cancel Order', callback_data: `cancel:${order.id}` },
-      ]],
-    },
-  });
+  // Send Telegram notification FIRST — this is the critical step
+  let telegramMsgId = null;
+  try {
+    const result = await tgRequest(BOT_TOKEN, 'sendMessage', {
+      chat_id: CHAT_ID,
+      text,
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: [[
+          { text: '✅ Complete Order', callback_data: `complete:${order.id}` },
+          { text: '❌ Cancel Order', callback_data: `cancel:${order.id}` },
+        ]],
+      },
+    });
+    if (result.ok) {
+      telegramMsgId = result.result.message_id;
+      console.log(`✅ Telegram notification sent for order ${order.id}`);
+    } else {
+      console.error('Telegram sendMessage failed:', result);
+    }
+  } catch (err) {
+    console.error('Telegram send error:', err.message);
+  }
 
-  if (result.ok) {
-    await store.setJSON(order.id, { ...order, status: 'processing', telegramMsgId: result.result.message_id });
+  // Store order in Blobs for status tracking (best-effort)
+  try {
+    const store = getStore('orders');
+    await store.setJSON(order.id, { ...order, status: 'processing', telegramMsgId });
+  } catch (err) {
+    console.warn('Blobs storage failed (non-critical):', err.message);
   }
 
   return { statusCode: 200, headers, body: JSON.stringify({ ok: true }) };
