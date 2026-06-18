@@ -953,12 +953,10 @@ const App: React.FC = () => {
                         </div>
                         <div>
                           <h2 className="text-lg md:text-2xl font-black text-white uppercase italic tracking-tighter mb-0.5 md:mb-1">{selectedGame.name}</h2>
-                          <p className="text-orange-400 text-[10px] font-bold uppercase tracking-widest">{selectedGame.category}</p>
+                          <p className="text-orange-400 text-[10px] font-bold tracking-wide">{selectedGame.description}</p>
                         </div>
                       </div>
-                      {selectedGame.description && (
-                        <p className="text-zinc-400 text-xs leading-relaxed mt-2 md:mt-4">{selectedGame.description}</p>
-                      )}
+                      <p className="hidden md:block text-zinc-400 text-xs leading-relaxed mt-4">{selectedGame.category}</p>
                     </div>
                   </div>
 
