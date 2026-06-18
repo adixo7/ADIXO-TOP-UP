@@ -937,10 +937,10 @@ const App: React.FC = () => {
               
               <div className="grid lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-1 space-y-8">
-                    <div className="bg-zinc-900 rounded-[2rem] p-6 border border-zinc-800 shadow-xl overflow-hidden relative">
-                    {selectedGame.banner && <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-24 object-cover opacity-20 grayscale" />}
-                    <div className="relative pt-8">
-                      <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-orange-500 mb-4 shadow-xl shadow-orange-500/20 bg-zinc-950">
+                    <div className="bg-zinc-900 rounded-xl md:rounded-[2rem] p-4 md:p-6 border border-zinc-800 shadow-xl overflow-hidden relative">
+                    {selectedGame.banner && <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-16 md:h-24 object-cover opacity-20 grayscale" />}
+                    <div className="relative pt-4 md:pt-8 flex items-center gap-3 md:block">
+                      <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl overflow-hidden border-2 border-orange-500 md:mb-4 shadow-xl shadow-orange-500/20 bg-zinc-950 flex-shrink-0">
                         <img 
                            src={selectedGame.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(selectedGame.name)}&background=18181b&color=f97316&bold=true`} 
                            alt={selectedGame.name} 
@@ -950,9 +950,11 @@ const App: React.FC = () => {
                            }}
                         />
                       </div>
-                      <h2 className="text-2xl font-black text-white uppercase italic tracking-tighter mb-1">{selectedGame.name}</h2>
-                      <p className="text-orange-400 text-[10px] font-bold uppercase tracking-widest mb-4">{selectedGame.category}</p>
-                      <p className="text-zinc-400 text-xs leading-relaxed mb-4">{selectedGame.description}</p>
+                      <div>
+                        <h2 className="text-lg md:text-2xl font-black text-white uppercase italic tracking-tighter mb-0.5 md:mb-1">{selectedGame.name}</h2>
+                        <p className="text-orange-400 text-[10px] font-bold uppercase tracking-widest md:mb-4">{selectedGame.category}</p>
+                        <p className="hidden md:block text-zinc-400 text-xs leading-relaxed mb-4">{selectedGame.description}</p>
+                      </div>
                     </div>
                   </div>
 
