@@ -1,6 +1,6 @@
 [build]
   publish = "dist"
-  command = "npm install --include=dev && ./node_modules/.bin/vite build"
+  command = "npm ci && ./node_modules/.bin/vite build"
   functions = "netlify/functions"
 
 [build.environment]
