@@ -15,28 +15,16 @@ const slides = [
 
 const HomeBanner: React.FC = () => {
   const [current, setCurrent] = useState(0);
-  const [animating, setAnimating] = useState(false);
-  const [direction, setDirection] = useState<'left' | 'right'>('left');
 
   useEffect(() => {
     const timer = setInterval(() => {
-      goTo((prev) => (prev + 1) % slides.length, 'left');
+      setCurrent((prev) => (prev + 1) % slides.length);
     }, 4000);
     return () => clearInterval(timer);
   }, []);
 
-  const goTo = (nextFn: (prev: number) => number, dir: 'left' | 'right') => {
-    setDirection(dir);
-    setAnimating(true);
-    setTimeout(() => {
-      setCurrent(nextFn);
-      setAnimating(false);
-    }, 400);
-  };
-
   const handleDotClick = (idx: number) => {
-    if (idx === current) return;
-    goTo(() => idx, idx > current ? 'left' : 'right');
+    setCurrent(idx);
   };
 
   return (
@@ -49,11 +37,8 @@ const HomeBanner: React.FC = () => {
           rel="noopener noreferrer"
           className="absolute inset-0 block"
           style={{
-            opacity: idx === current ? (animating ? 0 : 1) : 0,
-            transform: idx === current
-              ? `translateX(${animating ? (direction === 'left' ? '-30px' : '30px') : '0px'})`
-              : `translateX(${direction === 'left' ? '30px' : '-30px'})`,
-            transition: animating ? 'none' : 'opacity 0.5s ease, transform 0.5s ease',
+            opacity: idx === current ? 1 : 0,
+            transition: 'opacity 0.7s ease',
             pointerEvents: idx === current ? 'auto' : 'none',
           }}
         >
