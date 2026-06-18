@@ -938,7 +938,7 @@ const App: React.FC = () => {
               <div className="grid lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-1 space-y-8">
                     <div className="bg-zinc-900 rounded-xl md:rounded-[2rem] p-4 md:p-6 border border-zinc-800 shadow-xl overflow-hidden relative">
-                    {selectedGame.banner && <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-16 md:h-24 object-cover opacity-20 grayscale" />}
+                    {selectedGame.banner && <img src={selectedGame.banner} alt={selectedGame.name} className="absolute top-0 left-0 w-full h-full object-cover opacity-20 grayscale" />}
                     <div className="relative pt-4 md:pt-8">
                       <div className="flex items-center gap-3 md:block">
                         <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl overflow-hidden border-2 border-orange-500 md:mb-4 shadow-xl shadow-orange-500/20 bg-zinc-950 flex-shrink-0">
