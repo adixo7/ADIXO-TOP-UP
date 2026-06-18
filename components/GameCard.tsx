@@ -12,7 +12,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
       onClick={() => onClick(game)}
       className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-sm hover:-translate-y-1 hover:shadow-[0_8px_20px_-5px_rgba(249,115,22,0.25)]"
     >
-      <div className="aspect-[3/2] md:aspect-square overflow-hidden relative">
+      <div className="aspect-square overflow-hidden relative">
         <img 
           src={game.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(game.name)}&background=18181b&color=f97316&bold=true`} 
           alt={game.name} 
