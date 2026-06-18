@@ -31,65 +31,74 @@ const Features: React.FC = () => {
   return (
     <section className="py-6 md:py-16 animate-in fade-in duration-1000">
       <div className="max-w-2xl mx-auto px-4 mb-8 md:mb-16">
-        <div className="bg-[#0c0c0e] border border-zinc-800/50 rounded-2xl overflow-hidden flex flex-row md:flex-row">
+        <div className="bg-[#0c0c0e] border border-zinc-800/50 rounded-2xl overflow-hidden flex flex-col md:flex-row">
           {/* Left Side: Support Info */}
-          <div className="flex-1 p-3 md:p-8 flex flex-col justify-between border-r border-zinc-800/50">
+          <div className="flex-1 p-5 md:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-zinc-800/50">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-2 md:mb-4">
+              <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-3 md:mb-4">
                 <i className="far fa-comment-dots text-orange-500 text-[8px]"></i>
                 <span className="text-orange-500 text-[8px] font-bold tracking-widest uppercase">{t('features.liveSupport')}</span>
               </div>
 
-              <h2 className="text-white text-base md:text-3xl font-black italic uppercase tracking-tighter leading-none mb-2 md:mb-3">
+              <h2 className="text-white text-xl md:text-3xl font-black italic uppercase tracking-tighter leading-none mb-2 md:mb-3">
                 {t('features.needHelp')}<br />
                 {t('features.with') && <>{t('features.with')}<br /></>}
                 <span className="text-orange-500">{t('features.yourOrder')}</span>
               </h2>
 
-              <p className="text-zinc-400 text-[9px] md:text-xs leading-relaxed mb-3 md:mb-5 max-w-[200px]">
+              <p className="text-zinc-400 text-[10px] md:text-xs leading-relaxed mb-4 md:mb-5 max-w-[200px]">
                 {t('features.supportDesc')}
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center">
                 <i className="fab fa-telegram-plane text-orange-500 text-sm"></i>
               </div>
               <div>
                 <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest">{t('features.telegramUsername')}</p>
-                <p className="text-white text-[10px] md:text-xs font-bold italic">@AdiXO_TV</p>
+                <p className="text-white text-xs font-bold italic">@AdiXO_TV</p>
               </div>
             </div>
           </div>
 
-          {/* Right Side: Profile Card */}
-          <div className="flex-1 p-3 md:p-8 flex flex-col items-center justify-center text-center bg-zinc-900/20">
-            <div className="relative mb-2 md:mb-4">
-              <div className="w-14 h-14 md:w-28 md:h-28 rounded-full border-[3px] border-zinc-800 p-1 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <img
-                  src="/images/support-avatar.jpg"
-                  alt="Support Admin"
-                  className="w-full h-full rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-110"
-                />
+          {/* Right Side: compact row on mobile, full card on desktop */}
+          <div className="flex-1 bg-zinc-900/20 md:p-8 md:flex md:flex-col md:items-center md:justify-center md:text-center">
+            {/* Mobile layout: horizontal row */}
+            <div className="flex md:hidden items-center gap-4 p-4">
+              <div className="relative flex-shrink-0">
+                <div className="w-12 h-12 rounded-full border-2 border-zinc-800 overflow-hidden">
+                  <img src="/images/support-avatar.jpg" alt="Support Admin" className="w-full h-full object-cover grayscale scale-110" />
+                </div>
+                <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#0c0c0e]"></div>
               </div>
-              <div className="absolute bottom-1 right-1 w-3 h-3 md:w-4 md:h-4 bg-green-500 rounded-full border-2 border-[#0c0c0e] shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+              <div className="flex-1 min-w-0">
+                <p className="text-white text-sm font-black italic uppercase tracking-tight">Adixo Support</p>
+                <p className="text-orange-500 text-[7px] font-bold uppercase tracking-widest mb-2">{t('features.headAdmin')}</p>
+                <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 text-black font-black italic uppercase tracking-wider py-1.5 px-3 rounded-lg text-[9px] transition-all active:scale-95">
+                  {t('features.messageOnTelegram')} <i className="fas fa-external-link-alt text-[8px]"></i>
+                </a>
+              </div>
             </div>
 
-            <h3 className="text-white text-sm md:text-lg font-black italic uppercase tracking-tight mb-0.5">Adixo Support</h3>
-            <p className="text-orange-500 text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] mb-2 md:mb-5">{t('features.headAdmin')}</p>
-
-            <a
-              href="https://t.me/AdiXO_TV"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-orange-500 hover:bg-orange-600 text-black font-black italic uppercase tracking-wider py-2 md:py-3 px-2 md:px-4 rounded-lg flex items-center justify-center gap-1.5 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-orange-500/20 text-[9px] md:text-[11px]"
-            >
-              {t('features.messageOnTelegram')}
-              <i className="fas fa-external-link-alt text-[8px]"></i>
-            </a>
-
-            <p className="mt-2 text-zinc-500 text-[7px] font-bold uppercase tracking-widest">{t('features.responseTime')}</p>
+            {/* Desktop layout: full card */}
+            <div className="hidden md:flex flex-col items-center text-center">
+              <div className="relative mb-4">
+                <div className="w-28 h-28 rounded-full border-[3px] border-zinc-800 p-1 relative overflow-hidden group">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <img src="/images/support-avatar.jpg" alt="Support Admin" className="w-full h-full rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-700 scale-110" />
+                </div>
+                <div className="absolute bottom-1.5 right-1.5 w-4 h-4 bg-green-500 rounded-full border-[3px] border-[#0c0c0e] shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
+              </div>
+              <h3 className="text-white text-lg font-black italic uppercase tracking-tight mb-0.5">Adixo Support</h3>
+              <p className="text-orange-500 text-[8px] font-bold uppercase tracking-[0.2em] mb-5">{t('features.headAdmin')}</p>
+              <a href="https://t.me/AdiXO_TV" target="_blank" rel="noopener noreferrer"
+                className="w-full bg-orange-500 hover:bg-orange-600 text-black font-black italic uppercase tracking-wider py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-orange-500/20 text-[11px]">
+                {t('features.messageOnTelegram')} <i className="fas fa-external-link-alt text-[9px]"></i>
+              </a>
+              <p className="mt-3 text-zinc-500 text-[7px] font-bold uppercase tracking-widest">{t('features.responseTime')}</p>
+            </div>
           </div>
         </div>
       </div>
