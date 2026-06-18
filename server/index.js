@@ -23,6 +23,7 @@ app.use(express.json());
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const ORDERS_FILE = join(__dirname, 'orders.json');
+const SITE_CONTROL_FILE = join(__dirname, 'site-control.json');
 
 // Load persisted orders
 let orders = {};
@@ -32,6 +33,16 @@ if (existsSync(ORDERS_FILE)) {
 
 function saveOrders() {
   try { writeFileSync(ORDERS_FILE, JSON.stringify(orders, null, 2)); } catch {}
+}
+
+// Load persisted site control
+let siteControl = { maintenance: false, announcement: null, activeBanner: 0 };
+if (existsSync(SITE_CONTROL_FILE)) {
+  try { siteControl = { ...siteControl, ...JSON.parse(readFileSync(SITE_CONTROL_FILE, 'utf8')) }; } catch {}
+}
+
+function saveSiteControl() {
+  try { writeFileSync(SITE_CONTROL_FILE, JSON.stringify(siteControl, null, 2)); } catch {}
 }
 
 async function tgRequest(method, body) {
@@ -92,6 +103,12 @@ app.post('/api/order', async (req, res) => {
   res.json({ ok: true });
 });
 
+// GET /api/site-control — frontend fetches site state
+app.get('/api/site-control', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.json(siteControl);
+});
+
 // GET /api/order/:id — frontend polls this for status changes
 app.get('/api/order/:id', (req, res) => {
   const o = orders[req.params.id];
@@ -103,32 +120,56 @@ app.post('/api/telegram-webhook', async (req, res) => {
   res.sendStatus(200);
 
   const update = req.body;
+
+  // Handle callback_query (button taps)
   const cb = update.callback_query;
-  if (!cb) return;
+  if (cb) {
+    const [action, orderId] = (cb.data || '').split(':');
+    const order = orders[orderId];
+    if (order && (action === 'complete' || action === 'cancel')) {
+      const newStatus = action === 'complete' ? 'completed' : 'failed';
+      orders[orderId].status = newStatus;
+      saveOrders();
+      const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
+      await tgRequest('answerCallbackQuery', { callback_query_id: cb.id, text: `Order ${badge}` });
+      await tgRequest('editMessageText', {
+        chat_id: cb.message.chat.id,
+        message_id: cb.message.message_id,
+        text: cb.message.text + `\n\n${badge}`,
+        parse_mode: 'HTML',
+      });
+      console.log(`Order ${orderId} marked as ${newStatus}`);
+    }
+    return;
+  }
 
-  const [action, orderId] = (cb.data || '').split(':');
-  const order = orders[orderId];
+  // Handle commands (dev only — in prod Netlify function handles these)
+  const msg = update.message;
+  if (!msg || !msg.text) return;
+  const chatId = String(msg.chat.id);
+  const parts = msg.text.trim().split(' ');
+  const command = parts[0].toLowerCase().split('@')[0];
+  const arg = parts.slice(1).join(' ').trim();
 
-  if (order && (action === 'complete' || action === 'cancel')) {
-    const newStatus = action === 'complete' ? 'completed' : 'failed';
-    orders[orderId].status = newStatus;
-    saveOrders();
+  async function reply(text) {
+    await tgRequest('sendMessage', { chat_id: chatId, text, parse_mode: 'HTML' });
+  }
 
-    const badge = action === 'complete' ? '✅ COMPLETED' : '❌ CANCELLED';
-
-    await tgRequest('answerCallbackQuery', {
-      callback_query_id: cb.id,
-      text: `Order ${badge}`,
-    });
-
-    await tgRequest('editMessageText', {
-      chat_id: cb.message.chat.id,
-      message_id: cb.message.message_id,
-      text: cb.message.text + `\n\n${badge}`,
-      parse_mode: 'HTML',
-    });
-
-    console.log(`Order ${orderId} marked as ${newStatus}`);
+  if (command === '/maintenance') {
+    const val = arg.toLowerCase();
+    if (val === 'on' || val === 'off') {
+      siteControl.maintenance = val === 'on';
+      saveSiteControl();
+      await reply(val === 'on' ? '🔧 Maintenance mode ON' : '✅ Maintenance mode OFF');
+    }
+  } else if (command === '/announce') {
+    siteControl.announcement = (!arg || arg.toLowerCase() === 'off') ? null : arg;
+    saveSiteControl();
+    await reply(siteControl.announcement ? `📢 Announcement set: ${siteControl.announcement}` : '🔕 Announcement cleared.');
+  } else if (command === '/banner') {
+    siteControl.activeBanner = arg.toLowerCase() === 'telegram' ? 1 : 0;
+    saveSiteControl();
+    await reply(`🖼 Banner set to: ${arg}`);
   }
 });
 

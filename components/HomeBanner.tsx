@@ -13,8 +13,12 @@ const slides = [
   },
 ];
 
-const HomeBanner: React.FC = () => {
-  const [current, setCurrent] = useState(0);
+interface Props {
+  initialSlide?: number;
+}
+
+const HomeBanner: React.FC<Props> = ({ initialSlide = 0 }) => {
+  const [current, setCurrent] = useState(initialSlide % slides.length);
 
   useEffect(() => {
     const timer = setInterval(() => {

@@ -10,6 +10,11 @@
   node_bundler = "nft"
 
 [[redirects]]
+  from = "/api/site-control"
+  to = "/.netlify/functions/site-control"
+  status = 200
+
+[[redirects]]
   from = "/api/order/:id"
   to = "/.netlify/functions/order-status?id=:id"
   status = 200

@@ -4,6 +4,7 @@ import { GAMES, PAYMENT_METHODS } from './data';
 import { Game, Package, Transaction, User, PaymentMethod } from './types';
 import Layout from './components/Layout';
 import HomeBanner from './components/HomeBanner';
+import AnnouncementBanner from './components/AnnouncementBanner';
 import GameCard from './components/GameCard';
 import Auth from './components/Auth';
 import PaymentGateway from './components/PaymentGateway';
@@ -157,12 +158,33 @@ const App: React.FC = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [stockOutToast, setStockOutToast] = useState<string | null>(null);
   const [showLangPopup, setShowLangPopup] = useState(false);
+  const [announcement, setAnnouncement] = useState<string | null>(null);
+  const [activeBanner, setActiveBanner] = useState(0);
+  const [botMaintenance, setBotMaintenance] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
 
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [activeTab, selectedGame]);
+
+  // Fetch site-control state on mount and every 30s
+  useEffect(() => {
+    const fetchSiteControl = async () => {
+      try {
+        const res = await fetch('/api/site-control');
+        if (res.ok) {
+          const data = await res.json();
+          setAnnouncement(data.announcement || null);
+          setActiveBanner(data.activeBanner ?? 0);
+          setBotMaintenance(!!data.maintenance);
+        }
+      } catch {}
+    };
+    fetchSiteControl();
+    const interval = setInterval(fetchSiteControl, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
@@ -547,6 +569,19 @@ const App: React.FC = () => {
       onOpenAuth={(mode) => setAuthMode(mode || 'login')}
       onOpenLangPopup={() => setShowLangPopup(true)}
     >
+      {announcement && <AnnouncementBanner message={announcement} />}
+      {botMaintenance && (
+        <div className="fixed inset-0 z-[999] bg-black/95 flex flex-col items-center justify-center gap-6 px-6 text-center">
+          <div className="w-16 h-16 rounded-full bg-orange-600/20 border border-orange-600/40 flex items-center justify-center mb-2">
+            <i className="fas fa-tools text-orange-500 text-2xl"></i>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">Under Maintenance</h1>
+          <p className="text-zinc-400 text-sm max-w-xs">ADIXO Store is currently under maintenance. We'll be back shortly!</p>
+          <a href="https://t.me/adixoglory" target="_blank" rel="noopener noreferrer" className="mt-2 px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white font-black text-sm rounded-xl transition-colors">
+            <i className="fab fa-telegram mr-2"></i>Check Telegram for Updates
+          </a>
+        </div>
+      )}
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleDisclaimerClose} />}
       {showServerIssue && <ServerIssuePopup onAgree={() => setShowServerIssue(false)} onAvoid={() => setShowServerIssue(false)} />}
@@ -557,7 +592,7 @@ const App: React.FC = () => {
         <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
 
           {/* Slideshow Banner */}
-          <HomeBanner />
+          <HomeBanner initialSlide={activeBanner} />
 
           <section>
             <div className="flex items-center justify-between mb-4 md:mb-6">
