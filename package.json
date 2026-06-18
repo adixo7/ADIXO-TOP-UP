@@ -13,18 +13,17 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@netlify/blobs": "^10.7.9",
+    "@types/cors": "^2.8.19",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
-  },
-  "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@vitejs/plugin-react": "^4.7.0",
+    "react-dom": "^19.2.6",
     "typescript": "^5.9.3",
     "vite": "^6.4.2"
-  }
+  },
+  "devDependencies": {}
 }
