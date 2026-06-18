@@ -10,8 +10,6 @@ interface LayoutProps {
   user: User | null;
   onLogout: () => void;
   onOpenAuth: (mode?: 'login' | 'register') => void;
-  searchTerm: string;
-  onSearchChange: (value: string) => void;
   onOpenLangPopup: () => void;
 }
 
@@ -123,16 +121,12 @@ const Layout: React.FC<LayoutProps> = ({
   user,
   onLogout,
   onOpenAuth,
-  searchTerm,
-  onSearchChange,
   onOpenLangPopup,
 }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isBellOpen, setIsBellOpen] = useState(false);
   const [readIds, setReadIds] = useState<string[]>(getReadIds);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLDivElement>(null);
   const bellRef = useRef<HTMLDivElement>(null);
   const { t, lang } = useLanguage();
 
@@ -143,16 +137,13 @@ const Layout: React.FC<LayoutProps> = ({
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsProfileOpen(false);
       }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        if (!searchTerm) setIsSearchOpen(false);
-      }
       if (bellRef.current && !bellRef.current.contains(event.target as Node)) {
         setIsBellOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [searchTerm]);
+  }, []);
 
   const handleBellOpen = () => {
     setIsBellOpen(o => {
@@ -359,29 +350,6 @@ const Layout: React.FC<LayoutProps> = ({
           </nav>
 
           <div className="flex items-center gap-2 md:gap-3">
-            {/* Search */}
-            <div className="relative hidden md:flex items-center" ref={searchRef}>
-              {isSearchOpen ? (
-                <div className="flex items-center bg-zinc-950 border border-orange-500/50 rounded-xl overflow-hidden animate-in slide-in-from-right-4 duration-300">
-                  <input
-                    autoFocus
-                    type="text"
-                    placeholder={t('common.search')}
-                    value={searchTerm}
-                    onChange={(e) => onSearchChange(e.target.value)}
-                    className="bg-transparent text-white px-3 py-1.5 text-[10px] md:text-xs font-bold focus:outline-none w-24 md:w-48"
-                  />
-                  <button onClick={() => { onSearchChange(''); setIsSearchOpen(false); }} className="px-2 py-1.5 text-zinc-500 hover:text-white">
-                    <i className="fas fa-times text-[10px]"></i>
-                  </button>
-                </div>
-              ) : (
-                <button onClick={() => { setIsSearchOpen(true); onTabChange('games'); }} className="p-2 md:p-2.5 text-zinc-400 hover:text-white transition-colors border border-zinc-800 rounded-lg md:rounded-xl bg-zinc-900/50">
-                  <i className="fas fa-search text-sm md:text-base"></i>
-                </button>
-              )}
-            </div>
-
             {/* Bell — always visible */}
             {BellButton}
 
