@@ -634,7 +634,7 @@ const App: React.FC = () => {
                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
                     onClick={() => { setSelectedGame(game || null); setActiveTab('games'); }}
                   >
-                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
+                    <div className="aspect-[5/2] md:aspect-video overflow-hidden bg-zinc-950 relative">
                       <img 
                         src={'/images/glory-bots-cover.png'} 
                         alt={proBot.unit} 
@@ -673,7 +673,7 @@ const App: React.FC = () => {
                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-blue-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(59,130,246,0.3)] relative"
                     onClick={() => { setSelectedGame(ebGame); setActiveTab('games'); }}
                   >
-                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
+                    <div className="aspect-[5/2] md:aspect-video overflow-hidden bg-zinc-950 relative">
                       <img
                         src="/images/event-bypass-cover.png"
                         alt="Event Bypass"
@@ -712,7 +712,7 @@ const App: React.FC = () => {
                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-emerald-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(16,185,129,0.3)] relative"
                     onClick={() => { setSelectedGame(ffGame); setActiveTab('games'); }}
                   >
-                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
+                    <div className="aspect-[5/2] md:aspect-video overflow-hidden bg-zinc-950 relative">
                       <img
                         src="/images/ff-panel-cover.avif"
                         alt="FF Panel"
@@ -751,7 +751,7 @@ const App: React.FC = () => {
                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-violet-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(139,92,246,0.35)] relative"
                     onClick={() => { setSelectedGame(luGame); setActiveTab('games'); }}
                   >
-                    <div className="aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
+                    <div className="aspect-[5/2] md:aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
                       <img src="/level-up-bg.png" alt="Level Up" className="absolute inset-0 w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/30"></div>
                       {/* UPTO 50% OFF badge */}
@@ -809,7 +809,7 @@ const App: React.FC = () => {
                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-pink-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(236,72,153,0.3)] relative"
                     onClick={() => { setSelectedGame(flGame); setActiveTab('games'); }}
                   >
-                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
+                    <div className="aspect-[5/2] md:aspect-video overflow-hidden bg-zinc-950 relative">
                       <img
                         src="/images/free-fire.webp"
                         alt="FF Likes"
