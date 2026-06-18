@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GAMES, PAYMENT_METHODS } from './data';
 import { Game, Package, Transaction, User, PaymentMethod } from './types';
 import Layout from './components/Layout';
+import HomeBanner from './components/HomeBanner';
 import GameCard from './components/GameCard';
 import Auth from './components/Auth';
 import PaymentGateway from './components/PaymentGateway';
@@ -555,7 +556,8 @@ const App: React.FC = () => {
       {activeTab === 'home' && (
         <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
 
-
+          {/* Slideshow Banner */}
+          <HomeBanner />
 
           <section>
             <div className="flex items-center justify-between mb-4 md:mb-6">
