@@ -51,20 +51,6 @@ const HomeBanner: React.FC = () => {
         </a>
       ))}
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleDotClick(idx)}
-            className={`rounded-full transition-all duration-300 ${
-              idx === current
-                ? 'w-5 h-2 bg-orange-500'
-                : 'w-2 h-2 bg-zinc-600 hover:bg-zinc-400'
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 };
