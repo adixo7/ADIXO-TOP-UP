@@ -40,7 +40,7 @@ const HomeBanner: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl shadow-2xl" style={{ aspectRatio: '16/5' }}>
+    <div className="relative overflow-hidden rounded-2xl shadow-2xl mx-auto" style={{ aspectRatio: '16/9', maxWidth: '560px', width: '100%' }}>
       {slides.map((slide, idx) => (
         <a
           key={idx}
