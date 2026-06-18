@@ -1,0 +1,81 @@
+6:44:36 PM: Netlify Build                                                 
+6:44:36 PM: ────────────────────────────────────────────────────────────────
+6:44:36 PM: ​
+6:44:36 PM: ❯ Version
+6:44:36 PM:   @netlify/build 36.0.0
+6:44:36 PM: ​
+6:44:36 PM: ❯ Flags
+6:44:36 PM:   accountId: 699d568eb869fd394ccc945b
+6:44:36 PM:   baseRelDir: true
+6:44:36 PM:   buildId: 6a33e7e58b972000086de366
+6:44:36 PM:   deployId: 6a33e7e58b972000086de368
+6:44:36 PM: ​
+6:44:36 PM: ❯ Current directory
+6:44:36 PM:   /opt/build/repo
+6:44:36 PM: ​
+6:44:36 PM: ❯ Config file
+6:44:36 PM:   /opt/build/repo/netlify.toml
+6:44:36 PM: ​
+6:44:36 PM: ❯ Context
+6:44:36 PM:   production
+6:44:36 PM: ​
+6:44:36 PM: build.command from netlify.toml                               
+6:44:36 PM: ────────────────────────────────────────────────────────────────
+6:44:36 PM: ​
+6:44:36 PM: $ npm install && npm run build
+6:45:47 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+6:45:47 PM: npm error Exit handler never called!
+6:45:47 PM: npm error This is an error with npm itself. Please report this error at:
+6:45:47 PM: npm error   <https://github.com/npm/cli/issues&gt;
+6:45:47 PM: npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2026-06-18T12_44_36_886Z-debug-0.log
+6:45:47 PM: > adixo-topup@1.0.0 build
+6:45:47 PM: > vite build
+6:45:47 PM: sh: 1: vite: not found
+6:45:47 PM: ​
+6:45:47 PM: "build.command" failed                                        
+6:45:47 PM: ────────────────────────────────────────────────────────────────
+6:45:47 PM: ​
+6:45:47 PM:   Error message
+6:45:47 PM:   Command failed with exit code 127: npm install && npm run build (https://ntl.fyi/exit-code-127)
+6:45:47 PM: ​
+6:45:47 PM:   Error location
+6:45:47 PM:   In build.command from netlify.toml:
+6:45:47 PM:   npm install && npm run build
+6:45:47 PM: ​
+6:45:47 PM:   Resolved config
+6:45:47 PM:   build:
+6:45:47 PM:     command: npm install && npm run build
+6:45:47 PM:     commandOrigin: config
+6:45:47 PM:     environment:
+6:45:47 PM:       - NODE_VERSION
+6:45:47 PM:     publish: /opt/build/repo/dist
+6:45:47 PM:     publishOrigin: config
+6:45:47 PM:   functions:
+6:45:47 PM:     "*":
+6:45:47 PM:       node_bundler: nft
+6:45:47 PM:   functionsDirectory: /opt/build/repo/netlify/functions
+6:45:47 PM:   redirects:
+6:45:47 PM:     - from: /api/site-control
+6:45:47 PM:       status: 200
+6:45:47 PM:       to: /.netlify/functions/site-control
+6:45:47 PM:     - from: /api/order/:id
+6:45:47 PM:       status: 200
+6:45:47 PM:       to: /.netlify/functions/order-status?id=:id
+6:45:47 PM:     - from: /api/order
+6:45:47 PM:       status: 200
+6:45:47 PM:       to: /.netlify/functions/order
+6:45:47 PM:     - from: /api/telegram-webhook
+6:45:47 PM:       status: 200
+6:45:47 PM:       to: /.netlify/functions/telegram-webhook
+6:45:47 PM:     - from: /api/setup-webhook
+6:45:47 PM:       status: 200
+6:45:47 PM:       to: /.netlify/functions/setup-webhook
+6:45:47 PM:     - from: /api/debug-storage
+6:45:47 PM:       status: 200
+6:45:47 PM:       to: /.netlify/functions/debug-storage
+6:45:47 PM:     - from: /*
+      status: 200
+      to: /index.html
+  redirectsOrigin: config
+6:45:47 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+6:45:47 PM: Failing build: Failed to build site
