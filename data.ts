@@ -275,7 +275,11 @@ export const GAMES: Game[] = [
     description: 'Boost your Free Fire profile likes with daily delivery packages.',
     packages: [
       { id: 'ff-likes-14d', amount: 3080, unit: 'Likes (14 Days)', price: 210, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 14 Days = 3080 Total Likes', isPopular: true },
-      { id: 'ff-likes-28d', amount: 6160, unit: 'Likes (28 Days)', price: 370, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 28 Days = 6160 Total Likes' }
+      { id: 'ff-likes-28d', amount: 6160, unit: 'Likes (28 Days)', price: 370, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 28 Days = 6160 Total Likes' },
+      { id: 'ff-likes-60d', amount: 13200, unit: 'Likes (60 Days)', price: 700, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 60 Days = 13200 Total Likes' },
+      { id: 'ff-likes-120d', amount: 26400, unit: 'Likes (120 Days)', price: 1300, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 120 Days = 26400 Total Likes' },
+      { id: 'ff-likes-150d', amount: 33000, unit: 'Likes (150 Days)', price: 1600, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 150 Days = 33000 Total Likes' },
+      { id: 'ff-likes-365d', amount: 80300, unit: 'Likes (365 Days)', price: 3700, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 365 Days = 80300 Total Likes' }
     ]
   },
   {
