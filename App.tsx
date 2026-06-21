@@ -449,6 +449,9 @@ const App: React.FC = () => {
           paymentMethod: selectedPayment.name,
           trxId,
           date: orderTime,
+          userName: user.name,
+          userEmail: user.email,
+          userId: user.id,
         }),
       });
     } catch (err) {
