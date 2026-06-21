@@ -1283,19 +1283,9 @@ const App: React.FC = () => {
                                     </>
                                   )}
 
-                                  {/* 100% BONUS corner ribbon for HIRE BOTS */}
-                                  {isHireBots && (
-                                    <>
-                                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-orange-600 via-red-400 to-orange-600 z-10"></div>
-                                      <div className="absolute top-0 left-0 bg-gradient-to-r from-red-500 to-orange-500 text-white text-[6px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10 flex items-center gap-0.5">
-                                        <i className="fas fa-fire text-[5px]"></i> 100% BONUS
-                                      </div>
-                                    </>
-                                  )}
-
-                                  {/* 100% BONUS floating pill for Mystery Box, Guild Level Up, Glory Package */}
-                                  {isGloryOffer && (
-                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-0.5 px-2 py-[3px] rounded-full text-white text-[6px] font-black uppercase tracking-widest whitespace-nowrap" style={{ background: 'linear-gradient(135deg, #7c3aed, #db2777)', boxShadow: '0 0 10px rgba(168,85,247,0.5)' }}>
+                                  {/* 100% BONUS floating pill for all eligible packages */}
+                                  {(isHireBots || isGloryOffer) && (
+                                    <div className="absolute top-2 left-2 z-20 flex items-center gap-0.5 px-2 py-[3px] rounded-full text-white text-[6px] font-black uppercase tracking-widest whitespace-nowrap" style={{ background: 'linear-gradient(135deg, #7c3aed, #db2777)', boxShadow: '0 0 10px rgba(168,85,247,0.5)' }}>
                                       <i className="fas fa-star text-[5px] text-yellow-300"></i>
                                       100% BONUS
                                       <i className="fas fa-star text-[5px] text-yellow-300"></i>
