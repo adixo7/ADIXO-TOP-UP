@@ -75,7 +75,7 @@ const ServerIssuePopup: React.FC<ServerIssuePopupProps> = ({ onAgree, onAvoid })
             <p className="text-xs font-semibold leading-relaxed" style={{ color: 'rgba(255,255,255,0.75)' }}>
               Due to ongoing <span className="text-red-400 font-black">server issues</span>, the{' '}
               <span className="text-orange-400 font-black">Guild Glory Bot</span> target may{' '}
-              <span className="text-red-400 font-black">drop up to 30%</span> from the expected value.
+              <span className="text-red-400 font-black">drop up to 50%</span> from the expected value.
             </p>
           </div>
 

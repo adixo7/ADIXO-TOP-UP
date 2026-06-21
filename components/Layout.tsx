@@ -15,6 +15,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-glory-50pct-warning-1',
+    type: 'warning',
+    icon: 'fa-triangle-exclamation',
+    color: '#ef4444',
+    title: '⚠ Glory Drop Alert — Up to 50%',
+    body: 'Due to ongoing server issues, the Guild Glory Bot target may drop up to 50% from the expected value. Please be aware before placing your order. We are working to resolve this as soon as possible — thank you for your patience.',
+    ts: '2026-06-21T00:00:00Z',
+  },
+  {
     id: 'notif-eid-bonus-ended-2',
     type: 'notice',
     icon: 'fa-gift',
@@ -29,7 +38,7 @@ const NOTIFICATIONS = [
     icon: 'fa-triangle-exclamation',
     color: '#ef4444',
     title: '⚠ Server Issue — Guild Glory Bot',
-    body: 'Due to ongoing server issues, the Guild Glory Bot target may drop up to 30% from the expected value. If you agree with this condition, you may proceed to place your order. Otherwise, please avoid ordering until the issue is resolved. We are working to fix this as soon as possible — thank you for your patience.',
+    body: 'Due to ongoing server issues, the Guild Glory Bot target may drop up to 50% from the expected value. If you agree with this condition, you may proceed to place your order. Otherwise, please avoid ordering until the issue is resolved. We are working to fix this as soon as possible — thank you for your patience.',
     ts: '2026-05-28T09:00:00Z',
   },
   {
