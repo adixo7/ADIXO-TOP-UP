@@ -1233,12 +1233,14 @@ const App: React.FC = () => {
                               const isMystery = category === 'MYSTERY BOX';
                               const isGuildLevelUp = category === 'GUILD LEVEL UP';
                               const isBonus = !!pkg.isBonus;
+                              const isHireBots = category === 'HIRE BOTS';
                               const isMysteryBasicStockOut = pkg.id === 'mystery-basic';
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
                                                    pkg.id === 'mystery-super' ? { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', icon: 'text-purple-400', iconBg: 'border-purple-500/50', glow: 'shadow-[0_0_20px_rgba(168,85,247,0.15)]' } :
                                                    isBonus ? { border: 'border-amber-400/50', hover: 'hover:border-amber-400/80', icon: 'text-amber-400', iconBg: 'border-amber-400/50', glow: 'shadow-[0_0_28px_rgba(251,191,36,0.25)]' } :
                                                    isGuildLevelUp ? { border: 'border-emerald-500/30', hover: 'hover:border-emerald-500/60', icon: 'text-emerald-400', iconBg: 'border-emerald-500/40', glow: '' } :
+                                                   isHireBots ? { border: 'border-orange-500/40', hover: 'hover:border-orange-400/70', icon: 'text-orange-400', iconBg: 'border-orange-500/40', glow: 'shadow-[0_0_24px_rgba(249,115,22,0.2)]' } :
                                                    { border: 'border-zinc-800/50', hover: 'hover:border-orange-500/50', icon: 'text-orange-500', iconBg: 'border-zinc-800', glow: '' };
 
                               return (
@@ -1247,8 +1249,8 @@ const App: React.FC = () => {
                                   className={`relative group rounded-xl overflow-hidden border transition-all duration-500 ${
                                     isMysteryBasicStockOut ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
                                   } ${
-                                    isBonus ? 'bg-gradient-to-br from-amber-950/40 via-zinc-900/80 to-zinc-900' : 'bg-zinc-900/40'
-                                  } ${mysteryTheme.border} ${!isMysteryBasicStockOut ? mysteryTheme.hover : ''} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''} ${isBonus ? mysteryTheme.glow : ''}`}
+                                    isBonus ? 'bg-gradient-to-br from-amber-950/40 via-zinc-900/80 to-zinc-900' : isHireBots ? 'bg-gradient-to-br from-orange-950/30 via-zinc-900/80 to-zinc-900' : 'bg-zinc-900/40'
+                                  } ${mysteryTheme.border} ${!isMysteryBasicStockOut ? mysteryTheme.hover : ''} ${selectedPackage?.id === pkg.id ? 'ring-2 ring-orange-500 bg-zinc-900/80 scale-[1.02]' : ''} ${isMystery ? mysteryTheme.glow : ''} ${isBonus ? mysteryTheme.glow : ''} ${isHireBots ? mysteryTheme.glow : ''}`}
                                   onClick={() => {
                                     if (isMysteryBasicStockOut) {
                                       setStockOutToast('BASIC MYSTERY');
@@ -1275,6 +1277,16 @@ const App: React.FC = () => {
                                       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 z-10"></div>
                                       <div className="absolute top-0 left-0 bg-amber-400 text-black text-[6px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10">
                                         {t('product.bonus')}
+                                      </div>
+                                    </>
+                                  )}
+
+                                  {/* 100% BONUS ribbon for HIRE BOTS */}
+                                  {isHireBots && (
+                                    <>
+                                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-orange-600 via-red-400 to-orange-600 z-10"></div>
+                                      <div className="absolute top-0 left-0 bg-gradient-to-r from-red-500 to-orange-500 text-white text-[6px] font-black px-2 py-0.5 rounded-br-lg uppercase tracking-widest z-10 flex items-center gap-0.5">
+                                        <i className="fas fa-fire text-[5px]"></i> 100% BONUS
                                       </div>
                                     </>
                                   )}
