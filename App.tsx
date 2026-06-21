@@ -1232,9 +1232,11 @@ const App: React.FC = () => {
                             {groupedPackages[category].map((pkg) => {
                               const isMystery = category === 'MYSTERY BOX';
                               const isGuildLevelUp = category === 'GUILD LEVEL UP';
+                              const isGloryPackage = category === 'GLORY PACKAGE';
                               const isBonus = !!pkg.isBonus;
                               const isHireBots = category === 'HIRE BOTS';
                               const isMysteryBasicStockOut = pkg.id === 'mystery-basic';
+                              const isGloryOffer = (isMystery || isGuildLevelUp || isGloryPackage) && !isMysteryBasicStockOut && !isBonus;
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
                                                    pkg.id === 'mystery-super' ? { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', icon: 'text-purple-400', iconBg: 'border-purple-500/50', glow: 'shadow-[0_0_20px_rgba(168,85,247,0.15)]' } :
@@ -1281,7 +1283,7 @@ const App: React.FC = () => {
                                     </>
                                   )}
 
-                                  {/* 100% BONUS ribbon for HIRE BOTS */}
+                                  {/* 100% BONUS corner ribbon for HIRE BOTS */}
                                   {isHireBots && (
                                     <>
                                       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-orange-600 via-red-400 to-orange-600 z-10"></div>
@@ -1289,6 +1291,15 @@ const App: React.FC = () => {
                                         <i className="fas fa-fire text-[5px]"></i> 100% BONUS
                                       </div>
                                     </>
+                                  )}
+
+                                  {/* 100% BONUS floating pill for Mystery Box, Guild Level Up, Glory Package */}
+                                  {isGloryOffer && (
+                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 flex items-center gap-0.5 px-2 py-[3px] rounded-full text-white text-[6px] font-black uppercase tracking-widest whitespace-nowrap" style={{ background: 'linear-gradient(135deg, #7c3aed, #db2777)', boxShadow: '0 0 10px rgba(168,85,247,0.5)' }}>
+                                      <i className="fas fa-star text-[5px] text-yellow-300"></i>
+                                      100% BONUS
+                                      <i className="fas fa-star text-[5px] text-yellow-300"></i>
+                                    </div>
                                   )}
                                   
                                   <div className="p-2.5 flex flex-col items-center text-center">
