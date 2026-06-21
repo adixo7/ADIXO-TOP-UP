@@ -50,9 +50,13 @@ export const handler = async (event) => {
   const text =
     `🔔 <b>NEW ORDER RECEIVED</b>\n` +
     `━━━━━━━━━━━━━━━━━━\n` +
+    `👤 <b>Customer:</b> ${order.userName || 'N/A'}\n` +
+    `📧 <b>Email:</b> ${order.userEmail || 'N/A'}\n` +
+    `🆔 <b>User ID:</b> <code>${order.userId || 'N/A'}</code>\n` +
+    `━━━━━━━━━━━━━━━━━━\n` +
     `📦 <b>Order ID:</b> <code>${order.id}</code>\n` +
     `🎮 <b>Game:</b> ${order.gameName}\n` +
-    `👤 <b>Player ID:</b> <code>${order.playerId}</code>\n` +
+    `🎯 <b>Player ID:</b> <code>${order.playerId}</code>\n` +
     `💎 <b>Package:</b> ${order.packageName}\n` +
     `💰 <b>Amount:</b> ${sym}${priceStr}\n` +
     `💳 <b>Method:</b> ${order.paymentMethod}\n` +
