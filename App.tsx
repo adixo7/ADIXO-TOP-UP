@@ -1471,6 +1471,7 @@ const App: React.FC = () => {
                             className="appearance-none bg-black/60 border border-amber-500/30 text-white text-[10px] font-black uppercase tracking-widest rounded-lg pl-3 pr-7 py-2 focus:outline-none focus:border-amber-500/70 cursor-pointer"
                           >
                             <option value="default">Sort By</option>
+                            <option value="level-4">Level 4</option>
                             <option value="level-5">Level 5</option>
                             <option value="level-6">Level 6</option>
                             <option value="level-7">Level 7</option>
@@ -1483,6 +1484,7 @@ const App: React.FC = () => {
 
                       {selectedGame.packages
                         .filter(pkg => {
+                          if (guildSort === 'level-4') return pkg.level === 4;
                           if (guildSort === 'level-5') return pkg.level === 5;
                           if (guildSort === 'level-6') return pkg.level === 6;
                           if (guildSort === 'level-7') return pkg.level === 7;
