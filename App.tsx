@@ -945,7 +945,7 @@ const App: React.FC = () => {
                       </div>
                       <div className="p-1.5 flex items-center justify-between bg-zinc-900">
                         <div className="flex items-center gap-1">
-                          <span className="text-orange-500 font-black text-[8px] md:text-[10px] italic">৳{pkg.price}</span>
+                          <span className="gaming-font text-orange-500 font-black text-[8px] md:text-[10px] italic">৳{pkg.price}</span>
                           {pkg.oldPrice && <span className="text-zinc-500 text-[6px] md:text-[7px] line-through">৳{pkg.oldPrice}</span>}
                         </div>
                         <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
@@ -1204,12 +1204,12 @@ const App: React.FC = () => {
                                     style={{ background: 'rgba(34,197,94,0.15)', color: '#4ade80', border: '1px solid rgba(34,197,94,0.3)' }}>
                                     -{t.discount}%
                                   </span>
-                                  <span className="text-[10px] text-zinc-600 line-through font-bold">
+                                  <span className="gaming-font text-[10px] text-zinc-600 line-through font-bold">
                                     ৳{pkg.price.toLocaleString()}
                                   </span>
                                 </div>
                                 {/* Discounted price */}
-                                <span className="font-black text-lg leading-none" style={{ color: t.priceColor, textShadow: `0 0 14px ${t.blob1}` }}>
+                                <span className="gaming-font font-black text-lg leading-none" style={{ color: t.priceColor, textShadow: `0 0 14px ${t.blob1}` }}>
                                   ৳{Math.round(pkg.price * (1 - t.discount / 100)).toLocaleString()}
                                 </span>
                               </div>
@@ -1352,8 +1352,8 @@ const App: React.FC = () => {
                                     <p className="text-zinc-500 text-[7px] font-bold uppercase tracking-widest mb-2 line-clamp-1">{pkg.description}</p>
                                     
                                     <div className="flex items-baseline gap-1 mb-2">
-                                      <span className={`text-base font-black ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.price}</span>
-                                      <span className="text-orange-500 font-black text-[10px] italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
+                                      <span className={`gaming-font text-base font-black ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.price}</span>
+                                      <span className="gaming-font text-orange-500 font-black text-[10px] italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
                                       {pkg.oldPrice && <span className="text-zinc-500 text-[8px] line-through decoration-red-500/50 italic ml-1">
                                         {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
                                       </span>}
@@ -1601,7 +1601,7 @@ const App: React.FC = () => {
                             <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-1.5">
-                                <span className="text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                                <span className="gaming-font text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
                                 {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
                               </div>
                               <div className={`w-3 h-3 rounded-full border flex items-center justify-center transition-colors ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500 text-white' : 'border-zinc-700'}`}>
@@ -1780,7 +1780,7 @@ const App: React.FC = () => {
 
                                 {/* Price + selector */}
                                 <div className="flex flex-col items-end gap-2 shrink-0">
-                                  <p className="text-white font-black text-base leading-none">৳{pkg.price}</p>
+                                  <p className="gaming-font text-white font-black text-base leading-none">৳{pkg.price}</p>
                                   <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? theme.checkSel : `border-zinc-600 group-hover:${theme.iconBorder}`}`}>
                                     {isSelected && <i className="fas fa-check text-white text-[6px]"></i>}
                                   </div>
@@ -1957,7 +1957,7 @@ const App: React.FC = () => {
                                 {/* Price + BONUS tag + select circle */}
                                 <div className="flex items-center justify-between pt-1 gap-2">
                                   <div>
-                                    <p className="text-white font-black text-lg leading-none">৳{pkg.price}</p>
+                                    <p className="gaming-font text-white font-black text-lg leading-none">৳{pkg.price}</p>
                                     <p className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest mt-0.5">{t('product.bdt')}</p>
                                   </div>
                                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all ${isSelected ? 'border-white bg-white' : 'border-zinc-600 group-hover:border-white/50'}`}>
@@ -2051,7 +2051,7 @@ const App: React.FC = () => {
                                     : isMonthlyDeal ? 'text-amber-400'
                                     : isWeeklyDeal ? 'text-emerald-400'
                                     : 'text-orange-500 group-hover:text-orange-400'
-                                  }`}>
+                                  } gaming-font`}>
                                     ৳{pkg.price}
                                   </span>
                                   {pkg.oldPrice && (
@@ -2089,7 +2089,7 @@ const App: React.FC = () => {
                           <p className="text-white font-black text-sm uppercase italic tracking-tight leading-tight truncate pr-2">
                             {selectedPackage.amount} {selectedPackage.unit}
                           </p>
-                          <p className="text-xl font-black text-orange-400 italic leading-none shrink-0">
+                          <p className="gaming-font text-xl font-black text-orange-400 italic leading-none shrink-0">
                             {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price.toLocaleString()}
                           </p>
                         </div>
@@ -2176,10 +2176,12 @@ const App: React.FC = () => {
                                   : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
                               }`}
                             >
+                              <span className="gaming-font">
                               {canProceed
                                 ? `${t('game.confirmPay')} ${selectedPackage.currency === 'USD' ? '$' : '৳'}${selectedPackage.price}`
                                 : 'Fill All Required Fields'
                               }
+                              </span>
                             </button>
                           );
                         })()}
@@ -2398,7 +2400,7 @@ const App: React.FC = () => {
                               </span>
                             </div>
                           </div>
-                          <span className={`text-sm font-black tabular-nums ${ffPanelTierIdx === idx ? 'text-orange-400' : 'text-zinc-500'}`}>
+                          <span className={`gaming-font text-sm font-black tabular-nums ${ffPanelTierIdx === idx ? 'text-orange-400' : 'text-zinc-500'}`}>
                             ৳{tier.price.toLocaleString()}
                           </span>
                         </button>
@@ -2408,7 +2410,7 @@ const App: React.FC = () => {
                     {/* Summary bar */}
                     <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/5 mb-4">
                       <span className="text-zinc-500 text-[10px] font-bold uppercase tracking-widest">Total</span>
-                      <span className="text-white text-sm font-black">৳{FF_PANEL_TIERS[ffPanelPopupPkg.id][ffPanelTierIdx].price.toLocaleString()}</span>
+                      <span className="gaming-font text-white text-sm font-black">৳{FF_PANEL_TIERS[ffPanelPopupPkg.id][ffPanelTierIdx].price.toLocaleString()}</span>
                     </div>
 
                     <button
