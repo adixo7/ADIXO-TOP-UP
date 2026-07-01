@@ -1496,37 +1496,39 @@ const App: React.FC = () => {
                                   </p>
                                 </div>
 
-                                <div className="space-y-1 text-[10px] font-bold">
-                                  <div className="flex items-center gap-1.5 text-zinc-300">
-                                    <span className="text-zinc-500 uppercase tracking-wide">Level</span>
+                                <div className="space-y-1.5 text-sm font-bold">
+                                  <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide text-xs">Level</span>
                                     <span className="text-zinc-600">:</span>
                                     <span className="text-white font-black">7</span>
                                   </div>
-                                  <div className="flex items-center gap-1.5 text-zinc-300">
-                                    <span className="text-zinc-500 uppercase tracking-wide">Player Space</span>
+                                  <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide text-xs">Player Space</span>
                                     <span className="text-zinc-600">:</span>
                                     <span className="text-white font-black">50</span>
                                   </div>
-                                  <div className="flex items-center gap-1.5 text-zinc-300">
-                                    <span className="text-zinc-500 uppercase tracking-wide">Server</span>
+                                  <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide text-xs">Server</span>
                                     <span className="text-zinc-600">:</span>
-                                    <span className="text-white font-black">BD</span>
+                                    <span className="text-white font-black flex items-center gap-1.5">
+                                      <span className="text-base leading-none">🇧🇩</span> BD
+                                    </span>
                                   </div>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-1.5 border-t border-amber-500/10">
+                                <div className="flex items-center justify-between pt-2.5 border-t border-amber-500/10">
                                   <div>
-                                    <p className="text-[7px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Price</p>
-                                    <p className="text-lg font-black text-amber-400 italic leading-none">
+                                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Price</p>
+                                    <p className="text-3xl font-black text-amber-400 italic leading-none drop-shadow-[0_0_12px_rgba(245,158,11,0.35)]">
                                       ৳{pkg.price.toLocaleString()}
                                     </p>
                                   </div>
                                   <button
                                     onClick={() => setSelectedPackage(pkg)}
-                                    className={`px-4 py-2.5 rounded-lg font-black uppercase italic tracking-widest text-[9px] transition-all duration-300 ${
+                                    className={`px-5 py-3 rounded-xl font-black uppercase italic tracking-widest text-[11px] transition-all duration-300 ${
                                       isSelected
                                         ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                                        : 'bg-amber-600 text-white hover:bg-amber-500 active:scale-95'
+                                        : 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.03] active:scale-95'
                                     }`}
                                   >
                                     {isSelected ? <><i className="fas fa-check mr-1"></i>Selected</> : 'Buy Now'}
