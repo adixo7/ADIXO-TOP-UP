@@ -1514,20 +1514,20 @@ const App: React.FC = () => {
                                   </div>
                                 </div>
 
-                                <div className="pt-3 border-t border-amber-500/10 space-y-3">
-                                  <div className="flex items-end gap-2">
-                                    <span className="text-amber-400 text-lg font-black italic">৳</span>
-                                    <span className="text-4xl font-black text-white italic leading-none tracking-tight">
+                                <div className="pt-3 border-t border-amber-500/10 flex items-center justify-between gap-3">
+                                  <div className="flex items-end gap-1.5">
+                                    <span className="text-amber-400 text-base font-black italic">৳</span>
+                                    <span className="text-3xl font-black text-white italic leading-none tracking-tight">
                                       {pkg.price.toLocaleString()}
                                     </span>
-                                    <span className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-1">/ guild</span>
+                                    <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">/ guild</span>
                                   </div>
                                   <button
                                     onClick={() => setSelectedPackage(pkg)}
-                                    className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-black uppercase italic tracking-widest text-xs transition-all duration-300 ${
+                                    className={`shrink-0 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg font-black uppercase italic tracking-widest text-[10px] transition-all duration-300 ${
                                       isSelected
                                         ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/30'
-                                        : 'bg-amber-500 text-black shadow-[0_6px_0_0_rgba(0,0,0,0.35)] hover:bg-amber-400 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none'
+                                        : 'bg-amber-500 text-black shadow-[0_4px_0_0_rgba(0,0,0,0.35)] hover:bg-amber-400 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none'
                                     }`}
                                   >
                                     {isSelected ? <><i className="fas fa-check"></i>Selected</> : <><i className="fas fa-bolt"></i>Buy Now</>}
