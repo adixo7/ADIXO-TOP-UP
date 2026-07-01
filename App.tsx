@@ -596,7 +596,7 @@ const App: React.FC = () => {
         <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
 
           {/* Slideshow Banner */}
-          <HomeBanner initialSlide={activeBanner} />
+          <HomeBanner initialSlide={activeBanner} onNavigateInternal={(id) => { setSelectedGame(GAMES.find(g => g.id === id) || null); setActiveTab('games'); }} />
 
           <section>
             <div className="flex items-center justify-between mb-4 md:mb-6">
