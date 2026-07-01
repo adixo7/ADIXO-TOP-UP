@@ -1505,16 +1505,9 @@ const App: React.FC = () => {
                               boxShadow: isSelected ? '0 0 40px rgba(245,158,11,0.15)' : '0 10px 40px -10px rgba(0,0,0,0.6)'
                             }}
                           >
-                            <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
-                              {pkg.level != null && (
-                                <div className="flex items-center gap-1 px-3 py-1 rounded-full text-white text-[8px] font-black uppercase tracking-widest bg-black/70 border border-white/20 backdrop-blur-sm">
-                                  <i className="fas fa-layer-group text-[7px] text-amber-400"></i> LEVEL {pkg.level}
-                                </div>
-                              )}
-                            </div>
-                            {pkg.isPopular && (
+                            {pkg.level != null && (
                               <div className="absolute top-4 right-4 z-20 flex items-center gap-1 px-3 py-1 rounded-full text-black text-[8px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(135deg,#fbbf24,#f59e0b)', boxShadow: '0 0 15px rgba(245,158,11,0.5)' }}>
-                                <i className="fas fa-star text-[7px]"></i> PREMIUM
+                                <i className="fas fa-layer-group text-[7px]"></i> LEVEL {pkg.level}
                               </div>
                             )}
                             <div className="grid sm:grid-cols-5 gap-0">
