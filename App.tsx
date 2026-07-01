@@ -1479,61 +1479,60 @@ const App: React.FC = () => {
                                 <i className="fas fa-star text-[7px]"></i> PREMIUM
                               </div>
                             )}
-                            <div className="grid sm:grid-cols-2 gap-0">
-                              <div className="relative aspect-square sm:aspect-auto sm:h-full min-h-[220px] sm:min-h-[320px] overflow-hidden">
+                            <div className="grid sm:grid-cols-5 gap-0">
+                              <div className="relative sm:col-span-3 aspect-video sm:aspect-auto overflow-hidden bg-black">
                                 <img
                                   src={pkg.image || selectedGame.image}
                                   alt={pkg.unit}
-                                  className="w-full h-full object-cover"
+                                  className="w-full h-full object-contain sm:object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:via-transparent sm:to-black/10"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:via-transparent sm:to-black/10"></div>
                               </div>
 
-                              <div className="p-5 md:p-7 flex flex-col justify-center gap-5">
+                              <div className="sm:col-span-2 p-3.5 md:p-4 flex flex-col justify-center gap-2.5">
                                 <div>
-                                  <p className="text-amber-400 text-[9px] font-black uppercase tracking-[0.3em] mb-1.5 flex items-center gap-1.5">
+                                  <p className="text-amber-400 text-[8px] font-black uppercase tracking-[0.25em] mb-1 flex items-center gap-1">
                                     <i className="fas fa-check-circle"></i> 100% Safe Transfer
                                   </p>
-                                  <h3 className="text-white text-xl md:text-2xl font-black uppercase italic tracking-tighter leading-tight mb-1">
+                                  <h3 className="text-white text-sm md:text-base font-black uppercase italic tracking-tighter leading-tight mb-0.5">
                                     {pkg.unit}
                                   </h3>
-                                  <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-wide">{pkg.description}</p>
                                 </div>
 
-                                <div className="grid grid-cols-3 gap-2">
-                                  <div className="bg-black/40 border border-amber-500/15 rounded-xl px-2.5 py-2.5 text-center">
-                                    <i className="fas fa-layer-group text-amber-400 text-xs mb-1"></i>
-                                    <p className="text-white font-black text-sm leading-none">7</p>
-                                    <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-1">Level</p>
+                                <div className="space-y-1 text-[10px] font-bold">
+                                  <div className="flex items-center gap-1.5 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide">Level</span>
+                                    <span className="text-zinc-600">:</span>
+                                    <span className="text-white font-black">7</span>
                                   </div>
-                                  <div className="bg-black/40 border border-amber-500/15 rounded-xl px-2.5 py-2.5 text-center">
-                                    <i className="fas fa-users text-amber-400 text-xs mb-1"></i>
-                                    <p className="text-white font-black text-sm leading-none">50</p>
-                                    <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-1">Player Space</p>
+                                  <div className="flex items-center gap-1.5 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide">Player Space</span>
+                                    <span className="text-zinc-600">:</span>
+                                    <span className="text-white font-black">50</span>
                                   </div>
-                                  <div className="bg-black/40 border border-amber-500/15 rounded-xl px-2.5 py-2.5 text-center">
-                                    <i className="fas fa-server text-amber-400 text-xs mb-1"></i>
-                                    <p className="text-white font-black text-sm leading-none">BD</p>
-                                    <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-1">Server</p>
+                                  <div className="flex items-center gap-1.5 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide">Server</span>
+                                    <span className="text-zinc-600">:</span>
+                                    <span className="text-white font-black">BD</span>
                                   </div>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-1">
+                                <div className="flex items-center justify-between pt-1.5 border-t border-amber-500/10">
                                   <div>
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Price</p>
-                                    <p className="text-3xl font-black text-amber-400 italic leading-none">
+                                    <p className="text-[7px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Price</p>
+                                    <p className="text-lg font-black text-amber-400 italic leading-none">
                                       ৳{pkg.price.toLocaleString()}
                                     </p>
                                   </div>
                                   <button
                                     onClick={() => setSelectedPackage(pkg)}
-                                    className={`px-6 py-3.5 rounded-xl font-black uppercase italic tracking-widest text-[10px] transition-all duration-300 ${
+                                    className={`px-4 py-2.5 rounded-lg font-black uppercase italic tracking-widest text-[9px] transition-all duration-300 ${
                                       isSelected
                                         ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
                                         : 'bg-amber-600 text-white hover:bg-amber-500 active:scale-95'
                                     }`}
                                   >
-                                    {isSelected ? <><i className="fas fa-check mr-1.5"></i>Selected</> : 'Buy This Guild'}
+                                    {isSelected ? <><i className="fas fa-check mr-1"></i>Selected</> : 'Buy Now'}
                                   </button>
                                 </div>
                               </div>
