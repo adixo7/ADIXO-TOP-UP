@@ -2223,7 +2223,7 @@ const App: React.FC = () => {
                       </p>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-2xl font-black text-white italic tracking-tighter leading-none mb-2">৳{trx.price}</p>
+                      <p className="text-2xl font-black text-white italic tracking-tighter leading-none mb-2">${Number(trx.price).toFixed(2)}</p>
                       <div className={`inline-flex px-3 py-1 rounded-lg border text-[8px] font-black uppercase tracking-widest ${trx.status === 'processing' ? 'text-amber-500 border-amber-500/20 bg-amber-500/5' : trx.status === 'failed' ? 'text-red-500 border-red-500/20 bg-red-500/5' : 'text-green-500 border-green-500/20 bg-green-500/5'}`}>
                         {trx.status === 'processing' ? t('history.processing') : trx.status === 'failed' ? 'CANCELLED' : t('history.completed')}
                       </div>
