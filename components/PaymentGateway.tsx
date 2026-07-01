@@ -139,7 +139,7 @@ const PaymentGateway: React.FC<PaymentGatewayProps> = ({ method, pkg, game, play
         <div className="grid grid-cols-2 gap-2 mb-3">
           <div className="bg-[#121214] p-2 rounded-xl border border-zinc-800/60 flex flex-col items-center text-center">
             <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mb-0.5">TOTAL DUE</p>
-            <div className="gaming-font flex items-baseline gap-0.5 italic" style={{ color: primaryColor }}>
+            <div className="gaming-font flex items-baseline gap-0.5" style={{ color: primaryColor }}>
               <span className="text-xs font-black leading-none">{isBinance ? '$' : '৳'}</span>
               <span className="text-lg font-black leading-none tracking-tighter">
                 {isBinance ? displayPrice.toFixed(2) : displayPrice.toFixed(0)}

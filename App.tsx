@@ -945,7 +945,7 @@ const App: React.FC = () => {
                       </div>
                       <div className="p-1.5 flex items-center justify-between bg-zinc-900">
                         <div className="flex items-center gap-1">
-                          <span className="gaming-font text-orange-500 font-black text-[8px] md:text-[10px] italic">৳{pkg.price}</span>
+                          <span className="gaming-font text-orange-500 font-black text-[8px] md:text-[10px]">৳{pkg.price}</span>
                           {pkg.oldPrice && <span className="text-zinc-500 text-[6px] md:text-[7px] line-through">৳{pkg.oldPrice}</span>}
                         </div>
                         <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
@@ -1353,7 +1353,7 @@ const App: React.FC = () => {
                                     
                                     <div className="flex items-baseline gap-1 mb-2">
                                       <span className={`gaming-font text-base font-black ${isBonus ? 'text-amber-300' : 'text-white'}`}>{pkg.price}</span>
-                                      <span className="gaming-font text-orange-500 font-black text-[10px] italic">{pkg.currency === 'USD' ? '$' : '৳'}</span>
+                                      <span className="gaming-font text-orange-500 font-black text-[10px]">{pkg.currency === 'USD' ? '$' : '৳'}</span>
                                       {pkg.oldPrice && <span className="text-zinc-500 text-[8px] line-through decoration-red-500/50 italic ml-1">
                                         {pkg.currency === 'USD' ? '$' : '৳'}{pkg.oldPrice}
                                       </span>}
@@ -1601,7 +1601,7 @@ const App: React.FC = () => {
                             <h3 className="text-[8px] md:text-[9px] font-black text-white uppercase tracking-tight line-clamp-2 mb-1 leading-tight h-6 md:h-7">{pkg.unit}</h3>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-1.5">
-                                <span className="gaming-font text-orange-500 font-black text-[10px] md:text-xs italic">৳{pkg.price}</span>
+                                <span className="gaming-font text-orange-500 font-black text-[10px] md:text-xs">৳{pkg.price}</span>
                                 {pkg.oldPrice && <span className="text-zinc-500 text-[8px] md:text-[9px] line-through">৳{pkg.oldPrice}</span>}
                               </div>
                               <div className={`w-3 h-3 rounded-full border flex items-center justify-center transition-colors ${selectedPackage?.id === pkg.id ? 'border-orange-500 bg-orange-500 text-white' : 'border-zinc-700'}`}>
@@ -2089,7 +2089,7 @@ const App: React.FC = () => {
                           <p className="text-white font-black text-sm uppercase italic tracking-tight leading-tight truncate pr-2">
                             {selectedPackage.amount} {selectedPackage.unit}
                           </p>
-                          <p className="gaming-font text-xl font-black text-orange-400 italic leading-none shrink-0">
+                          <p className="gaming-font text-xl font-black text-orange-400 leading-none shrink-0">
                             {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price.toLocaleString()}
                           </p>
                         </div>
