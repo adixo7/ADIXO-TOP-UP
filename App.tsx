@@ -2083,16 +2083,33 @@ const App: React.FC = () => {
                   {selectedPackage && (
                     <div ref={paymentSectionRef} className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
-                      {/* Universal Product Detail Box (compact) */}
-                      <div className="relative rounded-2xl overflow-hidden border border-orange-500/25 shadow-lg shadow-orange-500/5 bg-[#0b0b0d]">
-                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500/80 via-orange-400/40 to-transparent"></div>
-                        <div className="relative flex items-center justify-between p-3">
-                          <p className="text-white font-black text-sm uppercase italic tracking-tight leading-tight truncate pr-2">
-                            {selectedPackage.amount} {selectedPackage.unit}
-                          </p>
-                          <p className="gaming-font text-xl font-black text-orange-400 leading-none shrink-0">
-                            {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price.toLocaleString()}
-                          </p>
+                      {/* Universal Product Detail Box (premium) */}
+                      <div className="relative rounded-2xl overflow-hidden border border-orange-500/30 shadow-[0_8px_30px_rgba(0,0,0,0.4)] bg-gradient-to-br from-[#141013] via-[#0d0b0c] to-[#0b0b0d]">
+                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500/90 via-amber-400/60 to-transparent"></div>
+                        <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-orange-500/10 blur-2xl"></div>
+                        <div className="absolute inset-0 opacity-[0.04] bg-[radial-gradient(circle_at_1px_1px,white_1px,transparent_0)] bg-[size:14px_14px]"></div>
+                        <div className="relative flex items-center gap-3 p-4">
+                          <div className="w-10 h-10 rounded-xl shrink-0 flex items-center justify-center border border-orange-500/40 bg-gradient-to-br from-orange-500/20 to-amber-600/10 shadow-inner">
+                            <i className="fas fa-box-open text-orange-400 text-sm"></i>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-orange-400/70 text-[8px] font-black uppercase tracking-[0.15em] mb-0.5">{t('game.orderSummary') || 'Order Summary'}</p>
+                            <p className="text-white font-black text-sm uppercase italic tracking-tight leading-tight truncate">
+                              {selectedPackage.amount} {selectedPackage.unit}
+                            </p>
+                          </div>
+                          <div className="text-right shrink-0">
+                            <p className="gaming-font text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300 leading-none">
+                              {selectedPackage.currency === 'USD' ? '$' : '৳'}{selectedPackage.price.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="relative flex items-center gap-1.5 px-4 pb-3 -mt-1">
+                          <i className="fas fa-shield-alt text-emerald-400 text-[8px]"></i>
+                          <span className="text-emerald-400/90 text-[8px] font-bold uppercase tracking-widest">100% Safe</span>
+                          <span className="text-zinc-600 text-[8px]">•</span>
+                          <i className="fas fa-bolt text-orange-400 text-[8px]"></i>
+                          <span className="text-zinc-500 text-[8px] font-bold uppercase tracking-widest">Instant Delivery</span>
                         </div>
                       </div>
 
