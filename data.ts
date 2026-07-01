@@ -271,12 +271,10 @@ export const GAMES: Game[] = [
     category: 'BUY GUILD',
     image: '/images/buy-guild-cover.png',
     banner: '/images/buy-guild-cover.png',
-    idPlaceholder: 'Account ID / Discord Tag',
+    idPlaceholder: 'Free Fire Account ID',
     description: 'Purchase pre-leveled, high-glory guilds instantly.',
     packages: [
-      { id: 'guild-buy-lvl5', amount: 1, unit: 'LEVEL 5 GUILD', price: 1200, currency: 'BDT', category: 'GUILD SHOP', description: 'Ready-made Level 5 Guild' },
-      { id: 'guild-buy-lvl6', amount: 1, unit: 'LEVEL 6 GUILD', price: 1800, currency: 'BDT', category: 'GUILD SHOP', description: 'Ready-made Level 6 Guild', isPopular: true },
-      { id: 'guild-buy-lvl7', amount: 1, unit: 'LEVEL 7 GUILD', price: 2600, currency: 'BDT', category: 'GUILD SHOP', description: 'Ready-made Level 7 Guild + Glory Bonus' }
+      { id: 'guild-fnhad-ofc', amount: 1, unit: 'FNHAD OFC GUILD', price: 1400, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 7 Guild · 50 Player Space · BD Server', isPopular: true, image: '/images/guild-fnhad.jpg' }
     ]
   },
   {

@@ -1450,6 +1450,98 @@ const App: React.FC = () => {
                         </div>
                       ))}
                     </div>
+                  ) : selectedGame.id === 'buy-guild' ? (
+                    <div className="space-y-6">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{background:'linear-gradient(135deg,rgba(245,158,11,0.25),rgba(217,119,6,0.1))',border:'1px solid rgba(245,158,11,0.35)'}}>
+                          <i className="fas fa-shield text-amber-400 text-xs"></i>
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-black text-white uppercase tracking-widest">Available Guild</h3>
+                          <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Verified · Instant Ownership Transfer</p>
+                        </div>
+                      </div>
+
+                      {selectedGame.packages.map(pkg => {
+                        const isSelected = selectedPackage?.id === pkg.id;
+                        return (
+                          <div
+                            key={pkg.id}
+                            className="relative rounded-2xl md:rounded-[1.75rem] overflow-hidden border shadow-2xl"
+                            style={{
+                              borderColor: isSelected ? 'rgba(245,158,11,0.7)' : 'rgba(245,158,11,0.25)',
+                              background: 'linear-gradient(135deg, rgba(24,20,10,0.98) 0%, rgba(10,10,12,0.98) 60%)',
+                              boxShadow: isSelected ? '0 0 40px rgba(245,158,11,0.15)' : '0 10px 40px -10px rgba(0,0,0,0.6)'
+                            }}
+                          >
+                            {pkg.isPopular && (
+                              <div className="absolute top-4 right-4 z-20 flex items-center gap-1 px-3 py-1 rounded-full text-black text-[8px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(135deg,#fbbf24,#f59e0b)', boxShadow: '0 0 15px rgba(245,158,11,0.5)' }}>
+                                <i className="fas fa-star text-[7px]"></i> PREMIUM
+                              </div>
+                            )}
+                            <div className="grid sm:grid-cols-2 gap-0">
+                              <div className="relative aspect-square sm:aspect-auto sm:h-full min-h-[220px] sm:min-h-[320px] overflow-hidden">
+                                <img
+                                  src={pkg.image || selectedGame.image}
+                                  alt={pkg.unit}
+                                  className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:via-transparent sm:to-black/10"></div>
+                              </div>
+
+                              <div className="p-5 md:p-7 flex flex-col justify-center gap-5">
+                                <div>
+                                  <p className="text-amber-400 text-[9px] font-black uppercase tracking-[0.3em] mb-1.5 flex items-center gap-1.5">
+                                    <i className="fas fa-check-circle"></i> 100% Safe Transfer
+                                  </p>
+                                  <h3 className="text-white text-xl md:text-2xl font-black uppercase italic tracking-tighter leading-tight mb-1">
+                                    {pkg.unit}
+                                  </h3>
+                                  <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-wide">{pkg.description}</p>
+                                </div>
+
+                                <div className="grid grid-cols-3 gap-2">
+                                  <div className="bg-black/40 border border-amber-500/15 rounded-xl px-2.5 py-2.5 text-center">
+                                    <i className="fas fa-layer-group text-amber-400 text-xs mb-1"></i>
+                                    <p className="text-white font-black text-sm leading-none">7</p>
+                                    <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-1">Level</p>
+                                  </div>
+                                  <div className="bg-black/40 border border-amber-500/15 rounded-xl px-2.5 py-2.5 text-center">
+                                    <i className="fas fa-users text-amber-400 text-xs mb-1"></i>
+                                    <p className="text-white font-black text-sm leading-none">50</p>
+                                    <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-1">Player Space</p>
+                                  </div>
+                                  <div className="bg-black/40 border border-amber-500/15 rounded-xl px-2.5 py-2.5 text-center">
+                                    <i className="fas fa-server text-amber-400 text-xs mb-1"></i>
+                                    <p className="text-white font-black text-sm leading-none">BD</p>
+                                    <p className="text-zinc-500 text-[7px] font-black uppercase tracking-widest mt-1">Server</p>
+                                  </div>
+                                </div>
+
+                                <div className="flex items-center justify-between pt-1">
+                                  <div>
+                                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Price</p>
+                                    <p className="text-3xl font-black text-amber-400 italic leading-none">
+                                      ৳{pkg.price.toLocaleString()}
+                                    </p>
+                                  </div>
+                                  <button
+                                    onClick={() => setSelectedPackage(pkg)}
+                                    className={`px-6 py-3.5 rounded-xl font-black uppercase italic tracking-widest text-[10px] transition-all duration-300 ${
+                                      isSelected
+                                        ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
+                                        : 'bg-amber-600 text-white hover:bg-amber-500 active:scale-95'
+                                    }`}
+                                  >
+                                    {isSelected ? <><i className="fas fa-check mr-1.5"></i>Selected</> : 'Buy This Guild'}
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   ) : selectedGame.id === 'pc-games' ? (
                     <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
                       {selectedGame.packages.map((pkg) => {
