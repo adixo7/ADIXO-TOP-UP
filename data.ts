@@ -266,6 +266,20 @@ export const GAMES: Game[] = [
     ]
   },
   {
+    id: 'buy-guild',
+    name: 'BUY GUILD',
+    category: 'BUY GUILD',
+    image: '/images/buy-guild-cover.png',
+    banner: '/images/buy-guild-cover.png',
+    idPlaceholder: 'Account ID / Discord Tag',
+    description: 'Purchase pre-leveled, high-glory guilds instantly.',
+    packages: [
+      { id: 'guild-buy-lvl5', amount: 1, unit: 'LEVEL 5 GUILD', price: 1200, currency: 'BDT', category: 'GUILD SHOP', description: 'Ready-made Level 5 Guild' },
+      { id: 'guild-buy-lvl6', amount: 1, unit: 'LEVEL 6 GUILD', price: 1800, currency: 'BDT', category: 'GUILD SHOP', description: 'Ready-made Level 6 Guild', isPopular: true },
+      { id: 'guild-buy-lvl7', amount: 1, unit: 'LEVEL 7 GUILD', price: 2600, currency: 'BDT', category: 'GUILD SHOP', description: 'Ready-made Level 7 Guild + Glory Bonus' }
+    ]
+  },
+  {
     id: 'ff-likes',
     name: 'FF LIKES',
     category: 'FF LIKES',
