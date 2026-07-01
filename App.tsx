@@ -1005,17 +1005,17 @@ const App: React.FC = () => {
 
                   <div className="space-y-4 px-2">
                     <h3 className="text-xl font-bold text-white">
-                      {selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
+                      {selectedGame.id === 'buy-guild' ? t('game.tgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
                     </h3>
                     <div className="relative group">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
-                        <i className={`fas ${selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : 'fa-gamepad'} text-xl`}></i>
+                        <i className={`fas ${selectedGame.id === 'buy-guild' ? 'fa-paper-plane' : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : 'fa-gamepad'} text-xl`}></i>
                       </div>
                       <input 
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder={selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.enterEmail') : selectedGame.id === 'ai-bots' ? t('game.enterGuildId') : selectedGame.idPlaceholder}
+                        placeholder={selectedGame.id === 'buy-guild' ? t('game.enterTgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.enterEmail') : selectedGame.id === 'ai-bots' ? t('game.enterGuildId') : selectedGame.idPlaceholder}
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
@@ -1024,6 +1024,11 @@ const App: React.FC = () => {
                     {(selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel') && (
                       <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">
                         {selectedGame.id === 'ff-panel' ? t('game.panelNote') : t('game.pcNote')}
+                      </p>
+                    )}
+                    {selectedGame.id === 'buy-guild' && (
+                      <p className="text-orange-500/80 text-[10px] font-medium italic mt-2 px-1">
+                        {t('game.guildContactNote')}
                       </p>
                     )}
                   </div>
