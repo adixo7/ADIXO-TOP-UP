@@ -1516,8 +1516,11 @@ const App: React.FC = () => {
                                   src={pkg.image || selectedGame.image}
                                   alt={pkg.unit}
                                   className="w-full h-full object-cover"
+                                  loading="eager"
+                                  decoding="sync"
+                                  style={{ imageRendering: 'auto' }}
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:via-transparent sm:to-black/10"></div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                               </div>
 
                               <div className="sm:col-span-2 p-3.5 md:p-4 flex flex-col justify-center gap-2.5">
