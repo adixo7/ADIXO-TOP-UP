@@ -120,6 +120,7 @@ const App: React.FC = () => {
   const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+  const [guildSort, setGuildSort] = useState<string>('default');
   const [selectedServer, setSelectedServer] = useState<string | null>(null);
   const [serverDropdownOpen, setServerDropdownOpen] = useState(false);
   const [ffPanelPopupPkg, setFfPanelPopupPkg] = useState<Package | null>(null);
@@ -1452,17 +1453,47 @@ const App: React.FC = () => {
                     </div>
                   ) : selectedGame.id === 'buy-guild' ? (
                     <div className="space-y-6">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{background:'linear-gradient(135deg,rgba(245,158,11,0.25),rgba(217,119,6,0.1))',border:'1px solid rgba(245,158,11,0.35)'}}>
-                          <i className="fas fa-shield text-amber-400 text-xs"></i>
+                      <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{background:'linear-gradient(135deg,rgba(245,158,11,0.25),rgba(217,119,6,0.1))',border:'1px solid rgba(245,158,11,0.35)'}}>
+                            <i className="fas fa-shield text-amber-400 text-xs"></i>
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-black text-white uppercase tracking-widest">Available Guild</h3>
+                            <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Verified · Instant Ownership Transfer</p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-sm font-black text-white uppercase tracking-widest">Available Guild</h3>
-                          <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Verified · Instant Ownership Transfer</p>
+
+                        <div className="relative">
+                          <select
+                            value={guildSort}
+                            onChange={(e) => setGuildSort(e.target.value)}
+                            className="appearance-none bg-black/60 border border-amber-500/30 text-white text-[10px] font-black uppercase tracking-widest rounded-lg pl-3 pr-7 py-2 focus:outline-none focus:border-amber-500/70 cursor-pointer"
+                          >
+                            <option value="default">Sort By</option>
+                            <option value="level-5">Level 5</option>
+                            <option value="level-6">Level 6</option>
+                            <option value="level-7">Level 7</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                          </select>
+                          <i className="fas fa-chevron-down absolute right-2.5 top-1/2 -translate-y-1/2 text-amber-400 text-[9px] pointer-events-none"></i>
                         </div>
                       </div>
 
-                      {selectedGame.packages.map(pkg => {
+                      {selectedGame.packages
+                        .filter(pkg => {
+                          if (guildSort === 'level-5') return pkg.level === 5;
+                          if (guildSort === 'level-6') return pkg.level === 6;
+                          if (guildSort === 'level-7') return pkg.level === 7;
+                          return true;
+                        })
+                        .sort((a, b) => {
+                          if (guildSort === 'price-low') return a.price - b.price;
+                          if (guildSort === 'price-high') return b.price - a.price;
+                          return 0;
+                        })
+                        .map(pkg => {
                         const isSelected = selectedPackage?.id === pkg.id;
                         return (
                           <div
@@ -1500,17 +1531,17 @@ const App: React.FC = () => {
                                   <div className="flex items-center gap-2 text-zinc-300">
                                     <span className="text-zinc-500 uppercase tracking-wide text-xs">Level</span>
                                     <span className="text-zinc-600">:</span>
-                                    <span className="text-white font-black">7</span>
+                                    <span className="text-white font-black">{pkg.level ?? '-'}</span>
                                   </div>
                                   <div className="flex items-center gap-2 text-zinc-300">
                                     <span className="text-zinc-500 uppercase tracking-wide text-xs">Player Space</span>
                                     <span className="text-zinc-600">:</span>
-                                    <span className="text-white font-black">50</span>
+                                    <span className="text-white font-black">{pkg.playerSpace ?? '-'}</span>
                                   </div>
                                   <div className="flex items-center gap-2 text-zinc-300">
                                     <span className="text-zinc-500 uppercase tracking-wide text-xs">Server</span>
                                     <span className="text-zinc-600">:</span>
-                                    <span className="text-white font-black">BD</span>
+                                    <span className="text-white font-black">{pkg.server ?? '-'}</span>
                                   </div>
                                 </div>
 

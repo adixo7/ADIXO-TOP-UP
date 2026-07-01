@@ -20,6 +20,9 @@ export interface Package {
   category?: string; // New field for grouping
   image?: string; // Image for the package cover
   description?: string;
+  level?: number;
+  playerSpace?: number;
+  server?: string;
 }
 
 export interface Game {

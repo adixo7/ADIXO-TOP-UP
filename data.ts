@@ -274,7 +274,7 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Free Fire Account ID',
     description: 'Purchase pre-leveled, high-glory guilds instantly.',
     packages: [
-      { id: 'guild-fnhad-ofc', amount: 1, unit: 'FNHAD OFC GUILD', price: 1400, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 7 Guild · 50 Player Space · BD Server', isPopular: true, image: '/images/guild-fnhad.jpg' }
+      { id: 'guild-fnhad-ofc', amount: 1, unit: 'FNHAD OFC GUILD', price: 1400, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 7 Guild · 50 Player Space · BD Server', isPopular: true, image: '/images/guild-fnhad.jpg', level: 7, playerSpace: 50, server: 'BD' }
     ]
   },
   {
