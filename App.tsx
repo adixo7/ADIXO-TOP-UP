@@ -1505,6 +1505,13 @@ const App: React.FC = () => {
                               boxShadow: isSelected ? '0 0 40px rgba(245,158,11,0.15)' : '0 10px 40px -10px rgba(0,0,0,0.6)'
                             }}
                           >
+                            <div className="absolute top-4 left-4 z-20 flex items-center gap-2">
+                              {pkg.level != null && (
+                                <div className="flex items-center gap-1 px-3 py-1 rounded-full text-white text-[8px] font-black uppercase tracking-widest bg-black/70 border border-white/20 backdrop-blur-sm">
+                                  <i className="fas fa-layer-group text-[7px] text-amber-400"></i> LEVEL {pkg.level}
+                                </div>
+                              )}
+                            </div>
                             {pkg.isPopular && (
                               <div className="absolute top-4 right-4 z-20 flex items-center gap-1 px-3 py-1 rounded-full text-black text-[8px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(135deg,#fbbf24,#f59e0b)', boxShadow: '0 0 15px rgba(245,158,11,0.5)' }}>
                                 <i className="fas fa-star text-[7px]"></i> PREMIUM
@@ -1547,8 +1554,8 @@ const App: React.FC = () => {
 
                                 <div className="pt-3 border-t border-amber-500/10 flex items-center justify-between gap-3">
                                   <div className="flex items-end gap-1.5">
-                                    <span className="text-amber-400 text-base font-black italic">৳</span>
-                                    <span className="text-3xl font-black text-white italic leading-none tracking-tight">
+                                    <span className="gaming-font text-amber-400 text-base font-bold">৳</span>
+                                    <span className="gaming-font text-3xl font-bold text-white leading-none tracking-wide">
                                       {pkg.price.toLocaleString()}
                                     </span>
                                     <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">/ guild</span>
