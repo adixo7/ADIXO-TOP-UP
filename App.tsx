@@ -1546,6 +1546,11 @@ const App: React.FC = () => {
                                     <span className="text-zinc-600">:</span>
                                     <span className="text-white font-black">{pkg.server ?? '-'}</span>
                                   </div>
+                                  <div className="flex items-center gap-2 text-zinc-300">
+                                    <span className="text-zinc-500 uppercase tracking-wide text-xs">Guild ID</span>
+                                    <span className="text-zinc-600">:</span>
+                                    <span className="text-white font-black">{pkg.guildId ?? '-'}</span>
+                                  </div>
                                 </div>
 
                                 <div className="pt-3 border-t border-amber-500/10 flex items-center justify-between gap-3">

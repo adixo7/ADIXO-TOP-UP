@@ -23,6 +23,7 @@ export interface Package {
   level?: number;
   playerSpace?: number;
   server?: string;
+  guildId?: string;
 }
 
 export interface Game {
