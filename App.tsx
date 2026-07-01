@@ -1510,28 +1510,27 @@ const App: React.FC = () => {
                                   <div className="flex items-center gap-2 text-zinc-300">
                                     <span className="text-zinc-500 uppercase tracking-wide text-xs">Server</span>
                                     <span className="text-zinc-600">:</span>
-                                    <span className="text-white font-black flex items-center gap-1.5">
-                                      <span className="text-base leading-none">🇧🇩</span> BD
-                                    </span>
+                                    <span className="text-white font-black">BD</span>
                                   </div>
                                 </div>
 
-                                <div className="flex items-center justify-between pt-2.5 border-t border-amber-500/10">
-                                  <div>
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-zinc-600 mb-0.5">Price</p>
-                                    <p className="text-3xl font-black text-amber-400 italic leading-none drop-shadow-[0_0_12px_rgba(245,158,11,0.35)]">
-                                      ৳{pkg.price.toLocaleString()}
-                                    </p>
+                                <div className="pt-3 border-t border-amber-500/10 space-y-3">
+                                  <div className="flex items-end gap-2">
+                                    <span className="text-amber-400 text-lg font-black italic">৳</span>
+                                    <span className="text-4xl font-black text-white italic leading-none tracking-tight">
+                                      {pkg.price.toLocaleString()}
+                                    </span>
+                                    <span className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-1">/ guild</span>
                                   </div>
                                   <button
                                     onClick={() => setSelectedPackage(pkg)}
-                                    className={`px-5 py-3 rounded-xl font-black uppercase italic tracking-widest text-[11px] transition-all duration-300 ${
+                                    className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-black uppercase italic tracking-widest text-xs transition-all duration-300 ${
                                       isSelected
-                                        ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/40'
-                                        : 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-[1.03] active:scale-95'
+                                        ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/30'
+                                        : 'bg-amber-500 text-black shadow-[0_6px_0_0_rgba(0,0,0,0.35)] hover:bg-amber-400 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none'
                                     }`}
                                   >
-                                    {isSelected ? <><i className="fas fa-check mr-1"></i>Selected</> : 'Buy Now'}
+                                    {isSelected ? <><i className="fas fa-check"></i>Selected</> : <><i className="fas fa-bolt"></i>Buy Now</>}
                                   </button>
                                 </div>
                               </div>
