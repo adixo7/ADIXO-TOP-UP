@@ -1284,7 +1284,7 @@ const App: React.FC = () => {
                               const isBonus = !!pkg.isBonus;
                               const isHireBots = category === 'HIRE BOTS';
                               const isMysteryBasicStockOut = pkg.id === 'mystery-basic';
-                              const isGloryOffer = (isMystery || isGuildLevelUp || isGloryPackage) && !isMysteryBasicStockOut && !isBonus;
+                              const isGloryOffer = (isMystery || isGuildLevelUp) && !isMysteryBasicStockOut && !isBonus;
                               const mysteryTheme = pkg.id === 'mystery-basic' ? { border: 'border-sky-500/30', hover: 'hover:border-sky-500/60', icon: 'text-sky-400', iconBg: 'border-sky-500/50', glow: 'shadow-[0_0_20px_rgba(14,165,233,0.15)]' } :
                                                    pkg.id === 'mystery-epic' ? { border: 'border-red-500/30', hover: 'hover:border-red-500/60', icon: 'text-red-400', iconBg: 'border-red-500/50', glow: 'shadow-[0_0_20px_rgba(239,68,68,0.15)]' } :
                                                    pkg.id === 'mystery-super' ? { border: 'border-purple-500/30', hover: 'hover:border-purple-500/60', icon: 'text-purple-400', iconBg: 'border-purple-500/50', glow: 'shadow-[0_0_20px_rgba(168,85,247,0.15)]' } :
