@@ -1480,11 +1480,11 @@ const App: React.FC = () => {
                               </div>
                             )}
                             <div className="grid sm:grid-cols-5 gap-0">
-                              <div className="relative sm:col-span-3 aspect-video sm:aspect-auto overflow-hidden bg-black">
+                              <div className="relative sm:col-span-3 aspect-video overflow-hidden bg-black">
                                 <img
                                   src={pkg.image || selectedGame.image}
                                   alt={pkg.unit}
-                                  className="w-full h-full object-contain sm:object-cover"
+                                  className="w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:via-transparent sm:to-black/10"></div>
                               </div>
@@ -1494,9 +1494,6 @@ const App: React.FC = () => {
                                   <p className="text-amber-400 text-[8px] font-black uppercase tracking-[0.25em] mb-1 flex items-center gap-1">
                                     <i className="fas fa-check-circle"></i> 100% Safe Transfer
                                   </p>
-                                  <h3 className="text-white text-sm md:text-base font-black uppercase italic tracking-tighter leading-tight mb-0.5">
-                                    {pkg.unit}
-                                  </h3>
                                 </div>
 
                                 <div className="space-y-1 text-[10px] font-bold">
