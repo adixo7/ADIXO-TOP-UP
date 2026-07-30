@@ -48,6 +48,42 @@
         background: #f97316;
         color: white;
       }
+      @keyframes mega-border-spin {
+        0%   { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes mega-glow-pulse {
+        0%, 100% { opacity: 0.7; transform: scale(1); }
+        50%       { opacity: 1;   transform: scale(1.12); }
+      }
+      @keyframes mega-shimmer-sweep {
+        0%   { transform: translateX(-100%) skewX(-15deg); }
+        100% { transform: translateX(300%)  skewX(-15deg); }
+      }
+      @keyframes mega-float {
+        0%, 100% { transform: translateY(0px); }
+        50%       { transform: translateY(-3px); }
+      }
+      @keyframes mega-star-spin {
+        0%   { transform: rotate(0deg)   scale(1); }
+        50%  { transform: rotate(180deg) scale(1.2); }
+        100% { transform: rotate(360deg) scale(1); }
+      }
+      .mega-border-ring {
+        animation: mega-border-spin 4s linear infinite;
+      }
+      .mega-glow-pulse {
+        animation: mega-glow-pulse 2s ease-in-out infinite;
+      }
+      .mega-shimmer-sweep {
+        animation: mega-shimmer-sweep 2.4s ease-in-out infinite;
+      }
+      .mega-float {
+        animation: mega-float 3s ease-in-out infinite;
+      }
+      .mega-star-spin {
+        animation: mega-star-spin 4s linear infinite;
+      }
     </style>
 </head>
   <body class="bg-[#050505] text-[#fafafa] font-['Chakra_Petch',sans-serif]">

@@ -1739,6 +1739,111 @@ const App: React.FC = () => {
                             },
                           ];
                           const theme = themes[idx] || themes[0];
+
+                          /* ── MEGA special card ─────────────────────── */
+                          if (isMega) {
+                            return (
+                              <div key={pkg.id} className="relative mega-float" style={{ padding: '2px', borderRadius: '18px' }}>
+                                {/* Animated conic-gradient border ring */}
+                                <div className="absolute inset-0 rounded-[18px] overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+                                  <div
+                                    className="mega-border-ring absolute"
+                                    style={{
+                                      width: '200%', height: '200%',
+                                      top: '-50%', left: '-50%',
+                                      background: 'conic-gradient(from 0deg, #a855f7, #ec4899, #f59e0b, #10b981, #3b82f6, #a855f7)',
+                                    }}
+                                  />
+                                </div>
+
+                                <button
+                                  onClick={() => setSelectedPackage(pkg)}
+                                  className="relative w-full text-left overflow-hidden transition-all duration-300"
+                                  style={{
+                                    borderRadius: '16px',
+                                    background: 'linear-gradient(140deg, #130020 0%, #0c0018 35%, #17001a 65%, #100018 100%)',
+                                    boxShadow: isSelected
+                                      ? '0 0 55px rgba(168,85,247,0.65), 0 0 25px rgba(236,72,153,0.4), inset 0 0 30px rgba(168,85,247,0.12)'
+                                      : '0 0 30px rgba(168,85,247,0.35), 0 0 12px rgba(236,72,153,0.2)',
+                                    transform: isSelected ? 'scale(1.015)' : undefined,
+                                  }}
+                                >
+                                  {/* Shimmer sweep */}
+                                  <span className="pointer-events-none absolute inset-0 overflow-hidden rounded-[16px]" style={{ zIndex: 1 }}>
+                                    <span className="mega-shimmer-sweep absolute inset-y-0 w-1/3" style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)' }} />
+                                  </span>
+
+                                  {/* Glow blobs */}
+                                  <span className="absolute -top-6 -left-6 w-28 h-28 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.3) 0%, transparent 70%)', zIndex: 1 }} />
+                                  <span className="absolute -bottom-6 -right-6 w-24 h-24 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(236,72,153,0.25) 0%, transparent 70%)', zIndex: 1 }} />
+                                  <span className="absolute top-0 right-1/3 w-20 h-20 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(251,191,36,0.15) 0%, transparent 70%)', zIndex: 1 }} />
+
+                                  {/* Top accent line — full rainbow */}
+                                  <span className="absolute top-0 left-0 right-0 h-[2px] rounded-t-[16px] pointer-events-none" style={{ background: 'linear-gradient(90deg, #a855f7, #ec4899, #f59e0b, #10b981, #3b82f6, #a855f7)', zIndex: 2 }} />
+
+                                  {/* MEGA badge */}
+                                  <div className="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-white text-[7px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(90deg, #a855f7, #ec4899)', zIndex: 3 }}>
+                                    <i className="fas fa-bolt text-[6px]"></i> MEGA
+                                  </div>
+
+                                  {/* PERMANENT badge */}
+                                  <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest" style={{ background: 'linear-gradient(90deg, #f59e0b, #f97316)', color: '#000', zIndex: 3 }}>
+                                    <i className="fas fa-infinity text-[6px]"></i> PERMANENT
+                                  </div>
+
+                                  {/* Spinning star decorations */}
+                                  <span className="mega-star-spin absolute" style={{ top: 36, right: 52, fontSize: 8, opacity: 0.5, color: '#f59e0b', zIndex: 2 }}>✦</span>
+                                  <span className="mega-star-spin absolute" style={{ bottom: 12, left: 70, fontSize: 6, opacity: 0.4, color: '#a855f7', animationDelay: '1s', zIndex: 2 }}>✦</span>
+                                  <span className="mega-star-spin absolute" style={{ top: 14, right: 120, fontSize: 5, opacity: 0.35, color: '#ec4899', animationDelay: '2s', zIndex: 2 }}>✦</span>
+
+                                  {/* Main content */}
+                                  <div className="relative flex items-center gap-4 px-4 pt-8 pb-4" style={{ zIndex: 3 }}>
+
+                                    {/* Left: giant ∞ */}
+                                    <div className="flex flex-col items-center justify-center shrink-0" style={{ width: 72 }}>
+                                      <div className="mega-glow-pulse flex items-center justify-center rounded-xl mb-1" style={{ width: 48, height: 48, background: 'rgba(168,85,247,0.15)', border: '1px solid rgba(168,85,247,0.5)', boxShadow: '0 0 18px rgba(168,85,247,0.5)' }}>
+                                        <span style={{ fontSize: 26, lineHeight: 1, background: 'linear-gradient(135deg, #a855f7, #ec4899, #f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 900 }}>∞</span>
+                                      </div>
+                                      <p className="text-[7px] font-black uppercase tracking-wider" style={{ color: '#a855f7', marginTop: 3 }}>INFINITE</p>
+                                    </div>
+
+                                    {/* Divider */}
+                                    <div className="self-stretch w-px" style={{ background: 'linear-gradient(to bottom, transparent, rgba(168,85,247,0.4), transparent)' }} />
+
+                                    {/* Centre: details */}
+                                    <div className="flex-1 flex flex-col gap-1.5 min-w-0">
+                                      <p className="text-[9px] font-black uppercase tracking-widest mb-0.5" style={{ background: 'linear-gradient(90deg, #a855f7, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>LIKES BOOST</p>
+
+                                      <div className="flex items-center gap-1.5">
+                                        <i className="fas fa-heart text-[7px]" style={{ color: '#ec4899' }}></i>
+                                        <p className="text-[9px] font-black text-white">Upto <span style={{ color: '#f59e0b' }}>450</span> <span className="text-zinc-400 font-semibold">Likes / Day</span></p>
+                                      </div>
+
+                                      <div className="flex items-center gap-1.5">
+                                        <i className="fas fa-calendar-alt text-[7px]" style={{ color: '#a855f7' }}></i>
+                                        <p className="text-[9px] font-black text-white">∞ <span className="text-zinc-400 font-semibold">Permanent</span></p>
+                                      </div>
+
+                                      <div className="flex items-center gap-1.5">
+                                        <i className="fas fa-star text-[7px]" style={{ color: '#f59e0b' }}></i>
+                                        <p className="text-[9px] font-black" style={{ background: 'linear-gradient(90deg, #f59e0b, #ec4899)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>NO LIMITS <span className="text-zinc-400 font-semibold" style={{ WebkitTextFillColor: 'initial', color: '#71717a' }}>Total Likes</span></p>
+                                      </div>
+                                    </div>
+
+                                    {/* Right: price + check */}
+                                    <div className="flex flex-col items-end gap-2 shrink-0">
+                                      <p className="gaming-font font-black text-base leading-none" style={{ background: 'linear-gradient(135deg, #f59e0b, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>৳{pkg.price}</p>
+                                      <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all" style={{ borderColor: isSelected ? '#a855f7' : 'rgba(113,113,122,0.8)', background: isSelected ? '#a855f7' : 'transparent', boxShadow: isSelected ? '0 0 8px rgba(168,85,247,0.7)' : undefined }}>
+                                        {isSelected && <i className="fas fa-check text-white text-[6px]"></i>}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </button>
+                              </div>
+                            );
+                          }
+                          /* ─────────────────────────────────────────── */
+
                           return (
                             <button
                               key={pkg.id}
@@ -1774,7 +1879,7 @@ const App: React.FC = () => {
                                     <i className={`fas fa-heart ${theme.accent} text-[10px]`}></i>
                                   </div>
                                   <p className={`text-3xl font-black ${theme.accent} leading-none`}>{days}</p>
-                                  <p className="text-[7px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">{isMega ? 'PERM' : 'DAYS'}</p>
+                                  <p className="text-[7px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">DAYS</p>
                                 </div>
 
                                 {/* Vertical divider */}
@@ -1789,11 +1894,11 @@ const App: React.FC = () => {
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-calendar-alt ${theme.accent} text-[7px]`}></i>
-                                    <p className="text-[9px] font-black text-white">{days} <span className="text-zinc-400 font-semibold">{isMega ? 'Permanent' : 'Days'}</span></p>
+                                    <p className="text-[9px] font-black text-white">{days} <span className="text-zinc-400 font-semibold">Days</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-star ${theme.accent} text-[7px]`}></i>
-                                    <p className={`text-[9px] font-black ${theme.accent}`}>{isMega ? '' : 'Upto '}{totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
+                                    <p className={`text-[9px] font-black ${theme.accent}`}>Upto {totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
                                   </div>
                                 </div>
 
