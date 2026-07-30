@@ -410,7 +410,10 @@ const App: React.FC = () => {
       : (selectedPackage.currency === 'BDT' ? selectedPackage.price : selectedPackage.price * exchangeRate);
     const displayCurrency = selectedPayment.id === 'binance' ? 'USD' : 'BDT';
 
-    const packageName = `${selectedPackage.amount} ${selectedPackage.unit}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
+    const packageDisplayName = selectedPackage.id === 'ff-likes-mega'
+      ? `NO LIMITS Likes (∞ Permanent)`
+      : `${selectedPackage.amount} ${selectedPackage.unit}`;
+    const packageName = `${packageDisplayName}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
 
     const newTransaction: Transaction = {
       id: orderId,
@@ -2218,7 +2221,7 @@ const App: React.FC = () => {
                           <div className="flex-1 min-w-0">
                             <p className="text-orange-400/70 text-[8px] font-black uppercase tracking-[0.15em] mb-0.5">{t('game.orderSummary') || 'Order Summary'}</p>
                             <p className="text-white font-black text-sm uppercase italic tracking-tight leading-tight truncate">
-                              {selectedPackage.amount} {selectedPackage.unit}
+                              {selectedPackage.id === 'ff-likes-mega' ? 'NO LIMITS Likes (\u221e Permanent)' : `${selectedPackage.amount} ${selectedPackage.unit}`}
                             </p>
                           </div>
                           <div className="text-right shrink-0">
