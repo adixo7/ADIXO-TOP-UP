@@ -137,7 +137,31 @@ const App: React.FC = () => {
   const [showMaintenance, setShowMaintenance] = useState(false);
   const [maintenanceMethod, setMaintenanceMethod] = useState<string>('bKash');
   const paymentSectionRef = useRef<HTMLDivElement>(null);
-  
+  const playerIdRef = useRef<HTMLDivElement>(null);
+  const packageSectionRef = useRef<HTMLDivElement>(null);
+  const serverSectionRef = useRef<HTMLDivElement>(null);
+  const [fillToast, setFillToast] = useState<string | null>(null);
+
+  const handleFillGuide = () => {
+    const isFFLikes = selectedGame?.id === 'ff-likes';
+    let label: string | null = null;
+    let ref: React.RefObject<HTMLDivElement | null> | null = null;
+    if (!selectedPackage) {
+      label = 'a Package'; ref = packageSectionRef;
+    } else if (!playerId.trim()) {
+      label = 'your Player ID'; ref = playerIdRef;
+    } else if (isFFLikes && !selectedServer) {
+      label = 'a Server'; ref = serverSectionRef;
+    } else if (!selectedPayment) {
+      label = 'a Payment Method'; ref = paymentSectionRef;
+    }
+    if (ref?.current) ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (label) {
+      setFillToast(label);
+      setTimeout(() => setFillToast(null), 3000);
+    }
+  };
+
   // Profile specific states
   const handlePaymentSelect = (method: PaymentMethod) => {
     if (method.id === 'bkash' || method.id === 'nagad' || method.id === 'rocket') {
@@ -592,6 +616,33 @@ const App: React.FC = () => {
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleDisclaimerClose} />}
       {showServerIssue && <ServerIssuePopup onAgree={() => setShowServerIssue(false)} onAvoid={() => setShowServerIssue(false)} />}
+
+      {/* Fill-field toast — slides in from bottom-right */}
+      <div
+        className="fixed bottom-6 right-5 z-[9999] transition-all duration-500"
+        style={{
+          transform: fillToast ? 'translateX(0)' : 'translateX(calc(100% + 24px))',
+          opacity: fillToast ? 1 : 0,
+          pointerEvents: fillToast ? 'auto' : 'none',
+        }}
+      >
+        <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-2xl"
+          style={{
+            background: 'linear-gradient(135deg, #1a0a00, #0f0f0f)',
+            border: '1px solid rgba(249,115,22,0.45)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.7), 0 0 16px rgba(249,115,22,0.2)',
+          }}
+        >
+          <div className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: 'rgba(249,115,22,0.15)', border: '1px solid rgba(249,115,22,0.35)' }}>
+            <i className="fas fa-arrow-pointer text-orange-400 text-[10px]"></i>
+          </div>
+          <div>
+            <p className="text-[8px] font-black uppercase tracking-widest text-orange-500/70 leading-none mb-0.5">ACTION REQUIRED</p>
+            <p className="text-[11px] font-black text-white leading-tight">Please fill up <span className="text-orange-400">{fillToast}</span></p>
+          </div>
+        </div>
+      </div>
       {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
@@ -1006,7 +1057,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-4 px-2">
+                  <div className="space-y-4 px-2" ref={playerIdRef}>
                     <h3 className="text-xl font-bold text-white">
                       {selectedGame.id === 'buy-guild' ? t('game.tgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
                     </h3>
@@ -1037,7 +1088,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="lg:col-span-2 space-y-10">
+                <div className="lg:col-span-2 space-y-10" ref={packageSectionRef}>
                   {selectedGame.id === 'level-up' ? (
                   <div className="space-y-2.5">
                     {/* Header */}
@@ -1936,7 +1987,7 @@ const App: React.FC = () => {
                         ];
                         const selected = servers.find(s => s.name === selectedServer);
                         return (
-                          <div className="mt-4">
+                          <div className="mt-4" ref={serverSectionRef}>
                             {/* Trigger bar */}
                             <button
                               onClick={() => setServerDropdownOpen(o => !o)}
@@ -2285,12 +2336,11 @@ const App: React.FC = () => {
                           const canProceed = !!playerId.trim() && !!selectedPayment && (!isFFLikes || !!selectedServer);
                           return (
                             <button
-                              onClick={handleConfirmOrder}
-                              disabled={!canProceed}
+                              onClick={canProceed ? handleConfirmOrder : handleFillGuide}
                               className={`w-full py-3.5 rounded-xl font-black uppercase italic tracking-widest transition-all text-[10px] ${
                                 canProceed
                                   ? 'bg-orange-600 text-white shadow-xl hover:bg-orange-700 active:scale-95 cursor-pointer'
-                                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                                  : 'bg-zinc-800 text-zinc-500 hover:bg-zinc-700 cursor-pointer'
                               }`}
                             >
                               <span className="gaming-font">
