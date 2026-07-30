@@ -15,6 +15,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-mega-likes-1',
+    type: 'offer',
+    icon: 'fa-infinity',
+    color: '#a855f7',
+    title: '⚡ NEW — MEGA Likes Package!',
+    body: 'Now get upto 450 likes daily — permanently! The all-new MEGA package gives you unlimited likes forever with no expiry. Available now in the FF LIKES section.',
+    ts: '2026-07-30T00:00:00Z',
+  },
+  {
     id: 'notif-glory-50pct-warning-1',
     type: 'warning',
     icon: 'fa-triangle-exclamation',
