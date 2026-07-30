@@ -2271,33 +2271,6 @@ const App: React.FC = () => {
                       </div>
 
                       <div className="mt-6 pt-4 border-t border-zinc-800/50 space-y-3">
-                        {/* Required fields checklist */}
-                        {(() => {
-                          const isFFLikes = selectedGame?.id === 'ff-likes';
-                          const checks = [
-                            { label: selectedGame?.id === 'pc-games' ? 'Email / WhatsApp entered' : 'Player ID entered', done: !!playerId.trim() },
-                            ...(isFFLikes ? [{ label: 'Server selected', done: !!selectedServer }] : []),
-                            { label: 'Payment method selected', done: !!selectedPayment },
-                          ];
-                          const allDone = checks.every(c => c.done);
-                          if (allDone) return null;
-                          return (
-                            <div className="bg-zinc-900/60 border border-zinc-800/60 rounded-xl px-3 py-2.5 space-y-1.5">
-                              {checks.map((c, i) => (
-                                <div key={i} className="flex items-center gap-2">
-                                  <div className={`w-3.5 h-3.5 rounded-full flex items-center justify-center shrink-0 ${c.done ? 'bg-emerald-500' : 'bg-zinc-700'}`}>
-                                    {c.done
-                                      ? <i className="fas fa-check text-white text-[6px]"></i>
-                                      : <i className="fas fa-times text-zinc-500 text-[6px]"></i>
-                                    }
-                                  </div>
-                                  <span className={`text-[9px] font-bold uppercase tracking-wide ${c.done ? 'text-emerald-400' : 'text-zinc-500'}`}>{c.label}</span>
-                                </div>
-                              ))}
-                            </div>
-                          );
-                        })()}
-
                         {/* Inline error message */}
                         {orderError && (
                           <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/30 rounded-xl px-3 py-2">
