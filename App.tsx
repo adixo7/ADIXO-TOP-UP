@@ -1619,8 +1619,10 @@ const App: React.FC = () => {
                         {selectedGame.packages.map((pkg, idx) => {
                           const isSelected = selectedPackage?.id === pkg.id;
                           const daysMatch = pkg.unit.match(/\((\d+) Days\)/);
-                          const days = daysMatch ? daysMatch[1] : '?';
-                          const totalLikes = pkg.amount.toLocaleString();
+                          const isMega = pkg.id === 'ff-likes-mega';
+                          const days = isMega ? '∞' : (daysMatch ? daysMatch[1] : '?');
+                          const totalLikes = isMega ? 'NO LIMITS' : pkg.amount.toLocaleString();
+                          const dailyLikes = isMega ? 450 : 220;
                           type LikesTheme = { bg: string; border: string; borderSel: string; glow: string; glowSel: string; shimmer: string; topLine: string; glowBlob: string; accent: string; iconBg: string; iconBorder: string; badge: string; tierLabel: string; checkSel: string };
                           const themes: LikesTheme[] = [
                             {
@@ -1719,6 +1721,22 @@ const App: React.FC = () => {
                               tierLabel: '👑 LEGENDARY',
                               checkSel: 'border-yellow-400 bg-yellow-400',
                             },
+                            {
+                              bg: 'from-rose-950/90 to-zinc-900',
+                              border: 'border-rose-400/60',
+                              borderSel: 'border-rose-300',
+                              glow: 'hover:shadow-[0_0_28px_rgba(244,63,94,0.4)]',
+                              glowSel: 'shadow-[0_0_44px_rgba(244,63,94,0.7)]',
+                              shimmer: 'from-rose-400/10 via-transparent to-pink-400/10',
+                              topLine: 'from-rose-500 via-pink-400 to-rose-500',
+                              glowBlob: 'bg-rose-500/30',
+                              accent: 'text-rose-300',
+                              iconBg: 'bg-rose-900/60',
+                              iconBorder: 'border-rose-400/65',
+                              badge: 'from-rose-500 via-pink-500 to-fuchsia-500',
+                              tierLabel: '⚡ MEGA',
+                              checkSel: 'border-rose-400 bg-rose-400',
+                            },
                           ];
                           const theme = themes[idx] || themes[0];
                           return (
@@ -1756,7 +1774,7 @@ const App: React.FC = () => {
                                     <i className={`fas fa-heart ${theme.accent} text-[10px]`}></i>
                                   </div>
                                   <p className={`text-3xl font-black ${theme.accent} leading-none`}>{days}</p>
-                                  <p className="text-[7px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">DAYS</p>
+                                  <p className="text-[7px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5">{isMega ? 'PERM' : 'DAYS'}</p>
                                 </div>
 
                                 {/* Vertical divider */}
@@ -1767,15 +1785,15 @@ const App: React.FC = () => {
                                   <p className={`text-[8px] font-black uppercase tracking-widest ${theme.accent} mb-0.5`}>LIKES BOOST</p>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-heart ${theme.accent} text-[7px]`}></i>
-                                    <p className="text-[9px] font-black text-white">Upto 220 <span className="text-zinc-400 font-semibold">Likes / Day</span></p>
+                                    <p className="text-[9px] font-black text-white">Upto {dailyLikes} <span className="text-zinc-400 font-semibold">Likes / Day</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-calendar-alt ${theme.accent} text-[7px]`}></i>
-                                    <p className="text-[9px] font-black text-white">{days} <span className="text-zinc-400 font-semibold">Days</span></p>
+                                    <p className="text-[9px] font-black text-white">{days} <span className="text-zinc-400 font-semibold">{isMega ? 'Permanent' : 'Days'}</span></p>
                                   </div>
                                   <div className="flex items-center gap-1.5">
                                     <i className={`fas fa-star ${theme.accent} text-[7px]`}></i>
-                                    <p className={`text-[9px] font-black ${theme.accent}`}>Upto {totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
+                                    <p className={`text-[9px] font-black ${theme.accent}`}>{isMega ? '' : 'Upto '}{totalLikes} <span className="text-zinc-400 font-semibold">Total Likes</span></p>
                                   </div>
                                 </div>
 
