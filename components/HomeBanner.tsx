@@ -35,7 +35,7 @@ const HomeBanner: React.FC<Props> = ({ initialSlide = 0, onNavigateInternal }) =
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 4000);
+    }, 2500);
     return () => clearInterval(timer);
   }, []);
 
