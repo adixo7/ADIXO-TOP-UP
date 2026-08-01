@@ -650,7 +650,23 @@ const App: React.FC = () => {
         <div className="space-y-12 animate-in fade-in duration-700 relative z-10">
 
           {/* Slideshow Banner */}
-          <HomeBanner initialSlide={activeBanner} onNavigateInternal={(id) => { setSelectedGame(GAMES.find(g => g.id === id) || null); setActiveTab('games'); }} />
+          <HomeBanner initialSlide={activeBanner} onNavigateInternal={(id, packageId) => {
+            const game = GAMES.find(g => g.id === id) || null;
+            setSelectedGame(game);
+            setActiveTab('games');
+            if (packageId && game) {
+              const pkg = game.packages.find(p => p.id === packageId) || null;
+              setTimeout(() => {
+                setSelectedPackage(pkg);
+                if (pkg) {
+                  setTimeout(() => {
+                    const el = document.getElementById(`pkg-${packageId}`);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }, 400);
+                }
+              }, 300);
+            }
+          }} />
 
           <section>
             <div className="flex items-center justify-between mb-4 md:mb-6">
@@ -1797,7 +1813,7 @@ const App: React.FC = () => {
                           /* ── MEGA special card ─────────────────────── */
                           if (isMega) {
                             return (
-                              <div key={pkg.id} className="relative mega-float" style={{ padding: '2px', borderRadius: '18px', overflow: 'hidden' }}>
+                              <div key={pkg.id} id={`pkg-${pkg.id}`} className="relative mega-float" style={{ padding: '2px', borderRadius: '18px', overflow: 'hidden' }}>
                                 {/* Animated conic-gradient border ring */}
                                 <div className="absolute inset-0 rounded-[18px] overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
                                   <div
