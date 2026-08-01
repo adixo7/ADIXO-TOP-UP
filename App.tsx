@@ -1797,7 +1797,7 @@ const App: React.FC = () => {
                           /* ── MEGA special card ─────────────────────── */
                           if (isMega) {
                             return (
-                              <div key={pkg.id} className="relative mega-float" style={{ padding: '2px', borderRadius: '18px' }}>
+                              <div key={pkg.id} className="relative mega-float" style={{ padding: '2px', borderRadius: '18px', overflow: 'hidden' }}>
                                 {/* Animated conic-gradient border ring */}
                                 <div className="absolute inset-0 rounded-[18px] overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
                                   <div
@@ -1819,7 +1819,6 @@ const App: React.FC = () => {
                                     boxShadow: isSelected
                                       ? '0 0 55px rgba(168,85,247,0.65), 0 0 25px rgba(236,72,153,0.4), inset 0 0 30px rgba(168,85,247,0.12)'
                                       : '0 0 30px rgba(168,85,247,0.35), 0 0 12px rgba(236,72,153,0.2)',
-                                    transform: isSelected ? 'scale(1.015)' : undefined,
                                   }}
                                 >
                                   {/* Shimmer sweep */}
