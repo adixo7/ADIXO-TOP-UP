@@ -429,7 +429,7 @@ const Layout: React.FC<LayoutProps> = ({
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 w-full flex flex-col">
+        <main className="flex-1 w-full flex flex-col overflow-x-hidden">
           <div className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-6 py-6 md:py-8">
             {children}
           </div>
