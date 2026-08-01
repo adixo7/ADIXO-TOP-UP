@@ -88,21 +88,7 @@ const HomeBanner: React.FC<Props> = ({ initialSlide = 0, onNavigateInternal }) =
         )
       ))}
 
-      {/* Dot indicators */}
-      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-        {slides.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => handleDotClick(idx)}
-            className="transition-all duration-300 rounded-full"
-            style={{
-              width: idx === current ? 16 : 6,
-              height: 6,
-              background: idx === current ? '#f97316' : 'rgba(255,255,255,0.35)',
-            }}
-          />
-        ))}
-      </div>
+
     </div>
   );
 };
