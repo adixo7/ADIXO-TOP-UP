@@ -355,7 +355,12 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply: text });
   } catch (err) {
     console.error('Gemini chat error:', err.message);
-    res.status(500).json({ error: 'AI temporarily unavailable. Please try again or contact support on Telegram.' });
+    const isQuota = err.message && err.message.includes('429');
+    const isNotFound = err.message && err.message.includes('404');
+    let userError = 'AI temporarily unavailable. Please try again or contact support on Telegram.';
+    if (isQuota) userError = 'AI quota exceeded. Please enable billing on your Google Cloud project at console.cloud.google.com, or contact support on Telegram.';
+    if (isNotFound) userError = 'AI model unavailable. Please contact support on Telegram.';
+    res.status(500).json({ error: userError });
   }
 });
 
