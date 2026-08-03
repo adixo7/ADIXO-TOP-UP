@@ -147,7 +147,7 @@ const ChatWidget: React.FC = () => {
                 <i className="fas fa-robot text-white text-sm"></i>
               </div>
               <div>
-                <p className="font-black text-white text-xs uppercase tracking-widest italic leading-none">ADIXO AI</p>
+                <p className="font-black text-xs uppercase tracking-widest leading-none" style={{color: '#f97316', fontStyle: 'normal'}}>ADIXO AI SUPPORT</p>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
                   <span className="text-[9px] text-zinc-400 font-bold uppercase tracking-widest">Online · Ask anything</span>
