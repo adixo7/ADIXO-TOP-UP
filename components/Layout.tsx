@@ -338,11 +338,11 @@ const Layout: React.FC<LayoutProps> = ({
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center overflow-hidden shadow-lg shadow-orange-600/20 group-hover:scale-105 transition-transform">
               <img src="/adixo-logo.png" alt="ADIXO STORE" className="w-full h-full object-cover" />
             </div>
-            <div className="flex items-center gap-1.5 md:gap-3">
+            <div className="flex items-center gap-3">
               <span className="text-lg md:text-2xl font-black tracking-tighter text-white uppercase italic logo-font leading-none">
                 ADIXO <span className="text-orange-500">STORE</span>
               </span>
-              <div className="flex items-center gap-1 md:gap-1.5 bg-black/60 border border-orange-500 px-1.5 md:px-2 py-0.5 md:py-1 rounded-[4px] shadow-[0_0_10px_rgba(249,115,22,0.3)] w-fit transition-all hover:border-orange-400">
+              <div className={`${user ? 'flex' : 'hidden md:flex'} items-center gap-1.5 bg-black/60 border border-orange-500 px-2 py-1 rounded-[4px] shadow-[0_0_10px_rgba(249,115,22,0.3)] w-fit transition-all hover:border-orange-400`}>
                 <div className="flex items-center justify-center">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
