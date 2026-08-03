@@ -9,6 +9,7 @@ import GameCard from './components/GameCard';
 import Auth from './components/Auth';
 import PaymentGateway from './components/PaymentGateway';
 import GuideBot from './components/GuideBot';
+import ChatWidget from './components/ChatWidget';
 import Features from './components/Features';
 import BonusOfferPopup from './components/BonusOfferPopup';
 import DisclaimerPopup from './components/DisclaimerPopup';
@@ -2659,7 +2660,7 @@ const App: React.FC = () => {
       )}
 
 
-      <GuideBot />
+      <ChatWidget />
     </Layout>
   );
 };

@@ -131,7 +131,7 @@ const ChatWidget: React.FC = () => {
       {isOpen && (
         <div
           className="w-[340px] md:w-[400px] bg-zinc-950 border border-zinc-800 rounded-3xl shadow-[0_0_60px_-10px_rgba(0,0,0,0.9)] flex flex-col mb-4 overflow-hidden"
-          style={{ height: '520px', animation: 'chatSlideIn 0.25s cubic-bezier(0.16,1,0.3,1)' }}
+          style={{ height: 'min(520px, calc(100vh - 140px))', animation: 'chatSlideIn 0.25s cubic-bezier(0.16,1,0.3,1)' }}
         >
           <style>{`
             @keyframes chatSlideIn {
