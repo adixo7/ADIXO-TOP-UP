@@ -3,7 +3,7 @@ import cors from 'cors';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+// AI chat uses Groq (free, global) with OpenAI-compatible API
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -178,7 +178,7 @@ app.post('/api/telegram-webhook', async (req, res) => {
   }
 });
 
-// POST /api/chat — Gemini AI chat with full site knowledge
+// POST /api/chat — AI chat powered by Groq (free, global, OpenAI-compatible)
 const ADIXO_SYSTEM_PROMPT = `You are ADIXO AI, the official smart assistant for ADIXO TOP UP — a premium gaming credit hub based in Bangladesh. You know everything about this website: every product, price, service, and process. You are helpful, friendly, and professional.
 
 LANGUAGE RULE: Detect the user's language from their message. If they write in Bangla (Bengali), reply in Bangla. If they write in English, reply in English. If mixed, reply in both naturally. Always be fluent and natural in both languages.
@@ -324,8 +324,8 @@ RESPONSE STYLE
 - For Bangla responses, use proper Bengali script. Don't mix scripts awkwardly.`;
 
 app.post('/api/chat', async (req, res) => {
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-  if (!GEMINI_API_KEY) {
+  const GROQ_API_KEY = process.env.GROQ_API_KEY;
+  if (!GROQ_API_KEY) {
     return res.status(503).json({ error: 'AI service not configured. Please contact support on Telegram.' });
   }
 
@@ -335,32 +335,37 @@ app.post('/api/chat', async (req, res) => {
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash',
-      systemInstruction: ADIXO_SYSTEM_PROMPT,
-    });
-
-    // Build conversation history for Gemini (max last 20 messages to keep context fresh)
+    // Build messages array for Groq (OpenAI-compatible)
     const recentHistory = history.slice(-20);
-    const chat = model.startChat({
-      history: recentHistory.map(m => ({
-        role: m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }],
-      })),
+    const messages = [
+      { role: 'system', content: ADIXO_SYSTEM_PROMPT },
+      ...recentHistory.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
+      { role: 'user', content: message },
+    ];
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${GROQ_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages,
+        max_tokens: 1024,
+        temperature: 0.7,
+      }),
     });
 
-    const result = await chat.sendMessage(message);
-    const text = result.response.text();
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || `HTTP ${response.status}`);
+
+    const text = data.choices?.[0]?.message?.content;
+    if (!text) throw new Error('Empty response from AI');
     res.json({ reply: text });
   } catch (err) {
-    console.error('Gemini chat error:', err.message);
-    const isQuota = err.message && err.message.includes('429');
-    const isNotFound = err.message && err.message.includes('404');
-    let userError = 'AI temporarily unavailable. Please try again or contact support on Telegram.';
-    if (isQuota) userError = 'AI quota exceeded. Please enable billing on your Google Cloud project at console.cloud.google.com, or contact support on Telegram.';
-    if (isNotFound) userError = 'AI model unavailable. Please contact support on Telegram.';
-    res.status(500).json({ error: userError });
+    console.error('Groq chat error:', err.message);
+    res.status(500).json({ error: 'AI temporarily unavailable. Please try again or contact support on Telegram.' });
   }
 });
 
