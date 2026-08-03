@@ -342,6 +342,7 @@ const Layout: React.FC<LayoutProps> = ({
               <span className="text-lg md:text-2xl font-black tracking-tighter text-white uppercase italic logo-font leading-none">
                 ADIXO <span className="text-orange-500">STORE</span>
               </span>
+              {/* Full LIVE badge — PC always, phone only when logged in */}
               <div className={`${user ? 'flex' : 'hidden md:flex'} items-center gap-1.5 bg-black/60 border border-orange-500 px-2 py-1 rounded-[4px] shadow-[0_0_10px_rgba(249,115,22,0.3)] w-fit transition-all hover:border-orange-400`}>
                 <div className="flex items-center justify-center">
                   <span className="relative flex h-1.5 w-1.5">
@@ -351,6 +352,13 @@ const Layout: React.FC<LayoutProps> = ({
                 </div>
                 <span className="text-green-500 text-[8px] md:text-[9px] font-black uppercase tracking-[0.15em] leading-none gaming-font">{t('nav.liveIndicator')}</span>
               </div>
+              {/* Dot only — phone, logged out */}
+              {!user && (
+                <span className="md:hidden relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.9)]"></span>
+                </span>
+              )}
             </div>
           </div>
 
