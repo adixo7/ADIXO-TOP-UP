@@ -101,8 +101,13 @@ const ChatWidget: React.FC = () => {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Unknown error');
+      let data: any;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error('AI service unavailable. Please try again shortly.');
+      }
+      if (!res.ok) throw new Error(data?.error || 'AI service unavailable. Please try again shortly.');
 
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }]);
     } catch (err: any) {

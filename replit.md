@@ -7,7 +7,7 @@ Premium gaming credit hub for Free Fire, PUBG, and more. A React + Vite + TypeSc
 - **Frontend**: React 19 + TypeScript + Vite 6 (port 5000)
 - **Backend**: Express.js (port 3001), proxied via Vite `/api`
 - **Styling**: Tailwind CSS (CDN), Font Awesome icons, Google Fonts (Chakra Petch, Orbitron, Oxanium)
-- **AI Integration**: Google Gemini API (`@google/generative-ai`)
+- **AI Integration**: Groq API (OpenAI-compatible, `llama-3.3-70b-versatile`) for the AI chat widget
 - **Notifications**: Telegram Bot API for order notifications & management
 
 ## Project Structure
@@ -24,7 +24,7 @@ Premium gaming credit hub for Free Fire, PUBG, and more. A React + Vite + TypeSc
 ## Environment Variables / Secrets
 - `TELEGRAM_BOT_TOKEN` - Telegram bot token for order notifications (optional)
 - `TELEGRAM_CHAT_ID` - Telegram chat ID to send order alerts to (optional)
-- `GEMINI_API_KEY` - Google Gemini API key for AI chatbot (optional)
+- `GROQ_API_KEY` - Groq API key for AI chatbot (uses `llama-3.3-70b-versatile` via Groq's OpenAI-compatible API)
 
 ## How to Run on Replit
 - **Workflow**: "Start application" — runs both backend (port 3001) and Vite dev server (port 5000)
