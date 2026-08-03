@@ -35,6 +35,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/chat"
+  to = "/.netlify/functions/chat"
+  status = 200
+
+[[redirects]]
   from = "/api/debug-storage"
   to = "/.netlify/functions/debug-storage"
   status = 200
