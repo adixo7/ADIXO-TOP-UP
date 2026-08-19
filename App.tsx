@@ -1471,7 +1471,7 @@ const App: React.FC = () => {
                                             <i className={`fas fa-check ${isMystery ? mysteryTheme.icon : 'text-green-500/70'} text-[6px]`}></i>
                                             <span>{
                                               pkg.id === 'mystery-basic' ? '50k - 370k glory' :
-                                              pkg.id === 'mystery-epic' ? '350k - 1.2M glory' :
+                                              pkg.id === 'mystery-epic' ? '150k - 1.2M glory' :
                                               pkg.id === 'mystery-super' ? '1.2M - 3.4M glory' :
                                               '7 Days'
                                             }</span>
