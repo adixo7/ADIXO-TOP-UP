@@ -293,7 +293,7 @@ export const GAMES: Game[] = [
       { id: 'ff-likes-120d', amount: 26400, unit: 'Likes (120 Days)', price: 1300, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 120 Days = 26400 Total Likes' },
       { id: 'ff-likes-150d', amount: 33000, unit: 'Likes (150 Days)', price: 1600, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 150 Days = 33000 Total Likes' },
       { id: 'ff-likes-365d', amount: 80300, unit: 'Likes (365 Days)', price: 2500, currency: 'BDT', category: 'FF LIKES', description: '220 Likes/Day × 365 Days = 80300 Total Likes' },
-      { id: 'ff-likes-mega', amount: 0, unit: 'Likes (∞ Days)', price: 3000, currency: 'BDT', category: 'FF LIKES', description: '450 Likes/Day × ∞ Days = NO LIMITS Total Likes' }
+      { id: 'ff-likes-mega', amount: 0, unit: 'Likes (∞ Days)', price: 999, oldPrice: 3000, currency: 'BDT', category: 'FF LIKES', description: '450 Likes/Day × ∞ Days = NO LIMITS Total Likes' }
     ]
   },
   {

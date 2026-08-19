@@ -310,7 +310,7 @@ BUY GUILD (Pre-leveled Free Fire Guilds)
 FF LIKES (Free Fire Profile Likes)
 ━━━━━━━━━━━━━━━━━━━━━━━━
 220 Likes/Day delivered daily:
-14 Days (3080 total) = ৳210 (Popular) | 28 Days (6160) = ৳370 | 60 Days (13200) = ৳700 | 120 Days (26400) = ৳1300 | 150 Days (33000) = ৳1600 | 365 Days (80300) = ৳2500 | Unlimited (450/day, no end) = ৳3000
+14 Days (3080 total) = ৳210 (Popular) | 28 Days (6160) = ৳370 | 60 Days (13200) = ৳700 | 120 Days (26400) = ৳1300 | 150 Days (33000) = ৳1600 | 365 Days (80300) = ৳2500 | Unlimited (450/day, no end) = ৳999 (offer, was ৳3000)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
 FF PANEL (Tools & APK Mods) — All ৳100 each
