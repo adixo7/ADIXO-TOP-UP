@@ -1902,7 +1902,14 @@ const App: React.FC = () => {
 
                                     {/* Right: price + check */}
                                     <div className="flex flex-col items-end gap-2 shrink-0">
-                                      <p className="gaming-font font-black text-base leading-none" style={{ background: 'linear-gradient(135deg, #f59e0b, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>৳{pkg.price}</p>
+                                      <div className="flex items-baseline gap-1.5">
+                                        <p className="gaming-font font-black text-base leading-none" style={{ background: 'linear-gradient(135deg, #f59e0b, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>৳{pkg.price}</p>
+                                        {pkg.oldPrice && (
+                                          <span className="text-[10px] line-through decoration-red-500 font-bold text-red-400">
+                                            ৳{pkg.oldPrice}
+                                          </span>
+                                        )}
+                                      </div>
                                       <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all" style={{ borderColor: isSelected ? '#a855f7' : 'rgba(113,113,122,0.8)', background: isSelected ? '#a855f7' : 'transparent', boxShadow: isSelected ? '0 0 8px rgba(168,85,247,0.7)' : undefined }}>
                                         {isSelected && <i className="fas fa-check text-white text-[6px]"></i>}
                                       </div>
@@ -1974,7 +1981,14 @@ const App: React.FC = () => {
 
                                 {/* Price + selector */}
                                 <div className="flex flex-col items-end gap-2 shrink-0">
-                                  <p className="gaming-font text-white font-black text-base leading-none">৳{pkg.price}</p>
+                                  <div className="flex items-baseline gap-1.5">
+                                    <p className="gaming-font text-white font-black text-base leading-none">৳{pkg.price}</p>
+                                    {pkg.oldPrice && (
+                                      <span className="text-[10px] line-through decoration-red-500 font-bold text-red-400">
+                                        ৳{pkg.oldPrice}
+                                      </span>
+                                    )}
+                                  </div>
                                   <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center transition-all ${isSelected ? theme.checkSel : `border-zinc-600 group-hover:${theme.iconBorder}`}`}>
                                     {isSelected && <i className="fas fa-check text-white text-[6px]"></i>}
                                   </div>
