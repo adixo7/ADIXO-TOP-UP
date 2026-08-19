@@ -285,7 +285,7 @@ HIRE BOTS:
 MYSTERY BOXES (random glory drops):
 - Basic Mystery Box: 4 Bots | 50K–370K Glory = ৳252
 - Epic Mystery Box: 4 Bots | 150K–1.2M Glory = ৳504
-- Super Mystery Box: 4 Bots | 1.2M–3.4M Glory = ৳1008
+- Super Mystery Box: 4 Bots | 200K–3.4M Glory = ৳1008
 
 GUILD LEVEL UP:
 - Level 5 = ৳550 | Level 6 = ৳850 | Level 7 + 4-Week Glory Bonus = ৳1400

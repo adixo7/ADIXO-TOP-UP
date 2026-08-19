@@ -71,7 +71,7 @@ const ANSWERS: Record<TopicKey, { text: string; chips: TopicKey[]; supportLinks?
     chips: ['how_to_order', 'payment_methods', 'support'],
   },
   mystery_boxes: {
-    text: "**Mystery Boxes** are exciting random glory drops for your Free Fire AI Bots! 📦\n\nThree tiers:\n\n🎁 **Basic Box** — ৳252\n4 Bots | 50K–370K Glory | 100% Safe\n\n🎁 **Epic Box** — ৳504\n4 Bots | 150K–1.2M Glory | 100% Safe\n\n🎁 **Super Box** — ৳1008\n4 Bots | 1.2M–3.4M Glory | 100% Safe\n\nAll boxes guarantee delivery within the specified glory range!",
+    text: "**Mystery Boxes** are exciting random glory drops for your Free Fire AI Bots! 📦\n\nThree tiers:\n\n🎁 **Basic Box** — ৳252\n4 Bots | 50K–370K Glory | 100% Safe\n\n🎁 **Epic Box** — ৳504\n4 Bots | 150K–1.2M Glory | 100% Safe\n\n🎁 **Super Box** — ৳1008\n4 Bots | 200K–3.4M Glory | 100% Safe\n\nAll boxes guarantee delivery within the specified glory range!",
     chips: ['ai_bots', 'how_to_order', 'safety'],
   },
   safety: {

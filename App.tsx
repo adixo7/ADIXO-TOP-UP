@@ -1472,7 +1472,7 @@ const App: React.FC = () => {
                                             <span>{
                                               pkg.id === 'mystery-basic' ? '50k - 370k glory' :
                                               pkg.id === 'mystery-epic' ? '150k - 1.2M glory' :
-                                              pkg.id === 'mystery-super' ? '1.2M - 3.4M glory' :
+                                              pkg.id === 'mystery-super' ? '200k - 3.4M glory' :
                                               '7 Days'
                                             }</span>
                                           </div>
