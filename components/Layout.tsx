@@ -15,6 +15,15 @@ interface LayoutProps {
 
 const NOTIFICATIONS = [
   {
+    id: 'notif-glory-issue-resolved-1',
+    type: 'offer',
+    icon: 'fa-circle-check',
+    color: '#22c55e',
+    title: 'HIGH GLORY IS BACK! 🔥',
+    body: 'The low glory issue has been solved. Get high Glory from our Guild Glory Bot at a low price and enjoy better results with every order.',
+    ts: '2026-08-20T09:00:00Z',
+  },
+  {
     id: 'notif-mega-likes-1',
     type: 'offer',
     icon: 'fa-infinity',
@@ -76,15 +85,6 @@ const NOTIFICATIONS = [
     title: 'Level Up — Upto 50% OFF! 🔥',
     body: 'All Level Up packages are now discounted! Starter 15% off up to Supreme 50% off. Limited time deal.',
     ts: '2026-05-19T06:00:00Z',
-  },
-  {
-    id: 'notif-glory-issue-resolved-1',
-    type: 'offer',
-    icon: 'fa-circle-check',
-    color: '#22c55e',
-    title: 'HIGH GLORY IS BACK! 🔥',
-    body: 'The low glory issue has been solved. Get high Glory from our Guild Glory Bot at a low price and enjoy better results with every order.',
-    ts: '2026-08-20T09:00:00Z',
   },
   {
     id: 'notif-bonus-1',
