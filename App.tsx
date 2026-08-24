@@ -188,6 +188,9 @@ const App: React.FC = () => {
   const [activeBanner, setActiveBanner] = useState(0);
   const [botMaintenance, setBotMaintenance] = useState(false);
   const [orderError, setOrderError] = useState<string | null>(null);
+  const [showCardsPin, setShowCardsPin] = useState(false);
+  const [cardsPin, setCardsPin] = useState('');
+  const [cardsPinError, setCardsPinError] = useState('');
 
 
   useEffect(() => {
@@ -617,6 +620,76 @@ const App: React.FC = () => {
       {showMaintenance && <MaintenancePopup onClose={() => setShowMaintenance(false)} methodName={maintenanceMethod} />}
       {showDisclaimer && <DisclaimerPopup onClose={handleDisclaimerClose} />}
       {showServerIssue && <ServerIssuePopup onAgree={() => setShowServerIssue(false)} onAvoid={() => setShowServerIssue(false)} />}
+      {showCardsPin && (
+        <div
+          className="fixed inset-0 z-[1100] bg-black/80 backdrop-blur-sm flex items-center justify-center px-4"
+          onClick={() => {
+            setShowCardsPin(false);
+            setCardsPin('');
+            setCardsPinError('');
+          }}
+        >
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (cardsPin === '1122') {
+                const cardsGame = GAMES.find(g => g.id === 'cards') || null;
+                setShowCardsPin(false);
+                setCardsPin('');
+                setCardsPinError('');
+                setSelectedGame(cardsGame);
+                setActiveTab('games');
+              } else {
+                setCardsPinError('Incorrect PIN. Please try again.');
+                setCardsPin('');
+              }
+            }}
+            onClick={(event) => event.stopPropagation()}
+            className="w-full max-w-sm rounded-2xl border border-cyan-500/30 bg-[#111113] p-6 md:p-8 shadow-[0_0_50px_rgba(6,182,212,0.16)]"
+          >
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-400/40 bg-cyan-500/10">
+              <i className="fas fa-lock text-cyan-400 text-xl"></i>
+            </div>
+            <h2 className="text-center text-xl font-black uppercase italic tracking-tight text-white">Enter PIN</h2>
+            <p className="mt-2 text-center text-xs font-medium text-zinc-400">Enter the PIN to access CARDS.</p>
+            <input
+              autoFocus
+              type="password"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={4}
+              value={cardsPin}
+              onChange={(event) => {
+                setCardsPin(event.target.value.replace(/\D/g, '').slice(0, 4));
+                setCardsPinError('');
+              }}
+              placeholder="••••"
+              aria-label="Cards PIN"
+              className="mt-6 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-4 text-center text-xl font-black tracking-[0.6em] text-white outline-none transition-colors focus:border-cyan-400"
+            />
+            {cardsPinError && (
+              <p className="mt-3 text-center text-xs font-bold text-red-400">{cardsPinError}</p>
+            )}
+            <button
+              type="submit"
+              className="mt-5 w-full rounded-xl bg-cyan-600 px-4 py-3 text-xs font-black uppercase tracking-widest text-white transition-colors hover:bg-cyan-500"
+            >
+              Enter CARDS
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowCardsPin(false);
+                setCardsPin('');
+                setCardsPinError('');
+              }}
+              className="mt-3 w-full py-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
+            >
+              Cancel
+            </button>
+          </form>
+        </div>
+      )}
 
       {/* Fill-field toast — slides in from bottom-right */}
       <div
@@ -824,7 +897,11 @@ const App: React.FC = () => {
                 return (
                   <div
                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-cyan-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(6,182,212,0.3)] relative"
-                    onClick={() => { setSelectedGame(cardsGame); setActiveTab('games'); }}
+                    onClick={() => {
+                      setCardsPin('');
+                      setCardsPinError('');
+                      setShowCardsPin(true);
+                    }}
                   >
                     <div className="aspect-video overflow-hidden bg-zinc-950 relative">
                       <img
