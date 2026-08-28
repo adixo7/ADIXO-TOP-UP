@@ -84,7 +84,7 @@ export const GAMES: Game[] = [
         id: 'ff-deals-mystery-basic',
         amount: 1,
         unit: 'Basic Mystery Box',
-        price: 150,
+        price: 160,
         currency: 'BDT',
         category: 'MYSTERY BOX',
         rewards: [
@@ -92,6 +92,48 @@ export const GAMES: Game[] = [
           '1 Weekly + 75 Diamonds',
           '1 Weekly + 350 Diamonds',
           '1 Monthly'
+        ]
+      },
+      {
+        id: 'ff-deals-mystery-hyper',
+        amount: 1,
+        unit: 'Hyper Mystery Box',
+        price: 330,
+        currency: 'BDT',
+        category: 'MYSTERY BOX',
+        rewards: [
+          '2 Weekly',
+          '2 Weekly + 115 Diamonds',
+          '3 Weekly + 75 Diamonds',
+          '1 Monthly'
+        ]
+      },
+      {
+        id: 'ff-deals-mystery-tragic',
+        amount: 1,
+        unit: 'Tragic Mystery Box',
+        price: 800,
+        currency: 'BDT',
+        category: 'MYSTERY BOX',
+        rewards: [
+          '1 Monthly',
+          '1 Monthly + 1 Weekly',
+          '1 Monthly + 1 Weekly + 115 Diamonds',
+          '2 Monthly'
+        ]
+      },
+      {
+        id: 'ff-deals-mystery-emerald',
+        amount: 1,
+        unit: 'Emerald Mystery Box',
+        price: 999,
+        currency: 'BDT',
+        category: 'MYSTERY BOX',
+        rewards: [
+          '1 Monthly + 355 Diamonds',
+          '1 Monthly + 1 Weekly + 75 Diamonds',
+          '2 Monthly + 1 Weekly',
+          '2 Monthly + 2 Weekly'
         ]
       }
     ]
