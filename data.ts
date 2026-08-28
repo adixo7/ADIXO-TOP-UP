@@ -72,6 +72,16 @@ export const GAMES: Game[] = [
     ]
   },
   {
+    id: 'ff-deals',
+    name: 'FF DEALS',
+    category: 'FF DEALS',
+    image: '/ff-deals-cover.png',
+    banner: '/ff-deals-cover.png',
+    idPlaceholder: 'Player ID / Account ID',
+    description: 'Special Free Fire deals and limited-time offers.',
+    packages: []
+  },
+  {
     id: 'mlbb',
     name: 'Mobile Legends',
     category: 'MOBA',
