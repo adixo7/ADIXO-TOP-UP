@@ -2233,6 +2233,77 @@ const App: React.FC = () => {
                         );
                       })()}
                     </div>
+                  ) : selectedGame.id === 'ff-deals' ? (
+                    <div className="space-y-6">
+                      {sortedCategoryKeys.map((category) => (
+                        <div key={category} className="space-y-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center border border-amber-500/35 bg-amber-500/10">
+                              <i className="fas fa-box-open text-amber-400 text-sm"></i>
+                            </div>
+                            <div>
+                              <h3 className="text-sm font-black text-white uppercase tracking-[0.2em] italic">{category}</h3>
+                              <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider">Choose your mystery reward box</p>
+                            </div>
+                            <div className="flex-1 h-px bg-gradient-to-r from-amber-500/30 to-transparent"></div>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-3">
+                            {groupedPackages[category].map((pkg) => {
+                              const isSelected = selectedPackage?.id === pkg.id;
+                              return (
+                                <button
+                                  key={pkg.id}
+                                  type="button"
+                                  onClick={() => setSelectedPackage(pkg)}
+                                  className={`group relative overflow-hidden rounded-2xl border p-4 text-left transition-all duration-300 ${
+                                    isSelected
+                                      ? 'border-amber-400 bg-amber-500/10 shadow-[0_0_26px_rgba(245,158,11,0.2)]'
+                                      : 'border-zinc-800 bg-zinc-900/60 hover:border-amber-500/60 hover:bg-amber-500/5'
+                                  }`}
+                                >
+                                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-amber-500/[0.07] via-transparent to-transparent"></div>
+                                  <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center">
+                                    <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center border transition-colors ${
+                                      isSelected
+                                        ? 'border-amber-400/70 bg-amber-400/20'
+                                        : 'border-amber-500/30 bg-amber-500/10'
+                                    }`}>
+                                      <i className="fas fa-gift text-amber-400 text-xl"></i>
+                                    </div>
+
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-[8px] font-black uppercase tracking-[0.25em] text-amber-400 mb-1">BASIC</p>
+                                      <h4 className="text-white font-black uppercase italic tracking-tight text-base">{pkg.unit}</h4>
+                                      <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider mt-1">Possible rewards</p>
+                                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-1.5 mt-2">
+                                        {(pkg.rewards || []).map((reward) => (
+                                          <span key={reward} className="flex items-center gap-2 text-[10px] text-zinc-300 font-semibold">
+                                            <i className="fas fa-check text-emerald-400 text-[8px]"></i>
+                                            {reward}
+                                          </span>
+                                        ))}
+                                      </div>
+                                    </div>
+
+                                    <div className="flex items-center justify-between sm:flex-col sm:items-end gap-3 shrink-0 sm:min-w-[88px]">
+                                      <span className="gaming-font text-2xl font-black text-amber-400">৳{pkg.price.toLocaleString()}</span>
+                                      <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                                        isSelected
+                                          ? 'border-amber-400 bg-amber-400'
+                                          : 'border-zinc-700 group-hover:border-amber-400/70'
+                                      }`}>
+                                        {isSelected && <i className="fas fa-check text-black text-[7px]"></i>}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   ) : selectedGame.id === 'event-bypass' ? (
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

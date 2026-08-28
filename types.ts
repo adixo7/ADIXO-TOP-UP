@@ -20,6 +20,7 @@ export interface Package {
   category?: string; // New field for grouping
   image?: string; // Image for the package cover
   description?: string;
+  rewards?: string[]; // Possible rewards for mystery boxes and similar packages
   level?: number;
   playerSpace?: number;
   server?: string;

@@ -79,7 +79,22 @@ export const GAMES: Game[] = [
     banner: '/ff-deals-cover.png',
     idPlaceholder: 'Player ID / Account ID',
     description: 'Special Free Fire deals and limited-time offers.',
-    packages: []
+    packages: [
+      {
+        id: 'ff-deals-mystery-basic',
+        amount: 1,
+        unit: 'Basic Mystery Box',
+        price: 150,
+        currency: 'BDT',
+        category: 'MYSTERY BOX',
+        rewards: [
+          '1 Weekly',
+          '1 Weekly + 75 Diamonds',
+          '1 Weekly + 350 Diamonds',
+          '1 Monthly'
+        ]
+      }
+    ]
   },
   {
     id: 'mlbb',
