@@ -798,7 +798,7 @@ const App: React.FC = () => {
             </div>
             {filteredGames.length > 0 ? (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
-                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'cards' && g.id !== 'level-up' && g.id !== 'ff-likes' && g.id !== 'buy-guild').map(game => (
+                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'cards' && g.id !== 'level-up' && g.id !== 'ff-likes' && g.id !== 'buy-guild' && g.id !== 'mlbb' && g.id !== 'pubg' && g.id !== 'codm' && g.id !== 'bs').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
