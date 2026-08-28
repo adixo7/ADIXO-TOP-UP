@@ -622,7 +622,7 @@ const App: React.FC = () => {
       {showServerIssue && <ServerIssuePopup onAgree={() => setShowServerIssue(false)} onAvoid={() => setShowServerIssue(false)} />}
       {showCardsPin && (
         <div
-          className="fixed inset-0 z-[1100] bg-black/80 backdrop-blur-sm flex items-center justify-center px-4"
+          className="fixed inset-0 z-[1100] flex items-center justify-center overflow-hidden bg-[#020507]/90 px-4 py-6 backdrop-blur-md animate-in fade-in duration-300"
           onClick={() => {
             setShowCardsPin(false);
             setCardsPin('');
@@ -632,7 +632,7 @@ const App: React.FC = () => {
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              if (cardsPin === '1122') {
+              if (cardsPin === '1436') {
                 const cardsGame = GAMES.find(g => g.id === 'cards') || null;
                 setShowCardsPin(false);
                 setCardsPin('');
@@ -645,36 +645,82 @@ const App: React.FC = () => {
               }
             }}
             onClick={(event) => event.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl border border-cyan-500/30 bg-[#111113] p-6 md:p-8 shadow-[0_0_50px_rgba(6,182,212,0.16)]"
+            className="relative w-full max-w-[390px] overflow-hidden rounded-[1.75rem] border border-cyan-400/30 bg-[#080d10] shadow-[0_28px_100px_rgba(0,0,0,0.85),0_0_70px_rgba(6,182,212,0.14)] animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
           >
-            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-400/40 bg-cyan-500/10">
-              <i className="fas fa-lock text-cyan-400 text-xl"></i>
+            <div className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -left-16 h-48 w-48 rounded-full bg-fuchsia-600/10 blur-3xl" />
+            <div className="pointer-events-none absolute inset-0 opacity-[0.06]" style={{ backgroundImage: 'linear-gradient(rgba(34,211,238,0.7) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.7) 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+
+            <div className="relative border-b border-cyan-300/10 px-6 pb-5 pt-5 md:px-7">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-cyan-300/40 bg-cyan-400/10 shadow-[0_0_24px_rgba(34,211,238,0.14)]">
+                    <i className="fas fa-id-card text-cyan-300 text-lg"></i>
+                  </div>
+                  <div>
+                    <p className="text-[9px] font-black uppercase tracking-[0.32em] text-cyan-300/75">Digital services</p>
+                    <h2 className="mt-1 text-2xl font-black uppercase italic leading-none tracking-tight text-white">CARDS</h2>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowCardsPin(false);
+                    setCardsPin('');
+                    setCardsPinError('');
+                  }}
+                  aria-label="Close cards access"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-zinc-500 transition-all hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:text-cyan-200"
+                >
+                  <i className="fas fa-times text-xs"></i>
+                </button>
+              </div>
+              <div className="mt-5 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-zinc-500">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_rgba(103,232,249,0.9)]" />
+                Restricted card terminal
+              </div>
             </div>
-            <h2 className="text-center text-xl font-black uppercase italic tracking-tight text-white">Enter PIN</h2>
-            <p className="mt-2 text-center text-xs font-medium text-zinc-400">Enter the PIN to access CARDS.</p>
-            <input
-              autoFocus
-              type="password"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              maxLength={4}
-              value={cardsPin}
-              onChange={(event) => {
-                setCardsPin(event.target.value.replace(/\D/g, '').slice(0, 4));
-                setCardsPinError('');
-              }}
-              placeholder="••••"
-              aria-label="Cards PIN"
-              className="mt-6 w-full rounded-xl border border-zinc-700 bg-zinc-950 px-4 py-4 text-center text-xl font-black tracking-[0.6em] text-white outline-none transition-colors focus:border-cyan-400"
-            />
+
+            <div className="relative px-6 pb-6 pt-6 md:px-7 md:pb-7">
+              <div className="mb-5">
+                <p className="text-sm font-bold text-zinc-200">Enter access PIN</p>
+                <p className="mt-1 text-xs leading-relaxed text-zinc-500">Unlock digital cards and gaming card services.</p>
+              </div>
+              <label htmlFor="cards-access-pin" className="mb-2 block text-[9px] font-black uppercase tracking-[0.22em] text-zinc-500">
+                4-digit security code
+              </label>
+            <div className={`flex items-center rounded-2xl border bg-black/50 px-4 transition-all ${cardsPinError ? 'border-red-400/70 shadow-[0_0_20px_rgba(248,113,113,0.12)]' : 'border-cyan-300/20 focus-within:border-cyan-300/70 focus-within:shadow-[0_0_24px_rgba(34,211,238,0.12)]'}`}>
+              <i className={`fas fa-key mr-3 text-xs ${cardsPinError ? 'text-red-400' : 'text-cyan-300/70'}`}></i>
+              <input
+                autoFocus
+                id="cards-access-pin"
+                type="password"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={4}
+                value={cardsPin}
+                onChange={(event) => {
+                  setCardsPin(event.target.value.replace(/\D/g, '').slice(0, 4));
+                  setCardsPinError('');
+                }}
+                placeholder="• • • •"
+                aria-label="Cards PIN"
+                className="w-full bg-transparent py-4 text-center text-xl font-black tracking-[0.5em] text-white outline-none placeholder:text-zinc-700"
+              />
+              <span className="text-[9px] font-black tracking-widest text-zinc-600">{cardsPin.length}/4</span>
+            </div>
             {cardsPinError && (
-              <p className="mt-3 text-center text-xs font-bold text-red-400">{cardsPinError}</p>
+              <p className="mt-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-red-400">
+                <i className="fas fa-triangle-exclamation"></i>
+                {cardsPinError}
+              </p>
             )}
             <button
               type="submit"
-              className="mt-5 w-full rounded-xl bg-cyan-600 px-4 py-3 text-xs font-black uppercase tracking-widest text-white transition-colors hover:bg-cyan-500"
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-cyan-200/30 bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#031015] shadow-[0_8px_24px_rgba(6,182,212,0.22)] transition-all hover:from-cyan-300 hover:to-blue-400 hover:shadow-[0_10px_30px_rgba(6,182,212,0.34)] active:scale-[0.98]"
             >
-              Enter CARDS
+              <i className="fas fa-unlock-alt text-xs"></i>
+              Unlock cards
             </button>
             <button
               type="button"
@@ -683,10 +729,11 @@ const App: React.FC = () => {
                 setCardsPin('');
                 setCardsPinError('');
               }}
-              className="mt-3 w-full py-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
+              className="mt-3 w-full py-1 text-[9px] font-black uppercase tracking-[0.22em] text-zinc-600 transition-colors hover:text-zinc-300"
             >
-              Cancel
+              Return to store
             </button>
+            </div>
           </form>
         </div>
       )}
