@@ -2263,8 +2263,8 @@ const App: React.FC = () => {
                                   }`}
                                 >
                                   <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-amber-500/[0.07] via-transparent to-transparent"></div>
-                                  <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center">
-                                    <div className={`w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center border transition-colors ${
+                                  <div className="relative grid grid-cols-[72px_minmax(0,1fr)] gap-x-4 gap-y-3 sm:flex sm:flex-row sm:items-center sm:gap-4">
+                                    <div className={`col-start-1 row-start-1 w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center border transition-colors sm:col-auto sm:row-auto ${
                                       isSelected
                                         ? 'border-amber-400/70 bg-amber-400/20'
                                         : 'border-amber-500/30 bg-amber-500/10'
@@ -2272,7 +2272,7 @@ const App: React.FC = () => {
                                       <i className="fas fa-gift text-amber-400 text-xl"></i>
                                     </div>
 
-                                    <div className="flex-1 min-w-0">
+                                    <div className="col-start-2 row-start-1 row-span-2 flex-1 min-w-0 sm:col-auto sm:row-auto">
                                       <p className="text-[8px] font-black uppercase tracking-[0.25em] text-amber-400 mb-1">BASIC</p>
                                       <h4 className="text-white font-black uppercase italic tracking-tight text-base">{pkg.unit}</h4>
                                       <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider mt-1">Possible rewards</p>
@@ -2286,7 +2286,7 @@ const App: React.FC = () => {
                                       </div>
                                     </div>
 
-                                    <div className="flex items-center justify-between sm:flex-col sm:items-end gap-3 shrink-0 sm:min-w-[88px]">
+                                    <div className="col-start-1 row-start-2 flex flex-col items-center justify-center gap-2 shrink-0 sm:col-auto sm:row-auto sm:items-end sm:min-w-[88px]">
                                       <span className="gaming-font text-2xl font-black text-amber-400">৳{pkg.price.toLocaleString()}</span>
                                       <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                                         isSelected
