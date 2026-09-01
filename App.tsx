@@ -831,12 +831,13 @@ const App: React.FC = () => {
                   >
                      <div className="aspect-video overflow-hidden bg-[#17141d] relative flex items-center justify-center">
                        <img
-                         src="/images/lory-bots-cover.jpeg"
+                         src="/images/lory-bots-cover-sharp.jpeg"
                         alt={proBot.unit} 
-                         className="w-full h-full object-contain object-center transition-opacity duration-700 opacity-95 group-hover:opacity-100"
+                         className="w-full h-full object-contain object-center transition-transform duration-700 group-hover:scale-[1.01]"
+                         style={{ filter: 'contrast(1.12) saturate(1.08) brightness(1.06)' }}
                       />
-                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/95 via-[#0c0c0e]/20 to-transparent"></div>
-                       <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0e]/20 via-transparent to-orange-500/10 pointer-events-none"></div>
+                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/95 via-transparent to-transparent"></div>
+                       <div className="absolute inset-0 ring-1 ring-inset ring-orange-500/10 pointer-events-none"></div>
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-robot text-orange-500 text-[8px] md:text-[10px]"></i>
