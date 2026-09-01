@@ -826,16 +826,17 @@ const App: React.FC = () => {
                 return (
                   <div 
                     key={proBot.id} 
-                    className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
+                     className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
                     onClick={() => { setSelectedGame(game || null); setActiveTab('games'); }}
                   >
-                    <div className="aspect-video overflow-hidden bg-zinc-950 relative">
-                      <img 
-                        src={'/images/glory-bots-cover.png'} 
+                     <div className="aspect-video overflow-hidden bg-[#17141d] relative flex items-center justify-center">
+                       <img
+                         src="/images/lory-bots-cover.jpeg"
                         alt={proBot.unit} 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60 group-hover:opacity-100" 
+                         className="w-full h-full object-contain object-center transition-opacity duration-700 opacity-95 group-hover:opacity-100"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/40 to-transparent"></div>
+                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/95 via-[#0c0c0e]/20 to-transparent"></div>
+                       <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0e]/20 via-transparent to-orange-500/10 pointer-events-none"></div>
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
                         <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
                           <i className="fas fa-robot text-orange-500 text-[8px] md:text-[10px]"></i>
@@ -2251,35 +2252,117 @@ const App: React.FC = () => {
                           <div className="grid grid-cols-1 gap-3">
                             {groupedPackages[category].map((pkg) => {
                               const isSelected = selectedPackage?.id === pkg.id;
+                              const mysteryBoxThemes: Record<string, {
+                                label: string;
+                                badge: string;
+                                accent: string;
+                                border: string;
+                                background: string;
+                                iconBackground: string;
+                                iconBorder: string;
+                                shadow: string;
+                                selectedShadow: string;
+                                icon: string;
+                              }> = {
+                                'ff-deals-mystery-basic': {
+                                  label: 'BASIC',
+                                  badge: 'STARTER',
+                                  accent: '#fbbf24',
+                                  border: 'rgba(180, 120, 20, 0.38)',
+                                  background: 'linear-gradient(115deg, rgba(57, 40, 16, 0.92) 0%, rgba(24, 23, 27, 0.98) 32%, rgba(16, 16, 20, 1) 100%)',
+                                  iconBackground: 'rgba(180, 120, 20, 0.16)',
+                                  iconBorder: 'rgba(251, 191, 36, 0.45)',
+                                  shadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
+                                  selectedShadow: '0 0 32px rgba(251, 191, 36, 0.24)',
+                                  icon: 'fa-box-open'
+                                },
+                                'ff-deals-mystery-hyper': {
+                                  label: 'HYPER',
+                                  badge: 'UPGRADE',
+                                  accent: '#a78bfa',
+                                  border: 'rgba(139, 92, 246, 0.42)',
+                                  background: 'linear-gradient(115deg, rgba(44, 27, 84, 0.88) 0%, rgba(22, 20, 35, 0.98) 34%, rgba(16, 16, 20, 1) 100%)',
+                                  iconBackground: 'rgba(139, 92, 246, 0.16)',
+                                  iconBorder: 'rgba(167, 139, 250, 0.5)',
+                                  shadow: '0 8px 28px rgba(76, 29, 149, 0.18)',
+                                  selectedShadow: '0 0 36px rgba(139, 92, 246, 0.32)',
+                                  icon: 'fa-bolt'
+                                },
+                                'ff-deals-mystery-tragic': {
+                                  label: 'TRAGIC',
+                                  badge: 'PREMIUM',
+                                  accent: '#fb7185',
+                                  border: 'rgba(225, 29, 72, 0.45)',
+                                  background: 'linear-gradient(115deg, rgba(83, 22, 42, 0.9) 0%, rgba(30, 18, 27, 0.98) 34%, rgba(16, 16, 20, 1) 100%)',
+                                  iconBackground: 'rgba(225, 29, 72, 0.15)',
+                                  iconBorder: 'rgba(251, 113, 133, 0.5)',
+                                  shadow: '0 8px 32px rgba(159, 18, 57, 0.2)',
+                                  selectedShadow: '0 0 42px rgba(225, 29, 72, 0.38)',
+                                  icon: 'fa-fire'
+                                },
+                                'ff-deals-mystery-emerald': {
+                                  label: 'EMERALD',
+                                  badge: 'ULTIMATE',
+                                  accent: '#34d399',
+                                  border: 'rgba(16, 185, 129, 0.48)',
+                                  background: 'linear-gradient(115deg, rgba(11, 69, 56, 0.92) 0%, rgba(16, 35, 33, 0.98) 34%, rgba(16, 16, 20, 1) 100%)',
+                                  iconBackground: 'rgba(16, 185, 129, 0.16)',
+                                  iconBorder: 'rgba(52, 211, 153, 0.55)',
+                                  shadow: '0 8px 36px rgba(5, 150, 105, 0.22)',
+                                  selectedShadow: '0 0 48px rgba(16, 185, 129, 0.42)',
+                                  icon: 'fa-gem'
+                                }
+                              };
+                              const theme = mysteryBoxThemes[pkg.id] || mysteryBoxThemes['ff-deals-mystery-basic'];
                               return (
                                 <button
                                   key={pkg.id}
                                   type="button"
                                   onClick={() => setSelectedPackage(pkg)}
-                                  className={`group relative overflow-hidden rounded-2xl border p-4 text-left transition-all duration-300 ${
-                                    isSelected
-                                      ? 'border-amber-400 bg-amber-500/10 shadow-[0_0_26px_rgba(245,158,11,0.2)]'
-                                      : 'border-zinc-800 bg-zinc-900/60 hover:border-amber-500/60 hover:bg-amber-500/5'
+                                  className={`group relative overflow-hidden rounded-2xl border-l-4 border-r border-t border-b p-4 text-left transition-all duration-300 hover:-translate-y-0.5 ${
+                                    isSelected ? 'scale-[1.01]' : ''
                                   }`}
+                                  style={{
+                                    background: theme.background,
+                                    borderLeftColor: theme.accent,
+                                    borderTopColor: isSelected ? theme.accent : theme.border,
+                                    borderRightColor: isSelected ? theme.accent : theme.border,
+                                    borderBottomColor: isSelected ? theme.accent : theme.border,
+                                    boxShadow: isSelected ? theme.selectedShadow : theme.shadow
+                                  }}
                                 >
-                                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-amber-500/[0.07] via-transparent to-transparent"></div>
+                                  <div
+                                    className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
+                                    style={{ background: `linear-gradient(90deg, ${theme.accent}, transparent 72%)` }}
+                                  ></div>
+                                  <div
+                                    className="absolute -right-16 -top-16 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none"
+                                    style={{ background: theme.accent }}
+                                  ></div>
                                   <div className="relative grid grid-cols-[72px_minmax(0,1fr)] gap-x-4 gap-y-3 sm:flex sm:flex-row sm:items-center sm:gap-4">
-                                    <div className={`col-start-1 row-start-1 w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center border transition-colors sm:col-auto sm:row-auto ${
-                                      isSelected
-                                        ? 'border-amber-400/70 bg-amber-400/20'
-                                        : 'border-amber-500/30 bg-amber-500/10'
-                                    }`}>
-                                      <i className="fas fa-gift text-amber-400 text-xl"></i>
+                                    <div
+                                      className="col-start-1 row-start-1 w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center border transition-colors sm:col-auto sm:row-auto"
+                                      style={{ background: theme.iconBackground, borderColor: theme.iconBorder, boxShadow: `inset 0 0 18px ${theme.iconBackground}` }}
+                                    >
+                                      <i className={`fas ${theme.icon} text-xl`} style={{ color: theme.accent, filter: `drop-shadow(0 0 7px ${theme.accent})` }}></i>
                                     </div>
 
                                     <div className="col-start-2 row-start-1 row-span-2 flex-1 min-w-0 sm:col-auto sm:row-auto">
-                                      <p className="text-[8px] font-black uppercase tracking-[0.25em] text-amber-400 mb-1">BASIC</p>
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <p className="text-[8px] font-black uppercase tracking-[0.25em]" style={{ color: theme.accent }}>{theme.label}</p>
+                                        <span
+                                          className="text-[6px] font-black uppercase tracking-[0.16em] px-1.5 py-0.5 rounded-full"
+                                          style={{ color: theme.accent, background: `${theme.accent}1a`, border: `1px solid ${theme.accent}55` }}
+                                        >
+                                          {theme.badge}
+                                        </span>
+                                      </div>
                                       <h4 className="text-white font-black uppercase italic tracking-tight text-base">{pkg.unit}</h4>
                                       <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-wider mt-1">Possible rewards</p>
                                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-1.5 mt-2">
                                         {(pkg.rewards || []).map((reward) => (
                                           <span key={reward} className="flex items-center gap-2 text-[10px] text-zinc-300 font-semibold">
-                                            <i className="fas fa-check text-emerald-400 text-[8px]"></i>
+                                            <i className="fas fa-check text-[8px]" style={{ color: theme.accent }}></i>
                                             {reward}
                                           </span>
                                         ))}
@@ -2287,12 +2370,20 @@ const App: React.FC = () => {
                                     </div>
 
                                     <div className="col-start-1 row-start-2 flex flex-col items-center justify-center gap-2 shrink-0 sm:col-auto sm:row-auto sm:items-end sm:min-w-[88px]">
-                                      <span className="gaming-font text-2xl font-black text-amber-400">৳{pkg.price.toLocaleString()}</span>
-                                      <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
-                                        isSelected
-                                          ? 'border-amber-400 bg-amber-400'
-                                          : 'border-zinc-700 group-hover:border-amber-400/70'
-                                      }`}>
+                                      <span
+                                        className="gaming-font text-2xl font-black"
+                                        style={{ color: theme.accent, textShadow: `0 0 16px ${theme.accent}66` }}
+                                      >
+                                        ৳{pkg.price.toLocaleString()}
+                                      </span>
+                                      <span
+                                        className="w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all"
+                                        style={{
+                                          borderColor: isSelected ? theme.accent : `${theme.accent}66`,
+                                          background: isSelected ? theme.accent : 'transparent',
+                                          boxShadow: isSelected ? `0 0 12px ${theme.accent}88` : undefined
+                                        }}
+                                      >
                                         {isSelected && <i className="fas fa-check text-black text-[7px]"></i>}
                                       </span>
                                     </div>
