@@ -829,11 +829,15 @@ const App: React.FC = () => {
                      className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
                     onClick={() => { setSelectedGame(game || null); setActiveTab('games'); }}
                   >
-                     <div className="aspect-video overflow-hidden bg-[#17141d] relative flex items-center justify-center">
+                     <div
+                       className="aspect-video overflow-hidden relative flex items-center justify-center"
+                       style={{ background: 'radial-gradient(ellipse at center, #25202d 0%, #17141d 58%, #0c0c0e 100%)' }}
+                     >
                        <img
                          src="/images/lory-bots-cover.jpeg"
                         alt={proBot.unit} 
-                         className="w-full h-full object-contain object-center transition-opacity duration-700 opacity-95 group-hover:opacity-100"
+                         className="w-[94%] h-[88%] object-contain object-center rounded-xl transition-opacity duration-700 opacity-95 group-hover:opacity-100"
+                         style={{ filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45))' }}
                       />
                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/95 via-[#0c0c0e]/20 to-transparent"></div>
                        <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0e]/20 via-transparent to-orange-500/10 pointer-events-none"></div>
