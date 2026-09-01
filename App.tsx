@@ -829,15 +829,11 @@ const App: React.FC = () => {
                      className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
                     onClick={() => { setSelectedGame(game || null); setActiveTab('games'); }}
                   >
-                     <div
-                       className="aspect-video overflow-hidden relative flex items-center justify-center"
-                       style={{ background: 'radial-gradient(ellipse at center, #25202d 0%, #17141d 58%, #0c0c0e 100%)' }}
-                     >
+                     <div className="aspect-video overflow-hidden bg-[#17141d] relative flex items-center justify-center">
                        <img
                          src="/images/lory-bots-cover.jpeg"
                         alt={proBot.unit} 
-                         className="w-[94%] h-[88%] object-contain object-center rounded-xl transition-opacity duration-700 opacity-95 group-hover:opacity-100"
-                         style={{ filter: 'drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45))' }}
+                         className="w-full h-full object-contain object-center transition-opacity duration-700 opacity-95 group-hover:opacity-100"
                       />
                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/95 via-[#0c0c0e]/20 to-transparent"></div>
                        <div className="absolute inset-0 bg-gradient-to-r from-[#0c0c0e]/20 via-transparent to-orange-500/10 pointer-events-none"></div>
@@ -2323,15 +2319,16 @@ const App: React.FC = () => {
                                   key={pkg.id}
                                   type="button"
                                   onClick={() => setSelectedPackage(pkg)}
-                                  className={`group relative overflow-hidden rounded-2xl border border-black/70 p-4 text-left transition-all duration-300 hover:-translate-y-0.5 ${
+                                  className={`group relative overflow-hidden rounded-2xl border-l-4 border-r border-t border-b p-4 text-left transition-all duration-300 hover:-translate-y-0.5 ${
                                     isSelected ? 'scale-[1.01]' : ''
                                   }`}
                                   style={{
                                     background: theme.background,
-                                    borderColor: isSelected ? `${theme.accent}66` : 'rgba(0, 0, 0, 0.72)',
-                                    boxShadow: isSelected
-                                      ? `${theme.selectedShadow}, inset 0 0 24px rgba(0, 0, 0, 0.32)`
-                                      : `inset 0 0 24px rgba(0, 0, 0, 0.38), ${theme.shadow}`
+                                    borderLeftColor: theme.accent,
+                                    borderTopColor: isSelected ? theme.accent : theme.border,
+                                    borderRightColor: isSelected ? theme.accent : theme.border,
+                                    borderBottomColor: isSelected ? theme.accent : theme.border,
+                                    boxShadow: isSelected ? theme.selectedShadow : theme.shadow
                                   }}
                                 >
                                   <div
@@ -2341,10 +2338,6 @@ const App: React.FC = () => {
                                   <div
                                     className="absolute -right-16 -top-16 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none"
                                     style={{ background: theme.accent }}
-                                  ></div>
-                                  <div
-                                    className="absolute inset-0 rounded-2xl pointer-events-none"
-                                    style={{ boxShadow: 'inset 0 0 28px rgba(0, 0, 0, 0.62)' }}
                                   ></div>
                                   <div className="relative grid grid-cols-[72px_minmax(0,1fr)] gap-x-4 gap-y-3 sm:flex sm:flex-row sm:items-center sm:gap-4">
                                     <div
