@@ -839,19 +839,15 @@ const App: React.FC = () => {
                        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e]/95 via-transparent to-transparent"></div>
                        <div className="absolute inset-0 ring-1 ring-inset ring-orange-500/10 pointer-events-none"></div>
                         <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
-                          <div
-                            className="absolute -inset-x-2 -inset-y-1.5 bg-[#0c0c0e]/25 backdrop-blur-[3px] pointer-events-none"
-                            style={{ maskImage: 'linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)' }}
-                          ></div>
                           <div className="relative">
                             <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
-                              <i className="fas fa-robot text-orange-500 text-[8px] md:text-[10px]"></i>
-                              <p className="text-orange-500 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">{t('home.advancedAI')}</p>
+                              <i className="fas fa-robot text-orange-500 text-[8px] md:text-[10px]" style={{ filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.95))' }}></i>
+                              <p className="text-orange-500 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.95), 0 0 8px rgba(0,0,0,0.8)' }}>{t('home.advancedAI')}</p>
                             </div>
-                            <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-0.5">
+                            <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-0.5" style={{ textShadow: '0 2px 5px rgba(0,0,0,0.98), 0 0 10px rgba(0,0,0,0.75)' }}>
                               {proBot.unit}
                             </h3>
-                            <p className="text-zinc-400 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
+                            <p className="text-zinc-300 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.98), 0 0 8px rgba(0,0,0,0.75)' }}>
                               {t('home.guildBotsDesc')}
                             </p>
                           </div>
