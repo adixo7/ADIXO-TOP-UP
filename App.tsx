@@ -2323,16 +2323,15 @@ const App: React.FC = () => {
                                   key={pkg.id}
                                   type="button"
                                   onClick={() => setSelectedPackage(pkg)}
-                                  className={`group relative overflow-hidden rounded-2xl border-l-4 border-r border-t border-b p-4 text-left transition-all duration-300 hover:-translate-y-0.5 ${
+                                  className={`group relative overflow-hidden rounded-2xl border border-black/70 p-4 text-left transition-all duration-300 hover:-translate-y-0.5 ${
                                     isSelected ? 'scale-[1.01]' : ''
                                   }`}
                                   style={{
                                     background: theme.background,
-                                    borderLeftColor: theme.accent,
-                                    borderTopColor: isSelected ? theme.accent : theme.border,
-                                    borderRightColor: isSelected ? theme.accent : theme.border,
-                                    borderBottomColor: isSelected ? theme.accent : theme.border,
-                                    boxShadow: isSelected ? theme.selectedShadow : theme.shadow
+                                    borderColor: isSelected ? `${theme.accent}66` : 'rgba(0, 0, 0, 0.72)',
+                                    boxShadow: isSelected
+                                      ? `${theme.selectedShadow}, inset 0 0 24px rgba(0, 0, 0, 0.32)`
+                                      : `inset 0 0 24px rgba(0, 0, 0, 0.38), ${theme.shadow}`
                                   }}
                                 >
                                   <div
@@ -2342,6 +2341,10 @@ const App: React.FC = () => {
                                   <div
                                     className="absolute -right-16 -top-16 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none"
                                     style={{ background: theme.accent }}
+                                  ></div>
+                                  <div
+                                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                                    style={{ boxShadow: 'inset 0 0 28px rgba(0, 0, 0, 0.62)' }}
                                   ></div>
                                   <div className="relative grid grid-cols-[72px_minmax(0,1fr)] gap-x-4 gap-y-3 sm:flex sm:flex-row sm:items-center sm:gap-4">
                                     <div
