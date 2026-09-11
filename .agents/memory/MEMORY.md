@@ -1,1 +1,2 @@
 - [Imported Node projects](imported-node-projects.md) — GitHub imports may need dependency installation before their configured workflow can start.
+- [Portable npm lockfiles](portable-npm-lockfiles.md) — Replit package installs can write internal tarball URLs that external CI cannot resolve.
