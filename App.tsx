@@ -19,6 +19,60 @@ import Confetti from './components/Confetti';
 import LanguagePopup from './components/LanguagePopup';
 import { useLanguage } from './LanguageContext';
 
+const CARDS_PIN_GUARD_KEY = 'adixo-cards-pin-guard';
+const CARDS_PIN_MAX_ATTEMPTS = 3;
+const CARDS_PIN_LOCKOUT_MS = 60 * 60 * 1000;
+
+type CardsPinGuard = {
+  failedAttempts: number;
+  lockedUntil: number;
+};
+
+const EMPTY_CARDS_PIN_GUARD: CardsPinGuard = { failedAttempts: 0, lockedUntil: 0 };
+
+const readCardsPinGuard = (): CardsPinGuard => {
+  if (typeof window === 'undefined') return EMPTY_CARDS_PIN_GUARD;
+
+  try {
+    const stored = window.localStorage.getItem(CARDS_PIN_GUARD_KEY);
+    if (!stored) return EMPTY_CARDS_PIN_GUARD;
+
+    const parsed = JSON.parse(stored) as Partial<CardsPinGuard>;
+    const failedAttempts = Number.isInteger(parsed.failedAttempts)
+      ? Math.min(Math.max(parsed.failedAttempts as number, 0), CARDS_PIN_MAX_ATTEMPTS)
+      : 0;
+    const lockedUntil = Number.isFinite(parsed.lockedUntil) ? (parsed.lockedUntil as number) : 0;
+
+    if (lockedUntil <= Date.now()) return { failedAttempts, lockedUntil: 0 };
+    return { failedAttempts, lockedUntil };
+  } catch {
+    return EMPTY_CARDS_PIN_GUARD;
+  }
+};
+
+const saveCardsPinGuard = (guard: CardsPinGuard) => {
+  try {
+    window.localStorage.setItem(CARDS_PIN_GUARD_KEY, JSON.stringify(guard));
+  } catch {}
+};
+
+const clearCardsPinGuard = () => {
+  try {
+    window.localStorage.removeItem(CARDS_PIN_GUARD_KEY);
+  } catch {}
+};
+
+const formatCardsPinLockout = (remainingMs: number) => {
+  const totalSeconds = Math.max(0, Math.ceil(remainingMs / 1000));
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  if (hours > 0) return `${hours}h ${minutes}m`;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+};
+
 
 const FF_PANEL_TIERS: Record<string, { days: number; price: number }[]> = {
   'ff-brmod-android': [
@@ -191,11 +245,38 @@ const App: React.FC = () => {
   const [showCardsPin, setShowCardsPin] = useState(false);
   const [cardsPin, setCardsPin] = useState('');
   const [cardsPinError, setCardsPinError] = useState('');
+  const [cardsPinGuard, setCardsPinGuard] = useState<CardsPinGuard>(() => readCardsPinGuard());
+  const [cardsPinRemainingMs, setCardsPinRemainingMs] = useState(() => Math.max(0, cardsPinGuard.lockedUntil - Date.now()));
+  const cardsPinLocked = cardsPinRemainingMs > 0;
 
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [activeTab, selectedGame]);
+
+  useEffect(() => {
+    const syncCardsPinLockout = () => {
+      const remainingMs = Math.max(0, cardsPinGuard.lockedUntil - Date.now());
+      setCardsPinRemainingMs(remainingMs);
+
+      if (cardsPinGuard.lockedUntil > 0 && remainingMs === 0) {
+        setCardsPinGuard(EMPTY_CARDS_PIN_GUARD);
+        clearCardsPinGuard();
+      }
+    };
+
+    syncCardsPinLockout();
+    if (!showCardsPin || cardsPinGuard.lockedUntil <= Date.now()) return;
+
+    const interval = window.setInterval(syncCardsPinLockout, 1000);
+    return () => window.clearInterval(interval);
+  }, [showCardsPin, cardsPinGuard.lockedUntil]);
+
+  useEffect(() => {
+    if (showCardsPin && cardsPinLocked) {
+      setCardsPinError(`Too many incorrect attempts. Try again in ${formatCardsPinLockout(cardsPinRemainingMs)}.`);
+    }
+  }, [showCardsPin, cardsPinLocked, cardsPinRemainingMs]);
 
   // Fetch site-control state on mount and every 30s
   useEffect(() => {
@@ -632,15 +713,35 @@ const App: React.FC = () => {
           <form
             onSubmit={(event) => {
               event.preventDefault();
+              if (cardsPinLocked) {
+                setCardsPinError(`Too many incorrect attempts. Try again in ${formatCardsPinLockout(cardsPinRemainingMs)}.`);
+                return;
+              }
+
               if (cardsPin === '1436') {
                 const cardsGame = GAMES.find(g => g.id === 'cards') || null;
+                clearCardsPinGuard();
+                setCardsPinGuard(EMPTY_CARDS_PIN_GUARD);
+                setCardsPinRemainingMs(0);
                 setShowCardsPin(false);
                 setCardsPin('');
                 setCardsPinError('');
                 setSelectedGame(cardsGame);
                 setActiveTab('games');
               } else {
-                setCardsPinError('Incorrect PIN. Please try again.');
+                const failedAttempts = cardsPinGuard.failedAttempts + 1;
+                const nextGuard: CardsPinGuard = failedAttempts >= CARDS_PIN_MAX_ATTEMPTS
+                  ? { failedAttempts: CARDS_PIN_MAX_ATTEMPTS, lockedUntil: Date.now() + CARDS_PIN_LOCKOUT_MS }
+                  : { failedAttempts, lockedUntil: 0 };
+
+                saveCardsPinGuard(nextGuard);
+                setCardsPinGuard(nextGuard);
+                setCardsPinRemainingMs(Math.max(0, nextGuard.lockedUntil - Date.now()));
+                setCardsPinError(
+                  nextGuard.lockedUntil > 0
+                    ? 'Too many incorrect attempts. Try again in 1 hour.'
+                    : `Incorrect PIN. ${CARDS_PIN_MAX_ATTEMPTS - failedAttempts} attempt${CARDS_PIN_MAX_ATTEMPTS - failedAttempts === 1 ? '' : 's'} remaining.`
+                );
                 setCardsPin('');
               }
             }}
@@ -699,6 +800,7 @@ const App: React.FC = () => {
                 pattern="[0-9]*"
                 maxLength={4}
                 value={cardsPin}
+                disabled={cardsPinLocked}
                 onChange={(event) => {
                   setCardsPin(event.target.value.replace(/\D/g, '').slice(0, 4));
                   setCardsPinError('');
@@ -717,7 +819,8 @@ const App: React.FC = () => {
             )}
             <button
               type="submit"
-              className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-cyan-200/30 bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#031015] shadow-[0_8px_24px_rgba(6,182,212,0.22)] transition-all hover:from-cyan-300 hover:to-blue-400 hover:shadow-[0_10px_30px_rgba(6,182,212,0.34)] active:scale-[0.98]"
+              disabled={cardsPinLocked}
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl border border-cyan-200/30 bg-gradient-to-r from-cyan-500 to-blue-500 px-4 py-3.5 text-[10px] font-black uppercase tracking-[0.2em] text-[#031015] shadow-[0_8px_24px_rgba(6,182,212,0.22)] transition-all hover:from-cyan-300 hover:to-blue-400 hover:shadow-[0_10px_30px_rgba(6,182,212,0.34)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:from-cyan-500 disabled:hover:to-blue-500 disabled:hover:shadow-[0_8px_24px_rgba(6,182,212,0.22)]"
             >
               <i className="fas fa-unlock-alt text-xs"></i>
               Unlock cards
