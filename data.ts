@@ -302,8 +302,8 @@ export const GAMES: Game[] = [
     id: 'cards',
     name: 'CARDS',
     category: 'CARDS',
-    image: '/attached_assets/line-icon-credit-card-glyph-style-neon-gradient-black-backgro_1787594934982.avif',
-    banner: '/attached_assets/line-icon-credit-card-glyph-style-neon-gradient-black-backgro_1787594934982.avif',
+    image: '/images/cards-cover.avif',
+    banner: '/images/cards-cover.avif',
     idPlaceholder: 'Account ID / Details',
     description: 'Digital cards and gaming card services.',
     packages: []
