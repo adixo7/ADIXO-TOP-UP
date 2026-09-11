@@ -33,7 +33,7 @@ export const GAMES: Game[] = [
     id: 'ff',
     name: 'Free Fire',
     category: 'Battle Royale',
-    image: '/attached_assets/bb6346e8ac9c2a26b52e8fdfa69653676d93aea13411ca27f260ad1b8e81a_1789124891794.webp',
+    image: '/images/free-fire.webp',
     banner: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop&q=80',
     idPlaceholder: 'Player ID (e.g. 123456789)',
     description: 'Survive to the end in the fast-paced mobile battle royale.',
