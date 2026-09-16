@@ -382,7 +382,7 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Steam/Epic Account Email',
     description: 'Get the best PC games with 30% discount.',
     packages: [
-      { id: 'pc-gta-5', amount: 1, unit: 'Grand Theft Auto 5 | GTA V – Premium Online', price: 2254, oldPrice: 2990, currency: 'BDT', category: 'PC GAMES', image: '/images/gta-v.jpg' },
+      { id: 'pc-gta-6', amount: 1, unit: 'Grand Theft Auto VI | Premium Edition', price: 9999, currency: 'BDT', isPopular: true, category: 'PC GAMES', image: '/images/gta-6-cover.png' },
       { id: 'pc-1', amount: 1, unit: 'Red Dead Redemption 2 | RDR 2 | Rockstar Redeem', price: 3299, oldPrice: 6099, currency: 'BDT', category: 'PC GAMES', image: '/images/rdr2.jpg' },
       { id: 'pc-hitman-2', amount: 1, unit: 'Hitman 2: Silent Assassin | Steam Account', price: 890, oldPrice: 2990, currency: 'BDT', category: 'PC GAMES', image: '/images/games/hitman-2.jpg' },
       { id: 'pc-human-fall-flat', amount: 1, unit: 'Human: Fall Flat | Steam Account', price: 1150, oldPrice: 1490, currency: 'BDT', category: 'PC GAMES', image: '/images/games/human-fall-flat.jpg' },

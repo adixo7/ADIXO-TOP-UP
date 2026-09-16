@@ -1251,7 +1251,7 @@ const App: React.FC = () => {
               {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => {
                   const name = pkg.unit.toLowerCase();
-                  return name.includes('grand theft auto 5') || 
+                          return name.includes('grand theft auto vi') || 
                          name.includes('forza horizon 5') || 
                          name.includes('rdr 2') || 
                          name.includes('spider-man 2') || 
@@ -1268,12 +1268,20 @@ const App: React.FC = () => {
                   return (
                     <div 
                       key={pkg.id} 
-                      className="game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border border-zinc-800 transition-all duration-300 shadow-sm" 
+                      className={`game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border transition-all duration-300 ${
+                        pkg.id === 'pc-gta-6'
+                          ? 'border-orange-400/70 shadow-lg shadow-orange-500/20'
+                          : 'border-zinc-800 shadow-sm'
+                      }`} 
                       onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}
                     >
                       <div className="aspect-[3/4] overflow-hidden relative">
-                        <div className="absolute top-1 right-1 z-20 bg-red-600 text-white text-[4px] md:text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border border-red-500/50">
-                          30% OFF
+                          <div className={`absolute top-1 right-1 z-20 text-white text-[4px] md:text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border ${
+                            pkg.id === 'pc-gta-6'
+                              ? 'bg-gradient-to-r from-amber-400 to-orange-500 border-amber-300/70 text-black'
+                              : 'bg-red-600 border-red-500/50'
+                          }`}>
+                           {pkg.id === 'pc-gta-6' ? 'PREMIUM' : '30% OFF'}
                         </div>
                         <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -1286,7 +1294,9 @@ const App: React.FC = () => {
                       </div>
                       <div className="p-1.5 flex items-center justify-between bg-zinc-900">
                         <div className="flex items-center gap-1">
-                          <span className="gaming-font text-orange-500 font-black text-[8px] md:text-[10px]">৳{pkg.price}</span>
+                           <span className={`gaming-font font-black text-[8px] md:text-[10px] ${
+                             pkg.id === 'pc-gta-6' ? 'text-amber-300' : 'text-orange-500'
+                           }`}>৳{pkg.price.toLocaleString()}</span>
                           {pkg.oldPrice && <span className="text-zinc-500 text-[6px] md:text-[7px] line-through">৳{pkg.oldPrice}</span>}
                         </div>
                         <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>
