@@ -1247,7 +1247,7 @@ const App: React.FC = () => {
                 {t('home.viewAll')} <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3 max-w-xl">
+            <div className="grid grid-cols-1 gap-3 max-w-sm">
               {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => pkg.id === 'pc-gta-6')
                 .map((pkg, idx) => {
@@ -1259,7 +1259,7 @@ const App: React.FC = () => {
                   return (
                     <div 
                       key={pkg.id} 
-                      className={`game-card group cursor-pointer bg-zinc-900 rounded-lg overflow-hidden border transition-all duration-300 ${
+                      className={`game-card group cursor-pointer bg-zinc-900 rounded-xl overflow-hidden border transition-all duration-300 ${
                         pkg.id === 'pc-gta-6'
                           ? 'border-orange-400/70 shadow-lg shadow-orange-500/20'
                           : 'border-zinc-800 shadow-sm'
@@ -1267,7 +1267,7 @@ const App: React.FC = () => {
                       onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}
                     >
                       <div className="aspect-video overflow-hidden relative">
-                          <div className={`absolute top-3 right-3 z-20 text-white text-[7px] md:text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter border ${
+                          <div className={`absolute top-2 right-2 z-20 text-white text-[6px] md:text-[8px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter border ${
                             pkg.id === 'pc-gta-6'
                               ? 'bg-gradient-to-r from-amber-400 to-orange-500 border-amber-300/70 text-black'
                               : 'bg-red-600 border-red-500/50'
@@ -1277,15 +1277,15 @@ const App: React.FC = () => {
                         <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <div className="absolute bottom-1.5 left-1.5 right-1.5">
-                           <p className="text-orange-400 text-[8px] md:text-xs font-black uppercase tracking-widest mb-1">PC GAMES</p>
-                           <h3 className="text-white text-base md:text-2xl font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+                           <p className="text-orange-400 text-[7px] md:text-[9px] font-black uppercase tracking-widest mb-0.5">PC GAMES</p>
+                           <h3 className="text-white text-[10px] md:text-sm font-black uppercase italic tracking-tight leading-none truncate group-hover:text-orange-300 transition-colors">
                             {pkg.unit}
                           </h3>
                         </div>
                       </div>
-                       <div className="p-3 md:p-4 flex items-center justify-between bg-zinc-900">
+                       <div className="p-2 md:p-2.5 flex items-center justify-between bg-zinc-900">
                         <div className="flex items-center gap-1">
-                           <span className={`gaming-font font-black text-[8px] md:text-[10px] ${
+                           <span className={`gaming-font font-black text-xs md:text-sm ${
                              pkg.id === 'pc-gta-6' ? 'text-amber-300' : 'text-orange-500'
                            } text-sm md:text-lg`}>৳{pkg.price.toLocaleString()}</span>
                           {pkg.oldPrice && <span className="text-zinc-500 text-[6px] md:text-[7px] line-through">৳{pkg.oldPrice}</span>}
