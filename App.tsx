@@ -1259,10 +1259,10 @@ const App: React.FC = () => {
                   return (
                     <div 
                       key={pkg.id} 
-                      className={`game-card group cursor-pointer bg-zinc-900 rounded-xl overflow-hidden border transition-all duration-300 ${
+                      className={`game-card group cursor-pointer bg-zinc-900 rounded-xl overflow-hidden border-0 transition-all duration-300 ${
                         pkg.id === 'pc-gta-6'
-                          ? 'border-orange-400/70 shadow-lg shadow-orange-500/20'
-                          : 'border-zinc-800 shadow-sm'
+                          ? 'shadow-lg shadow-orange-500/20'
+                          : 'shadow-sm'
                       }`} 
                       onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}
                     >
