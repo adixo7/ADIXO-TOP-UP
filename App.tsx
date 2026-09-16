@@ -1247,7 +1247,7 @@ const App: React.FC = () => {
                 {t('home.viewAll')} <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-3 max-w-4xl">
+            <div className="grid grid-cols-1 gap-3 max-w-xl">
               {GAMES.find(g => g.id === 'pc-games')?.packages
                 .filter(pkg => pkg.id === 'pc-gta-6')
                 .map((pkg, idx) => {
