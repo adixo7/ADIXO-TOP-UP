@@ -1274,7 +1274,7 @@ const App: React.FC = () => {
                           }`}>
                            {pkg.id === 'pc-gta-6' ? 'PREMIUM' : '30% OFF'}
                         </div>
-                        <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                         <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover scale-[1.04] transition-transform duration-500 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <div className="absolute bottom-1.5 left-1.5 right-1.5">
                            <p className="text-orange-400 text-[7px] md:text-[9px] font-black uppercase tracking-widest mb-0.5">PC GAMES</p>
