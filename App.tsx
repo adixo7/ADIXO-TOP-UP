@@ -1238,15 +1238,17 @@ const App: React.FC = () => {
                 <span className="w-1 h-4 md:h-5 bg-orange-600 rounded-full"></span> 
                 {t('home.pcGames')}
               </h2>
-              <button 
-                onClick={() => {
-                  setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null);
-                  setActiveTab('games');
-                }}
-                className="text-orange-500 text-[8px] font-black uppercase tracking-widest hover:underline flex items-center gap-1.5 md:gap-2"
-              >
-                {t('home.viewAll')} <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
-              </button>
+              {(GAMES.find(g => g.id === 'pc-games')?.packages.length ?? 0) > 1 && (
+                <button 
+                  onClick={() => {
+                    setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null);
+                    setActiveTab('games');
+                  }}
+                  className="text-orange-500 text-[8px] font-black uppercase tracking-widest hover:underline flex items-center gap-1.5 md:gap-2"
+                >
+                  {t('home.viewAll')} <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
+                </button>
+              )}
             </div>
             <div className="grid grid-cols-1 gap-3 max-w-sm">
               {GAMES.find(g => g.id === 'pc-games')?.packages
