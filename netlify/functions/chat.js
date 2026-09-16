@@ -147,7 +147,7 @@ BRMod Android Root | BRMod SilentAim PC | Snake Carrom Pool | Drip Client APKMod
 ━━━━━━━━━━━━━━━━━━━━━━━━
 PC GAMES (account delivered via Email/WhatsApp)
 ━━━━━━━━━━━━━━━━━━━━━━━━
-Grand Theft Auto VI Premium Edition = ৳9999 | RDR2 = ৳3299 (was ৳6099) | Hitman 2 = ৳890 | Human: Fall Flat = ৳1150 | EA FC 25 = ৳1250 | FC 26 = ৳3795 | GTA 4 = ৳1790 | Resident Evil 4 = ৳2150 | Resident Evil 2 = ৳4949 | RE3 = ৳4729 | Cyberpunk 2077 = ৳5775 | Forza Horizon 5 Premium = ৳4399 | Spider-Man 2 = ৳6599 | God of War = ৳6919 | The Crew 2 = ৳3575 | The Crew Motorfest = ৳7205 | Watch Dogs Legion = ৳4179 | Cities Skylines II = ৳4399 | COD Black Ops III Zombies = ৳4069 | Assetto Corsa Competizione = ৳3839
+Grand Theft Auto VI Premium Edition = ৳9999
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
 SUPPORT & CONTACT

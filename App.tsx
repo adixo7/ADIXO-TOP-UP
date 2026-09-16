@@ -1247,18 +1247,9 @@ const App: React.FC = () => {
                 {t('home.viewAll')} <i className="fas fa-chevron-right text-[5px] md:text-[6px]"></i>
               </button>
             </div>
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 md:gap-3">
+            <div className="grid grid-cols-1 gap-3 max-w-4xl">
               {GAMES.find(g => g.id === 'pc-games')?.packages
-                .filter(pkg => {
-                  const name = pkg.unit.toLowerCase();
-                          return name.includes('grand theft auto vi') || 
-                         name.includes('forza horizon 5') || 
-                         name.includes('rdr 2') || 
-                         name.includes('spider-man 2') || 
-                         name.includes('fc™ 26') || 
-                         name.includes('cyberpunk 2077');
-                })
-                .slice(0, 6)
+                .filter(pkg => pkg.id === 'pc-gta-6')
                 .map((pkg, idx) => {
                   const allPkgs = GAMES.find(g => g.id === 'pc-games')?.packages || [];
                   const baseIdx = allPkgs.findIndex(p => p.id === pkg.id);
@@ -1275,8 +1266,8 @@ const App: React.FC = () => {
                       }`} 
                       onClick={() => { setSelectedGame(GAMES.find(g => g.id === 'pc-games') || null); setSelectedPackage(pkg); setActiveTab('games'); }}
                     >
-                      <div className="aspect-[3/4] overflow-hidden relative">
-                          <div className={`absolute top-1 right-1 z-20 text-white text-[4px] md:text-[5px] font-black px-1 py-0.5 rounded-full uppercase tracking-tighter border ${
+                      <div className="aspect-video overflow-hidden relative">
+                          <div className={`absolute top-3 right-3 z-20 text-white text-[7px] md:text-[10px] font-black px-2 py-1 rounded-full uppercase tracking-tighter border ${
                             pkg.id === 'pc-gta-6'
                               ? 'bg-gradient-to-r from-amber-400 to-orange-500 border-amber-300/70 text-black'
                               : 'bg-red-600 border-red-500/50'
@@ -1286,17 +1277,17 @@ const App: React.FC = () => {
                         <img src={imageSrc} alt={pkg.unit} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <div className="absolute bottom-1.5 left-1.5 right-1.5">
-                          <p className="text-orange-400 text-[5px] md:text-[7px] font-black uppercase tracking-widest mb-0.5">PC GAMES</p>
-                          <h3 className="text-white text-[8px] md:text-[10px] font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
+                           <p className="text-orange-400 text-[8px] md:text-xs font-black uppercase tracking-widest mb-1">PC GAMES</p>
+                           <h3 className="text-white text-base md:text-2xl font-black uppercase italic tracking-tighter leading-none truncate group-hover:text-orange-300 transition-colors">
                             {pkg.unit}
                           </h3>
                         </div>
                       </div>
-                      <div className="p-1.5 flex items-center justify-between bg-zinc-900">
+                       <div className="p-3 md:p-4 flex items-center justify-between bg-zinc-900">
                         <div className="flex items-center gap-1">
                            <span className={`gaming-font font-black text-[8px] md:text-[10px] ${
                              pkg.id === 'pc-gta-6' ? 'text-amber-300' : 'text-orange-500'
-                           }`}>৳{pkg.price.toLocaleString()}</span>
+                           } text-sm md:text-lg`}>৳{pkg.price.toLocaleString()}</span>
                           {pkg.oldPrice && <span className="text-zinc-500 text-[6px] md:text-[7px] line-through">৳{pkg.oldPrice}</span>}
                         </div>
                         <i className="fas fa-chevron-right text-[6px] text-zinc-600 group-hover:text-orange-500 transition-colors"></i>

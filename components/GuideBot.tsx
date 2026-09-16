@@ -50,7 +50,7 @@ const ANSWERS: Record<TopicKey, { text: string; chips: TopicKey[]; supportLinks?
     supportLinks: true,
   },
   available_games: {
-    text: "We support all major titles:\n\n🔥 **Free Fire** — Diamonds, Memberships, Level Up Pass\n⚔️ **PUBG Mobile** — UC, Royale Pass\n🗡️ **Mobile Legends** — Diamonds, Passes\n💥 **Blood Strike** — Golds, Strike Pass\n🎯 **Call of Duty Mobile** — COD Points\n🤖 **AI Bots** — Glory Bots, Mystery Boxes, Guild Boost\n🛡️ **FF Panel** — 17+ premium panel tools\n🔓 **Event Bypass** — 5, 14, 30, 60 day packs\n🖥️ **PC Games** — 20+ titles up to 30% off\n\nHead to the **Games** tab to explore!",
+     text: "We support all major titles:\n\n🔥 **Free Fire** — Diamonds, Memberships, Level Up Pass\n⚔️ **PUBG Mobile** — UC, Royale Pass\n🗡️ **Mobile Legends** — Diamonds, Passes\n💥 **Blood Strike** — Golds, Strike Pass\n🎯 **Call of Duty Mobile** — COD Points\n🤖 **AI Bots** — Glory Bots, Mystery Boxes, Guild Boost\n🛡️ **FF Panel** — 17+ premium panel tools\n🔓 **Event Bypass** — 5, 14, 30, 60 day packs\n🖥️ **PC Games** — Grand Theft Auto VI Premium Edition (৳9,999)\n\nHead to the **Games** tab to explore!",
     chips: ['how_to_order', 'coupons', 'payment_methods'],
   },
   coupons: {
