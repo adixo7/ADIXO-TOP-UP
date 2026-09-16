@@ -17,6 +17,7 @@ import ServerIssuePopup from './components/ServerIssuePopup';
 import MaintenancePopup from './components/MaintenancePopup';
 import Confetti from './components/Confetti';
 import LanguagePopup from './components/LanguagePopup';
+import Gta6Details from './components/Gta6Details';
 import { useLanguage } from './LanguageContext';
 
 const CARDS_PIN_GUARD_KEY = 'adixo-cards-pin-guard';
@@ -1303,6 +1304,25 @@ const App: React.FC = () => {
       )}
 
       {activeTab === 'games' && (
+        selectedGame?.id === 'pc-games' && selectedPackage?.id === 'pc-gta-6' ? (
+          <Gta6Details
+            game={selectedGame}
+            pkg={selectedPackage}
+            playerId={playerId}
+            selectedPayment={selectedPayment}
+            paymentMethods={PAYMENT_METHODS}
+            orderError={orderError}
+            onBack={() => {
+              setSelectedPackage(null);
+              setSelectedPayment(null);
+              setOrderError(null);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onPlayerIdChange={setPlayerId}
+            onPaymentSelect={handlePaymentSelect}
+            onConfirmOrder={handleConfirmOrder}
+          />
+        ) : (
         <div className="space-y-12">
           {selectedGame ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
@@ -2832,7 +2852,7 @@ const App: React.FC = () => {
             </div>
           )}
         </div>
-      )}
+        ))}
 
       {activeTab === 'history' && (
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in duration-500 pb-20 px-4">
