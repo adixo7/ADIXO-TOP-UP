@@ -1961,6 +1961,7 @@ const App: React.FC = () => {
                                     <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">/ guild</span>
                                   </div>
                                   <button
+                                     disabled={pkg.sold}
                                      onClick={() => pkg.sold ? handleSoldGuildClick(pkg.guildId) : setSelectedPackage(pkg)}
                                     className={`shrink-0 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg font-black uppercase italic tracking-widest text-[10px] transition-all duration-300 ${
                                        pkg.sold
