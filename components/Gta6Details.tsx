@@ -246,12 +246,18 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
         </div>
 
         <div className="relative overflow-hidden rounded-2xl bg-zinc-950 shadow-2xl shadow-orange-950/15 w-full max-w-3xl h-[220px] md:h-[320px] mx-auto">
+          <div
+            className="absolute inset-0 scale-110 bg-cover bg-center blur-2xl opacity-70 transition-all duration-700"
+            style={{ backgroundImage: `url(${GTA6_PREVIEW_IMAGES[activePreview].src})` }}
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
           {GTA6_PREVIEW_IMAGES.map((image, index) => (
             <img
               key={image.src}
               src={image.src}
               alt={image.alt}
-              className={`absolute inset-0 w-full h-full object-contain bg-black/70 p-1 transition-opacity duration-700 ${
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
                 index === activePreview ? 'opacity-100' : 'opacity-0'
               }`}
               aria-hidden={index !== activePreview}
