@@ -20,40 +20,24 @@ const REQUIREMENTS = [
     subtitle: '1080p entry-level setup',
     icon: 'fa-gauge-low',
     accent: 'text-sky-400',
-    border: 'border-sky-500/25',
-    rows: [
-      ['OS', 'Windows 11 64-bit'],
-      ['Processor', 'Intel Core i5-12400F / AMD Ryzen 5 5600'],
-      ['Graphics', 'RTX 3060 / RX 6700 XT'],
-      ['Memory', '16GB RAM'],
-      ['Storage', 'NVMe SSD with 150 to 200GB available'],
-    ],
+    description:
+      'Windows 11 64-bit with an Intel Core i5-12400F or AMD Ryzen 5 5600, paired with an RTX 3060 or RX 6700 XT. 16GB of RAM and an NVMe SSD with 150 to 200GB available space are recommended for this 1080p entry-level setup.',
   },
   {
     label: 'Recommended configuration',
     subtitle: '1080p with comfortable smoothness',
     icon: 'fa-display',
     accent: 'text-orange-400',
-    border: 'border-orange-500/30',
-    rows: [
-      ['Processor', 'Intel Core i5-13400F / AMD Ryzen 5 7500F'],
-      ['Graphics', 'RTX 5060 / RX 9060 XT'],
-      ['Memory', 'Minimum 16GB, 32GB for a more comfortable experience'],
-      ['Storage', '1TB NVMe SSD'],
-    ],
+    description:
+      'For a smoother 1080p experience, use an Intel Core i5-13400F or AMD Ryzen 5 7500F with an RTX 5060 or RX 9060 XT. Plan for at least 16GB of memory, 32GB for extra headroom, plus a 1TB NVMe SSD.',
   },
   {
     label: 'Ideal configuration',
     subtitle: '1440p — the best balance for many PC gamers',
     icon: 'fa-crown',
     accent: 'text-amber-300',
-    border: 'border-amber-400/35',
-    rows: [
-      ['Processor', 'Intel Core i5-14600KF / AMD Ryzen 5 7500F'],
-      ['Graphics', 'RTX 5070 / RX 9070'],
-      ['Memory', '32GB DDR5'],
-      ['Storage', '1 to 2TB NVMe SSD'],
-    ],
+    description:
+      'For the best balance at 1440p, an Intel Core i5-14600KF or AMD Ryzen 5 7500F pairs with an RTX 5070 or RX 9070. 32GB DDR5 and 1 to 2TB of NVMe SSD storage complete the ideal setup.',
   },
 ];
 
@@ -118,24 +102,18 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
         <div>
           {REQUIREMENTS.map((tier) => (
             <article key={tier.label} className="border-t border-white/10 py-5 first:pt-0 last:border-b">
-              <div className="flex items-start gap-3 mb-4">
-                <div className={`w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center ${tier.accent}`}>
-                  <i className={`fas ${tier.icon}`}></i>
+              <div className="grid md:grid-cols-[minmax(190px,0.7fr)_1.3fr] gap-4 md:gap-10 items-start">
+                <div className="flex items-start gap-3">
+                  <div className={`w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center ${tier.accent}`}>
+                    <i className={`fas ${tier.icon}`}></i>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-black uppercase italic tracking-tight">{tier.label}</h3>
+                    <p className="text-zinc-500 text-[9px] uppercase tracking-widest mt-1">{tier.subtitle}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-white font-black uppercase italic tracking-tight">{tier.label}</h3>
-                  <p className="text-zinc-500 text-[9px] uppercase tracking-widest mt-1">{tier.subtitle}</p>
-                </div>
+                <p className="text-zinc-300 text-sm leading-7 max-w-2xl">{tier.description}</p>
               </div>
-              <p className="text-zinc-300 text-xs leading-7">
-                {tier.rows.map(([label, value], index) => (
-                  <React.Fragment key={label}>
-                    <span className="text-zinc-500 font-black uppercase tracking-widest text-[8px]">{label}:</span>{' '}
-                    <span className="text-zinc-200">{value}</span>
-                    {index < tier.rows.length - 1 && <span className="text-zinc-700 mx-2">•</span>}
-                  </React.Fragment>
-                ))}
-              </p>
             </article>
           ))}
         </div>
