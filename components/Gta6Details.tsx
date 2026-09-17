@@ -115,11 +115,11 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
             Pick your performance target
           </h2>
         </div>
-        <div className="space-y-4">
+        <div>
           {REQUIREMENTS.map((tier) => (
-            <article key={tier.label} className={`bg-zinc-950/80 rounded-2xl border ${tier.border} p-5 md:p-6`}>
-              <div className="flex items-start gap-3 mb-5">
-                <div className={`w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center ${tier.accent}`}>
+            <article key={tier.label} className="border-t border-white/10 py-5 first:pt-0 last:border-b">
+              <div className="flex items-start gap-3 mb-4">
+                <div className={`w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center ${tier.accent}`}>
                   <i className={`fas ${tier.icon}`}></i>
                 </div>
                 <div>
@@ -127,11 +127,11 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
                   <p className="text-zinc-500 text-[9px] uppercase tracking-widest mt-1">{tier.subtitle}</p>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+              <div className="grid sm:grid-cols-2 gap-x-8">
                 {tier.rows.map(([label, value]) => (
-                  <div key={label} className="border-t border-white/5 pt-2.5">
+                  <div key={label} className="border-t border-white/5 py-2.5">
                     <p className="text-zinc-600 text-[8px] font-black uppercase tracking-widest">{label}</p>
-                    <p className="text-zinc-200 text-xs leading-relaxed mt-1">{value}</p>
+                    <p className="text-zinc-200 text-xs leading-relaxed mt-1.5">{value}</p>
                   </div>
                 ))}
               </div>
