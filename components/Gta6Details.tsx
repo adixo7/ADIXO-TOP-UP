@@ -69,8 +69,6 @@ const GTA6_PREVIEW_IMAGES = [
   { src: '/images/gta6-preview-mural.jpg', alt: 'Grand Theft Auto VI street scene with colorful murals' },
 ];
 
-const GTA6_SLIDES = [...GTA6_PREVIEW_IMAGES, GTA6_PREVIEW_IMAGES[0]];
-
 const Gta6Details: React.FC<Gta6DetailsProps> = ({
   game,
   pkg,
@@ -84,24 +82,14 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
   onConfirmOrder,
 }) => {
   const [activePreview, setActivePreview] = useState(0);
-  const [isSliding, setIsSliding] = useState(true);
 
   useEffect(() => {
     const slideshow = window.setInterval(() => {
-      setIsSliding(true);
-      setActivePreview((current) => current + 1);
+      setActivePreview((current) => (current + 1) % GTA6_PREVIEW_IMAGES.length);
     }, 5000);
 
     return () => window.clearInterval(slideshow);
   }, []);
-
-  const handleSlideEnd = () => {
-    if (activePreview === GTA6_PREVIEW_IMAGES.length) {
-      setIsSliding(false);
-      setActivePreview(0);
-      window.requestAnimationFrame(() => setIsSliding(true));
-    }
-  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20 px-1">
@@ -257,42 +245,18 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
           </span>
         </div>
 
-        <div
-          className="relative overflow-hidden rounded-2xl border border-orange-500/25 bg-zinc-950 shadow-2xl shadow-orange-950/15 w-full max-w-3xl h-[220px] md:h-[320px] mx-auto"
-          onTransitionEnd={handleSlideEnd}
-        >
-          <div
-            className={`flex h-full ${isSliding ? 'transition-transform duration-1000 ease-in-out' : ''}`}
-            style={{ transform: `translateX(-${activePreview * 100}%)` }}
-          >
-            {GTA6_SLIDES.map((image, index) => (
-              <img
-                key={`${image.src}-${index}`}
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-contain shrink-0 bg-black/70 p-1"
-                aria-hidden={index !== activePreview}
-              />
-            ))}
-          </div>
-          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/75 to-transparent pointer-events-none" />
-          <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2">
-            {GTA6_PREVIEW_IMAGES.map((image, index) => (
-              <button
-                key={image.src}
-                type="button"
-                onClick={() => {
-                  setIsSliding(true);
-                  setActivePreview(index);
-                }}
-                aria-label={`Show preview ${index + 1}`}
-                aria-current={index === activePreview}
-                className={`h-1.5 rounded-full transition-all ${
-                  index === activePreview ? 'w-8 bg-orange-500' : 'w-1.5 bg-white/50 hover:bg-white/80'
-                }`}
-              />
-            ))}
-          </div>
+        <div className="relative overflow-hidden rounded-2xl bg-zinc-950 shadow-2xl shadow-orange-950/15 w-full max-w-3xl h-[220px] md:h-[320px] mx-auto">
+          {GTA6_PREVIEW_IMAGES.map((image, index) => (
+            <img
+              key={image.src}
+              src={image.src}
+              alt={image.alt}
+              className={`absolute inset-0 w-full h-full object-contain bg-black/70 p-1 transition-opacity duration-700 ${
+                index === activePreview ? 'opacity-100' : 'opacity-0'
+              }`}
+              aria-hidden={index !== activePreview}
+            />
+          ))}
         </div>
       </section>
     </div>
