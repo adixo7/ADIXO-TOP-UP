@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Game, Package, PaymentMethod } from '../types';
 
 interface Gta6DetailsProps {
@@ -60,6 +60,15 @@ const REQUIREMENTS = [
   },
 ];
 
+const GTA6_PREVIEW_IMAGES = [
+  { src: '/images/gta-6-cover.avif', alt: 'Grand Theft Auto VI cover art' },
+  { src: '/images/gta6-preview-road.webp', alt: 'Grand Theft Auto VI gameplay on a Vice City street' },
+  { src: '/images/gta6-preview-island.jpg', alt: 'Grand Theft Auto VI island and seaplane scene' },
+  { src: '/images/gta6-preview-bikers.jpg', alt: 'Grand Theft Auto VI biker convoy' },
+  { src: '/images/gta6-preview-city.webp', alt: 'Grand Theft Auto VI Vice City skyline at night' },
+  { src: '/images/gta6-preview-mural.jpg', alt: 'Grand Theft Auto VI street scene with colorful murals' },
+];
+
 const Gta6Details: React.FC<Gta6DetailsProps> = ({
   game,
   pkg,
@@ -71,8 +80,19 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
   onPlayerIdChange,
   onPaymentSelect,
   onConfirmOrder,
-}) => (
-  <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20 px-1">
+}) => {
+  const [activePreview, setActivePreview] = useState(0);
+
+  useEffect(() => {
+    const slideshow = window.setInterval(() => {
+      setActivePreview((current) => (current + 1) % GTA6_PREVIEW_IMAGES.length);
+    }, 3000);
+
+    return () => window.clearInterval(slideshow);
+  }, []);
+
+  return (
+    <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20 px-1">
     <button
       onClick={onBack}
       className="text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors"
@@ -211,7 +231,51 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
         </div>
       </aside>
     </div>
-  </div>
-);
+
+      <section className="space-y-4">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="text-orange-500 text-[9px] font-black uppercase tracking-[0.25em]">Vice City preview</p>
+            <h2 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter mt-1">
+              Explore GTA VI
+            </h2>
+          </div>
+          <span className="text-zinc-600 text-[8px] font-black uppercase tracking-widest shrink-0">
+            Auto slideshow · 3 sec
+          </span>
+        </div>
+
+        <div className="relative overflow-hidden rounded-2xl border border-orange-500/25 bg-zinc-950 shadow-2xl shadow-orange-950/15 aspect-video">
+          {GTA6_PREVIEW_IMAGES.map((image, index) => (
+            <img
+              key={image.src}
+              src={image.src}
+              alt={image.alt}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                index === activePreview ? 'opacity-100' : 'opacity-0'
+              }`}
+              aria-hidden={index !== activePreview}
+            />
+          ))}
+          <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/75 to-transparent pointer-events-none" />
+          <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2">
+            {GTA6_PREVIEW_IMAGES.map((image, index) => (
+              <button
+                key={image.src}
+                type="button"
+                onClick={() => setActivePreview(index)}
+                aria-label={`Show preview ${index + 1}`}
+                aria-current={index === activePreview}
+                className={`h-1.5 rounded-full transition-all ${
+                  index === activePreview ? 'w-8 bg-orange-500' : 'w-1.5 bg-white/50 hover:bg-white/80'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
 
 export default Gta6Details;
