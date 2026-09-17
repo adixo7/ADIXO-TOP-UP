@@ -127,14 +127,15 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
                   <p className="text-zinc-500 text-[9px] uppercase tracking-widest mt-1">{tier.subtitle}</p>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 gap-x-8">
-                {tier.rows.map(([label, value]) => (
-                  <div key={label} className="border-t border-white/5 py-2.5">
-                    <p className="text-zinc-600 text-[8px] font-black uppercase tracking-widest">{label}</p>
-                    <p className="text-zinc-200 text-xs leading-relaxed mt-1.5">{value}</p>
-                  </div>
+              <p className="text-zinc-300 text-xs leading-7">
+                {tier.rows.map(([label, value], index) => (
+                  <React.Fragment key={label}>
+                    <span className="text-zinc-500 font-black uppercase tracking-widest text-[8px]">{label}:</span>{' '}
+                    <span className="text-zinc-200">{value}</span>
+                    {index < tier.rows.length - 1 && <span className="text-zinc-700 mx-2">•</span>}
+                  </React.Fragment>
                 ))}
-              </div>
+              </p>
             </article>
           ))}
         </div>
