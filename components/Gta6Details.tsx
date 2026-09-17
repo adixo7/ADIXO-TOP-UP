@@ -16,28 +16,47 @@ interface Gta6DetailsProps {
 
 const REQUIREMENTS = [
   {
-    label: 'Estimated minimum configuration',
+    label: 'Estimated minimum configuration for GTA 6 on PC',
     subtitle: '1080p entry-level setup',
-    icon: 'fa-gauge-low',
-    accent: 'text-sky-400',
-    description:
-      'Windows 11 64-bit with an Intel Core i5-12400F or AMD Ryzen 5 5600, paired with an RTX 3060 or RX 6700 XT. 16GB of RAM and an NVMe SSD with 150 to 200GB available space are recommended for this 1080p entry-level setup.',
+    intro:
+      "If your goal is simply to run GTA 6 on PC with settings at 1080p, without trying to achieve perfect smoothness, here's an estimated minimum configuration:",
+    outro:
+      'This baseline still makes sense if you place it above the recommended requirements already published for GTA V Enhanced on PC.',
+    rows: [
+      ['OS', 'Windows 11 64-bit'],
+      ['Processor', 'Intel Core i5-12400F / AMD Ryzen 5 5600'],
+      ['Graphics card', 'RTX 3060 / RX 6700 XT'],
+      ['RAM', '16GB RAM'],
+      ['Storage', 'NVMe SSD with 150 to 200GB available'],
+    ],
   },
   {
-    label: 'Recommended configuration',
+    label: 'Recommended configuration for GTA 6 on PC',
     subtitle: '1080p with comfortable smoothness',
-    icon: 'fa-display',
-    accent: 'text-orange-400',
-    description:
-      'For a smoother 1080p experience, use an Intel Core i5-13400F or AMD Ryzen 5 7500F with an RTX 5060 or RX 9060 XT. Plan for at least 16GB of memory, 32GB for extra headroom, plus a 1TB NVMe SSD.',
+    intro:
+      'If you want GTA 6 to feel comfortably smooth at 1080p, this is the recommended configuration to aim for:',
+    outro:
+      'This setup gives you more room for consistent performance and future game updates without requiring an extreme build.',
+    rows: [
+      ['Processor', 'Intel Core i5-13400F / AMD Ryzen 5 7500F'],
+      ['Graphics card', 'RTX 5060 / RX 9060 XT'],
+      ['RAM', 'Minimum 16GB, 32GB for a more comfortable experience'],
+      ['Storage', '1TB NVMe SSD'],
+    ],
   },
   {
-    label: 'Ideal configuration',
+    label: 'Ideal configuration for GTA 6 on PC',
     subtitle: '1440p — the best balance for many PC gamers',
-    icon: 'fa-crown',
-    accent: 'text-amber-300',
-    description:
-      'For the best balance at 1440p, an Intel Core i5-14600KF or AMD Ryzen 5 7500F pairs with an RTX 5070 or RX 9070. 32GB DDR5 and 1 to 2TB of NVMe SSD storage complete the ideal setup.',
+    intro:
+      "If you're aiming for a stronger 1440p experience with high settings and more headroom, this is the ideal configuration:",
+    outro:
+      'This is the best-balanced target for players who want a smoother experience without moving into extreme hardware.',
+    rows: [
+      ['Processor', 'Intel Core i5-14600KF / AMD Ryzen 5 7500F'],
+      ['Graphics card', 'RTX 5070 / RX 9070'],
+      ['RAM', '32GB DDR5'],
+      ['Storage', '1 to 2TB NVMe SSD'],
+    ],
   },
 ];
 
@@ -101,19 +120,19 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
         </div>
         <div>
           {REQUIREMENTS.map((tier) => (
-            <article key={tier.label} className="border-t border-white/10 py-5 first:pt-0 last:border-b">
-              <div className="grid md:grid-cols-[minmax(190px,0.7fr)_1.3fr] gap-4 md:gap-10 items-start">
-                <div className="flex items-start gap-3">
-                  <div className={`w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center ${tier.accent}`}>
-                    <i className={`fas ${tier.icon}`}></i>
-                  </div>
-                  <div>
-                    <h3 className="text-white font-black uppercase italic tracking-tight">{tier.label}</h3>
-                    <p className="text-zinc-500 text-[9px] uppercase tracking-widest mt-1">{tier.subtitle}</p>
-                  </div>
-                </div>
-                <p className="text-zinc-300 text-sm leading-7 max-w-2xl">{tier.description}</p>
-              </div>
+            <article key={tier.label} className="border-t border-white/10 py-7 first:pt-0 last:border-b">
+              <h3 className="text-white text-lg md:text-xl font-black uppercase tracking-tight">
+                {tier.label}
+              </h3>
+              <p className="text-zinc-400 text-sm leading-7 mt-3 max-w-4xl">{tier.intro}</p>
+              <ul className="list-disc pl-5 mt-4 space-y-1 text-zinc-300 text-sm leading-6 marker:text-orange-500">
+                {tier.rows.map(([label, value]) => (
+                  <li key={label}>
+                    <span className="text-zinc-400">{label}:</span> {value}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-zinc-400 text-sm leading-7 mt-4 max-w-4xl">{tier.outro}</p>
             </article>
           ))}
         </div>
