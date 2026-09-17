@@ -25,6 +25,7 @@ export interface Package {
   playerSpace?: number;
   server?: string;
   guildId?: string;
+  sold?: boolean;
 }
 
 export interface Game {

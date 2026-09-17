@@ -351,8 +351,9 @@ export const GAMES: Game[] = [
     idPlaceholder: 'Free Fire Account ID',
     description: 'Purchase pre-leveled, high-glory guilds instantly.',
     packages: [
-      { id: 'guild-fnhad-ofc', amount: 1, unit: 'GUILD', price: 1400, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 7 Guild · 50 Player Space · BD Server', isPopular: true, image: '/images/guild-fnhad.jpg', level: 7, playerSpace: 50, server: 'BD', guildId: '3097563022' },
-      { id: 'guild-adixostore', amount: 1, unit: 'GUILD', price: 600, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 4 Guild · 35 Player Space · BD Server', image: '/images/guild-adixostore.jpg', level: 4, playerSpace: 35, server: 'BD', guildId: '3100056925' }
+      { id: 'guild-adixo-3102234605', amount: 1, unit: 'GUILD', price: 950, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 7 Guild · 50 Player Space · BD Server', isPopular: true, image: '/images/guild-adixo-3102234605.jpg', level: 7, playerSpace: 50, server: 'BD', guildId: '3102234605' },
+      { id: 'guild-fnhad-ofc', amount: 1, unit: 'GUILD', price: 1400, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 7 Guild · 50 Player Space · BD Server', image: '/images/guild-fnhad.jpg', level: 7, playerSpace: 50, server: 'BD', guildId: '3097563022', sold: true },
+      { id: 'guild-adixostore', amount: 1, unit: 'GUILD', price: 600, currency: 'BDT', category: 'GUILD SHOP', description: 'Level 4 Guild · 35 Player Space · BD Server', image: '/images/guild-adixostore.jpg', level: 4, playerSpace: 35, server: 'BD', guildId: '3100056925', sold: true }
     ]
   },
   {

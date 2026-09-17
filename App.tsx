@@ -197,6 +197,23 @@ const App: React.FC = () => {
   const packageSectionRef = useRef<HTMLDivElement>(null);
   const serverSectionRef = useRef<HTMLDivElement>(null);
   const [fillToast, setFillToast] = useState<string | null>(null);
+  const [soldGuildToast, setSoldGuildToast] = useState<string | null>(null);
+  const soldGuildToastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (soldGuildToastTimer.current) clearTimeout(soldGuildToastTimer.current);
+    };
+  }, []);
+
+  const handleSoldGuildClick = (guildId?: string) => {
+    setSoldGuildToast(guildId ? `Guild ${guildId} is already sold, contact Admin for a new one.` : 'This guild is already sold, contact Admin for a new one.');
+    if (soldGuildToastTimer.current) clearTimeout(soldGuildToastTimer.current);
+    soldGuildToastTimer.current = setTimeout(() => {
+      setSoldGuildToast(null);
+      soldGuildToastTimer.current = null;
+    }, 5000);
+  };
 
   const handleFillGuide = () => {
     const isFFLikes = selectedGame?.id === 'ff-likes';
@@ -868,6 +885,24 @@ const App: React.FC = () => {
           </div>
         </div>
       </div>
+      {soldGuildToast && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center px-5 pointer-events-none">
+          <div
+            className="max-w-md rounded-2xl px-6 py-5 text-center shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+            style={{
+              background: 'linear-gradient(135deg, rgba(31,12,4,0.98), rgba(12,12,14,0.98))',
+              border: '1px solid rgba(249,115,22,0.55)',
+              boxShadow: '0 0 40px rgba(249,115,22,0.25), 0 18px 50px rgba(0,0,0,0.75)',
+            }}
+          >
+            <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-orange-500/15 text-orange-400">
+              <i className="fas fa-ban"></i>
+            </div>
+            <p className="text-[10px] font-black uppercase tracking-[0.25em] text-orange-400">Guild Sold</p>
+            <p className="mt-2 text-sm font-bold leading-relaxed text-white">{soldGuildToast}</p>
+          </div>
+        </div>
+      )}
       {showLangPopup && <LanguagePopup onClose={() => { setShowLangPopup(false); sessionStorage.setItem('adixo_lang_shown', '1'); }} />}
       <Confetti active={showConfetti} onDone={() => setShowConfetti(false)} />
 
@@ -1852,6 +1887,7 @@ const App: React.FC = () => {
                           return true;
                         })
                         .sort((a, b) => {
+                           if (Boolean(a.sold) !== Boolean(b.sold)) return a.sold ? 1 : -1;
                           if (guildSort === 'price-low') return a.price - b.price;
                           if (guildSort === 'price-high') return b.price - a.price;
                           return 0;
@@ -1925,14 +1961,20 @@ const App: React.FC = () => {
                                     <span className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">/ guild</span>
                                   </div>
                                   <button
-                                    onClick={() => setSelectedPackage(pkg)}
+                                     onClick={() => pkg.sold ? handleSoldGuildClick(pkg.guildId) : setSelectedPackage(pkg)}
                                     className={`shrink-0 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg font-black uppercase italic tracking-widest text-[10px] transition-all duration-300 ${
-                                      isSelected
+                                       pkg.sold
+                                         ? 'bg-zinc-700 text-zinc-300 shadow-[0_4px_0_0_rgba(0,0,0,0.35)] hover:bg-zinc-600'
+                                         : isSelected
                                         ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/30'
                                         : 'bg-amber-500 text-black shadow-[0_4px_0_0_rgba(0,0,0,0.35)] hover:bg-amber-400 hover:-translate-y-0.5 active:translate-y-0 active:shadow-none'
                                     }`}
                                   >
-                                    {isSelected ? <><i className="fas fa-check"></i>Selected</> : <><i className="fas fa-bolt"></i>Buy Now</>}
+                                     {pkg.sold
+                                       ? <><i className="fas fa-ban"></i>Sold</>
+                                       : isSelected
+                                         ? <><i className="fas fa-check"></i>Selected</>
+                                         : <><i className="fas fa-bolt"></i>Buy Now</>}
                                   </button>
                                 </div>
                               </div>
