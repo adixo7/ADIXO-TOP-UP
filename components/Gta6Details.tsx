@@ -86,7 +86,7 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
   useEffect(() => {
     const slideshow = window.setInterval(() => {
       setActivePreview((current) => (current + 1) % GTA6_PREVIEW_IMAGES.length);
-    }, 3000);
+    }, 4000);
 
     return () => window.clearInterval(slideshow);
   }, []);
@@ -131,7 +131,7 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
     </section>
 
     <div className="grid lg:grid-cols-[1.35fr_0.65fr] gap-8 items-start">
-      <section className="space-y-4">
+      <section className="space-y-4 max-w-4xl mx-auto w-full">
         <div>
           <p className="text-orange-500 text-[9px] font-black uppercase tracking-[0.25em]">Hardware requirements</p>
           <h2 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter mt-1">
@@ -241,22 +241,25 @@ const Gta6Details: React.FC<Gta6DetailsProps> = ({
             </h2>
           </div>
           <span className="text-zinc-600 text-[8px] font-black uppercase tracking-widest shrink-0">
-            Auto slideshow · 3 sec
+            Auto slideshow · 4 sec
           </span>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl border border-orange-500/25 bg-zinc-950 shadow-2xl shadow-orange-950/15 aspect-video">
-          {GTA6_PREVIEW_IMAGES.map((image, index) => (
-            <img
-              key={image.src}
-              src={image.src}
-              alt={image.alt}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                index === activePreview ? 'opacity-100' : 'opacity-0'
-              }`}
-              aria-hidden={index !== activePreview}
-            />
-          ))}
+        <div className="relative overflow-hidden rounded-2xl border border-orange-500/25 bg-zinc-950 shadow-2xl shadow-orange-950/15 aspect-[1.7/1] md:aspect-[2.35/1]">
+          <div
+            className="flex h-full transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${activePreview * 100}%)` }}
+          >
+            {GTA6_PREVIEW_IMAGES.map((image, index) => (
+              <img
+                key={image.src}
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover shrink-0"
+                aria-hidden={index !== activePreview}
+              />
+            ))}
+          </div>
           <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/75 to-transparent pointer-events-none" />
           <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2">
             {GTA6_PREVIEW_IMAGES.map((image, index) => (
