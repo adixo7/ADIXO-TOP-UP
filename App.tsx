@@ -1315,9 +1315,12 @@ const App: React.FC = () => {
             paymentMethods={PAYMENT_METHODS}
             orderError={orderError}
             onBack={() => {
+              setSelectedGame(null);
               setSelectedPackage(null);
+              setSelectedServer(null);
               setSelectedPayment(null);
               setOrderError(null);
+              setActiveTab('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onPlayerIdChange={setPlayerId}
