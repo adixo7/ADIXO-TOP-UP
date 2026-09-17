@@ -29,6 +29,8 @@ Premium gaming credit hub for Free Fire, PUBG, and more. A React + Vite + TypeSc
 ## How to Run on Replit
 - **Workflow**: "Start application" — runs both backend (port 3001) and Vite dev server (port 5000)
 - The app is accessible in the Replit preview pane on port 5000
+- Dependencies are installed from `package-lock.json`; if the workspace is freshly imported, run `npm install` once before starting the workflow.
+- Telegram order notifications remain disabled until `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are provided.
 
 ## Scripts
 - `npm run start` - Start backend + Vite dev server (used by Replit workflow)
