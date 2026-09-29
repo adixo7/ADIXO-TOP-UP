@@ -132,26 +132,21 @@ const CARD_SERIES_SEEDS: Array<{ series: CardSeries; entries: CardSeed[] }> = [
 ];
 
 const CARD_HOLDERS = [
+  'Emily Carter', 'James Wilson', 'Olivia Brooks', 'Ethan Miller',
+  'Sophia Bennett', 'Mason Clark', 'Ava Mitchell', 'Liam Parker',
+  'Chloe Anderson', 'Noah Thompson', 'Grace Walker', 'Daniel Harris',
+  'Madison Reed', 'Logan Cooper', 'Harper Morgan', 'Benjamin Scott',
+  'Lily Adams', 'Henry Foster', 'Ella Collins', 'Jack Turner',
   'Aisha Rahman', 'Rayan Chowdhury', 'Nabila Karim', 'Arif Mahmud',
   'Maliha Noor', 'Zayan Hossain', 'Tasmia Haque', 'Fahim Hasan',
   'Raisa Ahmed', 'Nafis Kabir', 'Sohana Islam', 'Adnan Faruk',
   'Mehnaz Sultana', 'Samiul Bari', 'Jannat Sarker', 'Tahmid Rafi',
   'Mim Akter', 'Shafin Alam', 'Nusrat Jahan', 'Abrar Nayeem',
-  'Ishrat Tasin', 'Farhan Nabil', 'Sanjida Roy', 'Arian Tasnim',
-  'Moumita Das', 'Rezaul Karim', 'Anika Sen', 'Yusuf Riaz',
-  'Lamisa Zaman', 'Sakib Anwar', 'Rafia Haque', 'Imran Faisal',
-  'Sabrina Chowdhury', 'Nihad Rahman', 'Maira Hossain', 'Rifat Ahmed',
-  'Samira Kabir', 'Tanvir Islam', 'Oishi Akter', 'Mehedi Hasan',
-  'Nadia Sultana', 'Shadman Noor', 'Lamia Faruk', 'Afnan Mahmud',
-  'Tanjila Rafi', 'Rohan Sarker', 'Mahrin Jahan', 'Aminul Bari',
-  'Orin Tasnim', 'Rayhan Nayeem', 'Sadia Alam', 'Munim Roy',
-  'Fariha Zaman', 'Arafat Anwar', 'Nuzhat Faisal', 'Khalid Riaz',
-  'Safa Sen', 'Mahin Haque', 'Rukaiya Das', 'Shakil Kabir',
-  'Tuba Islam', 'Shuvo Ahmed', 'Maliha Sarker', 'Nayeem Chowdhury',
-  'Esha Rahman', 'Ridwan Hossain', 'Jerin Noor', 'Wasif Karim',
-  'Rumana Akter', 'Siam Faruk', 'Muntaha Jahan', 'Asif Nabil',
-  'Sohana Rafi', 'Ayman Sultana', 'Rida Mahmud', 'Nabil Tasnim',
-  'Sanjida Haque', 'Foysal Zaman',
+  'Aarav Mehta', 'Ananya Iyer', 'Vihaan Kapoor', 'Diya Sharma',
+  'Rohan Malhotra', 'Kavya Nair', 'Arjun Patel', 'Meera Joshi',
+  'Ishaan Gupta', 'Priya Menon', 'Lucas Ferreira', 'Camila Torres',
+  'Mateo Rossi', 'Elena Petrov', 'Daniel Kim', 'Amara Okafor',
+  'Leo Dubois', 'Hana Suzuki', 'Sofia Alvarez', 'Mina Haddad',
 ];
 
 const CARD_BRANDS = ['VISA', 'MASTERCARD', 'AMERICAN EXPRESS'] as const;

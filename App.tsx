@@ -180,6 +180,7 @@ const App: React.FC = () => {
   const [showCardTerms, setShowCardTerms] = useState(false);
   const [cardsSeriesFilter, setCardsSeriesFilter] = useState<CardSeries | 'ALL'>('ALL');
   const [cardsSort, setCardsSort] = useState<'default' | 'price-asc' | 'price-desc' | 'name'>('default');
+  const [cardsFilterPanel, setCardsFilterPanel] = useState<'series' | 'sort' | null>(null);
   const [guildSort, setGuildSort] = useState<string>('default');
   const [selectedServer, setSelectedServer] = useState<string | null>(null);
   const [serverDropdownOpen, setServerDropdownOpen] = useState(false);
@@ -2050,37 +2051,91 @@ const App: React.FC = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="relative mt-5 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
-                          <label className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">
-                            <span>Series</span>
-                            <select
-                              value={cardsSeriesFilter}
-                              onChange={(event) => setCardsSeriesFilter(event.target.value as CardSeries | 'ALL')}
-                              className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2 text-[9px] font-black tracking-[0.08em] text-white outline-none transition-colors focus:border-violet-400/60"
+                        <div className="relative mt-5 border-t border-white/10 pt-4">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <button
+                              type="button"
+                              aria-expanded={cardsFilterPanel === 'series'}
+                              onClick={() => setCardsFilterPanel(cardsFilterPanel === 'series' ? null : 'series')}
+                              className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] transition-all ${
+                                cardsFilterPanel === 'series'
+                                  ? 'border-violet-300/50 bg-violet-400/15 text-white'
+                                  : 'border-white/10 bg-white/[0.04] text-zinc-300 hover:border-white/25 hover:text-white'
+                              }`}
                             >
-                              <option value="ALL">All series</option>
-                              <option value="AQUA">Aqua</option>
-                              <option value="RUBY">Ruby</option>
-                              <option value="GOLD">Gold</option>
-                              <option value="ELITE">Elite</option>
-                            </select>
-                          </label>
-                          <label className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">
-                            <span>Sort by</span>
-                            <select
-                              value={cardsSort}
-                              onChange={(event) => setCardsSort(event.target.value as typeof cardsSort)}
-                              className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2 text-[9px] font-black tracking-[0.08em] text-white outline-none transition-colors focus:border-violet-400/60"
+                              <i className="fas fa-layer-group text-[10px] text-violet-300" />
+                              Series: {cardsSeriesFilter === 'ALL' ? 'All' : cardsSeriesFilter}
+                              <i className={`fas fa-chevron-down text-[8px] transition-transform ${cardsFilterPanel === 'series' ? 'rotate-180' : ''}`} />
+                            </button>
+                            <button
+                              type="button"
+                              aria-expanded={cardsFilterPanel === 'sort'}
+                              onClick={() => setCardsFilterPanel(cardsFilterPanel === 'sort' ? null : 'sort')}
+                              className={`flex items-center gap-2 rounded-xl border px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] transition-all ${
+                                cardsFilterPanel === 'sort'
+                                  ? 'border-cyan-300/50 bg-cyan-400/15 text-white'
+                                  : 'border-white/10 bg-white/[0.04] text-zinc-300 hover:border-white/25 hover:text-white'
+                              }`}
                             >
-                              <option value="default">Series order</option>
-                              <option value="price-asc">Price: low to high</option>
-                              <option value="price-desc">Price: high to low</option>
-                              <option value="name">Card name</option>
-                            </select>
-                          </label>
-                          <span className="ml-auto text-[8px] font-bold uppercase tracking-[0.16em] text-zinc-600">
-                            Showing {visibleCardPackages.length} of {selectedGame.packages.length}
-                          </span>
+                              <i className="fas fa-arrow-down-wide-short text-[10px] text-cyan-300" />
+                              Sort: {cardsSort === 'default' ? 'Series order' : cardsSort === 'price-asc' ? 'Low to high' : cardsSort === 'price-desc' ? 'High to low' : 'Card name'}
+                              <i className={`fas fa-chevron-down text-[8px] transition-transform ${cardsFilterPanel === 'sort' ? 'rotate-180' : ''}`} />
+                            </button>
+                            <span className="ml-auto text-[8px] font-bold uppercase tracking-[0.16em] text-zinc-600">
+                              Showing {visibleCardPackages.length} of {selectedGame.packages.length}
+                            </span>
+                          </div>
+
+                          <div className={`grid overflow-hidden transition-all duration-300 ease-out ${
+                            cardsFilterPanel ? 'mt-3 max-h-28 translate-y-0 opacity-100' : 'pointer-events-none max-h-0 translate-y-[-6px] opacity-0'
+                          }`}>
+                            {cardsFilterPanel === 'series' ? (
+                              <div className="flex flex-wrap gap-2">
+                                {(['ALL', 'AQUA', 'RUBY', 'GOLD', 'ELITE'] as const).map((series) => (
+                                  <button
+                                    key={series}
+                                    type="button"
+                                    onClick={() => {
+                                      setCardsSeriesFilter(series);
+                                      setCardsFilterPanel(null);
+                                    }}
+                                    className={`rounded-lg border px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] transition-colors ${
+                                      cardsSeriesFilter === series
+                                        ? 'border-violet-300/60 bg-violet-400/20 text-white'
+                                        : 'border-white/10 bg-white/[0.03] text-zinc-400 hover:border-violet-300/40 hover:text-white'
+                                    }`}
+                                  >
+                                    {series === 'ALL' ? 'All series' : series}
+                                  </button>
+                                ))}
+                              </div>
+                            ) : cardsFilterPanel === 'sort' ? (
+                              <div className="flex flex-wrap gap-2">
+                                {[
+                                  ['default', 'Series order'],
+                                  ['price-asc', 'Price: low to high'],
+                                  ['price-desc', 'Price: high to low'],
+                                  ['name', 'Card name'],
+                                ].map(([value, label]) => (
+                                  <button
+                                    key={value}
+                                    type="button"
+                                    onClick={() => {
+                                      setCardsSort(value as typeof cardsSort);
+                                      setCardsFilterPanel(null);
+                                    }}
+                                    className={`rounded-lg border px-3 py-2 text-[9px] font-black uppercase tracking-[0.12em] transition-colors ${
+                                      cardsSort === value
+                                        ? 'border-cyan-300/60 bg-cyan-400/20 text-white'
+                                        : 'border-white/10 bg-white/[0.03] text-zinc-400 hover:border-cyan-300/40 hover:text-white'
+                                    }`}
+                                  >
+                                    {label}
+                                  </button>
+                                ))}
+                              </div>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
 
@@ -2109,13 +2164,6 @@ const App: React.FC = () => {
                               label: 'RUBY SERIES',
                             },
                             {
-                              background: 'linear-gradient(112deg, #17636b 0%, #102c34 44%, #081116 100%)',
-                              accent: '#99f6e4',
-                              glow: 'rgba(20,184,166,0.3)',
-                              orb: 'rgba(20,184,166,0.28)',
-                              label: 'TEAL SERIES',
-                            },
-                            {
                               background: 'linear-gradient(112deg, #4b3918 0%, #241c10 44%, #0e0c09 100%)',
                               accent: '#fde68a',
                               glow: 'rgba(245,158,11,0.3)',
@@ -2123,10 +2171,10 @@ const App: React.FC = () => {
                               label: 'GOLD SERIES',
                             },
                             {
-                              background: 'linear-gradient(112deg, #343434 0%, #17181b 44%, #090a0d 100%)',
+                              background: 'linear-gradient(112deg, #202124 0%, #0b0c0f 42%, #000000 100%)',
                               accent: '#e5e7eb',
-                              glow: 'rgba(156,163,175,0.32)',
-                              orb: 'rgba(229,231,235,0.2)',
+                              glow: 'rgba(229,231,235,0.35)',
+                              orb: 'rgba(229,231,235,0.16)',
                               label: 'ELITE SERIES',
                             },
                           ][seriesThemeIndex[pkg.cardSeries || 'AQUA']];
@@ -2170,6 +2218,9 @@ const App: React.FC = () => {
                                 }}
                               >
                                 <span className="pointer-events-none absolute inset-0 opacity-25" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.13) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
+                                 {(pkg.cardSeries === 'RUBY' || pkg.cardSeries === 'ELITE') && (
+                                   <span className="pointer-events-none absolute -left-1/2 top-[-20%] h-[140%] w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent opacity-0 transition-all duration-1000 ease-out group-hover:left-[120%] group-hover:opacity-100" />
+                                 )}
                                 <span className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-125" style={{ background: themes.orb }} />
                                 <span className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/35 to-transparent" />
 
