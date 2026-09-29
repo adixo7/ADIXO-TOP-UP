@@ -2144,42 +2144,30 @@ const App: React.FC = () => {
                                     </span>
                                     <span className="mt-3 grid grid-cols-[1.2fr_0.8fr] items-end gap-3">
                                       <span>
-                                        <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Card holder</span>
-                                        <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.12em] text-white/90">{pkg.cardHolder}</span>
+                                        <span className="block text-[7px] font-bold uppercase tracking-[0.22em] text-white/55">Card holder</span>
+                                        <span className="mt-1 block text-[clamp(0.62rem,1.5vw,0.88rem)] font-black uppercase tracking-[0.1em] text-white">{pkg.cardHolder}</span>
                                       </span>
                                       <span className="text-right">
-                                        <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Expires</span>
-                                        <span className="mt-1 block text-[8px] font-black tracking-[0.12em] text-white/90">{pkg.cardExpiryFull || pkg.cardExpiry}</span>
+                                        <span className="block text-[7px] font-bold uppercase tracking-[0.22em] text-white/55">Expires</span>
+                                        <span className="mt-1 block text-[clamp(0.62rem,1.5vw,0.88rem)] font-black tracking-[0.1em] text-white">{pkg.cardExpiryFull || pkg.cardExpiry}</span>
                                       </span>
                                     </span>
                                   </span>
                                 </span>
                               </button>
 
-                              <div className="mt-2 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#0b111d]/80 px-2.5 py-2 text-[7px]">
-                                <span className="flex items-center gap-1.5 text-zinc-500">
-                                  <span className="font-bold uppercase tracking-[0.12em]">Limit:</span>
-                                  <span className="font-mono font-black" style={{ color: themes.accent }}>{pkg.cardLimit || '৳25,00,000'}</span>
-                                </span>
-                                <span className="text-zinc-500">
-                                  <span className="font-bold uppercase tracking-[0.12em]">Expiry:</span>{' '}
-                                  <span className="font-mono font-black text-zinc-300">{pkg.cardExpiryFull || pkg.cardExpiry}</span>
-                                </span>
-                              </div>
-
-                              <div className="mt-3 grid grid-cols-[1fr_auto_auto] items-end gap-2">
-                                <div className="rounded-xl border border-white/10 bg-[#0b111d] px-2.5 py-2">
-                                  <p className="text-[6px] font-black uppercase tracking-[0.2em] text-zinc-600">Price</p>
-                                  <p className="mt-0.5 font-mono text-base font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
+                              <div className="mt-3 grid grid-cols-[1fr_auto_auto] items-center gap-2">
+                                <div className="rounded-xl border border-white/10 bg-[#0b111d] px-3 py-2.5">
+                                  <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500">Price</p>
+                                  <p className="mt-0.5 font-mono text-lg font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
                                 </div>
-                                <div className="pb-2 text-center">
-                                  <p className="text-[6px] font-black uppercase tracking-[0.16em] text-zinc-600">Qty</p>
-                                  <p className="mt-1 font-mono text-[10px] font-black" style={{ color: themes.accent }}>{pkg.cardQuantity || 1}</p>
+                                <div className="px-1 text-center">
+                                  <p className="text-[7px] font-black uppercase tracking-[0.16em] text-zinc-500">Qty</p>
                                 </div>
                                 <button
                                   type="button"
                                   onClick={() => handlePackageSelect(selectedGame, pkg)}
-                                  className={`rounded-xl px-3 py-2.5 text-[8px] font-black uppercase tracking-[0.12em] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${isSelected ? 'bg-white text-slate-950' : 'bg-emerald-500 text-emerald-950 shadow-[0_6px_18px_rgba(16,185,129,0.25)] hover:bg-emerald-400'}`}
+                                  className={`rounded-xl px-4 py-3 text-[9px] font-black uppercase tracking-[0.12em] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${isSelected ? 'bg-white text-slate-950' : 'bg-emerald-500 text-emerald-950 shadow-[0_6px_18px_rgba(16,185,129,0.25)] hover:bg-emerald-400'}`}
                                 >
                                   {isSelected ? 'Selected' : 'Buy'}
                                 </button>
