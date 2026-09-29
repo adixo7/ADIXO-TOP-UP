@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { GAMES, PAYMENT_METHODS } from './data';
-import { Game, Package, Transaction, User, PaymentMethod } from './types';
+import { CardSeries, Game, Package, Transaction, User, PaymentMethod } from './types';
 import Layout from './components/Layout';
 import HomeBanner from './components/HomeBanner';
 import AnnouncementBanner from './components/AnnouncementBanner';
@@ -178,6 +178,8 @@ const App: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [showCardTerms, setShowCardTerms] = useState(false);
+  const [cardsSeriesFilter, setCardsSeriesFilter] = useState<CardSeries | 'ALL'>('ALL');
+  const [cardsSort, setCardsSort] = useState<'default' | 'price-asc' | 'price-desc' | 'name'>('default');
   const [guildSort, setGuildSort] = useState<string>('default');
   const [selectedServer, setSelectedServer] = useState<string | null>(null);
   const [serverDropdownOpen, setServerDropdownOpen] = useState(false);
@@ -608,6 +610,17 @@ const App: React.FC = () => {
     game.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     game.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const visibleCardPackages = selectedGame?.id === 'cards'
+    ? [...selectedGame.packages]
+      .filter(pkg => cardsSeriesFilter === 'ALL' || pkg.cardSeries === cardsSeriesFilter)
+      .sort((a, b) => {
+        if (cardsSort === 'price-asc') return a.price - b.price;
+        if (cardsSort === 'price-desc') return b.price - a.price;
+        if (cardsSort === 'name') return a.unit.localeCompare(b.unit);
+        return 0;
+      })
+    : [];
 
   const searchedPackages = GAMES.flatMap(game => 
     game.packages.map(pkg => ({ ...pkg, gameName: game.name, gameId: game.id, gameImage: game.image }))
@@ -1347,22 +1360,8 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {activeTab === 'games' && (
-        selectedGame?.id === 'cards' && selectedPackage && showCardTerms ? (
-          <CardTerms
-            game={selectedGame}
-            pkg={selectedPackage}
-            onBack={() => {
-              setSelectedPackage(null);
-              setShowCardTerms(false);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
-            onContinue={() => {
-              setShowCardTerms(false);
-              window.setTimeout(() => paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
-            }}
-          />
-        ) : selectedGame?.id === 'pc-games' && selectedPackage?.id === 'pc-gta-6' ? (
+{activeTab === 'games' && (
+        selectedGame?.id === 'pc-games' && selectedPackage?.id === 'pc-gta-6' ? (
           <Gta6Details
             game={selectedGame}
             pkg={selectedPackage}
@@ -1388,6 +1387,22 @@ const App: React.FC = () => {
         <div className="space-y-12">
           {selectedGame ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
+             {selectedGame.id === 'cards' && selectedPackage && showCardTerms && (
+               <div className="mb-10">
+                 <CardTerms
+                   game={selectedGame}
+                   pkg={selectedPackage}
+                   onBack={() => {
+                     setSelectedPackage(null);
+                     setShowCardTerms(false);
+                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                   }}
+                   onContinue={() => {
+                     window.setTimeout(() => paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+                   }}
+                 />
+               </div>
+             )}
               <button 
                 onClick={() => { 
                   setSelectedGame(null); 
@@ -1397,7 +1412,9 @@ const App: React.FC = () => {
                   setActiveTab('home');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="mb-8 text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors"
+                className={`mb-8 text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors ${
+                  selectedGame.id === 'cards' && selectedPackage && showCardTerms ? 'hidden' : ''
+                }`}
               >
                 <i className="fas fa-arrow-left"></i> {t('games.back')}
               </button>
@@ -2033,11 +2050,49 @@ const App: React.FC = () => {
                             </div>
                           </div>
                         </div>
+                        <div className="relative mt-5 flex flex-wrap items-center gap-3 border-t border-white/10 pt-4">
+                          <label className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                            <span>Series</span>
+                            <select
+                              value={cardsSeriesFilter}
+                              onChange={(event) => setCardsSeriesFilter(event.target.value as CardSeries | 'ALL')}
+                              className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2 text-[9px] font-black tracking-[0.08em] text-white outline-none transition-colors focus:border-violet-400/60"
+                            >
+                              <option value="ALL">All series</option>
+                              <option value="AQUA">Aqua</option>
+                              <option value="RUBY">Ruby</option>
+                              <option value="GOLD">Gold</option>
+                              <option value="ELITE">Elite</option>
+                            </select>
+                          </label>
+                          <label className="flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                            <span>Sort by</span>
+                            <select
+                              value={cardsSort}
+                              onChange={(event) => setCardsSort(event.target.value as typeof cardsSort)}
+                              className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2 text-[9px] font-black tracking-[0.08em] text-white outline-none transition-colors focus:border-violet-400/60"
+                            >
+                              <option value="default">Series order</option>
+                              <option value="price-asc">Price: low to high</option>
+                              <option value="price-desc">Price: high to low</option>
+                              <option value="name">Card name</option>
+                            </select>
+                          </label>
+                          <span className="ml-auto text-[8px] font-bold uppercase tracking-[0.16em] text-zinc-600">
+                            Showing {visibleCardPackages.length} of {selectedGame.packages.length}
+                          </span>
+                        </div>
                       </div>
 
                       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                        {selectedGame.packages.map((pkg, index) => {
+                        {visibleCardPackages.map((pkg, index) => {
                           const isSelected = selectedPackage?.id === pkg.id;
+                          const seriesThemeIndex: Record<CardSeries, number> = {
+                            AQUA: 0,
+                            RUBY: 1,
+                            GOLD: 2,
+                            ELITE: 3,
+                          };
                           const themes = [
                             {
                               background: 'linear-gradient(112deg, #155e75 0%, #0c2739 44%, #080e19 100%)',
@@ -2068,13 +2123,13 @@ const App: React.FC = () => {
                               label: 'GOLD SERIES',
                             },
                             {
-                              background: 'linear-gradient(112deg, #302957 0%, #1b1a31 44%, #0d0c14 100%)',
-                              accent: '#c4b5fd',
-                              glow: 'rgba(139,92,246,0.32)',
-                              orb: 'rgba(139,92,246,0.28)',
-                              label: 'VIOLET SERIES',
+                              background: 'linear-gradient(112deg, #343434 0%, #17181b 44%, #090a0d 100%)',
+                              accent: '#e5e7eb',
+                              glow: 'rgba(156,163,175,0.32)',
+                              orb: 'rgba(229,231,235,0.2)',
+                              label: 'ELITE SERIES',
                             },
-                          ][index % 5];
+                          ][seriesThemeIndex[pkg.cardSeries || 'AQUA']];
 
                           const brandMark = pkg.cardBrand === 'AMERICAN EXPRESS'
                             ? (
@@ -2166,7 +2221,7 @@ const App: React.FC = () => {
                                   <p className="mt-0.5 font-mono text-base font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
                                 </div>
                                 <div className="text-right">
-                                  <p className="text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.category}</p>
+                                   <p className="text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardSeries} · {pkg.category}</p>
                                   <p className="mt-0.5 max-w-[12rem] text-[7px] font-bold uppercase tracking-[0.12em] text-zinc-600">{pkg.description}</p>
                                 </div>
                               </div>

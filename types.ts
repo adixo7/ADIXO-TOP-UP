@@ -7,6 +7,8 @@ export interface User {
   registeredDate?: string;
 }
 
+export type CardSeries = 'AQUA' | 'RUBY' | 'GOLD' | 'ELITE';
+
 export interface Package {
   id: string;
   amount: number;
@@ -34,6 +36,7 @@ export interface Package {
   cardHolder?: string;
   cardLimit?: string;
   cardQuantity?: number;
+  cardSeries?: CardSeries;
 }
 
 export interface Game {

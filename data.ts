@@ -1,5 +1,5 @@
 
-import { Game, PaymentMethod } from './types';
+import { CardSeries, Game, Package, PaymentMethod } from './types';
 
 export const PAYMENT_METHODS: PaymentMethod[] = [
   {
@@ -27,6 +27,166 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
     color: '#F3BA2F'
   }
 ];
+
+type CardSeed = readonly [unit: string, price: number];
+
+const CARD_SERIES_SEEDS: Array<{ series: CardSeries; entries: CardSeed[] }> = [
+  {
+    series: 'AQUA',
+    entries: [
+      ['Aqua Horizon', 1000],
+      ['Blue Harbor', 1200],
+      ['Coastal Prism', 1300],
+      ['Lagoon Crest', 1400],
+      ['Ocean Relay', 1500],
+      ['Tidal Nova', 1600],
+      ['Marine Atlas', 1700],
+      ['Sapphire Current', 1800],
+      ['Cobalt Shore', 1900],
+      ['Seabreeze Axis', 2000],
+      ['Aqua Meridian', 2100],
+      ['Deepwater Key', 2200],
+      ['Coral Circuit', 2300],
+      ['Wavefront Prime', 2400],
+      ['Skyline Tide', 2450],
+      ['Pacific Ember', 2500],
+      ['Glacier Current', 1250],
+      ['Bayline Reserve', 1750],
+      ['Azure Beacon', 2050],
+      ['Mistline Signature', 2350],
+    ],
+  },
+  {
+    series: 'RUBY',
+    entries: [
+      ['Ruby Ember', 2550],
+      ['Crimson Vale', 2700],
+      ['Scarlet Orbit', 2850],
+      ['Garnet Crown', 3000],
+      ['Rosewood Pulse', 3150],
+      ['Burgundy Crest', 3300],
+      ['Carmine Ledger', 3450],
+      ['Redstone Halo', 3600],
+      ['Velvet Flame', 3750],
+      ['Merlot Axis', 3900],
+      ['Pomegranate Key', 4050],
+      ['Cherry Voltage', 4200],
+      ['Cardinal Reserve', 4350],
+      ['Maroon Vector', 4450],
+      ['Ruby Monarch', 2500],
+      ['Sienna Signal', 2950],
+      ['Crimson Harbor', 3400],
+      ['Rosa Prime', 3850],
+      ['Wineglass Elite', 4100],
+      ['Vermilion Gate', 4500],
+    ],
+  },
+  {
+    series: 'GOLD',
+    entries: [
+      ['Golden Atlas', 4500],
+      ['Sunlit Reserve', 4700],
+      ['Brass Meridian', 4900],
+      ['Honeycomb Prime', 5100],
+      ['Citrine Vault', 5300],
+      ['Amber Crown', 5500],
+      ['Dune Monarch', 5700],
+      ['Gilded Horizon', 5900],
+      ['Topaz Circuit', 6100],
+      ['Solaris Key', 6300],
+      ['Ochre Signature', 6500],
+      ['Goldleaf Pulse', 6700],
+      ['Marigold Ledger', 6900],
+      ['Saffron Crest', 4800],
+      ['Luxe Bullion', 5200],
+      ['Sunstone Orbit', 5600],
+      ['Canary Reserve', 6000],
+      ['Aureate Vale', 6400],
+      ['Harvest Halo', 6800],
+      ['Imperial Gold', 7000],
+    ],
+  },
+  {
+    series: 'ELITE',
+    entries: [
+      ['Obsidian Apex', 7000],
+      ['Titanium Crest', 7200],
+      ['Platinum North', 7400],
+      ['Blackglass Reserve', 7600],
+      ['Onyx Meridian', 7800],
+      ['Quantum Crown', 8000],
+      ['Sterling Axis', 8200],
+      ['Eclipse Signature', 8400],
+      ['Diamond Relay', 8600],
+      ['Velvet Onyx', 8800],
+      ['Aurora Black', 9000],
+      ['Monarch Prime', 9200],
+      ['Celestial Vault', 9400],
+      ['Noble Circuit', 9600],
+      ['Regent Horizon', 9800],
+      ['Sovereign Key', 10000],
+      ['Imperial Apex', 10500],
+      ['Infinity Reserve', 11000],
+    ],
+  },
+];
+
+const CARD_HOLDERS = [
+  'Aisha Rahman', 'Rayan Chowdhury', 'Nabila Karim', 'Arif Mahmud',
+  'Maliha Noor', 'Zayan Hossain', 'Tasmia Haque', 'Fahim Hasan',
+  'Raisa Ahmed', 'Nafis Kabir', 'Sohana Islam', 'Adnan Faruk',
+  'Mehnaz Sultana', 'Samiul Bari', 'Jannat Sarker', 'Tahmid Rafi',
+  'Mim Akter', 'Shafin Alam', 'Nusrat Jahan', 'Abrar Nayeem',
+  'Ishrat Tasin', 'Farhan Nabil', 'Sanjida Roy', 'Arian Tasnim',
+  'Moumita Das', 'Rezaul Karim', 'Anika Sen', 'Yusuf Riaz',
+  'Lamisa Zaman', 'Sakib Anwar', 'Rafia Haque', 'Imran Faisal',
+  'Sabrina Chowdhury', 'Nihad Rahman', 'Maira Hossain', 'Rifat Ahmed',
+  'Samira Kabir', 'Tanvir Islam', 'Oishi Akter', 'Mehedi Hasan',
+  'Nadia Sultana', 'Shadman Noor', 'Lamia Faruk', 'Afnan Mahmud',
+  'Tanjila Rafi', 'Rohan Sarker', 'Mahrin Jahan', 'Aminul Bari',
+  'Orin Tasnim', 'Rayhan Nayeem', 'Sadia Alam', 'Munim Roy',
+  'Fariha Zaman', 'Arafat Anwar', 'Nuzhat Faisal', 'Khalid Riaz',
+  'Safa Sen', 'Mahin Haque', 'Rukaiya Das', 'Shakil Kabir',
+  'Tuba Islam', 'Shuvo Ahmed', 'Maliha Sarker', 'Nayeem Chowdhury',
+  'Esha Rahman', 'Ridwan Hossain', 'Jerin Noor', 'Wasif Karim',
+  'Rumana Akter', 'Siam Faruk', 'Muntaha Jahan', 'Asif Nabil',
+  'Sohana Rafi', 'Ayman Sultana', 'Rida Mahmud', 'Nabil Tasnim',
+  'Sanjida Haque', 'Foysal Zaman',
+];
+
+const CARD_BRANDS = ['VISA', 'MASTERCARD', 'AMERICAN EXPRESS'] as const;
+
+const CARD_CATALOG: Package[] = CARD_SERIES_SEEDS.flatMap(({ series, entries }, seriesIndex) =>
+  entries.map(([unit, price], entryIndex) => {
+    const index = CARD_SERIES_SEEDS
+      .slice(0, seriesIndex)
+      .reduce((total, group) => total + group.entries.length, 0) + entryIndex;
+    const brand = CARD_BRANDS[index % CARD_BRANDS.length];
+    const expiryMonth = String((index * 3) % 12 + 1).padStart(2, '0');
+    const expiryYear = 2028 + (index % 5);
+    const finalFour = String(4821 + index * 137).slice(-4);
+
+    return {
+      id: `card-${series.toLowerCase()}-${entryIndex + 1}`,
+      amount: 1,
+      unit,
+      price,
+      currency: 'BDT',
+      category: brand,
+      description: `${series} series ${brand.toLowerCase()} card`,
+      cardBrand: brand,
+      cardType: brand === 'MASTERCARD' && index % 2 === 0 ? 'DEBIT' : 'CREDIT',
+      cardSeries: series,
+      cardNumber: `••••  ••••  •••• ${finalFour}`,
+      cardExpiry: `${expiryMonth}/${String(expiryYear).slice(-2)}`,
+      cardExpiryFull: `${expiryMonth}/${expiryYear}`,
+      cardHolder: CARD_HOLDERS[index % CARD_HOLDERS.length],
+      cardLimit: `৳${(price * 900).toLocaleString('en-IN')}`,
+      cardQuantity: 1,
+      isPopular: index % 13 === 0,
+    };
+  }),
+);
 
 export const GAMES: Game[] = [
   {
@@ -306,94 +466,7 @@ export const GAMES: Game[] = [
     banner: '/images/cards-cover.avif',
     idPlaceholder: 'Account ID / Details',
     description: 'Digital cards and gaming card services.',
-    packages: [
-      {
-        id: 'card-visa-infinite',
-        amount: 1,
-        unit: 'Visa Infinite',
-        price: 1500,
-        currency: 'BDT',
-        category: 'VISA',
-        description: 'Premium Visa card',
-        cardBrand: 'VISA',
-        cardType: 'CREDIT',
-        cardNumber: '••••  ••••  •••• 4821',
-        cardExpiry: '09/29',
-        cardExpiryFull: '09/2029',
-        cardHolder: 'Sophia Jones',
-        cardLimit: '৳25,00,000',
-        cardQuantity: 3,
-        isPopular: true,
-      },
-      {
-        id: 'card-mastercard-world',
-        amount: 1,
-        unit: 'Mastercard World',
-        price: 2200,
-        currency: 'BDT',
-        category: 'MASTERCARD',
-        description: 'Premium Mastercard card',
-        cardBrand: 'MASTERCARD',
-        cardType: 'DEBIT',
-        cardNumber: '••••  ••••  •••• 1938',
-        cardExpiry: '11/28',
-        cardExpiryFull: '11/2028',
-        cardHolder: 'Evelyn Martinez',
-        cardLimit: '৳35,00,000',
-        cardQuantity: 4,
-      },
-      {
-        id: 'card-amex-gold',
-        amount: 1,
-        unit: 'American Express Gold',
-        price: 4800,
-        currency: 'BDT',
-        category: 'AMERICAN EXPRESS',
-        description: 'Premium AmEx credit card',
-        cardBrand: 'AMERICAN EXPRESS',
-        cardType: 'CREDIT',
-        cardNumber: '••••  •••••  •••• 1005',
-        cardExpiry: '07/30',
-        cardExpiryFull: '07/2030',
-        cardHolder: 'Olivia Smith',
-        cardLimit: '৳45,00,000',
-        cardQuantity: 2,
-      },
-      {
-        id: 'card-platinum-credit',
-        amount: 1,
-        unit: 'Visa Platinum',
-        price: 3000,
-        currency: 'BDT',
-        category: 'VISA',
-        description: 'Premium Visa card',
-        cardBrand: 'VISA',
-        cardType: 'CREDIT',
-        cardNumber: '••••  ••••  •••• 7204',
-        cardExpiry: '03/29',
-        cardExpiryFull: '03/2029',
-        cardHolder: 'Lucas Davis',
-        cardLimit: '৳60,00,000',
-        cardQuantity: 6,
-      },
-      {
-        id: 'card-premium-debit',
-        amount: 1,
-        unit: 'Mastercard Everyday',
-        price: 1250,
-        currency: 'BDT',
-        category: 'MASTERCARD',
-        description: 'Premium Mastercard card',
-        cardBrand: 'MASTERCARD',
-        cardType: 'DEBIT',
-        cardNumber: '••••  ••••  •••• 8642',
-        cardExpiry: '12/28',
-        cardExpiryFull: '12/2028',
-        cardHolder: 'Amelia Carter',
-        cardLimit: '৳50,00,000',
-        cardQuantity: 5,
-      },
-    ]
+    packages: CARD_CATALOG,
   },
   {
     id: 'level-up',

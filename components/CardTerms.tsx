@@ -89,6 +89,10 @@ const CardTerms: React.FC<CardTermsProps> = ({ game, pkg, onBack, onContinue }) 
               'Make sure the email or WhatsApp contact you provide belongs to you and is active.',
               'Do not share card details, delivery messages, or account information with anyone else.',
               'Orders may be subject to availability checks. Contact support if an item is unavailable.',
+              'Purchase at your own risk. Review the selected card, price, and delivery details carefully before paying.',
+              'Cards can be damaged, declined, expired, or unusable, and we do not provide any guarantee for card performance.',
+              'We are not liable for card damage, account restrictions, merchant rejection, delivery issues, or any other card-related problem.',
+              'All card purchases are final. No refund, replacement, chargeback, or reversal will be provided after payment.',
             ].map((term, index) => (
               <div key={term} className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
                 <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-[9px] font-black text-orange-300">
