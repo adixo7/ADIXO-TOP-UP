@@ -26,6 +26,11 @@ export interface Package {
   server?: string;
   guildId?: string;
   sold?: boolean;
+  cardBrand?: string;
+  cardType?: 'CREDIT' | 'DEBIT';
+  cardNumber?: string;
+  cardExpiry?: string;
+  cardHolder?: string;
 }
 
 export interface Game {

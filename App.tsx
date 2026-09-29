@@ -506,7 +506,7 @@ const App: React.FC = () => {
       return;
     }
     if (!playerId.trim()) {
-      setOrderError(selectedGame?.id === 'pc-games' ? "Please enter your Email or WhatsApp number." : "Please enter your Player ID.");
+      setOrderError(selectedGame?.id === 'pc-games' || selectedGame?.id === 'cards' ? "Please enter your Email or WhatsApp number." : "Please enter your Player ID.");
       return;
     }
     if (selectedGame?.id === 'ff-likes' && !selectedServer) {
@@ -537,7 +537,9 @@ const App: React.FC = () => {
       : (selectedPackage.currency === 'BDT' ? selectedPackage.price : selectedPackage.price * exchangeRate);
     const displayCurrency = selectedPayment.id === 'binance' ? 'USD' : 'BDT';
 
-    const packageDisplayName = selectedPackage.id === 'ff-likes-mega'
+    const packageDisplayName = selectedGame.id === 'cards'
+      ? selectedPackage.unit
+      : selectedPackage.id === 'ff-likes-mega'
       ? `NO LIMITS Likes (∞ Permanent)`
       : `${selectedPackage.amount} ${selectedPackage.unit}`;
     const packageName = `${packageDisplayName}${selectedGame.id === 'ff-likes' && selectedServer ? ` — Server: ${selectedServer}` : ''}`;
@@ -1407,17 +1409,17 @@ const App: React.FC = () => {
 
                   <div className="space-y-4 px-2" ref={playerIdRef}>
                     <h3 className="text-xl font-bold text-white">
-                      {selectedGame.id === 'buy-guild' ? t('game.tgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
+                      {selectedGame.id === 'buy-guild' ? t('game.tgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' || selectedGame.id === 'cards' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
                     </h3>
                     <div className="relative group">
                       <div className="absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-orange-500 transition-colors">
-                        <i className={`fas ${selectedGame.id === 'buy-guild' ? 'fa-paper-plane' : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : 'fa-gamepad'} text-xl`}></i>
+                          <i className={`fas ${selectedGame.id === 'buy-guild' ? 'fa-paper-plane' : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' || selectedGame.id === 'cards' ? 'fa-envelope' : selectedGame.id === 'ai-bots' ? 'fa-users' : 'fa-gamepad'} text-xl`}></i>
                       </div>
                       <input 
                         type="text" 
                         value={playerId}
                         onChange={(e) => setPlayerId(e.target.value)}
-                        placeholder={selectedGame.id === 'buy-guild' ? t('game.enterTgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' ? t('game.enterEmail') : selectedGame.id === 'ai-bots' ? t('game.enterGuildId') : selectedGame.idPlaceholder}
+                         placeholder={selectedGame.id === 'buy-guild' ? t('game.enterTgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' || selectedGame.id === 'cards' ? t('game.enterEmail') : selectedGame.id === 'ai-bots' ? t('game.enterGuildId') : selectedGame.idPlaceholder}
                         className="w-full bg-[#0d0d0f] border border-zinc-800/60 rounded-xl pl-14 pr-5 py-5 text-white font-medium focus:outline-none focus:border-orange-500 transition-all shadow-sm"
                       />
                     </div>
@@ -1983,6 +1985,150 @@ const App: React.FC = () => {
                           </div>
                         );
                       })}
+                    </div>
+                  ) : selectedGame.id === 'cards' ? (
+                    <div className="space-y-5">
+                      <div className="relative overflow-hidden rounded-2xl border border-cyan-300/15 bg-gradient-to-br from-cyan-950/30 via-zinc-950 to-violet-950/20 p-4 md:p-5">
+                        <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl" />
+                        <div className="pointer-events-none absolute -bottom-20 left-1/3 h-40 w-40 rounded-full bg-violet-500/10 blur-3xl" />
+                        <div className="relative flex items-start justify-between gap-4">
+                          <div>
+                            <p className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.28em] text-cyan-300">
+                              <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.9)]" />
+                              Secure card inventory
+                            </p>
+                            <h3 className="mt-2 text-lg font-black uppercase italic tracking-tight text-white md:text-xl">Choose your card</h3>
+                            <p className="mt-1 max-w-xl text-[10px] leading-relaxed text-zinc-500">
+                              Sample masked previews. Full card details stay hidden until your order is confirmed.
+                            </p>
+                          </div>
+                          <div className="hidden shrink-0 items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1.5 text-[8px] font-black uppercase tracking-widest text-emerald-300 sm:flex">
+                            <i className="fas fa-shield-alt text-[9px]" />
+                            Masked
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        {selectedGame.packages.map((pkg, index) => {
+                          const isSelected = selectedPackage?.id === pkg.id;
+                          const themes = [
+                            {
+                              background: 'linear-gradient(135deg, #164e75 0%, #0b2032 48%, #061016 100%)',
+                              accent: '#67e8f9',
+                              glow: 'rgba(34,211,238,0.28)',
+                              orb: 'rgba(56,189,248,0.28)',
+                            },
+                            {
+                              background: 'linear-gradient(135deg, #40151c 0%, #1b1017 48%, #09090b 100%)',
+                              accent: '#fca5a5',
+                              glow: 'rgba(248,113,113,0.26)',
+                              orb: 'rgba(239,68,68,0.24)',
+                            },
+                            {
+                              background: 'linear-gradient(135deg, #17616b 0%, #0c2830 48%, #071114 100%)',
+                              accent: '#a5f3fc',
+                              glow: 'rgba(45,212,191,0.25)',
+                              orb: 'rgba(20,184,166,0.24)',
+                            },
+                            {
+                              background: 'linear-gradient(135deg, #403014 0%, #1b170e 48%, #0b0b09 100%)',
+                              accent: '#fde68a',
+                              glow: 'rgba(251,191,36,0.25)',
+                              orb: 'rgba(245,158,11,0.22)',
+                            },
+                            {
+                              background: 'linear-gradient(135deg, #25233d 0%, #141522 48%, #09090b 100%)',
+                              accent: '#c4b5fd',
+                              glow: 'rgba(167,139,250,0.25)',
+                              orb: 'rgba(139,92,246,0.24)',
+                            },
+                          ][index % 5];
+
+                          return (
+                            <button
+                              key={pkg.id}
+                              type="button"
+                              onClick={() => handlePackageSelect(selectedGame, pkg)}
+                              aria-pressed={isSelected}
+                              className={`group relative aspect-[1.62/1] overflow-hidden rounded-[1.35rem] border p-4 text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
+                                isSelected
+                                  ? 'scale-[1.025] border-white/80 shadow-2xl'
+                                  : 'border-white/15 shadow-[0_14px_35px_rgba(0,0,0,0.35)] hover:-translate-y-2 hover:scale-[1.035] hover:border-white/45 hover:shadow-2xl'
+                              }`}
+                              style={{
+                                background: themes.background,
+                                boxShadow: isSelected
+                                  ? `0 0 0 1px ${themes.accent}66, 0 18px 45px ${themes.glow}`
+                                  : undefined,
+                              }}
+                            >
+                              <span
+                                className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-150"
+                                style={{ background: themes.orb }}
+                              />
+                              <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_25%,rgba(255,255,255,0.12)_42%,transparent_58%)] opacity-0 transition-all duration-700 group-hover:translate-x-1/2 group-hover:opacity-100" />
+                              <span className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/30 to-transparent" />
+
+                              <div className="relative flex h-full flex-col justify-between">
+                                <div className="flex items-start justify-between gap-3">
+                                  <div className="flex items-center gap-2">
+                                    <span className="flex h-8 w-10 items-center justify-center rounded-lg border border-white/20 bg-white/10 shadow-inner">
+                                      <span className="h-5 w-6 rounded-[4px] border border-amber-100/50 bg-gradient-to-br from-amber-200 via-yellow-500 to-amber-800 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.6)]" />
+                                    </span>
+                                    <i className="fas fa-wifi rotate-90 text-[11px] text-white/60" aria-hidden="true" />
+                                  </div>
+                                  <span className="text-right text-[10px] font-black uppercase italic tracking-widest text-white/90">
+                                    {pkg.cardBrand}
+                                  </span>
+                                </div>
+
+                                <div className="mt-2">
+                                  <p className="font-mono text-[clamp(0.75rem,2vw,1rem)] font-semibold tracking-[0.14em] text-white/90 drop-shadow-lg">
+                                    {pkg.cardNumber}
+                                  </p>
+                                  <div className="mt-2 flex items-end justify-between gap-3">
+                                    <div>
+                                      <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-white/45">Card holder</p>
+                                      <p className="mt-0.5 text-[9px] font-black tracking-[0.16em] text-white/90">{pkg.cardHolder}</p>
+                                    </div>
+                                    <div className="text-right">
+                                      <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-white/45">Expires</p>
+                                      <p className="mt-0.5 text-[9px] font-black tracking-[0.12em] text-white/90">{pkg.cardExpiry}</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="mt-2 flex items-center justify-between gap-3 border-t border-white/10 pt-2">
+                                  <span className="text-[8px] font-black uppercase tracking-[0.2em]" style={{ color: themes.accent }}>
+                                    {pkg.cardType} · {pkg.category}
+                                  </span>
+                                  <span className="font-mono text-[10px] font-black text-white">
+                                    ৳{pkg.price.toLocaleString()}
+                                  </span>
+                                </div>
+                              </div>
+
+                              {pkg.isPopular && (
+                                <span className="absolute left-0 top-0 rounded-br-xl bg-cyan-300 px-2.5 py-1 text-[7px] font-black uppercase tracking-[0.16em] text-slate-950 shadow-lg">
+                                  Featured
+                                </span>
+                              )}
+                              <span
+                                className={`absolute bottom-3 right-3 flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${
+                                  isSelected ? 'border-white bg-white text-slate-950' : 'border-white/30 bg-black/20 text-transparent group-hover:border-white/70'
+                                }`}
+                              >
+                                <i className="fas fa-check text-[8px]" />
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      <div className="flex items-center gap-2 rounded-xl border border-zinc-800/80 bg-zinc-950/60 px-3 py-2.5 text-[9px] font-bold uppercase tracking-wider text-zinc-500">
+                        <i className="fas fa-lock text-cyan-400/70" />
+                        Only the last four digits are shown in this preview. Card prices above are sample values.
+                      </div>
                     </div>
                   ) : selectedGame.id === 'pc-games' ? (
                     <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
