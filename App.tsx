@@ -2057,86 +2057,129 @@ const App: React.FC = () => {
                             },
                           ][index % 5];
 
+                          const brandMark = pkg.cardBrand === 'AMERICAN EXPRESS'
+                            ? (
+                              <span className="flex flex-col items-center rounded-[4px] border border-white/70 px-2 py-1 text-[clamp(0.48rem,1.2vw,0.7rem)] font-black uppercase leading-[0.9] tracking-[0.04em] text-white">
+                                <span>American</span>
+                                <span>Express</span>
+                              </span>
+                            )
+                            : pkg.cardBrand === 'MASTERCARD'
+                              ? (
+                                <span className="flex items-center gap-1.5">
+                                  <span className="relative flex h-6 w-9 items-center justify-center">
+                                    <span className="absolute left-0 h-5 w-5 rounded-full bg-red-500/90" />
+                                    <span className="absolute right-0 h-5 w-5 rounded-full bg-yellow-300/90" />
+                                    <span className="relative text-[5px] font-black tracking-[-0.08em] text-white">mc</span>
+                                  </span>
+                                  <span className="text-[clamp(0.62rem,1.5vw,0.88rem)] font-black lowercase tracking-[-0.04em] text-white">mastercard</span>
+                                </span>
+                              )
+                              : (
+                                <span className="text-[clamp(0.85rem,2.4vw,1.35rem)] font-black uppercase italic tracking-[0.06em] text-white">
+                                  {pkg.cardBrand}
+                                </span>
+                              );
+
                           return (
-                            <button
-                              key={pkg.id}
-                              type="button"
-                              onClick={() => handlePackageSelect(selectedGame, pkg)}
-                              aria-pressed={isSelected}
-                              className={`group relative overflow-hidden rounded-[1.5rem] border text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
-                                isFeatured ? 'aspect-[2/1] p-5 sm:p-6 md:col-span-2 md:aspect-[2.35/1] md:p-7' : 'aspect-[1.62/1] p-4 sm:p-5'
-                              } ${
-                                isSelected
-                                  ? 'scale-[1.025] border-white/80'
-                                  : 'border-white/15 shadow-[0_18px_45px_rgba(0,0,0,0.38)] hover:-translate-y-3 hover:rotate-[0.4deg] hover:scale-[1.025] hover:border-white/50 hover:shadow-2xl'
-                              }`}
-                              style={{
-                                background: themes.background,
-                                boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 20px 55px ${themes.glow}` : undefined,
-                              }}
-                            >
-                              <span className="pointer-events-none absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.12) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
-                              <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150" style={{ background: themes.orb }} />
-                              <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
-                              <span className="pointer-events-none absolute -bottom-12 -left-12 h-28 w-28 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-150" />
+                            <div key={pkg.id} className="min-w-0">
+                              <button
+                                type="button"
+                                onClick={() => handlePackageSelect(selectedGame, pkg)}
+                                aria-pressed={isSelected}
+                                aria-label={`Select ${pkg.unit}`}
+                                className={`group relative flex w-full overflow-hidden rounded-[1.45rem] border text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
+                                  isFeatured ? 'aspect-[2/1] p-5 sm:p-6 md:col-span-2 md:aspect-[2.35/1] md:p-7' : 'aspect-[1.62/1] p-4 sm:p-5'
+                                } ${
+                                  isSelected
+                                    ? 'scale-[1.025] border-white/80'
+                                    : 'border-white/15 shadow-[0_18px_45px_rgba(0,0,0,0.38)] hover:-translate-y-3 hover:rotate-[0.4deg] hover:scale-[1.025] hover:border-white/50 hover:shadow-2xl'
+                                }`}
+                                style={{
+                                  background: themes.background,
+                                  boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 20px 55px ${themes.glow}` : undefined,
+                                }}
+                              >
+                                <span className="pointer-events-none absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.12) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
+                                <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150" style={{ background: themes.orb }} />
+                                <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
+                                <span className="pointer-events-none absolute -bottom-12 -left-12 h-28 w-28 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-150" />
 
-                              <div className="relative flex h-full flex-col justify-between">
-                                <div className="flex items-start justify-between gap-4">
-                                  <div className="flex items-center gap-2.5">
-                                    <span className="flex h-9 w-11 items-center justify-center rounded-xl border border-white/20 bg-black/20 shadow-inner">
-                                      <span className="h-5 w-7 rounded-[4px] border border-amber-100/60 bg-gradient-to-br from-amber-100 via-yellow-400 to-amber-800 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.7)]" />
+                                <span className="relative flex h-full w-full flex-col justify-between">
+                                  <span className="flex items-start justify-between gap-4">
+                                    <span className="flex items-start gap-2.5">
+                                      <span className="relative flex h-9 w-11 items-center justify-center rounded-xl border border-white/20 bg-black/20 shadow-inner">
+                                        <span className="relative h-5 w-7 overflow-hidden rounded-[4px] border border-amber-100/70 bg-gradient-to-br from-amber-100 via-yellow-400 to-amber-800 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.75)]">
+                                          <span className="absolute inset-x-0 top-1/2 border-t border-amber-900/40" />
+                                          <span className="absolute inset-y-0 left-1/2 border-l border-amber-900/40" />
+                                          <span className="absolute left-1/3 top-0 h-full border-l border-amber-900/25" />
+                                        </span>
+                                      </span>
+                                      <span className="mt-2 flex items-center gap-2">
+                                        <i className="fas fa-wifi rotate-90 text-[10px] text-white/65" aria-hidden="true" />
+                                        <span className="hidden flex-col text-[7px] font-black uppercase leading-[1.15] tracking-[0.22em] text-white/50 sm:flex">
+                                          <span>{themes.label.split(' ')[0]}</span>
+                                          <span>{themes.label.split(' ').slice(1).join(' ')}</span>
+                                        </span>
+                                      </span>
                                     </span>
-                                    <i className="fas fa-wifi rotate-90 text-xs text-white/60" aria-hidden="true" />
-                                    <span className="hidden text-[8px] font-black uppercase tracking-[0.24em] text-white/45 sm:inline">{themes.label}</span>
-                                  </div>
-                                  <div className="text-right">
-                                    <p className="text-[clamp(0.75rem,2vw,1.05rem)] font-black uppercase italic tracking-[0.08em] text-white">{pkg.cardBrand}</p>
-                                    <p className="mt-1 text-[7px] font-black uppercase tracking-[0.2em]" style={{ color: themes.accent }}>{isFeatured ? 'Signature issue' : pkg.cardType}</p>
-                                  </div>
-                                </div>
+                                    <span className="flex flex-col items-end gap-1 text-right">
+                                      {brandMark}
+                                      <span className="text-[6px] font-black uppercase tracking-[0.22em]" style={{ color: themes.accent }}>{isFeatured ? 'Signature issue' : pkg.cardType}</span>
+                                    </span>
+                                  </span>
 
-                                <div className={isFeatured ? 'max-w-2xl' : ''}>
-                                  <p className={`font-mono font-semibold tracking-[0.15em] text-white drop-shadow-lg ${isFeatured ? 'text-[clamp(1rem,2.8vw,1.45rem)]' : 'text-[clamp(0.75rem,2vw,1rem)]'}`}>
-                                    {pkg.cardNumber}
-                                  </p>
-                                  <div className="mt-3 flex items-end justify-between gap-4">
-                                    <div>
-                                      <p className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/45">Card holder</p>
-                                      <p className="mt-1 text-[9px] font-black tracking-[0.18em] text-white/90">{pkg.cardHolder}</p>
-                                    </div>
-                                    <div className="text-right">
-                                      <p className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/45">Valid thru</p>
-                                      <p className="mt-1 text-[9px] font-black tracking-[0.14em] text-white/90">{pkg.cardExpiry}</p>
-                                    </div>
-                                    {isFeatured && (
-                                      <div className="hidden text-right sm:block">
-                                        <p className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/45">Edition</p>
-                                        <p className="mt-1 text-[9px] font-black uppercase tracking-[0.14em]" style={{ color: themes.accent }}>Infinite</p>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
+                                  <span className={isFeatured ? 'max-w-2xl' : ''}>
+                                    <span className={`block whitespace-nowrap font-mono font-semibold tracking-[0.18em] text-white drop-shadow-lg ${isFeatured ? 'text-[clamp(1rem,2.8vw,1.45rem)]' : 'text-[clamp(0.7rem,1.8vw,0.98rem)]'}`}>
+                                      {pkg.cardNumber}
+                                    </span>
+                                    <span className={`mt-3 grid items-end gap-3 ${isFeatured ? 'grid-cols-[1.3fr_0.7fr_auto]' : 'grid-cols-[1.2fr_0.8fr]'}`}>
+                                      <span>
+                                        <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Card holder</span>
+                                        <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.18em] text-white/90">{pkg.cardHolder}</span>
+                                      </span>
+                                      <span className="text-right">
+                                        <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Valid thru</span>
+                                        <span className="mt-1 block text-[8px] font-black tracking-[0.14em] text-white/90">{pkg.cardExpiry}</span>
+                                      </span>
+                                      {isFeatured && (
+                                        <span className="hidden text-right sm:block">
+                                          <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Edition</span>
+                                          <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.14em]" style={{ color: themes.accent }}>Infinite</span>
+                                        </span>
+                                      )}
+                                    </span>
+                                  </span>
 
-                                <div className="flex items-end justify-between gap-3 border-t border-white/15 pt-2.5">
-                                  <div>
-                                    <p className="text-[8px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.category}</p>
-                                    <p className="mt-1 text-[7px] font-bold uppercase tracking-[0.16em] text-white/40">{pkg.description}</p>
-                                  </div>
-                                  <div className="flex items-center gap-2">
-                                    <span className="font-mono text-sm font-black text-white">৳{pkg.price.toLocaleString()}</span>
+                                  <span className="flex items-end justify-between gap-3 border-t border-white/15 pt-2.5">
+                                    <span>
+                                      <span className="block text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardBrand}</span>
+                                      <span className="mt-1 block text-[6px] font-bold uppercase leading-tight tracking-[0.14em] text-white/40">Premium {pkg.cardType?.toLowerCase()}<br />card</span>
+                                    </span>
                                     <span className={`flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${isSelected ? 'border-white bg-white text-slate-950' : 'border-white/30 bg-black/20 text-transparent group-hover:border-white/80'}`}>
-                                      <i className="fas fa-arrow-up-right text-[8px]" />
+                                      <i className={`text-[8px] ${isSelected ? 'fas fa-check' : 'fas fa-arrow-up-right'}`} />
                                     </span>
-                                  </div>
+                                  </span>
+                                </span>
+
+                                {pkg.isPopular && (
+                                  <span className="absolute left-0 top-0 rounded-br-xl bg-white px-3 py-1.5 text-[7px] font-black uppercase tracking-[0.18em] text-slate-950 shadow-lg">
+                                    Signature
+                                  </span>
+                                )}
+                              </button>
+
+                              <div className="flex items-center justify-between gap-3 px-1.5 pt-2.5">
+                                <div>
+                                  <p className="text-[6px] font-black uppercase tracking-[0.22em] text-zinc-600">Price</p>
+                                  <p className="mt-0.5 font-mono text-sm font-black text-white">৳{pkg.price.toLocaleString()}</p>
+                                </div>
+                                <div className="text-right">
+                                  <p className="text-[6px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.category}</p>
+                                  <p className="mt-0.5 max-w-[12rem] text-[6px] font-bold uppercase tracking-[0.12em] text-zinc-600">{pkg.description}</p>
                                 </div>
                               </div>
-
-                              {pkg.isPopular && (
-                                <span className="absolute left-0 top-0 rounded-br-xl bg-white px-3 py-1.5 text-[7px] font-black uppercase tracking-[0.18em] text-slate-950 shadow-lg">
-                                  Signature
-                                </span>
-                              )}
-                            </button>
+                            </div>
                           );
                         })}
                       </div>
