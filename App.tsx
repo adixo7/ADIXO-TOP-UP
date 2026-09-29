@@ -2017,7 +2017,6 @@ const App: React.FC = () => {
 
                       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {selectedGame.packages.map((pkg, index) => {
-                          const isFeatured = index === 0;
                           const isSelected = selectedPackage?.id === pkg.id;
                           const themes = [
                             {
@@ -2059,9 +2058,9 @@ const App: React.FC = () => {
 
                           const brandMark = pkg.cardBrand === 'AMERICAN EXPRESS'
                             ? (
-                              <span className="flex flex-col items-center rounded-[4px] border border-white/70 px-2 py-1 text-[clamp(0.48rem,1.2vw,0.7rem)] font-black uppercase leading-[0.9] tracking-[0.04em] text-white">
-                                <span>American</span>
-                                <span>Express</span>
+                              <span className="flex flex-col items-center rounded-[4px] border border-sky-200/80 bg-sky-500/15 px-2 py-1 text-[clamp(0.42rem,1.1vw,0.62rem)] font-black uppercase leading-[0.95] tracking-[0.04em] text-white shadow-[inset_0_0_10px_rgba(125,211,252,0.12)]">
+                                <span>AMERICAN</span>
+                                <span>EXPRESS</span>
                               </span>
                             )
                             : pkg.cardBrand === 'MASTERCARD'
@@ -2076,8 +2075,9 @@ const App: React.FC = () => {
                                 </span>
                               )
                               : (
-                                <span className="text-[clamp(0.85rem,2.4vw,1.35rem)] font-black uppercase italic tracking-[0.06em] text-white">
-                                  {pkg.cardBrand}
+                                <span className="flex flex-col items-end">
+                                  <span className="text-[clamp(0.95rem,2.5vw,1.45rem)] font-black uppercase italic tracking-[0.03em] text-white">VISA</span>
+                                  <span className="text-[6px] font-black uppercase tracking-[0.2em] text-white/55">SIGNATURE</span>
                                 </span>
                               );
 
@@ -2088,9 +2088,7 @@ const App: React.FC = () => {
                                 onClick={() => handlePackageSelect(selectedGame, pkg)}
                                 aria-pressed={isSelected}
                                 aria-label={`Select ${pkg.unit}`}
-                                className={`group relative flex w-full overflow-hidden rounded-[1.45rem] border text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
-                                  isFeatured ? 'aspect-[2/1] p-5 sm:p-6 md:col-span-2 md:aspect-[2.35/1] md:p-7' : 'aspect-[1.62/1] p-4 sm:p-5'
-                                } ${
+                                className={`group relative flex aspect-[1.586/1] w-full overflow-hidden rounded-[1.45rem] border p-4 text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:p-5 ${
                                   isSelected
                                     ? 'scale-[1.025] border-white/80'
                                     : 'border-white/15 shadow-[0_18px_45px_rgba(0,0,0,0.38)] hover:-translate-y-3 hover:rotate-[0.4deg] hover:scale-[1.025] hover:border-white/50 hover:shadow-2xl'
@@ -2100,10 +2098,9 @@ const App: React.FC = () => {
                                   boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 20px 55px ${themes.glow}` : undefined,
                                 }}
                               >
-                                <span className="pointer-events-none absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.12) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
-                                <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150" style={{ background: themes.orb }} />
-                                <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
-                                <span className="pointer-events-none absolute -bottom-12 -left-12 h-28 w-28 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-150" />
+                                <span className="pointer-events-none absolute inset-0 opacity-25" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.13) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
+                                <span className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-125" style={{ background: themes.orb }} />
+                                <span className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/35 to-transparent" />
 
                                 <span className="relative flex h-full w-full flex-col justify-between">
                                   <span className="flex items-start justify-between gap-4">
@@ -2125,15 +2122,15 @@ const App: React.FC = () => {
                                     </span>
                                     <span className="flex flex-col items-end gap-1 text-right">
                                       {brandMark}
-                                      <span className="text-[6px] font-black uppercase tracking-[0.22em]" style={{ color: themes.accent }}>{isFeatured ? 'Signature issue' : pkg.cardType}</span>
+                                      <span className="text-[6px] font-black uppercase tracking-[0.22em]" style={{ color: themes.accent }}>{pkg.isPopular ? 'Signature issue' : 'Premium card'}</span>
                                     </span>
                                   </span>
 
-                                  <span className={isFeatured ? 'max-w-2xl' : ''}>
-                                    <span className={`block whitespace-nowrap font-mono font-semibold tracking-[0.18em] text-white drop-shadow-lg ${isFeatured ? 'text-[clamp(1rem,2.8vw,1.45rem)]' : 'text-[clamp(0.7rem,1.8vw,0.98rem)]'}`}>
+                                  <span>
+                                    <span className="block whitespace-nowrap font-mono text-[clamp(0.7rem,1.8vw,1.02rem)] font-semibold tracking-[0.18em] text-white drop-shadow-lg">
                                       {pkg.cardNumber}
                                     </span>
-                                    <span className={`mt-3 grid items-end gap-3 ${isFeatured ? 'grid-cols-[1.3fr_0.7fr_auto]' : 'grid-cols-[1.2fr_0.8fr]'}`}>
+                                    <span className="mt-3 grid grid-cols-[1.2fr_0.8fr] items-end gap-3">
                                       <span>
                                         <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Card holder</span>
                                         <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.18em] text-white/90">{pkg.cardHolder}</span>
@@ -2142,19 +2139,13 @@ const App: React.FC = () => {
                                         <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Valid thru</span>
                                         <span className="mt-1 block text-[8px] font-black tracking-[0.14em] text-white/90">{pkg.cardExpiry}</span>
                                       </span>
-                                      {isFeatured && (
-                                        <span className="hidden text-right sm:block">
-                                          <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Edition</span>
-                                          <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.14em]" style={{ color: themes.accent }}>Infinite</span>
-                                        </span>
-                                      )}
                                     </span>
                                   </span>
 
-                                  <span className="flex items-end justify-between gap-3 border-t border-white/15 pt-2.5">
+                                  <span className="flex items-end justify-between gap-3 pt-1">
                                     <span>
-                                      <span className="block text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardBrand}</span>
-                                      <span className="mt-1 block text-[6px] font-bold uppercase leading-tight tracking-[0.14em] text-white/40">Premium {pkg.cardType?.toLowerCase()}<br />card</span>
+                                      <span className="block text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardBrand === 'AMERICAN EXPRESS' ? 'AMEX' : pkg.cardBrand}</span>
+                                      <span className="mt-1 block text-[6px] font-bold uppercase leading-tight tracking-[0.14em] text-white/40">Premium card</span>
                                     </span>
                                     <span className={`flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${isSelected ? 'border-white bg-white text-slate-950' : 'border-white/30 bg-black/20 text-transparent group-hover:border-white/80'}`}>
                                       <i className={`text-[8px] ${isSelected ? 'fas fa-check' : 'fas fa-arrow-up-right'}`} />
