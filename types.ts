@@ -30,7 +30,10 @@ export interface Package {
   cardType?: 'CREDIT' | 'DEBIT';
   cardNumber?: string;
   cardExpiry?: string;
+  cardExpiryFull?: string;
   cardHolder?: string;
+  cardLimit?: string;
+  cardQuantity?: number;
 }
 
 export interface Game {

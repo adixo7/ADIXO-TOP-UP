@@ -2015,7 +2015,7 @@ const App: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
                         {selectedGame.packages.map((pkg, index) => {
                           const isSelected = selectedPackage?.id === pkg.id;
                           const themes = [
@@ -2082,20 +2082,32 @@ const App: React.FC = () => {
                               );
 
                           return (
-                            <div key={pkg.id} className="min-w-0">
+                            <div
+                              key={pkg.id}
+                              className={`min-w-0 rounded-[1.45rem] border bg-[#101827] p-3 transition-all duration-500 ${
+                                isSelected
+                                  ? 'border-white/70 shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_22px_55px_rgba(0,0,0,0.5)]'
+                                  : 'border-white/10 shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:-translate-y-1 hover:border-white/25 hover:shadow-2xl'
+                              }`}
+                            >
+                              <div className="mb-2 flex items-center justify-between px-1">
+                                <span className={`rounded-md px-2 py-1 text-[7px] font-black uppercase tracking-[0.16em] ${pkg.sold ? 'bg-red-500/15 text-red-300' : 'bg-emerald-400/15 text-emerald-300'}`}>
+                                  {pkg.sold ? 'Sold out' : 'Available'}
+                                </span>
+                                {pkg.isPopular && (
+                                  <span className="text-[7px] font-black uppercase tracking-[0.16em]" style={{ color: themes.accent }}>Featured</span>
+                                )}
+                              </div>
+
                               <button
                                 type="button"
                                 onClick={() => handlePackageSelect(selectedGame, pkg)}
                                 aria-pressed={isSelected}
                                 aria-label={`Select ${pkg.unit}`}
-                                className={`group relative flex aspect-[1.586/1] w-full overflow-hidden rounded-[1.45rem] border p-4 text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:p-5 ${
-                                  isSelected
-                                    ? 'scale-[1.025] border-white/80'
-                                    : 'border-white/15 shadow-[0_18px_45px_rgba(0,0,0,0.38)] hover:-translate-y-3 hover:rotate-[0.4deg] hover:scale-[1.025] hover:border-white/50 hover:shadow-2xl'
-                                }`}
+                                className="group relative flex aspect-[1.586/1] w-full overflow-hidden rounded-[1rem] border border-white/15 p-4 text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:p-5"
                                 style={{
                                   background: themes.background,
-                                  boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 20px 55px ${themes.glow}` : undefined,
+                                  boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 12px 35px ${themes.glow}` : undefined,
                                 }}
                               >
                                 <span className="pointer-events-none absolute inset-0 opacity-25" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.13) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
@@ -2103,7 +2115,7 @@ const App: React.FC = () => {
                                 <span className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/35 to-transparent" />
 
                                 <span className="relative flex h-full w-full flex-col justify-between">
-                                  <span className="flex items-start justify-between gap-4">
+                                  <span className="flex items-start justify-between gap-3">
                                     <span className="flex items-start gap-2.5">
                                       <span className="relative flex h-9 w-11 items-center justify-center rounded-xl border border-white/20 bg-black/20 shadow-inner">
                                         <span className="relative h-5 w-7 overflow-hidden rounded-[4px] border border-amber-100/70 bg-gradient-to-br from-amber-100 via-yellow-400 to-amber-800 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.75)]">
@@ -2122,7 +2134,7 @@ const App: React.FC = () => {
                                     </span>
                                     <span className="flex flex-col items-end gap-1 text-right">
                                       {brandMark}
-                                      <span className="text-[6px] font-black uppercase tracking-[0.22em]" style={{ color: themes.accent }}>{pkg.isPopular ? 'Signature issue' : 'Premium card'}</span>
+                                      <span className="text-[6px] font-black uppercase tracking-[0.22em]" style={{ color: themes.accent }}>Premium card</span>
                                     </span>
                                   </span>
 
@@ -2133,42 +2145,44 @@ const App: React.FC = () => {
                                     <span className="mt-3 grid grid-cols-[1.2fr_0.8fr] items-end gap-3">
                                       <span>
                                         <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Card holder</span>
-                                        <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.18em] text-white/90">{pkg.cardHolder}</span>
+                                        <span className="mt-1 block text-[8px] font-black uppercase tracking-[0.12em] text-white/90">{pkg.cardHolder}</span>
                                       </span>
                                       <span className="text-right">
-                                        <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Valid thru</span>
-                                        <span className="mt-1 block text-[8px] font-black tracking-[0.14em] text-white/90">{pkg.cardExpiry}</span>
+                                        <span className="block text-[6px] font-bold uppercase tracking-[0.22em] text-white/45">Expires</span>
+                                        <span className="mt-1 block text-[8px] font-black tracking-[0.12em] text-white/90">{pkg.cardExpiryFull || pkg.cardExpiry}</span>
                                       </span>
-                                    </span>
-                                  </span>
-
-                                  <span className="flex items-end justify-between gap-3 pt-1">
-                                    <span>
-                                      <span className="block text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardBrand === 'AMERICAN EXPRESS' ? 'AMEX' : pkg.cardBrand}</span>
-                                      <span className="mt-1 block text-[6px] font-bold uppercase leading-tight tracking-[0.14em] text-white/40">Premium card</span>
-                                    </span>
-                                    <span className={`flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${isSelected ? 'border-white bg-white text-slate-950' : 'border-white/30 bg-black/20 text-transparent group-hover:border-white/80'}`}>
-                                      <i className={`text-[8px] ${isSelected ? 'fas fa-check' : 'fas fa-arrow-up-right'}`} />
                                     </span>
                                   </span>
                                 </span>
-
-                                {pkg.isPopular && (
-                                  <span className="absolute left-0 top-0 rounded-br-xl bg-white px-3 py-1.5 text-[7px] font-black uppercase tracking-[0.18em] text-slate-950 shadow-lg">
-                                    Signature
-                                  </span>
-                                )}
                               </button>
 
-                              <div className="flex items-center justify-between gap-3 px-1.5 pt-2.5">
-                                <div>
-                                  <p className="text-[6px] font-black uppercase tracking-[0.22em] text-zinc-600">Price</p>
-                                  <p className="mt-0.5 font-mono text-sm font-black text-white">৳{pkg.price.toLocaleString()}</p>
+                              <div className="mt-2 flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#0b111d]/80 px-2.5 py-2 text-[7px]">
+                                <span className="flex items-center gap-1.5 text-zinc-500">
+                                  <span className="font-bold uppercase tracking-[0.12em]">Limit:</span>
+                                  <span className="font-mono font-black" style={{ color: themes.accent }}>{pkg.cardLimit || '৳25,00,000'}</span>
+                                </span>
+                                <span className="text-zinc-500">
+                                  <span className="font-bold uppercase tracking-[0.12em]">Expiry:</span>{' '}
+                                  <span className="font-mono font-black text-zinc-300">{pkg.cardExpiryFull || pkg.cardExpiry}</span>
+                                </span>
+                              </div>
+
+                              <div className="mt-3 grid grid-cols-[1fr_auto_auto] items-end gap-2">
+                                <div className="rounded-xl border border-white/10 bg-[#0b111d] px-2.5 py-2">
+                                  <p className="text-[6px] font-black uppercase tracking-[0.2em] text-zinc-600">Price</p>
+                                  <p className="mt-0.5 font-mono text-base font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
                                 </div>
-                                <div className="text-right">
-                                  <p className="text-[6px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.category}</p>
-                                  <p className="mt-0.5 max-w-[12rem] text-[6px] font-bold uppercase tracking-[0.12em] text-zinc-600">{pkg.description}</p>
+                                <div className="pb-2 text-center">
+                                  <p className="text-[6px] font-black uppercase tracking-[0.16em] text-zinc-600">Qty</p>
+                                  <p className="mt-1 font-mono text-[10px] font-black" style={{ color: themes.accent }}>{pkg.cardQuantity || 1}</p>
                                 </div>
+                                <button
+                                  type="button"
+                                  onClick={() => handlePackageSelect(selectedGame, pkg)}
+                                  className={`rounded-xl px-3 py-2.5 text-[8px] font-black uppercase tracking-[0.12em] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${isSelected ? 'bg-white text-slate-950' : 'bg-emerald-500 text-emerald-950 shadow-[0_6px_18px_rgba(16,185,129,0.25)] hover:bg-emerald-400'}`}
+                                >
+                                  {isSelected ? 'Selected' : 'Buy'}
+                                </button>
                               </div>
                             </div>
                           );
