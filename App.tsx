@@ -1987,61 +1987,73 @@ const App: React.FC = () => {
                       })}
                     </div>
                   ) : selectedGame.id === 'cards' ? (
-                    <div className="space-y-5">
-                      <div className="relative overflow-hidden rounded-2xl border border-cyan-300/15 bg-gradient-to-br from-cyan-950/30 via-zinc-950 to-violet-950/20 p-4 md:p-5">
-                        <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-cyan-400/10 blur-3xl" />
-                        <div className="pointer-events-none absolute -bottom-20 left-1/3 h-40 w-40 rounded-full bg-violet-500/10 blur-3xl" />
-                        <div className="relative flex items-start justify-between gap-4">
+                    <div className="space-y-6">
+                      <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0b0d13] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:p-6">
+                        <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-violet-500/10 blur-3xl" />
+                        <div className="pointer-events-none absolute -bottom-24 left-1/3 h-48 w-48 rounded-full bg-cyan-400/10 blur-3xl" />
+                        <div className="relative flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
                           <div>
-                            <p className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.28em] text-cyan-300">
-                              <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.9)]" />
-                              Secure card inventory
+                            <p className="flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.3em] text-violet-300">
+                              <i className="fas fa-layer-group text-[10px]" />
+                              Private card vault
                             </p>
-                            <h3 className="mt-2 text-lg font-black uppercase italic tracking-tight text-white md:text-xl">Choose your card</h3>
+                            <h3 className="mt-2 text-xl font-black uppercase italic tracking-tight text-white md:text-2xl">Pick your finish</h3>
                             <p className="mt-1 max-w-xl text-[10px] leading-relaxed text-zinc-500">
-                              Sample masked previews. Full card details stay hidden until your order is confirmed.
+                              A curated set of masked card previews. Hover a card to bring it forward.
                             </p>
                           </div>
-                          <div className="hidden shrink-0 items-center gap-2 rounded-full border border-emerald-400/20 bg-emerald-400/5 px-3 py-1.5 text-[8px] font-black uppercase tracking-widest text-emerald-300 sm:flex">
-                            <i className="fas fa-shield-alt text-[9px]" />
-                            Masked
+                          <div className="flex items-center gap-2">
+                            <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-right">
+                              <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-600">Available</p>
+                              <p className="mt-0.5 font-mono text-sm font-black text-white">{String(selectedGame.packages.length).padStart(2, '0')} <span className="text-[9px] text-zinc-500">styles</span></p>
+                            </div>
+                            <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2 text-right">
+                              <p className="text-[7px] font-black uppercase tracking-[0.2em] text-emerald-400/60">Access</p>
+                              <p className="mt-0.5 flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-emerald-300"><i className="fas fa-check-circle text-[10px]" /> Verified</p>
+                            </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         {selectedGame.packages.map((pkg, index) => {
+                          const isFeatured = index === 0;
                           const isSelected = selectedPackage?.id === pkg.id;
                           const themes = [
                             {
-                              background: 'linear-gradient(135deg, #164e75 0%, #0b2032 48%, #061016 100%)',
+                              background: 'linear-gradient(112deg, #155e75 0%, #0c2739 44%, #080e19 100%)',
                               accent: '#67e8f9',
-                              glow: 'rgba(34,211,238,0.28)',
-                              orb: 'rgba(56,189,248,0.28)',
+                              glow: 'rgba(34,211,238,0.32)',
+                              orb: 'rgba(56,189,248,0.3)',
+                              label: 'AQUA SERIES',
                             },
                             {
-                              background: 'linear-gradient(135deg, #40151c 0%, #1b1017 48%, #09090b 100%)',
-                              accent: '#fca5a5',
-                              glow: 'rgba(248,113,113,0.26)',
-                              orb: 'rgba(239,68,68,0.24)',
+                              background: 'linear-gradient(112deg, #4a1722 0%, #21131d 44%, #0d0b13 100%)',
+                              accent: '#fda4af',
+                              glow: 'rgba(244,63,94,0.3)',
+                              orb: 'rgba(244,63,94,0.26)',
+                              label: 'RUBY SERIES',
                             },
                             {
-                              background: 'linear-gradient(135deg, #17616b 0%, #0c2830 48%, #071114 100%)',
-                              accent: '#a5f3fc',
-                              glow: 'rgba(45,212,191,0.25)',
-                              orb: 'rgba(20,184,166,0.24)',
+                              background: 'linear-gradient(112deg, #17636b 0%, #102c34 44%, #081116 100%)',
+                              accent: '#99f6e4',
+                              glow: 'rgba(20,184,166,0.3)',
+                              orb: 'rgba(20,184,166,0.28)',
+                              label: 'TEAL SERIES',
                             },
                             {
-                              background: 'linear-gradient(135deg, #403014 0%, #1b170e 48%, #0b0b09 100%)',
+                              background: 'linear-gradient(112deg, #4b3918 0%, #241c10 44%, #0e0c09 100%)',
                               accent: '#fde68a',
-                              glow: 'rgba(251,191,36,0.25)',
-                              orb: 'rgba(245,158,11,0.22)',
+                              glow: 'rgba(245,158,11,0.3)',
+                              orb: 'rgba(245,158,11,0.26)',
+                              label: 'GOLD SERIES',
                             },
                             {
-                              background: 'linear-gradient(135deg, #25233d 0%, #141522 48%, #09090b 100%)',
+                              background: 'linear-gradient(112deg, #302957 0%, #1b1a31 44%, #0d0c14 100%)',
                               accent: '#c4b5fd',
-                              glow: 'rgba(167,139,250,0.25)',
-                              orb: 'rgba(139,92,246,0.24)',
+                              glow: 'rgba(139,92,246,0.32)',
+                              orb: 'rgba(139,92,246,0.28)',
+                              label: 'VIOLET SERIES',
                             },
                           ][index % 5];
 
@@ -2051,83 +2063,86 @@ const App: React.FC = () => {
                               type="button"
                               onClick={() => handlePackageSelect(selectedGame, pkg)}
                               aria-pressed={isSelected}
-                              className={`group relative aspect-[1.62/1] overflow-hidden rounded-[1.35rem] border p-4 text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/80 ${
+                              className={`group relative overflow-hidden rounded-[1.5rem] border text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
+                                isFeatured ? 'aspect-[2/1] p-5 sm:p-6 md:col-span-2 md:aspect-[2.35/1] md:p-7' : 'aspect-[1.62/1] p-4 sm:p-5'
+                              } ${
                                 isSelected
-                                  ? 'scale-[1.025] border-white/80 shadow-2xl'
-                                  : 'border-white/15 shadow-[0_14px_35px_rgba(0,0,0,0.35)] hover:-translate-y-2 hover:scale-[1.035] hover:border-white/45 hover:shadow-2xl'
+                                  ? 'scale-[1.025] border-white/80'
+                                  : 'border-white/15 shadow-[0_18px_45px_rgba(0,0,0,0.38)] hover:-translate-y-3 hover:rotate-[0.4deg] hover:scale-[1.025] hover:border-white/50 hover:shadow-2xl'
                               }`}
                               style={{
                                 background: themes.background,
-                                boxShadow: isSelected
-                                  ? `0 0 0 1px ${themes.accent}66, 0 18px 45px ${themes.glow}`
-                                  : undefined,
+                                boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 20px 55px ${themes.glow}` : undefined,
                               }}
                             >
-                              <span
-                                className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-150"
-                                style={{ background: themes.orb }}
-                              />
-                              <span className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_25%,rgba(255,255,255,0.12)_42%,transparent_58%)] opacity-0 transition-all duration-700 group-hover:translate-x-1/2 group-hover:opacity-100" />
-                              <span className="pointer-events-none absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/30 to-transparent" />
+                              <span className="pointer-events-none absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.12) 48%, transparent 52%)', backgroundSize: '220% 220%' }} />
+                              <span className="pointer-events-none absolute -right-16 -top-20 h-48 w-48 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150" style={{ background: themes.orb }} />
+                              <span className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
+                              <span className="pointer-events-none absolute -bottom-12 -left-12 h-28 w-28 rounded-full border border-white/10 transition-transform duration-700 group-hover:scale-150" />
 
                               <div className="relative flex h-full flex-col justify-between">
-                                <div className="flex items-start justify-between gap-3">
-                                  <div className="flex items-center gap-2">
-                                    <span className="flex h-8 w-10 items-center justify-center rounded-lg border border-white/20 bg-white/10 shadow-inner">
-                                      <span className="h-5 w-6 rounded-[4px] border border-amber-100/50 bg-gradient-to-br from-amber-200 via-yellow-500 to-amber-800 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.6)]" />
+                                <div className="flex items-start justify-between gap-4">
+                                  <div className="flex items-center gap-2.5">
+                                    <span className="flex h-9 w-11 items-center justify-center rounded-xl border border-white/20 bg-black/20 shadow-inner">
+                                      <span className="h-5 w-7 rounded-[4px] border border-amber-100/60 bg-gradient-to-br from-amber-100 via-yellow-400 to-amber-800 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.7)]" />
                                     </span>
-                                    <i className="fas fa-wifi rotate-90 text-[11px] text-white/60" aria-hidden="true" />
+                                    <i className="fas fa-wifi rotate-90 text-xs text-white/60" aria-hidden="true" />
+                                    <span className="hidden text-[8px] font-black uppercase tracking-[0.24em] text-white/45 sm:inline">{themes.label}</span>
                                   </div>
-                                  <span className="text-right text-[10px] font-black uppercase italic tracking-widest text-white/90">
-                                    {pkg.cardBrand}
-                                  </span>
+                                  <div className="text-right">
+                                    <p className="text-[clamp(0.75rem,2vw,1.05rem)] font-black uppercase italic tracking-[0.08em] text-white">{pkg.cardBrand}</p>
+                                    <p className="mt-1 text-[7px] font-black uppercase tracking-[0.2em]" style={{ color: themes.accent }}>{isFeatured ? 'Signature issue' : pkg.cardType}</p>
+                                  </div>
                                 </div>
 
-                                <div className="mt-2">
-                                  <p className="font-mono text-[clamp(0.75rem,2vw,1rem)] font-semibold tracking-[0.14em] text-white/90 drop-shadow-lg">
+                                <div className={isFeatured ? 'max-w-2xl' : ''}>
+                                  <p className={`font-mono font-semibold tracking-[0.15em] text-white drop-shadow-lg ${isFeatured ? 'text-[clamp(1rem,2.8vw,1.45rem)]' : 'text-[clamp(0.75rem,2vw,1rem)]'}`}>
                                     {pkg.cardNumber}
                                   </p>
-                                  <div className="mt-2 flex items-end justify-between gap-3">
+                                  <div className="mt-3 flex items-end justify-between gap-4">
                                     <div>
-                                      <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-white/45">Card holder</p>
-                                      <p className="mt-0.5 text-[9px] font-black tracking-[0.16em] text-white/90">{pkg.cardHolder}</p>
+                                      <p className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/45">Card holder</p>
+                                      <p className="mt-1 text-[9px] font-black tracking-[0.18em] text-white/90">{pkg.cardHolder}</p>
                                     </div>
                                     <div className="text-right">
-                                      <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-white/45">Expires</p>
-                                      <p className="mt-0.5 text-[9px] font-black tracking-[0.12em] text-white/90">{pkg.cardExpiry}</p>
+                                      <p className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/45">Valid thru</p>
+                                      <p className="mt-1 text-[9px] font-black tracking-[0.14em] text-white/90">{pkg.cardExpiry}</p>
                                     </div>
+                                    {isFeatured && (
+                                      <div className="hidden text-right sm:block">
+                                        <p className="text-[7px] font-bold uppercase tracking-[0.22em] text-white/45">Edition</p>
+                                        <p className="mt-1 text-[9px] font-black uppercase tracking-[0.14em]" style={{ color: themes.accent }}>Infinite</p>
+                                      </div>
+                                    )}
                                   </div>
                                 </div>
 
-                                <div className="mt-2 flex items-center justify-between gap-3 border-t border-white/10 pt-2">
-                                  <span className="text-[8px] font-black uppercase tracking-[0.2em]" style={{ color: themes.accent }}>
-                                    {pkg.cardType} · {pkg.category}
-                                  </span>
-                                  <span className="font-mono text-[10px] font-black text-white">
-                                    ৳{pkg.price.toLocaleString()}
-                                  </span>
+                                <div className="flex items-end justify-between gap-3 border-t border-white/15 pt-2.5">
+                                  <div>
+                                    <p className="text-[8px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.category}</p>
+                                    <p className="mt-1 text-[7px] font-bold uppercase tracking-[0.16em] text-white/40">{pkg.description}</p>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-mono text-sm font-black text-white">৳{pkg.price.toLocaleString()}</span>
+                                    <span className={`flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${isSelected ? 'border-white bg-white text-slate-950' : 'border-white/30 bg-black/20 text-transparent group-hover:border-white/80'}`}>
+                                      <i className="fas fa-arrow-up-right text-[8px]" />
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
 
                               {pkg.isPopular && (
-                                <span className="absolute left-0 top-0 rounded-br-xl bg-cyan-300 px-2.5 py-1 text-[7px] font-black uppercase tracking-[0.16em] text-slate-950 shadow-lg">
-                                  Featured
+                                <span className="absolute left-0 top-0 rounded-br-xl bg-white px-3 py-1.5 text-[7px] font-black uppercase tracking-[0.18em] text-slate-950 shadow-lg">
+                                  Signature
                                 </span>
                               )}
-                              <span
-                                className={`absolute bottom-3 right-3 flex h-5 w-5 items-center justify-center rounded-full border transition-all duration-300 ${
-                                  isSelected ? 'border-white bg-white text-slate-950' : 'border-white/30 bg-black/20 text-transparent group-hover:border-white/70'
-                                }`}
-                              >
-                                <i className="fas fa-check text-[8px]" />
-                              </span>
                             </button>
                           );
                         })}
                       </div>
-                      <div className="flex items-center gap-2 rounded-xl border border-zinc-800/80 bg-zinc-950/60 px-3 py-2.5 text-[9px] font-bold uppercase tracking-wider text-zinc-500">
-                        <i className="fas fa-lock text-cyan-400/70" />
-                        Only the last four digits are shown in this preview. Card prices above are sample values.
+                      <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-[#0b0d13] px-4 py-3 text-[9px] font-bold uppercase tracking-[0.14em] text-zinc-500">
+                        <i className="fas fa-lock text-violet-300/80" />
+                        Masked preview · only the final four digits are visible · sample prices shown
                       </div>
                     </div>
                   ) : selectedGame.id === 'pc-games' ? (
