@@ -1387,23 +1387,22 @@ const App: React.FC = () => {
         ) : (
         <div className="space-y-12">
           {selectedGame ? (
+            selectedGame.id === 'cards' && selectedPackage && showCardTerms ? (
+               <CardTerms
+                 game={selectedGame}
+                 pkg={selectedPackage}
+                 onBack={() => {
+                   setSelectedPackage(null);
+                   setShowCardTerms(false);
+                   window.scrollTo({ top: 0, behavior: 'smooth' });
+                 }}
+                 onContinue={() => {
+                   setShowCardTerms(false);
+                   window.setTimeout(() => paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+                 }}
+               />
+             ) : (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-20">
-             {selectedGame.id === 'cards' && selectedPackage && showCardTerms && (
-               <div className="mb-10">
-                 <CardTerms
-                   game={selectedGame}
-                   pkg={selectedPackage}
-                   onBack={() => {
-                     setSelectedPackage(null);
-                     setShowCardTerms(false);
-                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                   }}
-                   onContinue={() => {
-                     window.setTimeout(() => paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
-                   }}
-                 />
-               </div>
-             )}
               <button 
                 onClick={() => { 
                   setSelectedGame(null); 
@@ -1413,9 +1412,7 @@ const App: React.FC = () => {
                   setActiveTab('home');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className={`mb-8 text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors ${
-                  selectedGame.id === 'cards' && selectedPackage && showCardTerms ? 'hidden' : ''
-                }`}
+                 className="mb-8 text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] font-black uppercase tracking-widest transition-colors"
               >
                 <i className="fas fa-arrow-left"></i> {t('games.back')}
               </button>
@@ -3190,6 +3187,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             </div>
+            )
           ) : (
             <div className="space-y-8">
               <h2 className="text-4xl font-black text-white uppercase italic tracking-tighter">THE ARMORY</h2>
