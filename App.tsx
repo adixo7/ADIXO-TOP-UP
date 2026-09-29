@@ -18,6 +18,7 @@ import MaintenancePopup from './components/MaintenancePopup';
 import Confetti from './components/Confetti';
 import LanguagePopup from './components/LanguagePopup';
 import Gta6Details from './components/Gta6Details';
+import CardTerms from './components/CardTerms';
 import { useLanguage } from './LanguageContext';
 
 const CARDS_PIN_GUARD_KEY = 'adixo-cards-pin-guard';
@@ -176,6 +177,7 @@ const App: React.FC = () => {
   const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
+  const [showCardTerms, setShowCardTerms] = useState(false);
   const [guildSort, setGuildSort] = useState<string>('default');
   const [selectedServer, setSelectedServer] = useState<string | null>(null);
   const [serverDropdownOpen, setServerDropdownOpen] = useState(false);
@@ -494,6 +496,9 @@ const App: React.FC = () => {
     }
     setSelectedGame(game);
     setSelectedPackage(pkg);
+    if (game.id === 'cards') {
+      setShowCardTerms(true);
+    }
   };
 
   const handleConfirmOrder = () => {
@@ -1343,7 +1348,21 @@ const App: React.FC = () => {
       )}
 
       {activeTab === 'games' && (
-        selectedGame?.id === 'pc-games' && selectedPackage?.id === 'pc-gta-6' ? (
+        selectedGame?.id === 'cards' && selectedPackage && showCardTerms ? (
+          <CardTerms
+            game={selectedGame}
+            pkg={selectedPackage}
+            onBack={() => {
+              setSelectedPackage(null);
+              setShowCardTerms(false);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onContinue={() => {
+              setShowCardTerms(false);
+              window.setTimeout(() => paymentSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+            }}
+          />
+        ) : selectedGame?.id === 'pc-games' && selectedPackage?.id === 'pc-gta-6' ? (
           <Gta6Details
             game={selectedGame}
             pkg={selectedPackage}
@@ -1354,6 +1373,7 @@ const App: React.FC = () => {
             onBack={() => {
               setSelectedGame(null);
               setSelectedPackage(null);
+                   setShowCardTerms(false);
               setSelectedServer(null);
               setSelectedPayment(null);
               setOrderError(null);
@@ -2082,23 +2102,7 @@ const App: React.FC = () => {
                               );
 
                           return (
-                            <div
-                              key={pkg.id}
-                              className={`min-w-0 rounded-[1.45rem] border bg-[#101827] p-3 transition-all duration-500 ${
-                                isSelected
-                                  ? 'border-white/70 shadow-[0_0_0_1px_rgba(255,255,255,0.2),0_22px_55px_rgba(0,0,0,0.5)]'
-                                  : 'border-white/10 shadow-[0_18px_45px_rgba(0,0,0,0.35)] hover:-translate-y-1 hover:border-white/25 hover:shadow-2xl'
-                              }`}
-                            >
-                              <div className="mb-2 flex items-center justify-between px-1">
-                                <span className={`rounded-md px-2 py-1 text-[7px] font-black uppercase tracking-[0.16em] ${pkg.sold ? 'bg-red-500/15 text-red-300' : 'bg-emerald-400/15 text-emerald-300'}`}>
-                                  {pkg.sold ? 'Sold out' : 'Available'}
-                                </span>
-                                {pkg.isPopular && (
-                                  <span className="text-[7px] font-black uppercase tracking-[0.16em]" style={{ color: themes.accent }}>Featured</span>
-                                )}
-                              </div>
-
+                            <div key={pkg.id} className="min-w-0">
                               <button
                                 type="button"
                                 onClick={() => handlePackageSelect(selectedGame, pkg)}
@@ -2156,21 +2160,15 @@ const App: React.FC = () => {
                                 </span>
                               </button>
 
-                              <div className="mt-3 grid grid-cols-[1fr_auto_auto] items-center gap-2">
-                                <div className="rounded-xl border border-white/10 bg-[#0b111d] px-3 py-2.5">
+                              <div className="flex items-center justify-between gap-3 px-1.5 pt-2.5">
+                                <div>
                                   <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-500">Price</p>
-                                  <p className="mt-0.5 font-mono text-lg font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
+                                  <p className="mt-0.5 font-mono text-base font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
                                 </div>
-                                <div className="px-1 text-center">
-                                  <p className="text-[7px] font-black uppercase tracking-[0.16em] text-zinc-500">Qty</p>
+                                <div className="text-right">
+                                  <p className="text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.category}</p>
+                                  <p className="mt-0.5 max-w-[12rem] text-[7px] font-bold uppercase tracking-[0.12em] text-zinc-600">{pkg.description}</p>
                                 </div>
-                                <button
-                                  type="button"
-                                  onClick={() => handlePackageSelect(selectedGame, pkg)}
-                                  className={`rounded-xl px-4 py-3 text-[9px] font-black uppercase tracking-[0.12em] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${isSelected ? 'bg-white text-slate-950' : 'bg-emerald-500 text-emerald-950 shadow-[0_6px_18px_rgba(16,185,129,0.25)] hover:bg-emerald-400'}`}
-                                >
-                                  {isSelected ? 'Selected' : 'Buy'}
-                                </button>
                               </div>
                             </div>
                           );
