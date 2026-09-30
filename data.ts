@@ -150,14 +150,6 @@ const CARD_HOLDERS = [
 ];
 
 const CARD_BRANDS = ['VISA', 'MASTERCARD', 'AMERICAN EXPRESS'] as const;
-const SOLD_CARD_IDS = new Set([
-  'card-aqua-4',
-  'card-aqua-12',
-  'card-ruby-6',
-  'card-ruby-16',
-  'card-gold-8',
-  'card-elite-10',
-]);
 
 const CARD_CATALOG: Package[] = CARD_SERIES_SEEDS.flatMap(({ series, entries }, seriesIndex) =>
   entries.map(([unit, price], entryIndex) => {
@@ -176,7 +168,6 @@ const CARD_CATALOG: Package[] = CARD_SERIES_SEEDS.flatMap(({ series, entries }, 
       unit,
       price,
       currency: 'BDT',
-      sold: SOLD_CARD_IDS.has(id),
       category: brand,
       description: `${series} series ${brand.toLowerCase()} card`,
       cardBrand: brand,
