@@ -493,6 +493,7 @@ const App: React.FC = () => {
   };
 
   const handlePackageSelect = (game: Game, pkg: Package) => {
+    if (pkg.sold) return;
     if (!user) {
       setAuthMode('login');
       return;
@@ -501,6 +502,7 @@ const App: React.FC = () => {
     setSelectedPackage(pkg);
     if (game.id === 'cards') {
       setShowCardTerms(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -511,6 +513,10 @@ const App: React.FC = () => {
     }
     if (!selectedPackage) {
       setOrderError("Please select a package first.");
+      return;
+    }
+    if (selectedPackage.sold) {
+      setOrderError("This card is sold out.");
       return;
     }
     if (!playerId.trim()) {
@@ -2040,7 +2046,7 @@ const App: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-right">
                               <p className="text-[7px] font-black uppercase tracking-[0.2em] text-zinc-600">Available</p>
-                              <p className="mt-0.5 font-mono text-sm font-black text-white">{String(selectedGame.packages.length).padStart(2, '0')} <span className="text-[9px] text-zinc-500">styles</span></p>
+                              <p className="mt-0.5 font-mono text-sm font-black text-white">{String(selectedGame.packages.filter((card) => !card.sold).length).padStart(2, '0')} <span className="text-[9px] text-zinc-500">styles</span></p>
                             </div>
                             <div className="rounded-xl border border-emerald-400/20 bg-emerald-400/5 px-3 py-2 text-right">
                               <p className="text-[7px] font-black uppercase tracking-[0.2em] text-emerald-400/60">Access</p>
@@ -2207,8 +2213,13 @@ const App: React.FC = () => {
                                 type="button"
                                 onClick={() => handlePackageSelect(selectedGame, pkg)}
                                 aria-pressed={isSelected}
-                                aria-label={`Select ${pkg.unit}`}
-                                className="group relative z-0 flex aspect-[1.586/1] w-full overflow-hidden rounded-[1rem] border border-white/15 p-4 text-left transition-all duration-500 ease-out hover:z-10 hover:-translate-y-1 hover:scale-[1.04] focus:outline-none focus-visible:z-10 focus-visible:-translate-y-1 focus-visible:scale-[1.03] focus-visible:ring-2 focus-visible:ring-white/80 motion-reduce:transform-none motion-reduce:transition-none sm:p-5"
+                                aria-label={pkg.sold ? `${pkg.unit}, sold` : `Select ${pkg.unit}`}
+                                disabled={pkg.sold}
+                                className={`group relative z-0 flex aspect-[1.586/1] w-full overflow-hidden rounded-[1rem] border border-white/15 p-4 text-left transition-all duration-500 ease-out focus:outline-none focus-visible:z-10 focus-visible:-translate-y-1 focus-visible:scale-[1.03] focus-visible:ring-2 focus-visible:ring-white/80 motion-reduce:transform-none motion-reduce:transition-none sm:p-5 ${
+                                  pkg.sold
+                                    ? 'cursor-not-allowed opacity-60'
+                                    : 'hover:z-10 hover:-translate-y-1 hover:scale-[1.04]'
+                                }`}
                                 style={{
                                   background: themes.background,
                                   boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 12px 35px ${themes.glow}` : undefined,
@@ -2269,8 +2280,16 @@ const App: React.FC = () => {
                                   <p className="mt-0.5 font-mono text-base font-black text-sky-300">৳{pkg.price.toLocaleString()}</p>
                                 </div>
                                 <div className="text-right">
-                                   <p className="text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardSeries} · {pkg.category}</p>
-                                  <p className="mt-0.5 max-w-[12rem] text-[7px] font-bold uppercase tracking-[0.12em] text-zinc-600">{pkg.description}</p>
+                                  {pkg.sold ? (
+                                    <span className="inline-flex rounded-md border border-rose-400/30 bg-rose-500/10 px-2 py-1 text-[8px] font-black uppercase tracking-[0.18em] text-rose-300">
+                                      Sold
+                                    </span>
+                                  ) : (
+                                    <>
+                                      <p className="text-[7px] font-black uppercase tracking-[0.18em]" style={{ color: themes.accent }}>{pkg.cardSeries} · {pkg.category}</p>
+                                      <p className="mt-0.5 max-w-[12rem] text-[7px] font-bold uppercase tracking-[0.12em] text-zinc-600">{pkg.description}</p>
+                                    </>
+                                  )}
                                 </div>
                               </div>
                             </div>
