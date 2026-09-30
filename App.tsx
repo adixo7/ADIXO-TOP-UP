@@ -2208,7 +2208,7 @@ const App: React.FC = () => {
                                 onClick={() => handlePackageSelect(selectedGame, pkg)}
                                 aria-pressed={isSelected}
                                 aria-label={`Select ${pkg.unit}`}
-                                className="group relative flex aspect-[1.586/1] w-full overflow-hidden rounded-[1rem] border border-white/15 p-4 text-left transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 sm:p-5"
+                                className="group relative z-0 flex aspect-[1.586/1] w-full overflow-hidden rounded-[1rem] border border-white/15 p-4 text-left transition-all duration-500 ease-out hover:z-10 hover:-translate-y-1 hover:scale-[1.04] focus:outline-none focus-visible:z-10 focus-visible:-translate-y-1 focus-visible:scale-[1.03] focus-visible:ring-2 focus-visible:ring-white/80 motion-reduce:transform-none motion-reduce:transition-none sm:p-5"
                                 style={{
                                   background: themes.background,
                                   boxShadow: isSelected ? `0 0 0 1px ${themes.accent}66, 0 12px 35px ${themes.glow}` : undefined,
