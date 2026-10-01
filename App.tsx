@@ -1318,22 +1318,23 @@ const App: React.FC = () => {
                       <img
                         src={sensiGame.image}
                         alt="SENSI sensitivity settings"
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                        className="w-full h-full object-cover scale-[1.08] transition-transform duration-700 group-hover:scale-[1.12]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
-                      <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
-                        <div className="w-fit max-w-full rounded-lg bg-black/45 px-2 py-1.5 backdrop-blur-sm md:px-3 md:py-2">
-                          <div className="mb-0.5 md:mb-1 flex items-center gap-1 md:gap-2">
-                            <i className="fas fa-sliders-h text-orange-400 text-[8px] md:text-[10px]" aria-hidden="true"></i>
-                            <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">SENSITIVITY SETTINGS</p>
-                          </div>
-                          <h3 className="mb-0.5 text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight transition-colors group-hover:text-orange-400">
-                            SENSI
-                          </h3>
-                          <p className="line-clamp-1 text-[5px] md:text-[7px] font-bold uppercase tracking-wide text-zinc-200">
-                            Mobile and PC options
-                          </p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/35 to-transparent"></div>
+                      <div
+                        className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4"
+                        style={{ textShadow: '0 2px 6px rgba(0, 0, 0, 0.95)' }}
+                      >
+                        <div className="mb-0.5 md:mb-1 flex items-center gap-1 md:gap-2">
+                          <i className="fas fa-sliders-h text-orange-400 text-[8px] md:text-[10px]" aria-hidden="true"></i>
+                          <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">SENSITIVITY SETTINGS</p>
                         </div>
+                        <h3 className="mb-0.5 text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight transition-colors group-hover:text-orange-400">
+                          SENSI
+                        </h3>
+                        <p className="line-clamp-1 text-[5px] md:text-[7px] font-bold uppercase tracking-wide text-zinc-200">
+                          Mobile and PC options
+                        </p>
                       </div>
                     </div>
                     <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
