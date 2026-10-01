@@ -1318,7 +1318,7 @@ const App: React.FC = () => {
                       <img
                         src={sensiGame.image}
                         alt="SENSI sensitivity settings"
-                        className="w-full h-full object-cover scale-[1.08] transition-transform duration-700 group-hover:scale-[1.12]"
+                        className="w-full h-full -translate-y-3 object-cover scale-[1.08] transition-transform duration-700 group-hover:-translate-y-4 group-hover:scale-[1.12]"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-[#0c0c0e]/35 to-transparent"></div>
                       <div
