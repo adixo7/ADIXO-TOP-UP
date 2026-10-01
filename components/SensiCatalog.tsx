@@ -1,12 +1,100 @@
 import React, { useState } from 'react';
 import { SENSI_PACKAGE_CATEGORIES } from '../data';
-import { Package } from '../types';
+import type { Package } from '../types';
 
 interface SensiCatalogProps {
   packages: Package[];
   selectedPackage: Package | null;
   onSelectPackage: (pkg: Package | null) => void;
 }
+
+type ChoiceAccent = 'orange' | 'sky' | 'emerald' | 'violet';
+
+interface SensiChoiceButtonProps {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  accent: ChoiceAccent;
+  onClick: () => void;
+}
+
+const choiceAccents: Record<ChoiceAccent, { card: string; glow: string; dot: string; icon: string; arrow: string }> = {
+  orange: {
+    card: 'border-orange-500/35 hover:border-orange-400/80 hover:shadow-[0_18px_40px_-18px_rgba(249,115,22,0.65)]',
+    glow: 'bg-orange-500/15',
+    dot: 'bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.9)]',
+    icon: 'border-orange-400/30 bg-orange-500/10 text-orange-300 group-hover:bg-orange-500/20',
+    arrow: 'text-orange-300 group-hover:bg-orange-500 group-hover:text-black',
+  },
+  sky: {
+    card: 'border-sky-500/35 hover:border-sky-400/80 hover:shadow-[0_18px_40px_-18px_rgba(14,165,233,0.65)]',
+    glow: 'bg-sky-500/15',
+    dot: 'bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]',
+    icon: 'border-sky-400/30 bg-sky-500/10 text-sky-300 group-hover:bg-sky-500/20',
+    arrow: 'text-sky-300 group-hover:bg-sky-400 group-hover:text-black',
+  },
+  emerald: {
+    card: 'border-emerald-500/35 hover:border-emerald-400/80 hover:shadow-[0_18px_40px_-18px_rgba(16,185,129,0.65)]',
+    glow: 'bg-emerald-500/15',
+    dot: 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]',
+    icon: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-300 group-hover:bg-emerald-500/20',
+    arrow: 'text-emerald-300 group-hover:bg-emerald-400 group-hover:text-black',
+  },
+  violet: {
+    card: 'border-violet-500/35 hover:border-violet-400/80 hover:shadow-[0_18px_40px_-18px_rgba(139,92,246,0.65)]',
+    glow: 'bg-violet-500/15',
+    dot: 'bg-violet-400 shadow-[0_0_10px_rgba(167,139,250,0.9)]',
+    icon: 'border-violet-400/30 bg-violet-500/10 text-violet-300 group-hover:bg-violet-500/20',
+    arrow: 'text-violet-300 group-hover:bg-violet-400 group-hover:text-black',
+  },
+};
+
+const SensiChoiceButton: React.FC<SensiChoiceButtonProps> = ({
+  eyebrow,
+  title,
+  subtitle,
+  icon,
+  accent,
+  onClick,
+}) => {
+  const colors = choiceAccents[accent];
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`group relative isolate flex min-h-[176px] w-full flex-col justify-between overflow-hidden rounded-2xl border bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-5 text-left shadow-[0_12px_32px_-18px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${colors.card}`}
+    >
+      <span className={`pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full blur-3xl transition-opacity duration-300 group-hover:opacity-100 ${colors.glow}`} />
+      <span className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(135deg,transparent_46%,white_47%,transparent_48%)]" />
+
+      <span className="relative z-10 flex w-full items-center justify-between">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[8px] font-black uppercase tracking-[0.22em] text-zinc-400">
+          <span className={`h-1.5 w-1.5 rounded-full ${colors.dot}`} />
+          {eyebrow}
+        </span>
+        <span className={`flex h-11 w-11 items-center justify-center rounded-xl border backdrop-blur-sm transition-all duration-300 group-hover:scale-110 ${colors.icon}`}>
+          <i className={`${icon} text-lg`} aria-hidden="true"></i>
+        </span>
+      </span>
+
+      <span className="relative z-10 mt-8 flex w-full items-end justify-between gap-3">
+        <span>
+          <span className="block text-2xl font-black uppercase italic leading-none tracking-tight text-white transition-colors group-hover:text-white">
+            {title}
+          </span>
+          <span className="mt-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-500">
+            {subtitle}
+          </span>
+        </span>
+        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-all duration-300 group-hover:border-transparent ${colors.arrow}`}>
+          <i className="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-0.5" aria-hidden="true"></i>
+        </span>
+      </span>
+    </button>
+  );
+};
 
 const SensiCatalog: React.FC<SensiCatalogProps> = ({
   packages,
@@ -45,8 +133,6 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
         ? 'Mobile · iOS'
         : 'Mobile';
 
-  const optionClass = 'group rounded-2xl border border-orange-500/20 bg-zinc-900/70 p-5 text-left transition-all hover:border-orange-400/70 hover:bg-orange-950/20 hover:shadow-[0_0_28px_rgba(249,115,22,0.12)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400';
-
   return (
     <section className="space-y-5">
       <div className="flex items-center gap-3">
@@ -65,53 +151,61 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
 
       {!device && (
         <div className="grid gap-3 sm:grid-cols-2">
-          <button type="button" className={optionClass} onClick={() => chooseDevice('mobile')}>
-            <i className="fas fa-mobile-alt mb-4 text-xl text-orange-400" aria-hidden="true"></i>
-            <span className="block text-base font-black uppercase italic text-white group-hover:text-orange-300">Mobile</span>
-            <span className="mt-1 block text-xs text-zinc-500">Android or iOS</span>
-            <i className="fas fa-arrow-right mt-4 text-xs text-orange-400 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
-          </button>
-          <button type="button" className={optionClass} onClick={() => chooseDevice('pc')}>
-            <i className="fas fa-desktop mb-4 text-xl text-orange-400" aria-hidden="true"></i>
-            <span className="block text-base font-black uppercase italic text-white group-hover:text-orange-300">PC</span>
-            <span className="mt-1 block text-xs text-zinc-500">SENSI for PC</span>
-            <i className="fas fa-arrow-right mt-4 text-xs text-orange-400 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
-          </button>
+          <SensiChoiceButton
+            eyebrow="Device 01"
+            title="Mobile"
+            subtitle="Android or iOS"
+            icon="fas fa-mobile-alt"
+            accent="orange"
+            onClick={() => chooseDevice('mobile')}
+          />
+          <SensiChoiceButton
+            eyebrow="Device 02"
+            title="PC"
+            subtitle="SENSI for PC"
+            icon="fas fa-desktop"
+            accent="sky"
+            onClick={() => chooseDevice('pc')}
+          />
         </div>
       )}
 
       {device === 'mobile' && !mobileOS && (
-        <div className="space-y-3">
-          <button type="button" onClick={() => chooseDevice('mobile')} className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white">
-            <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>Back to devices
-          </button>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {(['android', 'ios'] as const).map((os) => (
-              <button key={os} type="button" className={optionClass} onClick={() => chooseOS(os)}>
-                <i className={`fab ${os === 'android' ? 'fa-android' : 'fa-apple'} mb-4 text-xl text-orange-400`} aria-hidden="true"></i>
-                <span className="block text-base font-black uppercase italic text-white group-hover:text-orange-300">{os === 'ios' ? 'iOS' : 'Android'}</span>
-                <span className="mt-1 block text-xs text-zinc-500">Choose {os === 'ios' ? 'iOS' : 'Android'} SENSI packs</span>
-                <i className="fas fa-arrow-right mt-4 text-xs text-orange-400 transition-transform group-hover:translate-x-1" aria-hidden="true"></i>
-              </button>
-            ))}
-          </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <SensiChoiceButton
+            eyebrow="Mobile 01"
+            title="Android"
+            subtitle="Android SENSI packs"
+            icon="fab fa-android"
+            accent="emerald"
+            onClick={() => chooseOS('android')}
+          />
+          <SensiChoiceButton
+            eyebrow="Mobile 02"
+            title="iOS"
+            subtitle="iOS SENSI packs"
+            icon="fab fa-apple"
+            accent="violet"
+            onClick={() => chooseOS('ios')}
+          />
         </div>
       )}
 
       {packageCategory && (
         <div className="space-y-4">
-          <button
-            type="button"
-            onClick={() => {
-              resetSelection();
-              if (device === 'mobile') setMobileOS(null);
-              else setDevice(null);
-            }}
-            className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
-          >
-            <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
-            {device === 'mobile' ? 'Back to Mobile options' : 'Back to devices'}
-          </button>
+          {device === 'mobile' && (
+            <button
+              type="button"
+              onClick={() => {
+                resetSelection();
+                setMobileOS(null);
+              }}
+              className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
+            >
+              <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+              Back to Mobile options
+            </button>
+          )}
 
           {visiblePackages.length > 0 ? (
             <div className="grid gap-3 sm:grid-cols-2">
