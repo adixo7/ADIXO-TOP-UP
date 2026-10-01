@@ -494,6 +494,11 @@ const App: React.FC = () => {
 
   const handlePackageSelect = (game: Game, pkg: Package) => {
     if (pkg.sold) return;
+    if (selectedPackage?.id === pkg.id) {
+      setSelectedPackage(null);
+      setShowCardTerms(false);
+      return;
+    }
     if (!user) {
       setAuthMode('login');
       return;
@@ -504,6 +509,10 @@ const App: React.FC = () => {
       setShowCardTerms(true);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  const togglePackageSelection = (pkg: Package) => {
+    setSelectedPackage(current => current?.id === pkg.id ? null : pkg);
   };
 
   const handleConfirmOrder = () => {
@@ -1584,7 +1593,7 @@ const App: React.FC = () => {
                       return (
                         <button
                           key={pkg.id}
-                          onClick={() => setSelectedPackage(pkg)}
+                          onClick={() => togglePackageSelection(pkg)}
                           className="w-full text-left group relative overflow-hidden rounded-2xl transition-all duration-400"
                           style={{
                             background: t.bg,
@@ -1695,7 +1704,14 @@ const App: React.FC = () => {
                       {selectedGame.packages.map(pkg => (
                         <button
                           key={pkg.id}
-                          onClick={() => { setFfPanelPopupPkg(pkg); setFfPanelTierIdx(0); }}
+                          onClick={() => {
+                            if (selectedPackage?.id === pkg.id) {
+                              togglePackageSelection(pkg);
+                            } else {
+                              setFfPanelPopupPkg(pkg);
+                              setFfPanelTierIdx(0);
+                            }
+                          }}
                           className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 text-left group ${
                             selectedPackage?.id === pkg.id
                               ? 'bg-orange-500/10 border-orange-500 text-white'
@@ -1749,7 +1765,7 @@ const App: React.FC = () => {
                                       setStockOutToast('BASIC MYSTERY');
                                       setTimeout(() => setStockOutToast(null), 6000);
                                     } else {
-                                      setSelectedPackage(pkg);
+                                      togglePackageSelection(pkg);
                                     }
                                   }}
                                 >
@@ -2005,7 +2021,7 @@ const App: React.FC = () => {
                                   </div>
                                   <button
                                      disabled={pkg.sold}
-                                     onClick={() => pkg.sold ? handleSoldGuildClick(pkg.guildId) : setSelectedPackage(pkg)}
+                                     onClick={() => pkg.sold ? handleSoldGuildClick(pkg.guildId) : togglePackageSelection(pkg)}
                                     className={`shrink-0 flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg font-black uppercase italic tracking-widest text-[10px] transition-all duration-300 ${
                                        pkg.sold
                                          ? 'bg-zinc-700 text-zinc-300 shadow-[0_4px_0_0_rgba(0,0,0,0.35)] hover:bg-zinc-600'
@@ -2317,7 +2333,7 @@ const App: React.FC = () => {
                               ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]' 
                               : 'border-zinc-800 hover:border-orange-500/50 shadow-sm'
                             }`}
-                            onClick={() => setSelectedPackage(pkg)}
+                            onClick={() => togglePackageSelection(pkg)}
                           >
                             {/* 30% Discount Badge */}
                             <div className="absolute -top-1 -right-1 z-20 bg-red-600 text-white text-[7px] font-black px-1.5 py-0.5 rounded-full uppercase tracking-tighter shadow-lg shadow-red-600/20 border border-red-500/50 animate-pulse">
@@ -2484,7 +2500,7 @@ const App: React.FC = () => {
                                 </div>
 
                                 <button
-                                  onClick={() => setSelectedPackage(pkg)}
+                                  onClick={() => togglePackageSelection(pkg)}
                                   className="relative w-full text-left overflow-hidden transition-all duration-300"
                                   style={{
                                     borderRadius: '16px',
@@ -2580,7 +2596,7 @@ const App: React.FC = () => {
                           return (
                             <button
                               key={pkg.id}
-                              onClick={() => setSelectedPackage(pkg)}
+                              onClick={() => togglePackageSelection(pkg)}
                               className={`group relative bg-gradient-to-br ${theme.bg} border rounded-xl px-4 py-3 transition-all duration-300 text-left overflow-hidden ${
                                 isSelected
                                   ? `${theme.borderSel} ${theme.glowSel} scale-[1.01]`
@@ -2810,7 +2826,7 @@ const App: React.FC = () => {
                                 <button
                                   key={pkg.id}
                                   type="button"
-                                  onClick={() => setSelectedPackage(pkg)}
+                                  onClick={() => togglePackageSelection(pkg)}
                                   className={`group relative overflow-hidden rounded-2xl border-l-4 border-r border-t border-b p-4 text-left transition-all duration-300 hover:-translate-y-0.5 ${
                                     isSelected ? 'scale-[1.01]' : ''
                                   }`}
@@ -2910,7 +2926,7 @@ const App: React.FC = () => {
                                   setStockOutToast(theme.name);
                                   setTimeout(() => setStockOutToast(null), 6000);
                                 } else {
-                                  setSelectedPackage(pkg);
+                                  togglePackageSelection(pkg);
                                 }
                               }}
                               className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-2xl p-5 transition-all duration-300 text-left overflow-hidden ${
@@ -3013,7 +3029,7 @@ const App: React.FC = () => {
                               return (
                               <button 
                                 key={pkg.id}
-                                onClick={() => setSelectedPackage(pkg)}
+                                onClick={() => togglePackageSelection(pkg)}
                                 className={`group relative bg-[#0d0d0f] border px-4 py-3 rounded-xl transition-all text-left flex justify-between items-center overflow-hidden ${
                                   selectedPackage?.id === pkg.id
                                   ? 'border-orange-500 bg-orange-500/10 shadow-[0_0_15px_rgba(249,115,22,0.1)]'
