@@ -80,11 +80,11 @@ const SensiChoiceButton: React.FC<SensiChoiceButtonProps> = ({
       </span>
 
       <span className="relative z-10 mt-5 flex w-full items-end justify-between gap-3">
-        <span>
+        <span className="rounded-lg border border-white/10 bg-black/45 px-2.5 py-2 shadow-lg backdrop-blur-sm">
           <span className="block text-xl font-black uppercase italic leading-none tracking-tight text-white transition-colors group-hover:text-white">
             {title}
           </span>
-          <span className="mt-1.5 block text-[9px] font-bold uppercase tracking-[0.14em] text-zinc-500">
+          <span className="mt-1.5 block text-[9px] font-bold uppercase tracking-[0.14em] text-zinc-300">
             {subtitle}
           </span>
         </span>

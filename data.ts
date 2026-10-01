@@ -552,8 +552,8 @@ export const GAMES: Game[] = [
     id: 'sensi',
     name: 'SENSI',
     category: 'SENSI',
-    image: '/images/sensi-cover.jpg',
-    banner: '/images/sensi-cover.jpg',
+    image: '/images/sensi-cover.png',
+    banner: '/images/sensi-cover.png',
     idPlaceholder: 'Player ID / Account Details',
     description: 'Choose a sensitivity option for Mobile or PC.',
     packages: []
