@@ -10,21 +10,18 @@ const Features: React.FC = () => {
       descKey: 'features.instantDeliveryDesc',
       icon: 'bolt',
       color: 'text-orange-400',
-      bg: 'bg-orange-500/5',
     },
     {
       titleKey: 'features.securePayment',
       descKey: 'features.securePaymentDesc',
       icon: 'shield',
       color: 'text-orange-400',
-      bg: 'bg-orange-500/5',
     },
     {
       titleKey: 'features.bestPrices',
       descKey: 'features.bestPricesDesc',
       icon: 'card',
       color: 'text-orange-400',
-      bg: 'bg-orange-500/5',
     },
   ];
 
@@ -82,46 +79,57 @@ const Features: React.FC = () => {
       </div>
 
       {/* Feature cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-5 px-4 md:px-0">
-        {featureList.map((feature) => (
-          <div
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-3 px-4 sm:grid-cols-3 sm:gap-0 md:px-0">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-6 left-10 top-6 border-l border-dashed border-orange-500/40 sm:bottom-auto sm:left-[16.6667%] sm:right-[16.6667%] sm:top-7 sm:border-l-0 sm:border-t"
+        />
+        {featureList.map((feature, index) => (
+          <article
             key={feature.titleKey}
-            className="group relative flex min-h-[148px] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-zinc-800/80 bg-gradient-to-b from-zinc-900/80 to-[#0c0c0e] p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40 hover:shadow-[0_12px_32px_-18px_rgba(249,115,22,0.55)] md:min-h-[180px] md:p-7"
+            className="group/feature relative grid w-full grid-cols-[3rem_minmax(0,1fr)] items-center gap-4 sm:flex sm:flex-col sm:items-center sm:gap-0 sm:px-3"
           >
-            <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent" />
-            <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-orange-500/15 bg-orange-500/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-transform duration-300 group-hover:scale-105 md:mb-5 md:h-14 md:w-14`}>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className={`h-6 w-6 ${feature.color} md:h-7 md:w-7`}
-              >
-                {feature.icon === 'bolt' ? (
-                  <path d="M13.2 2.8 5.8 13h5.1l-.6 8.2L18.2 11h-5.1l.1-8.2Z" />
-                ) : feature.icon === 'shield' ? (
-                  <>
-                    <path d="M12 3 19 6v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6l7-3Z" />
-                    <path d="m9 12 2 2 4-4" />
-                  </>
-                ) : (
-                  <>
-                    <rect x="3" y="5" width="18" height="14" rx="2.5" />
-                    <path d="M3 10h18M7 15h3" />
-                  </>
-                )}
-              </svg>
+            <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-orange-400/50 bg-[#111014] shadow-[0_0_0_5px_rgba(9,9,11,0.95),0_0_22px_rgba(249,115,22,0.16)] transition-transform duration-300 group-hover/feature:scale-105 sm:h-14 sm:w-14">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/10 sm:h-10 sm:w-10">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className={`h-5 w-5 ${feature.color} sm:h-6 sm:w-6`}
+                >
+                  {feature.icon === 'bolt' ? (
+                    <path d="M13.2 2.8 5.8 13h5.1l-.6 8.2L18.2 11h-5.1l.1-8.2Z" />
+                  ) : feature.icon === 'shield' ? (
+                    <>
+                      <path d="M12 3 19 6v5c0 4.6-2.8 8-7 10-4.2-2-7-5.4-7-10V6l7-3Z" />
+                      <path d="m9 12 2 2 4-4" />
+                    </>
+                  ) : (
+                    <>
+                      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+                      <path d="M3 10h18M7 15h3" />
+                    </>
+                  )}
+                </svg>
+              </div>
             </div>
-            <h3 className="mb-2 text-sm font-black uppercase italic leading-snug tracking-tight text-white md:text-base">
-              {t(feature.titleKey)}
-            </h3>
-            <p className="max-w-[20rem] text-xs font-medium leading-relaxed text-zinc-400 md:text-sm">
-              {t(feature.descKey)}
-            </p>
-          </div>
+            <div className="group relative min-w-0 rounded-2xl border border-zinc-800/80 bg-gradient-to-br from-zinc-900/90 to-[#0c0c0e] px-4 py-3.5 transition-all duration-300 hover:border-orange-500/40 hover:bg-zinc-900 sm:mt-5 sm:flex sm:min-h-[132px] sm:w-full sm:flex-col sm:items-center sm:justify-center sm:px-3 sm:py-4 sm:text-center md:min-h-[144px] md:px-5">
+              <div className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/40 to-transparent" />
+              <p className="mb-1 text-[9px] font-black uppercase tracking-[0.22em] text-orange-500/80">
+                {t('features.step')} {String(index + 1).padStart(2, '0')}
+              </p>
+              <h3 className="mb-1 text-sm font-black uppercase italic leading-snug tracking-tight text-white md:text-base">
+                {t(feature.titleKey)}
+              </h3>
+              <p className="text-xs font-medium leading-relaxed text-zinc-400 md:text-[13px]">
+                {t(feature.descKey)}
+              </p>
+            </div>
+          </article>
         ))}
       </div>
     </section>

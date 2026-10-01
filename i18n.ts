@@ -116,6 +116,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.securePaymentDesc': '100% secure transaction processing',
     'features.bestPrices': 'Best Prices',
     'features.bestPricesDesc': 'Competitive rates and discounts',
+    'features.step': 'Step',
     // Footer
     'footer.desc': 'The fastest and most secure way to top up your favorite games. Instant delivery, 24/7 support.',
     'footer.terms': 'Terms',
@@ -275,6 +276,7 @@ const translations: Record<Language, Record<string, string>> = {
     'features.securePaymentDesc': '১০০% নিরাপদ লেনদেন প্রক্রিয়া',
     'features.bestPrices': 'সেরা দাম',
     'features.bestPricesDesc': 'প্রতিযোগিতামূলক মূল্য এবং ছাড়',
+    'features.step': 'ধাপ',
     // Footer
     'footer.desc': 'আপনার প্রিয় গেম টপ-আপ করার সবচেয়ে দ্রুত ও নিরাপদ উপায়। তাৎক্ষণিক ডেলিভারি, ২৪/৭ সাপোর্ট।',
     'footer.terms': 'শর্তাবলী',
