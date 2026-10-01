@@ -64,32 +64,32 @@ const SensiChoiceButton: React.FC<SensiChoiceButtonProps> = ({
     <button
       type="button"
       onClick={onClick}
-      className={`group relative isolate flex min-h-[176px] w-full flex-col justify-between overflow-hidden rounded-2xl border bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-5 text-left shadow-[0_12px_32px_-18px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${colors.card}`}
+      className={`group relative isolate flex min-h-[140px] w-full flex-col justify-between overflow-hidden rounded-xl border bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-4 text-left shadow-[0_12px_32px_-18px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${colors.card}`}
     >
-      <span className={`pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full blur-3xl transition-opacity duration-300 group-hover:opacity-100 ${colors.glow}`} />
+      <span className={`pointer-events-none absolute -right-7 -top-9 h-32 w-32 rounded-full blur-3xl transition-opacity duration-300 group-hover:opacity-100 ${colors.glow}`} />
       <span className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(135deg,transparent_46%,white_47%,transparent_48%)]" />
 
       <span className="relative z-10 flex w-full items-center justify-between">
-        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-3 py-1.5 text-[8px] font-black uppercase tracking-[0.22em] text-zinc-400">
+        <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[8px] font-black uppercase tracking-[0.22em] text-zinc-400">
           <span className={`h-1.5 w-1.5 rounded-full ${colors.dot}`} />
           {eyebrow}
         </span>
-        <span className={`flex h-11 w-11 items-center justify-center rounded-xl border backdrop-blur-sm transition-all duration-300 group-hover:scale-110 ${colors.icon}`}>
-          <i className={`${icon} text-lg`} aria-hidden="true"></i>
+        <span className={`flex h-9 w-9 items-center justify-center rounded-lg border backdrop-blur-sm transition-all duration-300 group-hover:scale-110 ${colors.icon}`}>
+          <i className={`${icon} text-base`} aria-hidden="true"></i>
         </span>
       </span>
 
-      <span className="relative z-10 mt-8 flex w-full items-end justify-between gap-3">
+      <span className="relative z-10 mt-5 flex w-full items-end justify-between gap-3">
         <span>
-          <span className="block text-2xl font-black uppercase italic leading-none tracking-tight text-white transition-colors group-hover:text-white">
+          <span className="block text-xl font-black uppercase italic leading-none tracking-tight text-white transition-colors group-hover:text-white">
             {title}
           </span>
-          <span className="mt-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-zinc-500">
+          <span className="mt-1.5 block text-[9px] font-bold uppercase tracking-[0.14em] text-zinc-500">
             {subtitle}
           </span>
         </span>
-        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-all duration-300 group-hover:border-transparent ${colors.arrow}`}>
-          <i className="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-0.5" aria-hidden="true"></i>
+        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] transition-all duration-300 group-hover:border-transparent ${colors.arrow}`}>
+          <i className="fas fa-arrow-right text-[10px] transition-transform group-hover:translate-x-0.5" aria-hidden="true"></i>
         </span>
       </span>
     </button>
@@ -171,23 +171,37 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
       )}
 
       {device === 'mobile' && !mobileOS && (
-        <div className="grid gap-3 sm:grid-cols-2">
-          <SensiChoiceButton
-            eyebrow="Mobile 01"
-            title="Android"
-            subtitle="Android SENSI packs"
-            icon="fab fa-android"
-            accent="emerald"
-            onClick={() => chooseOS('android')}
-          />
-          <SensiChoiceButton
-            eyebrow="Mobile 02"
-            title="iOS"
-            subtitle="iOS SENSI packs"
-            icon="fab fa-apple"
-            accent="violet"
-            onClick={() => chooseOS('ios')}
-          />
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={() => {
+              resetSelection();
+              setDevice(null);
+              setMobileOS(null);
+            }}
+            className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
+          >
+            <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+            Back to devices
+          </button>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <SensiChoiceButton
+              eyebrow="Mobile 01"
+              title="Android"
+              subtitle="Android SENSI packs"
+              icon="fab fa-android"
+              accent="emerald"
+              onClick={() => chooseOS('android')}
+            />
+            <SensiChoiceButton
+              eyebrow="Mobile 02"
+              title="iOS"
+              subtitle="iOS SENSI packs"
+              icon="fab fa-apple"
+              accent="violet"
+              onClick={() => chooseOS('ios')}
+            />
+          </div>
         </div>
       )}
 
