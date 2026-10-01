@@ -1322,7 +1322,7 @@ const App: React.FC = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
                       <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
-                        <div className="w-fit max-w-full rounded-lg border border-white/10 bg-black/45 px-2 py-1.5 shadow-lg backdrop-blur-sm md:px-3 md:py-2">
+                        <div className="w-fit max-w-full rounded-lg bg-black/45 px-2 py-1.5 backdrop-blur-sm md:px-3 md:py-2">
                           <div className="mb-0.5 md:mb-1 flex items-center gap-1 md:gap-2">
                             <i className="fas fa-sliders-h text-orange-400 text-[8px] md:text-[10px]" aria-hidden="true"></i>
                             <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">SENSITIVITY SETTINGS</p>
