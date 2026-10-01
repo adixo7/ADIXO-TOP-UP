@@ -28,6 +28,12 @@ export const PAYMENT_METHODS: PaymentMethod[] = [
   }
 ];
 
+export const SENSI_PACKAGE_CATEGORIES = {
+  android: 'SENSI ANDROID',
+  ios: 'SENSI IOS',
+  pc: 'SENSI PC',
+} as const;
+
 type CardSeed = readonly [unit: string, price: number];
 
 const CARD_SERIES_SEEDS: Array<{ series: CardSeries; entries: CardSeed[] }> = [
@@ -541,5 +547,15 @@ export const GAMES: Game[] = [
     packages: [
       { id: 'pc-gta-6', amount: 1, unit: 'Grand Theft Auto VI | Premium Edition', price: 9999, currency: 'BDT', isPopular: true, category: 'PC GAMES', image: '/images/gta-6-cover.avif' }
     ]
+  },
+  {
+    id: 'sensi',
+    name: 'SENSI',
+    category: 'SENSI',
+    image: '/images/sensi-cover.jpg',
+    banner: '/images/sensi-cover.jpg',
+    idPlaceholder: 'Player ID / Account Details',
+    description: 'Choose a sensitivity option for Mobile or PC.',
+    packages: []
   }
 ];

@@ -19,6 +19,7 @@ import Confetti from './components/Confetti';
 import LanguagePopup from './components/LanguagePopup';
 import Gta6Details from './components/Gta6Details';
 import CardTerms from './components/CardTerms';
+import SensiCatalog from './components/SensiCatalog';
 import { useLanguage } from './LanguageContext';
 
 const CARDS_PIN_GUARD_KEY = 'adixo-cards-pin-guard';
@@ -973,7 +974,7 @@ const App: React.FC = () => {
             </div>
             {filteredGames.length > 0 ? (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 md:gap-3">
-                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'cards' && g.id !== 'level-up' && g.id !== 'ff-likes' && g.id !== 'buy-guild' && g.id !== 'mlbb' && g.id !== 'pubg' && g.id !== 'codm' && g.id !== 'bs').map(game => (
+                {filteredGames.filter(g => g.id !== 'pc-games' && g.id !== 'ai-bots' && g.id !== 'event-bypass' && g.id !== 'ff-panel' && g.id !== 'cards' && g.id !== 'level-up' && g.id !== 'ff-likes' && g.id !== 'buy-guild' && g.id !== 'mlbb' && g.id !== 'pubg' && g.id !== 'codm' && g.id !== 'bs' && g.id !== 'sensi').map(game => (
                   <GameCard key={game.id} game={game} onClick={(g) => { setSelectedGame(g); setActiveTab('games'); }} />
                 ))}
               </div>
@@ -1300,6 +1301,49 @@ const App: React.FC = () => {
                   </div>
                 );
               })()}
+              {/* SENSI card */}
+              {(() => {
+                const sensiGame = GAMES.find(g => g.id === 'sensi');
+                if (!sensiGame) return null;
+                return (
+                  <div
+                    className="group cursor-pointer bg-zinc-900 rounded-xl md:rounded-2xl overflow-hidden border border-orange-500/30 transition-all duration-500 shadow-2xl hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(249,115,22,0.3)] relative"
+                    onClick={() => {
+                      setSelectedGame(sensiGame);
+                      setSelectedPackage(null);
+                      setActiveTab('games');
+                    }}
+                  >
+                    <div className="aspect-video overflow-hidden bg-zinc-950 relative flex items-center justify-center">
+                      <img
+                        src={sensiGame.image}
+                        alt="SENSI sensitivity settings"
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0e] via-transparent to-transparent"></div>
+                      <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4">
+                        <div className="flex items-center gap-1 md:gap-2 mb-0.5 md:mb-1">
+                          <i className="fas fa-sliders-h text-orange-400 text-[8px] md:text-[10px]" aria-hidden="true"></i>
+                          <p className="text-orange-400 text-[6px] md:text-[8px] font-black uppercase tracking-[0.3em]">SENSITIVITY SETTINGS</p>
+                        </div>
+                        <h3 className="text-white text-[10px] sm:text-xs md:text-base font-black uppercase italic tracking-tighter leading-tight group-hover:text-orange-400 transition-colors mb-0.5">
+                          SENSI
+                        </h3>
+                        <p className="text-zinc-300 text-[5px] md:text-[7px] font-bold uppercase tracking-wide line-clamp-1">
+                          Mobile and PC options
+                        </p>
+                      </div>
+                    </div>
+                    <div className="p-2 md:p-3 bg-[#0c0c0e] border-t border-orange-500/10 flex items-center justify-between">
+                      <span className="text-orange-400 font-black text-xs md:text-sm italic uppercase">SENSI</span>
+                      <div className="flex items-center gap-1.5 md:gap-2 bg-orange-600/10 px-2 py-1 md:px-3 md:py-1.5 rounded-lg group-hover:bg-orange-600 transition-all duration-300">
+                        <span className="text-white font-black text-[8px] md:text-[10px] uppercase tracking-widest">{t('home.viewAll')}</span>
+                        <i className="fas fa-arrow-right text-[8px] md:text-[10px] text-orange-400 group-hover:text-white group-hover:translate-x-1 transition-all" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </section>
 
@@ -1489,7 +1533,13 @@ const App: React.FC = () => {
                 </div>
 
                 <div className="lg:col-span-2 space-y-10" ref={packageSectionRef}>
-                  {selectedGame.id === 'level-up' ? (
+                  {selectedGame.id === 'sensi' ? (
+                    <SensiCatalog
+                      packages={selectedGame.packages}
+                      selectedPackage={selectedPackage}
+                      onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+                    />
+                  ) : selectedGame.id === 'level-up' ? (
                   <div className="space-y-2.5">
                     {/* Header */}
                     <div className="flex items-center gap-3 mb-5">
