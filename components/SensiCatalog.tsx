@@ -12,6 +12,29 @@ interface SensiCatalogProps {
 
 type ChoiceAccent = 'orange' | 'sky' | 'emerald' | 'violet';
 
+const PC_EMULATORS = [
+  'BlueStacks 5',
+  'LDPlayer 9',
+  'GameLoop',
+  'MSI App Player',
+  'MuMu Player',
+  'NoxPlayer',
+  'BlueStacks X',
+  'BlueStacks 10',
+  'MEmu Play',
+  'Android Studio Emulator',
+  'Genymotion',
+  'Andy Emulator',
+  'Droid4X',
+  'KoPlayer',
+  'Phoenix OS',
+  'PrimeOS',
+  'Bliss OS',
+  'SmartGaGa',
+  'Remix OS Player',
+  'LeapDroid',
+] as const;
+
 interface SensiChoiceButtonProps {
   eyebrow: string;
   title: string;
@@ -104,6 +127,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
   onSelectPackage,
 }) => {
   const [device, setDevice] = useState<'mobile' | 'pc' | null>(null);
+  const [selectedEmulator, setSelectedEmulator] = useState<string | null>(null);
   const [mobilePlatform, setMobilePlatform] = useState<PhonePlatform | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedPhone, setSelectedPhone] = useState<{
@@ -117,6 +141,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
   const chooseDevice = (nextDevice: 'mobile' | 'pc') => {
     resetSelection();
     setDevice(nextDevice);
+    setSelectedEmulator(null);
     setMobilePlatform(null);
     setSelectedBrand(null);
     setSelectedPhone(null);
@@ -134,13 +159,19 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
     setSelectedBrand(brand);
     setPhoneSearch('');
   };
+  const chooseEmulator = (emulator: string) => {
+    resetSelection();
+    setSelectedEmulator(emulator);
+  };
   const choosePhone = (brand: string, model: string, platform: PhonePlatform) => {
     resetSelection();
     setSelectedPhone({ brand, model, platform });
   };
 
   const packageCategory = device === 'pc'
-    ? SENSI_PACKAGE_CATEGORIES.pc
+    ? selectedEmulator
+      ? SENSI_PACKAGE_CATEGORIES.pc
+      : null
     : selectedPhone?.platform === 'android'
       ? SENSI_PACKAGE_CATEGORIES.android
       : selectedPhone?.platform === 'ios'
@@ -150,7 +181,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
     ? packages.filter((pkg) => pkg.category === packageCategory)
     : [];
   const selectedLabel = device === 'pc'
-    ? 'PC'
+    ? selectedEmulator || 'PC'
     : selectedPhone
       ? selectedPhone.model
       : 'Mobile';
@@ -180,24 +211,28 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
           <h3 className="text-sm font-black uppercase tracking-widest text-white">
             {packageCategory
               ? `${selectedLabel} SENSI PACKS`
-              : device === 'mobile'
-                ? !mobilePlatform
-                  ? 'CHOOSE MOBILE PLATFORM'
-                  : isChoosingAndroidBrand
-                    ? 'CHOOSE ANDROID BRAND'
-                    : 'CHOOSE PHONE MODEL'
-                : 'CHOOSE YOUR DEVICE'}
+              : device === 'pc'
+                ? 'CHOOSE PC EMULATOR'
+                : device === 'mobile'
+                  ? !mobilePlatform
+                    ? 'CHOOSE MOBILE PLATFORM'
+                    : isChoosingAndroidBrand
+                      ? 'CHOOSE ANDROID BRAND'
+                      : 'CHOOSE PHONE MODEL'
+                  : 'CHOOSE YOUR DEVICE'}
           </h3>
           <p className="mt-1 text-[10px] font-medium text-zinc-500">
             {packageCategory
               ? 'Select an available pack to continue.'
-              : device === 'mobile'
-                ? !mobilePlatform
-                  ? 'Choose Android or iOS to continue.'
-                  : isChoosingAndroidBrand
-                    ? 'Choose your Android phone brand to see its models.'
-                    : `Choose an available ${mobilePlatform === 'ios' ? 'iPhone' : 'phone'} model.`
-                : 'Choose the platform for your SENSI settings.'}
+              : device === 'pc'
+                ? 'Choose your Android emulator to see the PC SENSI packs.'
+                : device === 'mobile'
+                  ? !mobilePlatform
+                    ? 'Choose Android or iOS to continue.'
+                    : isChoosingAndroidBrand
+                      ? 'Choose your Android phone brand to see its models.'
+                      : `Choose an available ${mobilePlatform === 'ios' ? 'iPhone' : 'phone'} model.`
+                  : 'Choose the platform for your SENSI settings.'}
           </p>
         </div>
       </div>
@@ -220,6 +255,42 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
             accent="sky"
             onClick={() => chooseDevice('pc')}
           />
+        </div>
+      )}
+
+      {device === 'pc' && !selectedEmulator && (
+        <div className="space-y-4">
+          <button
+            type="button"
+            onClick={() => {
+              resetSelection();
+              setDevice(null);
+              setSelectedEmulator(null);
+            }}
+            className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
+          >
+            <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+            Back to devices
+          </button>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {PC_EMULATORS.map((emulator, index) => (
+              <button
+                key={emulator}
+                type="button"
+                onClick={() => chooseEmulator(emulator)}
+                aria-label={`Choose ${emulator}`}
+                className="group flex min-h-14 items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-900/60 px-3 py-3 text-left transition-all hover:border-sky-400/60 hover:bg-sky-500/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70"
+              >
+                <span className="flex min-w-0 items-center gap-3">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sky-500/20 bg-sky-500/10 text-[9px] font-black text-sky-300">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-[10px] font-bold leading-snug text-zinc-200 group-hover:text-white">{emulator}</span>
+                </span>
+                <i className="fas fa-chevron-right shrink-0 text-[8px] text-zinc-600 transition-colors group-hover:text-sky-300" aria-hidden="true"></i>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -366,6 +437,19 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
 
       {packageCategory && (
         <div className="space-y-4">
+          {device === 'pc' && selectedEmulator && (
+            <button
+              type="button"
+              onClick={() => {
+                resetSelection();
+                setSelectedEmulator(null);
+              }}
+              className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
+            >
+              <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
+              Back to emulators
+            </button>
+          )}
           {device === 'mobile' && selectedPhone && (
             <button
               type="button"
