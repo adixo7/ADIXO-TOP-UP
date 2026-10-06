@@ -1,2 +1,3 @@
 - [Imported Node projects](imported-node-projects.md) — GitHub imports may need dependency installation before their configured workflow can start.
+- [Package firewall CVE blocks](package-firewall-cve-blocks.md) — A stale transitive lockfile resolution can remain blocked even after updating its parent dependency.
 - [Portable npm lockfiles](portable-npm-lockfiles.md) — Replit package installs can write internal tarball URLs that external CI cannot resolve.
