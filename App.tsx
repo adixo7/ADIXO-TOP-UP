@@ -513,6 +513,7 @@ const App: React.FC = () => {
   };
 
   const togglePackageSelection = (pkg: Package) => {
+    if (pkg.sold) return;
     setSelectedPackage(current => current?.id === pkg.id ? null : pkg);
   };
 
@@ -2961,29 +2962,23 @@ const App: React.FC = () => {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {selectedGame.packages.map(pkg => {
                           const days = pkg.amount;
-                          const isSelected = selectedPackage?.id === pkg.id;
-                          type EbTheme = { gradient: string; border: string; glow: string; accent: string; accentHex: string; badgeBg: string; badge?: string; name: string; chance: string; iconBg: string; shimmer: boolean; topLine: boolean; topLineColor: string; sparkle: boolean; stockOut?: boolean };
+                          type EbTheme = { gradient: string; border: string; glow: string; accent: string; accentHex: string; badgeBg: string; badge?: string; name: string; chance: string; iconBg: string; shimmer: boolean; topLine: boolean; topLineColor: string; sparkle: boolean };
                           const themes: Record<number, EbTheme> = {
-                            5:  { gradient: 'from-cyan-950/60 to-zinc-900', border: 'border-cyan-800/50', glow: 'shadow-[0_0_20px_rgba(6,182,212,0.25)]', accent: 'text-cyan-400', accentHex: 'rgba(6,182,212,0.12)', badgeBg: 'bg-cyan-600', badge: '', name: 'BASIC', chance: '60%', iconBg: 'bg-cyan-900/50 border-cyan-600/50', shimmer: false, topLine: false, topLineColor: '', sparkle: false, stockOut: true },
-                            14: { gradient: 'from-blue-950/70 to-zinc-900', border: 'border-blue-500/70', glow: 'shadow-[0_0_28px_rgba(59,130,246,0.35)]', accent: 'text-blue-400', accentHex: 'rgba(59,130,246,0.12)', badgeBg: 'bg-blue-500', badge: 'HOT', name: 'HYPER', chance: '75%', iconBg: 'bg-blue-900/60 border-blue-500/50', shimmer: false, topLine: true, topLineColor: 'from-blue-600/70 via-blue-400/50 to-blue-600/70', sparkle: false, stockOut: false },
+                            5:  { gradient: 'from-cyan-950/60 to-zinc-900', border: 'border-cyan-800/50', glow: 'shadow-[0_0_20px_rgba(6,182,212,0.25)]', accent: 'text-cyan-400', accentHex: 'rgba(6,182,212,0.12)', badgeBg: 'bg-cyan-600', badge: '', name: 'BASIC', chance: '60%', iconBg: 'bg-cyan-900/50 border-cyan-600/50', shimmer: false, topLine: false, topLineColor: '', sparkle: false },
+                            14: { gradient: 'from-blue-950/70 to-zinc-900', border: 'border-blue-500/70', glow: 'shadow-[0_0_28px_rgba(59,130,246,0.35)]', accent: 'text-blue-400', accentHex: 'rgba(59,130,246,0.12)', badgeBg: 'bg-blue-500', badge: 'HOT', name: 'HYPER', chance: '75%', iconBg: 'bg-blue-900/60 border-blue-500/50', shimmer: false, topLine: true, topLineColor: 'from-blue-600/70 via-blue-400/50 to-blue-600/70', sparkle: false },
                             30: { gradient: 'from-violet-950/80 to-zinc-900', border: 'border-violet-400/80', glow: 'shadow-[0_0_32px_rgba(139,92,246,0.45)]', accent: 'text-violet-300', accentHex: 'rgba(139,92,246,0.12)', badgeBg: 'bg-violet-600', badge: '', name: 'PREMIUM', chance: '90%', iconBg: 'bg-violet-900/70 border-violet-400/60', shimmer: true, topLine: true, topLineColor: 'from-violet-500 via-fuchsia-400/70 to-violet-500', sparkle: false },
                             60: { gradient: 'from-purple-950/90 via-fuchsia-950/60 to-zinc-900', border: 'border-fuchsia-400', glow: 'shadow-[0_0_40px_rgba(217,70,239,0.5)]', accent: 'text-fuchsia-300', accentHex: 'rgba(217,70,239,0.1)', badgeBg: 'bg-gradient-to-r from-fuchsia-500 to-purple-500', badge: 'BEST', name: 'SUPER', chance: '96%', iconBg: 'bg-fuchsia-900/70 border-fuchsia-400/60', shimmer: true, topLine: true, topLineColor: 'from-fuchsia-500 via-yellow-300/70 to-fuchsia-500', sparkle: true },
                           };
                           const theme = themes[days] || themes[5];
-                          const isStockOut = theme.stockOut === true;
+                          const isFixing = pkg.sold === true;
+                          const isSelected = !isFixing && selectedPackage?.id === pkg.id;
                           return (
                             <button
                               key={pkg.id}
-                              onClick={() => {
-                                if (isStockOut) {
-                                  setStockOutToast(theme.name);
-                                  setTimeout(() => setStockOutToast(null), 6000);
-                                } else {
-                                  togglePackageSelection(pkg);
-                                }
-                              }}
+                              disabled={isFixing}
+                              onClick={() => togglePackageSelection(pkg)}
                               className={`group relative bg-gradient-to-br ${theme.gradient} border ${theme.border} rounded-2xl p-5 transition-all duration-300 text-left overflow-hidden ${
-                                isStockOut ? 'cursor-not-allowed opacity-60' : isSelected ? `${theme.glow} scale-[1.02]` : `hover:scale-[1.01] hover:${theme.glow}`
+                                isFixing ? 'cursor-not-allowed opacity-60' : isSelected ? `${theme.glow} scale-[1.02]` : `hover:scale-[1.01] hover:${theme.glow}`
                               }`}
                             >
                               {/* Top shimmer line */}
@@ -3006,15 +3001,15 @@ const App: React.FC = () => {
                                 </>
                               )}
 
-                              {/* Stock Out tag */}
-                              {isStockOut && (
+                              {/* Fixing tag */}
+                              {isFixing && (
                                 <span className="absolute top-3 right-3 z-10 bg-red-600/90 text-white text-[7px] font-black px-2 py-0.5 rounded-md uppercase tracking-widest flex items-center gap-1">
-                                  <i className="fas fa-ban text-[6px]"></i> {t('product.stockOut')}
+                                  <i className="fas fa-wrench text-[6px]"></i> FIXING
                                 </span>
                               )}
 
                               {/* Badge */}
-                              {theme.badge && !isStockOut && (
+                              {theme.badge && !isFixing && (
                                 <div className={`absolute top-3 right-3 ${theme.badgeBg} text-white text-[7px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest z-10`}>
                                   {theme.badge}
                                 </div>
