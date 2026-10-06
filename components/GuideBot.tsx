@@ -50,7 +50,7 @@ const ANSWERS: Record<TopicKey, { text: string; chips: TopicKey[]; supportLinks?
     supportLinks: true,
   },
   available_games: {
-     text: "We support all major titles:\n\n🔥 **Free Fire** — Diamonds, Memberships, Level Up Pass\n⚔️ **PUBG Mobile** — UC, Royale Pass\n🗡️ **Mobile Legends** — Diamonds, Passes\n💥 **Blood Strike** — Golds, Strike Pass\n🎯 **Call of Duty Mobile** — COD Points\n🤖 **AI Bots** — Glory Bots, Mystery Boxes, Guild Boost\n🛡️ **FF Panel** — 17+ premium panel tools\n🔓 **Event Bypass** — 5, 14, 30, 60 day packs\n🖥️ **PC Games** — Grand Theft Auto VI Premium Edition (৳9,999)\n\nHead to the **Games** tab to explore!",
+     text: "We support all major titles:\n\n🔥 **Free Fire** — Diamonds, Memberships, Level Up Pass\n⚔️ **PUBG Mobile** — UC, Royale Pass\n🗡️ **Mobile Legends** — Diamonds, Passes\n💥 **Blood Strike** — Golds, Strike Pass\n🎯 **Call of Duty Mobile** — COD Points\n🤖 **AI Bots** — Glory Bots, Mystery Boxes, Guild Boost\n🛡️ **FF Panel** — 17+ premium panel tools\n🔓 **Event Bypass** — 5, 14, 30, 40 day packs\n🖥️ **PC Games** — Grand Theft Auto VI Premium Edition (৳9,999)\n\nHead to the **Games** tab to explore!",
     chips: ['how_to_order', 'coupons', 'payment_methods'],
   },
   coupons: {
@@ -59,7 +59,7 @@ const ANSWERS: Record<TopicKey, { text: string; chips: TopicKey[]; supportLinks?
     supportLinks: true,
   },
   event_bypass: {
-    text: "**Event Bypass** unlocks Free Fire event rewards without completing all event tasks manually!\n\nWe have 4 tiers:\n\n🔵 **BASIC** (5 days) — 60% unlock chance ❌ Stock Out\n🔵 **HYPER** (14 days) — 75% unlock chance ❌ Stock Out\n🟣 **PREMIUM** (30 days) — 90% unlock chance ✅ Available\n🟣 **SUPER** (60 days) — 96% unlock chance ✅ Available\n\nGo to **Games → Event Bypass** to order PREMIUM or SUPER.",
+    text: "**Event Bypass** unlocks Free Fire event rewards without completing all event tasks manually!\n\nWe have 4 tiers:\n\n🔵 **BASIC** (5 days) — 60% unlock chance ❌ Stock Out\n🔵 **HYPER** (14 days) — 75% unlock chance ❌ Stock Out\n🟣 **PREMIUM** (30 days) — 90% unlock chance ✅ Available\n🟣 **SUPER** (40 days) — 96% unlock chance ✅ Available for ৳1,600\n\nGo to **Games → Event Bypass** to order PREMIUM or SUPER.",
     chips: ['how_to_order', 'payment_methods', 'support'],
   },
   ai_bots: {

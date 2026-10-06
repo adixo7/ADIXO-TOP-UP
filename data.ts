@@ -501,7 +501,7 @@ export const GAMES: Game[] = [
       { id: 'eb-5', amount: 5, unit: 'Event Bypass', price: 250, currency: 'BDT', category: 'EVENT BYPASS', description: '5 Event Bypass Access', sold: true },
       { id: 'eb-14', amount: 14, unit: 'Event Bypass', price: 460, currency: 'BDT', category: 'EVENT BYPASS', description: '14 Event Bypass Access', isPopular: true, sold: true },
       { id: 'eb-30', amount: 30, unit: 'Event Bypass', price: 830, currency: 'BDT', category: 'EVENT BYPASS', description: '30 Event Bypass Access', sold: true },
-      { id: 'eb-60', amount: 60, unit: 'Event Bypass', price: 1400, currency: 'BDT', category: 'EVENT BYPASS', description: '60 Event Bypass Access', sold: true }
+      { id: 'eb-60', amount: 40, unit: 'Event Bypass', price: 1600, currency: 'BDT', category: 'EVENT BYPASS', description: '40 Event Bypass Access' }
     ]
   },
   {
