@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { SENSI_PACKAGE_CATEGORIES } from '../data';
 import type { Package } from '../types';
+import { MOBILE_PHONE_GROUPS } from './sensiPhoneModels';
+import type { PhonePlatform } from './sensiPhoneModels';
 
 interface SensiCatalogProps {
   packages: Package[];
@@ -102,24 +104,32 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
   onSelectPackage,
 }) => {
   const [device, setDevice] = useState<'mobile' | 'pc' | null>(null);
-  const [mobileOS, setMobileOS] = useState<'android' | 'ios' | null>(null);
+  const [selectedPhone, setSelectedPhone] = useState<{
+    brand: string;
+    model: string;
+    platform: PhonePlatform;
+  } | null>(null);
+  const [phoneSearch, setPhoneSearch] = useState('');
+  const [phonePlatformFilter, setPhonePlatformFilter] = useState<'all' | PhonePlatform>('all');
 
   const resetSelection = () => onSelectPackage(null);
   const chooseDevice = (nextDevice: 'mobile' | 'pc') => {
     resetSelection();
     setDevice(nextDevice);
-    setMobileOS(null);
+    setSelectedPhone(null);
+    setPhoneSearch('');
+    setPhonePlatformFilter('all');
   };
-  const chooseOS = (nextOS: 'android' | 'ios') => {
+  const choosePhone = (brand: string, model: string, platform: PhonePlatform) => {
     resetSelection();
-    setMobileOS(nextOS);
+    setSelectedPhone({ brand, model, platform });
   };
 
   const packageCategory = device === 'pc'
     ? SENSI_PACKAGE_CATEGORIES.pc
-    : mobileOS === 'android'
+    : selectedPhone?.platform === 'android'
       ? SENSI_PACKAGE_CATEGORIES.android
-      : mobileOS === 'ios'
+      : selectedPhone?.platform === 'ios'
         ? SENSI_PACKAGE_CATEGORIES.ios
         : null;
   const visiblePackages = packageCategory
@@ -127,11 +137,20 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
     : [];
   const selectedLabel = device === 'pc'
     ? 'PC'
-    : mobileOS === 'android'
-      ? 'Mobile · Android'
-      : mobileOS === 'ios'
-        ? 'Mobile · iOS'
-        : 'Mobile';
+    : selectedPhone
+      ? selectedPhone.model
+      : 'Mobile';
+  const normalizedPhoneSearch = phoneSearch.trim().toLowerCase();
+  const visiblePhoneGroups = MOBILE_PHONE_GROUPS
+    .filter((group) => phonePlatformFilter === 'all' || group.platform === phonePlatformFilter)
+    .map((group) => ({
+      ...group,
+      models: group.models.filter((model) =>
+        `${group.brand} ${model}`.toLowerCase().includes(normalizedPhoneSearch),
+      ),
+    }))
+    .filter((group) => group.models.length > 0);
+  const visiblePhoneCount = visiblePhoneGroups.reduce((total, group) => total + group.models.length, 0);
 
   return (
     <section className="space-y-5">
@@ -141,10 +160,14 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
         </div>
         <div>
           <h3 className="text-sm font-black uppercase tracking-widest text-white">
-            {packageCategory ? `${selectedLabel} SENSI PACKS` : device === 'mobile' ? 'CHOOSE MOBILE DEVICE' : 'CHOOSE YOUR DEVICE'}
+            {packageCategory ? `${selectedLabel} SENSI PACKS` : device === 'mobile' ? 'CHOOSE PHONE MODEL' : 'CHOOSE YOUR DEVICE'}
           </h3>
           <p className="mt-1 text-[10px] font-medium text-zinc-500">
-            {packageCategory ? 'Select an available pack to continue.' : 'Choose the platform for your SENSI settings.'}
+            {packageCategory
+              ? 'Select an available pack to continue.'
+              : device === 'mobile'
+                ? 'Search popular Android and iPhone models by brand or model name.'
+                : 'Choose the platform for your SENSI settings.'}
           </p>
         </div>
       </div>
@@ -170,54 +193,113 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
         </div>
       )}
 
-      {device === 'mobile' && !mobileOS && (
-        <div className="space-y-3">
+      {device === 'mobile' && !selectedPhone && (
+        <div className="space-y-4">
           <button
             type="button"
             onClick={() => {
               resetSelection();
               setDevice(null);
-              setMobileOS(null);
+              setSelectedPhone(null);
+              setPhoneSearch('');
+              setPhonePlatformFilter('all');
             }}
             className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
           >
             <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
             Back to devices
           </button>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <SensiChoiceButton
-              eyebrow="Mobile 01"
-              title="Android"
-              subtitle="Android SENSI packs"
-              icon="fab fa-android"
-              accent="emerald"
-              onClick={() => chooseOS('android')}
-            />
-            <SensiChoiceButton
-              eyebrow="Mobile 02"
-              title="iOS"
-              subtitle="iOS SENSI packs"
-              icon="fab fa-apple"
-              accent="violet"
-              onClick={() => chooseOS('ios')}
-            />
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-950/70 p-4 sm:p-5">
+            <label htmlFor="sensi-phone-search" className="mb-2 block text-[9px] font-black uppercase tracking-[0.2em] text-zinc-400">
+              Search phone models
+            </label>
+            <div className="relative">
+              <i className="fas fa-search pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500" aria-hidden="true"></i>
+              <input
+                id="sensi-phone-search"
+                type="search"
+                value={phoneSearch}
+                onChange={(event) => setPhoneSearch(event.target.value)}
+                placeholder="Try Galaxy A55 or iPhone 15"
+                className="w-full rounded-xl border border-zinc-800 bg-black/50 py-3 pl-9 pr-3 text-xs text-white outline-none transition-colors placeholder:text-zinc-600 focus:border-orange-400/70"
+              />
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Filter phone models">
+              {([
+                { value: 'all', label: 'All phones' },
+                { value: 'android', label: 'Android' },
+                { value: 'ios', label: 'iPhone' },
+              ] as const).map((filter) => (
+                <button
+                  key={filter.value}
+                  type="button"
+                  aria-pressed={phonePlatformFilter === filter.value}
+                  onClick={() => setPhonePlatformFilter(filter.value)}
+                  className={`rounded-full border px-3 py-1.5 text-[9px] font-black uppercase tracking-widest transition-colors ${
+                    phonePlatformFilter === filter.value
+                      ? 'border-orange-400/70 bg-orange-500/15 text-orange-300'
+                      : 'border-zinc-800 bg-black/30 text-zinc-500 hover:border-zinc-600 hover:text-white'
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+              <span className="ml-auto text-[9px] font-bold uppercase tracking-widest text-zinc-600">
+                {visiblePhoneCount} models
+              </span>
+            </div>
           </div>
+
+          {visiblePhoneGroups.length > 0 ? (
+            <div className="space-y-4">
+              {visiblePhoneGroups.map((group) => (
+                <section key={group.brand} aria-label={`${group.brand} phone models`} className="space-y-2">
+                  <div className="flex items-center justify-between gap-3">
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-300">{group.brand}</h4>
+                    <span className="text-[8px] font-bold uppercase tracking-widest text-zinc-600">
+                      {group.platform === 'ios' ? 'iOS' : 'Android'} · {group.models.length}
+                    </span>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {group.models.map((model) => (
+                      <button
+                        key={model}
+                        type="button"
+                        onClick={() => choosePhone(group.brand, model, group.platform)}
+                        aria-label={`Choose ${model}`}
+                        className="group flex min-h-14 items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-900/60 px-3 py-3 text-left transition-all hover:border-orange-400/60 hover:bg-orange-500/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70"
+                      >
+                        <span className="text-[10px] font-bold leading-snug text-zinc-200 group-hover:text-white">{model}</span>
+                        <i className="fas fa-chevron-right shrink-0 text-[8px] text-zinc-600 transition-colors group-hover:text-orange-300" aria-hidden="true"></i>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-dashed border-zinc-800 px-5 py-8 text-center">
+              <i className="fas fa-mobile-alt mb-2 text-lg text-zinc-600" aria-hidden="true"></i>
+              <p className="text-xs font-black uppercase tracking-widest text-zinc-300">No models found</p>
+              <p className="mt-1 text-[10px] text-zinc-500">Try a different brand or model name.</p>
+            </div>
+          )}
         </div>
       )}
 
       {packageCategory && (
         <div className="space-y-4">
-          {device === 'mobile' && (
+          {device === 'mobile' && selectedPhone && (
             <button
               type="button"
               onClick={() => {
                 resetSelection();
-                setMobileOS(null);
+                setSelectedPhone(null);
               }}
               className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
             >
               <i className="fas fa-arrow-left mr-2" aria-hidden="true"></i>
-              Back to Mobile options
+              Back to phone models
             </button>
           )}
 

@@ -19,8 +19,9 @@ import Confetti from './components/Confetti';
 import LanguagePopup from './components/LanguagePopup';
 import Gta6Details from './components/Gta6Details';
 import CardTerms from './components/CardTerms';
-import SensiCatalog from './components/SensiCatalog';
 import { useLanguage } from './LanguageContext';
+
+const SensiCatalog = React.lazy(() => import('./components/SensiCatalog'));
 
 const CARDS_PIN_GUARD_KEY = 'adixo-cards-pin-guard';
 const CARDS_PIN_MAX_ATTEMPTS = 3;
@@ -1538,11 +1539,19 @@ const App: React.FC = () => {
 
                 <div className="lg:col-span-2 space-y-10" ref={packageSectionRef}>
                   {selectedGame.id === 'sensi' ? (
-                    <SensiCatalog
-                      packages={selectedGame.packages}
-                      selectedPackage={selectedPackage}
-                      onSelectPackage={(pkg) => setSelectedPackage(pkg)}
-                    />
+                    <React.Suspense
+                      fallback={
+                        <div role="status" className="rounded-2xl border border-zinc-800 bg-zinc-950/70 px-5 py-8 text-center text-xs font-bold text-zinc-400">
+                          Loading SENSI devices…
+                        </div>
+                      }
+                    >
+                      <SensiCatalog
+                        packages={selectedGame.packages}
+                        selectedPackage={selectedPackage}
+                        onSelectPackage={(pkg) => setSelectedPackage(pkg)}
+                      />
+                    </React.Suspense>
                   ) : selectedGame.id === 'level-up' ? (
                   <div className="space-y-2.5">
                     {/* Header */}
