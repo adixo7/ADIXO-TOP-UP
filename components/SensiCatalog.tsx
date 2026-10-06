@@ -24,12 +24,7 @@ const PC_EMULATORS = [
   'MEmu Play',
   'Android Studio Emulator',
   'Genymotion',
-  'Andy Emulator',
-  'Droid4X',
-  'KoPlayer',
   'Phoenix OS',
-  'PrimeOS',
-  'Bliss OS',
   'SmartGaGa',
   'Remix OS Player',
   'LeapDroid',
@@ -273,7 +268,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
             Back to devices
           </button>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {PC_EMULATORS.map((emulator, index) => (
+            {PC_EMULATORS.map((emulator) => (
               <button
                 key={emulator}
                 type="button"
@@ -281,12 +276,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
                 aria-label={`Choose ${emulator}`}
                 className="group flex min-h-14 items-center justify-between gap-3 rounded-xl border border-zinc-800 bg-zinc-900/60 px-3 py-3 text-left transition-all hover:border-sky-400/60 hover:bg-sky-500/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70"
               >
-                <span className="flex min-w-0 items-center gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-sky-500/20 bg-sky-500/10 text-[9px] font-black text-sky-300">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span className="text-[10px] font-bold leading-snug text-zinc-200 group-hover:text-white">{emulator}</span>
-                </span>
+                <span className="text-[10px] font-bold leading-snug text-zinc-200 group-hover:text-white">{emulator}</span>
                 <i className="fas fa-chevron-right shrink-0 text-[8px] text-zinc-600 transition-colors group-hover:text-sky-300" aria-hidden="true"></i>
               </button>
             ))}
