@@ -37,6 +37,8 @@ interface SensiChoiceButtonProps {
   icon: string;
   accent: ChoiceAccent;
   onClick: () => void;
+  selected?: boolean;
+  testId?: string;
 }
 
 const choiceAccents: Record<ChoiceAccent, { card: string; glow: string; dot: string; icon: string; arrow: string }> = {
@@ -77,6 +79,8 @@ const SensiChoiceButton: React.FC<SensiChoiceButtonProps> = ({
   icon,
   accent,
   onClick,
+  selected,
+  testId,
 }) => {
   const colors = choiceAccents[accent];
 
@@ -84,7 +88,9 @@ const SensiChoiceButton: React.FC<SensiChoiceButtonProps> = ({
     <button
       type="button"
       onClick={onClick}
-      className={`group relative isolate flex min-h-[140px] w-full flex-col justify-between overflow-hidden rounded-xl border bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-4 text-left shadow-[0_12px_32px_-18px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${colors.card}`}
+      aria-pressed={selected}
+      data-testid={testId}
+      className={`group relative isolate flex min-h-[140px] w-full flex-col justify-between overflow-hidden rounded-xl border bg-gradient-to-br from-zinc-900 via-zinc-950 to-black p-4 text-left shadow-[0_12px_32px_-18px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${colors.card} ${selected ? 'border-white/70 ring-1 ring-white/50' : ''}`}
     >
       <span className={`pointer-events-none absolute -right-7 -top-9 h-32 w-32 rounded-full blur-3xl transition-opacity duration-300 group-hover:opacity-100 ${colors.glow}`} />
       <span className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(135deg,transparent_46%,white_47%,transparent_48%)]" />
@@ -130,6 +136,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
     model: string;
     platform: PhonePlatform;
   } | null>(null);
+  const [selectedSensitivity, setSelectedSensitivity] = useState<'high' | 'low' | null>(null);
   const [phoneSearch, setPhoneSearch] = useState('');
 
   const resetSelection = () => onSelectPackage(null);
@@ -140,6 +147,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
     setMobilePlatform(null);
     setSelectedBrand(null);
     setSelectedPhone(null);
+    setSelectedSensitivity(null);
     setPhoneSearch('');
   };
   const chooseMobilePlatform = (platform: PhonePlatform) => {
@@ -147,6 +155,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
     setMobilePlatform(platform);
     setSelectedBrand(null);
     setSelectedPhone(null);
+    setSelectedSensitivity(null);
     setPhoneSearch('');
   };
   const chooseBrand = (brand: string) => {
@@ -157,10 +166,16 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
   const chooseEmulator = (emulator: string) => {
     resetSelection();
     setSelectedEmulator(emulator);
+    setSelectedSensitivity(null);
   };
   const choosePhone = (brand: string, model: string, platform: PhonePlatform) => {
     resetSelection();
     setSelectedPhone({ brand, model, platform });
+    setSelectedSensitivity(null);
+  };
+  const chooseSensitivity = (sensitivity: 'high' | 'low') => {
+    resetSelection();
+    setSelectedSensitivity(sensitivity);
   };
 
   const packageCategory = device === 'pc'
@@ -205,7 +220,9 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
         <div>
           <h3 className="text-sm font-black uppercase tracking-widest text-white">
             {packageCategory
-              ? `${selectedLabel} SENSI PACKS`
+              ? selectedSensitivity
+                ? `${selectedLabel} · ${selectedSensitivity.toUpperCase()} SENSITIVITY PACKS`
+                : 'CHOOSE SENSITIVITY'
               : device === 'pc'
                 ? 'CHOOSE PC EMULATOR'
                 : device === 'mobile'
@@ -213,12 +230,16 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
                     ? 'CHOOSE MOBILE PLATFORM'
                     : isChoosingAndroidBrand
                       ? 'CHOOSE ANDROID BRAND'
-                      : 'CHOOSE PHONE MODEL'
+                      : selectedPhone
+                        ? 'CHOOSE SENSITIVITY'
+                        : 'CHOOSE PHONE MODEL'
                   : 'CHOOSE YOUR DEVICE'}
           </h3>
           <p className="mt-1 text-[10px] font-medium text-zinc-500">
             {packageCategory
-              ? 'Select an available pack to continue.'
+              ? selectedSensitivity
+                ? `Select an available pack for ${selectedSensitivity} sensitivity.`
+                : `Choose high or low sensitivity for ${selectedLabel}.`
               : device === 'pc'
                 ? 'Choose your Android emulator to see the PC SENSI packs.'
                 : device === 'mobile'
@@ -226,7 +247,9 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
                     ? 'Choose Android or iOS to continue.'
                     : isChoosingAndroidBrand
                       ? 'Choose your Android phone brand to see its models.'
-                      : `Choose an available ${mobilePlatform === 'ios' ? 'iPhone' : 'phone'} model.`
+                      : selectedPhone
+                        ? `Choose high or low sensitivity for ${selectedLabel}.`
+                        : `Choose an available ${mobilePlatform === 'ios' ? 'iPhone' : 'phone'} model.`
                   : 'Choose the platform for your SENSI settings.'}
           </p>
         </div>
@@ -318,7 +341,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
         </div>
       )}
 
-      {device === 'mobile' && mobilePlatform && (
+      {device === 'mobile' && mobilePlatform && !selectedPhone && (
         <div className="space-y-4">
           <button
             type="button"
@@ -433,6 +456,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
               onClick={() => {
                 resetSelection();
                 setSelectedEmulator(null);
+                setSelectedSensitivity(null);
               }}
               className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
             >
@@ -446,6 +470,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
               onClick={() => {
                 resetSelection();
                 setSelectedPhone(null);
+                setSelectedSensitivity(null);
                 setPhoneSearch('');
               }}
               className="text-[10px] font-black uppercase tracking-widest text-zinc-500 transition-colors hover:text-white"
@@ -455,7 +480,30 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
             </button>
           )}
 
-          {visiblePackages.length > 0 ? (
+          <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Choose sensitivity">
+            <SensiChoiceButton
+              eyebrow="Sensitivity 01"
+              title="High"
+              subtitle="Sensitivity"
+              icon="fas fa-arrow-up"
+              accent="orange"
+              selected={selectedSensitivity === 'high'}
+              testId="button-sensi-high-sensitivity"
+              onClick={() => chooseSensitivity('high')}
+            />
+            <SensiChoiceButton
+              eyebrow="Sensitivity 02"
+              title="Low"
+              subtitle="Sensitivity"
+              icon="fas fa-arrow-down"
+              accent="sky"
+              selected={selectedSensitivity === 'low'}
+              testId="button-sensi-low-sensitivity"
+              onClick={() => chooseSensitivity('low')}
+            />
+          </div>
+
+          {selectedSensitivity && (visiblePackages.length > 0 ? (
             <div className="grid gap-3 sm:grid-cols-2">
               {visiblePackages.map((pkg) => {
                 const isSelected = selectedPackage?.id === pkg.id;
@@ -484,7 +532,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
               <p className="text-xs font-black uppercase tracking-widest text-zinc-300">SENSI packs coming soon</p>
               <p className="mt-2 text-xs text-zinc-500">Packs for {selectedLabel} will appear here when they’re added.</p>
             </div>
-          )}
+          ))}
         </div>
       )}
     </section>
