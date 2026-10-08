@@ -558,6 +558,13 @@ export const GAMES: Game[] = [
     banner: '/images/sensi-cover.png',
     idPlaceholder: 'Player ID / Account Details',
     description: 'Choose a sensitivity option for Mobile or PC.',
-    packages: []
+    packages: [
+      { id: 'sensi-android-basic', amount: 1, unit: 'Basic Sensitivity', price: 450, currency: 'BDT', category: SENSI_PACKAGE_CATEGORIES.android },
+      { id: 'sensi-android-premium', amount: 1, unit: 'Premium Sensitivity', price: 700, currency: 'BDT', category: SENSI_PACKAGE_CATEGORIES.android },
+      { id: 'sensi-android-elite', amount: 1, unit: 'Elite Sensitivity', price: 999, currency: 'BDT', category: SENSI_PACKAGE_CATEGORIES.android },
+      { id: 'sensi-ios-basic', amount: 1, unit: 'Basic Sensitivity', price: 550, currency: 'BDT', category: SENSI_PACKAGE_CATEGORIES.ios },
+      { id: 'sensi-ios-premium', amount: 1, unit: 'Premium Sensitivity', price: 800, currency: 'BDT', category: SENSI_PACKAGE_CATEGORIES.ios },
+      { id: 'sensi-ios-elite', amount: 1, unit: 'Elite Sensitivity', price: 1200, currency: 'BDT', category: SENSI_PACKAGE_CATEGORIES.ios },
+    ]
   }
 ];
