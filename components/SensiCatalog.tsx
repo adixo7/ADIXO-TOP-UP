@@ -122,6 +122,55 @@ const SensiChoiceButton: React.FC<SensiChoiceButtonProps> = ({
   );
 };
 
+interface SensitivityChoiceButtonProps {
+  title: 'High' | 'Low';
+  onClick: () => void;
+  selected: boolean;
+  testId: string;
+}
+
+const SensitivityChoiceButton: React.FC<SensitivityChoiceButtonProps> = ({
+  title,
+  onClick,
+  selected,
+  testId,
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label={`${title} sensitivity`}
+    aria-pressed={selected}
+    data-testid={testId}
+    className={`flex min-h-[52px] w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/70 ${
+      selected
+        ? 'border-orange-400/80 bg-orange-500/10 text-white shadow-[inset_0_0_0_1px_rgba(249,115,22,0.12)]'
+        : 'border-zinc-800 bg-zinc-950/60 text-zinc-400 hover:border-zinc-600 hover:bg-zinc-900 hover:text-zinc-200'
+    }`}
+  >
+    <span className="text-sm font-semibold tracking-wide">{title}</span>
+    <span
+      aria-hidden="true"
+      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
+        selected
+          ? 'border-orange-400 bg-orange-400 text-zinc-950'
+          : 'border-zinc-600 bg-transparent'
+      }`}
+    >
+      {selected && (
+        <svg className="h-3 w-3" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path
+            d="m3.5 8.5 3 3 6-7"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      )}
+    </span>
+  </button>
+);
+
 const SensiCatalog: React.FC<SensiCatalogProps> = ({
   packages,
   selectedPackage,
@@ -480,27 +529,27 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
             </button>
           )}
 
-          <div className="grid gap-3 sm:grid-cols-2" role="group" aria-label="Choose sensitivity">
-            <SensiChoiceButton
-              eyebrow="Sensitivity 01"
-              title="High"
-              subtitle="Sensitivity"
-              icon="fas fa-arrow-up"
-              accent="orange"
-              selected={selectedSensitivity === 'high'}
-              testId="button-sensi-high-sensitivity"
-              onClick={() => chooseSensitivity('high')}
-            />
-            <SensiChoiceButton
-              eyebrow="Sensitivity 02"
-              title="Low"
-              subtitle="Sensitivity"
-              icon="fas fa-arrow-down"
-              accent="sky"
-              selected={selectedSensitivity === 'low'}
-              testId="button-sensi-low-sensitivity"
-              onClick={() => chooseSensitivity('low')}
-            />
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-zinc-400">
+                Sensitivity
+              </p>
+              <span className="text-[10px] font-medium text-zinc-600">Choose one</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2" role="group" aria-label="Choose sensitivity">
+              <SensitivityChoiceButton
+                title="High"
+                selected={selectedSensitivity === 'high'}
+                testId="button-sensi-high-sensitivity"
+                onClick={() => chooseSensitivity('high')}
+              />
+              <SensitivityChoiceButton
+                title="Low"
+                selected={selectedSensitivity === 'low'}
+                testId="button-sensi-low-sensitivity"
+                onClick={() => chooseSensitivity('low')}
+              />
+            </div>
           </div>
 
           {selectedSensitivity && (visiblePackages.length > 0 ? (
@@ -529,7 +578,7 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
           ) : (
             <div className="rounded-2xl border border-dashed border-zinc-800 bg-zinc-900/40 px-6 py-10 text-center">
               <i className="fas fa-box-open mb-3 text-xl text-zinc-600" aria-hidden="true"></i>
-              <p className="text-xs font-black uppercase tracking-widest text-zinc-300">SENSI packs coming soon</p>
+              <p className="text-xs font-black uppercase tracking-widest text-zinc-300">Sensitivity packs coming soon</p>
               <p className="mt-2 text-xs text-zinc-500">Packs for {selectedLabel} will appear here when they’re added.</p>
             </div>
           ))}
