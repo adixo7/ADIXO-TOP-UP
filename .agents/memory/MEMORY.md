@@ -3,4 +3,4 @@
 - [Portable npm lockfiles](portable-npm-lockfiles.md) — Replit package installs can write internal tarball URLs that external CI cannot resolve.
 - [Sensitivity terminology](sensitivity-terminology.md) — Use “sensitivity” in customer-facing labels; avoid the shorthand “sensi.”
 - [Mockup sandbox setup](mockup-sandbox-setup.md) — Check and install an artifact’s own dependencies before starting its preview workflow.
-- [Mobile sensitivity package scope](mobile-sensitivity-package-scope.md) — Android and iOS tiers are shared by High/Low; do not infer PC pricing before the user provides it.
+- [Sensitivity package rules](mobile-sensitivity-package-scope.md) — Android/iOS tiers are shared across High/Low; PC pricing stays deferred, and cards stack with polish rising by tier.

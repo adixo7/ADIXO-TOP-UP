@@ -209,6 +209,78 @@ const SensitivityChoiceButton: React.FC<SensitivityChoiceButtonProps> = ({
   </button>
 );
 
+type SensitivityPackageTier = 'basic' | 'premium' | 'elite';
+
+const getSensitivityPackageTier = (unit: string): SensitivityPackageTier => {
+  const normalizedUnit = unit.toLowerCase();
+  if (normalizedUnit.includes('elite')) return 'elite';
+  if (normalizedUnit.includes('premium')) return 'premium';
+  return 'basic';
+};
+
+const SENSITIVITY_PACKAGE_TIER_ORDER: Record<SensitivityPackageTier, number> = {
+  basic: 0,
+  premium: 1,
+  elite: 2,
+};
+
+const SENSITIVITY_PACKAGE_TIER_STYLES: Record<
+  SensitivityPackageTier,
+  { card: string; accent: string; icon: string; price: string; selected: string; check: string }
+> = {
+  basic: {
+    card: 'border-orange-500/20 bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-950 hover:border-orange-400/60 hover:shadow-[0_14px_34px_-26px_rgba(249,115,22,0.9)]',
+    accent: 'from-orange-300/80 to-orange-600',
+    icon: 'border-orange-500/25 bg-orange-500/10 text-orange-300',
+    price: 'text-orange-300',
+    selected: 'border-orange-400/80 ring-1 ring-orange-400/45 shadow-[0_0_28px_-14px_rgba(249,115,22,0.75)]',
+    check: 'border-orange-300 bg-orange-400 text-zinc-950',
+  },
+  premium: {
+    card: 'border-violet-500/30 bg-gradient-to-r from-violet-950/50 via-zinc-900 to-zinc-950 shadow-[0_10px_34px_-28px_rgba(139,92,246,0.7)] hover:border-violet-300/70 hover:shadow-[0_16px_38px_-22px_rgba(139,92,246,0.8)]',
+    accent: 'from-violet-300 via-purple-500 to-indigo-600',
+    icon: 'border-violet-400/35 bg-violet-500/10 text-violet-200',
+    price: 'text-violet-200',
+    selected: 'border-violet-300/90 ring-1 ring-violet-300/50 shadow-[0_0_32px_-13px_rgba(139,92,246,0.85)]',
+    check: 'border-violet-200 bg-violet-300 text-zinc-950',
+  },
+  elite: {
+    card: 'border-amber-400/35 bg-gradient-to-r from-amber-950/55 via-amber-950/20 to-zinc-950 shadow-[0_12px_36px_-26px_rgba(251,191,36,0.55)] hover:border-amber-300/80 hover:shadow-[0_18px_42px_-22px_rgba(251,191,36,0.85)]',
+    accent: 'from-amber-200 via-yellow-400 to-amber-600',
+    icon: 'border-amber-300/40 bg-amber-400/10 text-amber-200',
+    price: 'text-amber-200',
+    selected: 'border-amber-300/90 ring-1 ring-amber-300/60 shadow-[0_0_36px_-12px_rgba(251,191,36,0.9)]',
+    check: 'border-amber-200 bg-amber-300 text-zinc-950',
+  },
+};
+
+const SensitivityPackageIcon: React.FC<{ tier: SensitivityPackageTier }> = ({ tier }) => (
+  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    {tier === 'basic' ? (
+      <>
+        <circle cx="12" cy="12" r="7.5" stroke="currentColor" strokeWidth="1.7" />
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+      </>
+    ) : tier === 'premium' ? (
+      <path
+        d="m12 3 8 7-8 11-8-11 8-7Zm-8 7h16M8 10l4 11 4-11"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    ) : (
+      <path
+        d="m3.5 7.5 5 4 3.5-7 3.5 7 5-4-2 12H5.5l-2-12Zm2 8h13"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    )}
+  </svg>
+);
+
 const SensiCatalog: React.FC<SensiCatalogProps> = ({
   packages,
   selectedPackage,
@@ -275,7 +347,12 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
         ? SENSI_PACKAGE_CATEGORIES.ios
         : null;
   const visiblePackages = packageCategory
-    ? packages.filter((pkg) => pkg.category === packageCategory)
+    ? packages
+      .filter((pkg) => pkg.category === packageCategory)
+      .sort((first, second) =>
+        SENSITIVITY_PACKAGE_TIER_ORDER[getSensitivityPackageTier(first.unit)] -
+        SENSITIVITY_PACKAGE_TIER_ORDER[getSensitivityPackageTier(second.unit)]
+      )
     : [];
   const selectedLabel = device === 'pc'
     ? selectedEmulator || 'PC'
@@ -591,23 +668,53 @@ const SensiCatalog: React.FC<SensiCatalogProps> = ({
           </div>
 
           {selectedSensitivity && (visiblePackages.length > 0 ? (
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3">
               {visiblePackages.map((pkg) => {
                 const isSelected = selectedPackage?.id === pkg.id;
+                const tier = getSensitivityPackageTier(pkg.unit);
+                const tierStyles = SENSITIVITY_PACKAGE_TIER_STYLES[tier];
                 return (
                   <button
                     key={pkg.id}
                     type="button"
                     onClick={() => onSelectPackage(isSelected ? null : pkg)}
-                    className={`rounded-xl border p-4 text-left transition-all ${
-                      isSelected
-                        ? 'border-orange-400 bg-orange-500/10 ring-1 ring-orange-400/50'
-                        : 'border-zinc-800 bg-zinc-900/70 hover:border-orange-500/50'
+                    aria-label={`${pkg.unit}, ${pkg.currency === 'USD' ? '$' : '৳'}${pkg.price.toLocaleString()}`}
+                    aria-pressed={isSelected}
+                    className={`group relative isolate flex min-h-[76px] w-full items-center gap-3 overflow-hidden rounded-2xl border p-3.5 pl-4 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-300/70 ${tierStyles.card} ${
+                      isSelected ? tierStyles.selected : ''
                     }`}
                   >
-                    <span className="block text-xs font-black uppercase text-white">{pkg.unit}</span>
-                    <span className="mt-2 block text-sm font-black text-orange-400">
-                      {pkg.currency === 'USD' ? '$' : '৳'}{pkg.price.toLocaleString()}
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none absolute inset-y-2 left-0 w-1 rounded-r-full bg-gradient-to-b ${tierStyles.accent}`}
+                    />
+                    <span className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${tierStyles.icon}`}>
+                      <SensitivityPackageIcon tier={tier} />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-[12px] font-black uppercase leading-tight tracking-[0.04em] text-white sm:text-sm">
+                        {pkg.unit}
+                      </span>
+                    </span>
+                    <span className="ml-auto flex shrink-0 items-center gap-2.5">
+                      <span className="flex flex-col items-end">
+                        <span className={`text-lg font-black tabular-nums tracking-tight sm:text-xl ${tierStyles.price}`}>
+                          {pkg.currency === 'USD' ? '$' : '৳'}{pkg.price.toLocaleString()}
+                        </span>
+                        <span className="text-[8px] font-bold uppercase tracking-[0.16em] text-zinc-500">Price</span>
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                          isSelected ? tierStyles.check : 'border-white/15 bg-black/20 text-transparent group-hover:border-white/35'
+                        }`}
+                      >
+                        {isSelected && (
+                          <svg className="h-3 w-3" viewBox="0 0 16 16" fill="none">
+                            <path d="m3.5 8.5 3 3 6-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </span>
                     </span>
                   </button>
                 );
