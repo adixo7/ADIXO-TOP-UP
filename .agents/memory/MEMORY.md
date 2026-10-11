@@ -1,4 +1,5 @@
 - [Imported Node projects](imported-node-projects.md) — GitHub imports may need dependency installation before their configured workflow can start.
+- [Netlify package-manager selection](netlify-package-manager-selection.md) — Netlify may install dependencies from a detected lockfile before running the build command; keep install and build managers aligned.
 - [Package firewall CVE blocks](package-firewall-cve-blocks.md) — A stale transitive lockfile resolution can remain blocked even after updating its parent dependency.
 - [Portable npm lockfiles](portable-npm-lockfiles.md) — Replit package installs can write internal tarball URLs that external CI cannot resolve.
 - [Sensitivity terminology](sensitivity-terminology.md) — Use “sensitivity” in customer-facing labels; avoid the shorthand “sensi.”
