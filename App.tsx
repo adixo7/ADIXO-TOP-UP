@@ -2008,7 +2008,7 @@ const App: React.FC = () => {
                           <i className="fas fa-users-slash text-amber-300" aria-hidden="true"></i>
                           <div>
                             <p className="text-[10px] font-black uppercase tracking-widest text-amber-100">No guilds available</p>
-                            <p className="mt-0.5 text-[9px] text-zinc-400">All current listings have sold. Check back later for new stock.</p>
+                            <p className="mt-0.5 text-[9px] text-zinc-400">There are no guilds in stock right now. Please check back later.</p>
                           </div>
                         </div>
                       )}

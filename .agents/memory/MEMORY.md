@@ -5,4 +5,3 @@
 - [Sensitivity terminology](sensitivity-terminology.md) — Use “sensitivity” in customer-facing labels; avoid the shorthand “sensi.”
 - [Mockup sandbox setup](mockup-sandbox-setup.md) — Check and install an artifact’s own dependencies before starting its preview workflow.
 - [Sensitivity package rules](mobile-sensitivity-package-scope.md) — Android/iOS tiers are shared across High/Low; PC pricing stays deferred, and cards stack with polish rising by tier.
-- [Guild inventory scope](guild-inventory-scope.md) — Removing on-sale guilds should preserve sold listings and the sort controls.
