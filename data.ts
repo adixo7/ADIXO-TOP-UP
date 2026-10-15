@@ -157,6 +157,21 @@ const CARD_HOLDERS = [
 
 const CARD_BRANDS = ['VISA', 'MASTERCARD', 'AMERICAN EXPRESS'] as const;
 
+const SOLD_CARD_IDS = new Set([
+  'card-aqua-10',
+  'card-aqua-19',
+  'card-elite-1',
+  'card-elite-16',
+  'card-elite-18',
+  'card-elite-6',
+  'card-gold-12',
+  'card-gold-15',
+  'card-gold-3',
+  'card-ruby-10',
+  'card-ruby-15',
+  'card-ruby-18',
+]);
+
 const CARD_CATALOG: Package[] = CARD_SERIES_SEEDS.flatMap(({ series, entries }, seriesIndex) =>
   entries.map(([unit, price], entryIndex) => {
     const index = CARD_SERIES_SEEDS
@@ -186,6 +201,7 @@ const CARD_CATALOG: Package[] = CARD_SERIES_SEEDS.flatMap(({ series, entries }, 
       cardLimit: `৳${(price * 900).toLocaleString('en-IN')}`,
       cardQuantity: 1,
       isPopular: index % 13 === 0,
+      sold: SOLD_CARD_IDS.has(id),
     };
   }),
 );
