@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLanguage } from '../LanguageContext';
 
 const Features: React.FC = () => {
   const { t } = useLanguage();
+
+  useEffect(() => {
+    const targets = document.querySelectorAll<HTMLElement>(
+      '.feature-scroll-reveal [data-feature-reveal]',
+    );
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach((target) => target.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(({ target, isIntersecting }) => {
+          target.classList.toggle('is-visible', isIntersecting);
+        });
+      },
+      { threshold: 0.14, rootMargin: '0px 0px -5% 0px' },
+    );
+
+    targets.forEach((target) => observer.observe(target));
+    return () => observer.disconnect();
+  }, []);
 
   const featureList = [
     {
@@ -26,11 +49,38 @@ const Features: React.FC = () => {
   ];
 
   return (
-    <section className="py-6 md:py-16 animate-in fade-in duration-1000">
+    <section className="feature-scroll-reveal py-6 md:py-16">
+      <style>{`
+        .feature-scroll-reveal [data-feature-reveal] {
+          opacity: 0;
+          transition:
+            opacity 720ms cubic-bezier(0.16, 1, 0.3, 1),
+            transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: opacity, transform;
+        }
+        .feature-scroll-reveal [data-feature-reveal="from-left"] {
+          transform: translate3d(-44px, 0, 0);
+        }
+        .feature-scroll-reveal [data-feature-reveal="from-right"] {
+          transform: translate3d(44px, 0, 0);
+        }
+        .feature-scroll-reveal [data-feature-reveal].is-visible {
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .feature-scroll-reveal [data-feature-reveal] {
+            opacity: 1;
+            transform: none;
+            transition: none;
+            will-change: auto;
+          }
+        }
+      `}</style>
       <div className="max-w-2xl mx-auto px-4 mb-8 md:mb-16">
         <div className="bg-[#0c0c0e] border border-zinc-800/50 rounded-2xl overflow-hidden flex flex-row">
           {/* Left Side: Support Info */}
-          <div className="flex-[3] p-4 md:p-8 flex flex-col justify-between border-r border-zinc-800/50">
+          <div data-feature-reveal="from-left" className="flex-[3] p-4 md:p-8 flex flex-col justify-between border-r border-zinc-800/50">
             <div>
               <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-orange-500/10 border border-orange-500/20 mb-2 md:mb-4">
                 <i className="far fa-comment-dots text-orange-500 text-[8px]"></i>
@@ -57,7 +107,7 @@ const Features: React.FC = () => {
           </div>
 
           {/* Right Side: Profile */}
-          <div className="flex-[2] p-3 md:p-8 flex flex-col items-center justify-center text-center bg-zinc-900/20">
+          <div data-feature-reveal="from-right" className="flex-[2] p-3 md:p-8 flex flex-col items-center justify-center text-center bg-zinc-900/20">
             <div className="relative mb-2 md:mb-4">
               <div className="w-12 h-12 md:w-28 md:h-28 rounded-full border-2 md:border-[3px] border-zinc-800 p-0.5 md:p-1 overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
@@ -87,6 +137,8 @@ const Features: React.FC = () => {
         {featureList.map((feature, index) => (
           <article
             key={feature.titleKey}
+            data-feature-reveal={index % 2 === 0 ? 'from-left' : 'from-right'}
+            style={{ transitionDelay: `${index * 90}ms` }}
             className="group/feature relative grid w-full grid-cols-[3rem_minmax(0,1fr)] items-center gap-4 sm:flex sm:flex-col sm:items-center sm:gap-0 sm:px-3"
           >
             <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-orange-400/50 bg-[#111014] shadow-[0_0_0_5px_rgba(9,9,11,0.95),0_0_22px_rgba(249,115,22,0.16)] transition-transform duration-300 group-hover/feature:scale-105 sm:h-14 sm:w-14">
