@@ -1506,6 +1506,7 @@ const App: React.FC = () => {
                     </div>
                   </div>
 
+                  {(selectedGame.id !== 'buy-guild' || selectedGame.packages.length > 0) && (
                   <div className="space-y-4 px-2" ref={playerIdRef}>
                     <h3 className="text-xl font-bold text-white">
                       {selectedGame.id === 'buy-guild' ? t('game.tgUserEmail') : selectedGame.id === 'pc-games' || selectedGame.id === 'ff-panel' || selectedGame.id === 'cards' ? t('game.emailWhatsapp') : selectedGame.id === 'ai-bots' ? t('game.guildId') : t('game.playerId')}
@@ -1535,6 +1536,7 @@ const App: React.FC = () => {
                       </p>
                     )}
                   </div>
+                  )}
                 </div>
 
                 <div className="lg:col-span-2 space-y-10" ref={packageSectionRef}>
@@ -1970,6 +1972,20 @@ const App: React.FC = () => {
                       ))}
                     </div>
                   ) : selectedGame.id === 'buy-guild' ? (
+                    selectedGame.packages.length === 0 ? (
+                      <div
+                        role="status"
+                        className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-dashed border-amber-500/25 bg-gradient-to-br from-amber-500/[0.06] via-zinc-950/60 to-zinc-950 px-6 py-12 text-center"
+                      >
+                        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border border-amber-400/20 bg-amber-400/10 text-amber-300">
+                          <i className="fas fa-users-slash text-xl" aria-hidden="true"></i>
+                        </div>
+                        <h3 className="text-base font-black uppercase tracking-widest text-white">No guilds available</h3>
+                        <p className="mt-2 max-w-sm text-xs leading-relaxed text-zinc-400">
+                          There are no guilds in stock right now. Please check back later.
+                        </p>
+                      </div>
+                    ) : (
                     <div className="space-y-6">
                       <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
                         <div className="flex items-center gap-3">
@@ -2106,6 +2122,7 @@ const App: React.FC = () => {
                         );
                       })}
                     </div>
+                    )
                   ) : selectedGame.id === 'cards' ? (
                     <div className="space-y-6">
                       <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#0b0d13] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] md:p-6">
